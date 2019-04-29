@@ -1,0 +1,10 @@
+footer {
+    background-color: #000;
+    color: #FFF;
+}
+
+.footer-row {
+    min-height: 153px;
+    justify-content: center;
+    align-items: center;
+}
