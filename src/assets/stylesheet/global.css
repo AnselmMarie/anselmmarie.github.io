@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    color: #414141;
     font-family: "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -14,6 +15,41 @@ h1, h2, h3 {
     color: #6A45B4;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+h1 {
+    /*font-size: 35px;*/
+}
+
+h3 {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.skills-container {
+    margin-top: 400px;
+    margin-bottom: 400px;
+}
+
+.skills-container ul {
+    font-size: 18px;
+    line-height: 30px;
+}
+
+ul {
+    padding-left: 20px;
+    list-style-type: none;
+}
+
+li:before {
+    display: inline-block;
+    content: '//';
+    margin-left: -17px;
+    margin-right: 8px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+.my-work-container {
+    margin-bottom: 400px;
 }

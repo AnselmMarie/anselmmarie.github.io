@@ -4,6 +4,9 @@ import './homepage.css';
 /* Components */
 import HeroComponent from '../../components/hero.component/Hero';
 import FooterComponent from '../../components/footer.component/Footer';
+import PortfolioItemComponent from '../../components/portfolio.item.component/Portfolio.item';
+/* JSON */
+import portfolioData from '../../json/portfolio.item.json';
 
 class Homepage extends React.Component {
 
@@ -40,10 +43,10 @@ class Homepage extends React.Component {
 
                 <HeroComponent />
 
-                <div className="container">
+                <div className="container skills-container">
                     <div className="row">
 
-                        <div className="col-xs-12 col-md">
+                        <div className="col-xs-12 col-md offset-md-1">
                             <h3>Design</h3>
                             <ul>
                                 <li>Mobile Design</li>
@@ -55,7 +58,7 @@ class Homepage extends React.Component {
                             </ul>
                         </div>
 
-                        <div className="col-xs-12 col-md">
+                        <div className="col-xs-12 col-md offset-md-1">
                             <h3>Development</h3>
                             <ul>
                                 <li>Mobile Development</li>
@@ -70,13 +73,12 @@ class Homepage extends React.Component {
                     </div>
                 </div>
 
-                <div className="container">
+                <div className="container my-work-container">
                     <h3>My Work</h3>
-                    <div className="portfolio-item">
-                        <div className="portfolio-content">
-                            <h4>Title</h4>
-                            <h5>SubTitle</h5>
-                        </div>
+                    <div className="row">
+                        {portfolioData.data.map((data, index) => {
+                            return <PortfolioItemComponent key={index} item={data} />
+                        })}
                     </div>
                 </div>
 

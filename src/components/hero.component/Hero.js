@@ -1,9 +1,9 @@
 /* Node Modules */
 import React from "react";
 
-
 export default () => {
     return (
+
         <div className="container-fluid">
             <div className="hero-container">
                 <header className="hero-header">
@@ -19,5 +19,6 @@ export default () => {
                 </header>
             </div>
         </div>
+
     )
 }

@@ -1,0 +1,25 @@
+.portfolio-item {
+    width: 50%;
+    padding: 0 15px;
+    margin-bottom: 30px;
+}
+
+.image-style {
+    border-radius: 10px;
+}
+
+.portfolio-row {
+    min-height: 300px;
+    justify-content: center;
+    align-items: center;
+}
+
+.portfolio-content {
+    text-align: center;
+    color: #FFF;
+}
+
+.bg-fade {
+    background-color: rgba(0, 0, 0, .6);
+    border-radius: 10px;
+}
