@@ -8,12 +8,6 @@ header.container {
   margin-bottom: 90px;
 }
 
-.portfolio-header-container h1,
-.portfolio-header-container h2,
-.portfolio-header-container h3 {
-  color: #FFF;
-}
-
 .portfolio-header-container h1 {
   font-size: 40px;
   border-bottom: 1px #FFF solid;

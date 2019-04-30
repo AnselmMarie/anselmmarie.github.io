@@ -26,7 +26,7 @@ const goToPortfolio = (history, item) => {
  */
 const getImagePath = (thumbnail) => {
     let ii;
-console.log('`../../assets/images/portfolio/${thumbnail}`', `../../assets/images/portfolio/${thumbnail}`);
+
     try {
         ii = require(`../../assets/images/portfolio/${thumbnail}`);
     }

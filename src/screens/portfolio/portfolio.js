@@ -1,7 +1,7 @@
 /* Node Modules */
 import React, {Fragment} from 'react';
 /* Modules */
-import {getPortfolio} from "../../data/store";
+import {getPortfolio, clearPortfolio} from "../../data/store";
 /* Data */
 import portJson from '../../data/portfolio.item.json';
 /* Component Styles */
@@ -32,6 +32,16 @@ class Portfolio extends React.Component {
      */
     componentDidMount() {
         this.checkItem();
+    }
+
+    /**
+     * @function componentDidMount
+     * @desc init function once the component unMounts
+     * @author Anselm Marie
+     * @memberOf Portfolio
+     */
+    componentWillUnmount() {
+        clearPortfolio();
     }
 
     /**
