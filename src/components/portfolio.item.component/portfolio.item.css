@@ -6,12 +6,15 @@
 
 .image-style {
     border-radius: 10px;
+    background-size: cover;
 }
 
 .portfolio-row {
     min-height: 300px;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    margin: 0;
 }
 
 .portfolio-content {
@@ -20,6 +23,6 @@
 }
 
 .bg-fade {
-    background-color: rgba(0, 0, 0, .6);
+    background-color: rgba(0, 0, 0, .7);
     border-radius: 10px;
 }

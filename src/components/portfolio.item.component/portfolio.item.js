@@ -3,7 +3,7 @@ import React from "react";
 /* Component Styles */
 import './portfolio.item.css';
 /* Modules */
-import {updatePortfolio} from '../../modules/store';
+import {updatePortfolio} from '../../data/store';
 
 /**
  * @function goToPortfolio
@@ -14,7 +14,28 @@ import {updatePortfolio} from '../../modules/store';
  */
 const goToPortfolio = (history, item) => {
     updatePortfolio(item);
-    history.push('/portfolio');
+    history.push(`/portfolio/${item.url}`);
+};
+
+/**
+ * @function getImagePath
+ * @desc getting the full image path
+ * @author Anselm Marie
+ * @param {string} thumbnail - part of the thumbnail file path
+ * @return {string}
+ */
+const getImagePath = (thumbnail) => {
+    let ii;
+console.log('`../../assets/images/portfolio/${thumbnail}`', `../../assets/images/portfolio/${thumbnail}`);
+    try {
+        ii = require(`../../assets/images/portfolio/${thumbnail}`);
+    }
+    catch (e) {
+        console.log(e);
+        ii = '';
+    }
+
+    return ii;
 };
 
 export default (props) => {
@@ -24,7 +45,7 @@ export default (props) => {
     return (
 
         <div onClick={() => goToPortfolio(props.history, props.item)} className="portfolio-item">
-            <div className="image-style" style={{backgroundImage: `url(${item.thumbnail})`}}>
+            <div className="image-style" style={{backgroundImage: `url(${getImagePath(item.thumbnail)}`}}>
                 <div className="bg-fade">
                     <div className="row portfolio-row">
 

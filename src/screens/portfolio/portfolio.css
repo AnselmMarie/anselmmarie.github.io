@@ -1,4 +1,46 @@
+.portfolio-header-container {
+  background-color: #000;
+}
+
+header.container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin-bottom: 90px;
+}
+
+.portfolio-header-container h1,
+.portfolio-header-container h2,
+.portfolio-header-container h3 {
+  color: #FFF;
+}
+
+.portfolio-header-container h1 {
+  font-size: 40px;
+  border-bottom: 1px #FFF solid;
+  padding-bottom: 20px;
+  display: inline-block;
+}
+
+.portfolio-header-container h2 {
+  margin-top: 20px;
+  font-size: 30px;
+}
+
+.portfolio-header-container h3 {
+  font-size: 20px;
+}
+
+.portfolio-description {
+  font-size: 18px;
+  margin-bottom: 90px;
+}
+
+.image-container {
+  text-align: center;
+}
+
 .portfolio-image {
+  margin-bottom: 90px;
 }
 
 

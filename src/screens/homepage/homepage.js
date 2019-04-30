@@ -6,7 +6,7 @@ import HeroComponent from '../../components/hero.component/hero';
 import FooterComponent from '../../components/footer.component/footer';
 import PortfolioItemComponent from '../../components/portfolio.item.component/portfolio.item';
 /* JSON */
-import portfolioData from '../../json/portfolio.item.json';
+import portfolioData from '../../data/portfolio.item.json';
 
 class Homepage extends React.Component {
 

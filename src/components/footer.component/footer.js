@@ -1,6 +1,6 @@
 /* Node Modules */
 import React from "react";
-/* Component Style */
+/* Component Styles */
 import './footer.css';
 
 export default () => {

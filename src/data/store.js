@@ -1,5 +1,5 @@
 let store = {
-    portfolio: {}
+    portfolio: null,
 };
 
 /**
@@ -28,5 +28,5 @@ export const getPortfolio = () => {
  * @author Anselm Marie
  */
 export const clearPortfolio = () => {
-    store.portfolio = {};
+    store.portfolio = null;
 };
