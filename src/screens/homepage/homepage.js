@@ -2,9 +2,9 @@
 import React, {Fragment} from 'react';
 import './homepage.css';
 /* Components */
-import HeroComponent from '../../components/hero.component/Hero';
-import FooterComponent from '../../components/footer.component/Footer';
-import PortfolioItemComponent from '../../components/portfolio.item.component/Portfolio.item';
+import HeroComponent from '../../components/hero.component/hero';
+import FooterComponent from '../../components/footer.component/footer';
+import PortfolioItemComponent from '../../components/portfolio.item.component/portfolio.item';
 /* JSON */
 import portfolioData from '../../json/portfolio.item.json';
 
@@ -37,6 +37,7 @@ class Homepage extends React.Component {
      * @memberOf Homepage
      */
     render() {
+
         return (
 
             <Fragment>
@@ -77,7 +78,7 @@ class Homepage extends React.Component {
                     <h3>My Work</h3>
                     <div className="row">
                         {portfolioData.data.map((data, index) => {
-                            return <PortfolioItemComponent key={index} item={data} />
+                            return <PortfolioItemComponent key={index} item={data} history={this.props.history} />
                         })}
                     </div>
                 </div>

@@ -8,7 +8,7 @@ export default () => {
 
         <footer className="container-fluid">
             <div className="row footer-row">
-                <a href="https://itunes.apple.com/profile/ansmarie" target="_blank">
+                <a href="https://itunes.apple.com/profile/ansmarie" target="_blank" rel="noopener noreferrer">
                     <img
                         onMouseOver={(e) => (e.currentTarget.src = require('../../assets/images/apple-music-icon.png'))}
                         onMouseOut={(e) => (e.currentTarget.src = require('../../assets/images/apple-music-icon-white.png'))}
@@ -16,7 +16,7 @@ export default () => {
                         alt="Apple Music"
                         className="footer-icon" />
                 </a>
-                <a href="https://open.spotify.com/user/126462549" target="_blank">
+                <a href="https://open.spotify.com/user/126462549" target="_blank" rel="noopener noreferrer">
                     <img
                         onMouseOver={(e) => (e.currentTarget.src = require('../../assets/images/spotify-icon.png'))}
                         onMouseOut={(e) => (e.currentTarget.src = require('../../assets/images/spotify-icon-white.png'))}
@@ -24,7 +24,7 @@ export default () => {
                         alt="Spotify"
                         className="footer-icon" />
                 </a>
-                <a href="https://www.linkedin.com/in/anselm-marie/" target="_blank">
+                <a href="https://www.linkedin.com/in/anselm-marie/" target="_blank" rel="noopener noreferrer">
                     <img
                         onMouseOver={(e) => (e.currentTarget.src = require('../../assets/images/linkedin-icon.png'))}
                         onMouseOut={(e) => (e.currentTarget.src = require('../../assets/images/linkedin-icon-white.png'))}

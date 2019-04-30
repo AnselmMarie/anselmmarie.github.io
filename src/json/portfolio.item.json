@@ -3,68 +3,118 @@
     {
       "company": "Cricket Wireless",
       "title": "Breeze-Thru",
-      "subTitle": "Design/Development",
-      "portfolioImage": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg"
+      "subtitle": "Design/Development",
+      "thumbnail": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg",
+      "description": "",
+      "images": [
+        "cricket.wireless/rebrand01.jpg",
+        "cricket.wireless/rebrand03.jpg",
+        "cricket.wireless/responsive01.jpg",
+        "cricket.wireless/responsive03.jpg"
+      ]
     },
     {
       "company": "Cricket Wireless",
       "title": "AIO to Cricket Wireless",
-      "subTitle": "Development",
-      "portfolioImage": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg"
-    },
-    {
-      "company": "Cricket Wireless",
-      "title": "Responsive Website",
-      "subTitle": "Development",
-      "portfolioImage": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg"
-    },
-    {
-      "company": "Rove Logix",
-      "title": "Client Application",
-      "subTitle": "Design/Development",
-      "portfolioImage": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg"
+      "subtitle": "Development",
+      "thumbnail": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg",
+      "description": "When rebranding the website from Aio to Cricket we had to change sections of the site per release. Because of this we had to figure out certain issues like insuring new pages were responsive while the older pages stayed as a fixed width. It took about a year to completely re-brand the site.",
+      "images": [
+        "cricket.wireless/rebrand01.jpg",
+        "cricket.wireless/rebrand03.jpg",
+        "cricket.wireless/responsive01.jpg",
+        "cricket.wireless/responsive03.jpg"
+      ]
     },
     {
       "company": "Rove Logix",
-      "title": "Website",
-      "subTitle": "Design/Development",
-      "portfolioImage": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg"
-    },
-    {
-      "company": "Rove Logix",
-      "title": "Emails",
-      "subTitle": "Design/Development",
-      "portfolioImage": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg"
+      "title": "Company Development",
+      "subtitle": "Design/Development",
+      "thumbnail": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg",
+      "description": "Around 2013, a couple of developers and I created a SaaS application for land surveying, engineering, and geospatial services firms. I was tasked to design all the elements for the application then work on any development work.",
+      "images": [
+        "rove.logix/app01.jpg",
+        "rove.logix/app02.jpg",
+        "rove.logix/email02.jpg",
+        "rove.logix/email03.png",
+        "rove.logix/icon01.jpg",
+        "rove.logix/website01.jpg",
+        "rove.logix/website02.jpg"
+      ]
     },
     {
       "company": "Corporate Reports",
-      "title": "News App",
-      "subTitle": "Design/Development",
-      "portfolioImage": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg"
+      "title": "Caterpillar Inc. News App",
+      "subtitle": "Design/Development",
+      "thumbnail": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg",
+      "description": "I created the UI design and some minor development work for this iPhone and Android App. This app was packed with a CAT stock price, latest news from CAT, videos, pdfs and more.",
+      "images": [
+        "corporate.reports/cat01.jpg"
+      ]
     },
     {
       "company": "Corporate Reports",
       "title": "2013 Clorox Annual Report",
-      "subTitle": "Development",
-      "portfolioImage": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg"
+      "subtitle": "Development",
+      "thumbnail": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg",
+      "description": "A major feature Clorox wanted for this website was being responsive so I developed it using the Zurb Foundation Framework to create an excellent fluid feel that will look good on any screen. Having creative freedom on the mobile layouts I made sure the navigation and content was easy to use and read.",
+      "images": [
+        "corporate.reports/clorox01.jpg",
+        "corporate.reports/clorox02.jpg",
+        "corporate.reports/clorox03.jpg"
+      ]
+    },
+    {
+      "company": "Corporate Reports",
+      "title": "2012 Darden Annual Report",
+      "subtitle": "Design/Development",
+      "thumbnail": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg",
+      "description": "With the designers swamped with work I was given the task to design the 2012 Darden annual report website. While I mostly did the design I was able to help out of the development a little bit.",
+      "images": [
+        "corporate.reports/darden01.jpg",
+        "corporate.reports/darden02.jpg",
+        "corporate.reports/darden03.jpg",
+        "corporate.reports/darden04.jpg"
+      ]
+    },
+    {
+      "company": "Freelancing/Concepts",
+      "title": "Cosajiou",
+      "subtitle": "Design/Development",
+      "thumbnail": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg",
+      "description": "",
+      "images": []
     },
     {
       "company": "Freelancing/Concepts",
       "title": "Weather App",
-      "subTitle": "Design/Development",
-      "portfolioImage": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg"
+      "subtitle": "Design/Development",
+      "thumbnail": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg",
+      "description": "",
+      "images": []
     },
     {
       "company": "Freelancing/Concepts",
       "title": "Crunchy Roll Website Concept",
-      "subTitle": "Design",
-      "portfolioImage": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg"
+      "subtitle": "Design",
+      "thumbnail": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg",
+      "description": "This is a redesign concept I did for Crunchy Roll. The purpose was to update the design to a cleaner look and not feel dated.",
+      "images": [
+        "freelancing.concepts/crunchyroll01.jpg",
+        "freelancing.concepts/crunchyroll02.jpg"
+      ]
     },
     {
       "company": "Freelancing/Concepts",
       "title": "Instagram App Concept",
-      "subTitle": "Design",
-      "portfolioImage": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg"
+      "subtitle": "Design",
+      "thumbnail": "https://www.apple.com/v/home/ee/images/heroes/spring-iphone-xr/iphone_xr__b0z59ak0bqdy_large.jpg",
+      "description": "After the release of Instagram on iOS 7 I decided to tweak the design a little bit to seperate certain elements of the app a little better.\n",
+      "images": [
+        "freelancing.concepts/instagram01.jpg",
+        "freelancing.concepts/instagram02.jpg",
+        "freelancing.concepts/instagram03.jpg"
+      ]
     }
   ]
 }
