@@ -47,7 +47,7 @@ class Homepage extends React.Component {
                 <div className="container skills-container">
                     <div className="row">
 
-                        <div className="col-xs-12 col-md offset-md-1">
+                        <div className="col-one col-xs-12 col-md offset-md-1">
                             <h3>Design</h3>
                             <ul>
                                 <li>Mobile Design</li>
@@ -59,7 +59,7 @@ class Homepage extends React.Component {
                             </ul>
                         </div>
 
-                        <div className="col-xs-12 col-md offset-md-1">
+                        <div className="col-two col-xs-12 col-md offset-md-1">
                             <h3>Development</h3>
                             <ul>
                                 <li>Mobile Development</li>

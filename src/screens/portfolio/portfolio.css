@@ -1,11 +1,11 @@
 .portfolio-header-container {
   background-color: #000;
+  margin-bottom: 90px;
 }
 
 header.container {
   padding-top: 50px;
   padding-bottom: 50px;
-  margin-bottom: 90px;
 }
 
 .portfolio-header-container h1 {
@@ -34,7 +34,7 @@ header.container {
 }
 
 .portfolio-image {
-  margin-bottom: 90px;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto 90px;
 }
-
-

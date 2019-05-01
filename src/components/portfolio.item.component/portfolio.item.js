@@ -25,17 +25,16 @@ const goToPortfolio = (history, item) => {
  * @return {string}
  */
 const getImagePath = (thumbnail) => {
-    let ii;
+    let path;
 
     try {
-        ii = require(`../../assets/images/portfolio/${thumbnail}`);
+        path = require(`../../assets/images/portfolio/${thumbnail}`);
     }
     catch (e) {
-        console.log(e);
-        ii = '';
+        path = '';
     }
 
-    return ii;
+    return path;
 };
 
 export default (props) => {

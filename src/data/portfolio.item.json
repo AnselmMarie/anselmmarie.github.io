@@ -4,24 +4,24 @@
       "company": "Cricket Wireless",
       "title": "Breeze-Thru",
       "subtitle": "Design/Development",
-      "thumbnail": "cricket.wireless/",
-      "description": "",
+      "thumbnail": "cricket.wireless/breezeThru-thumbnail.jpg",
+      "description": "Cricket Wireless wanted a way to allow new customers to activate there service on any phone. Using an agile process I lead a team to build an web application to do this. While designing and developing the app there was a strong need to make sure the app was accessible to the color blind, visually impaired and etc. We had an internal focus group to test the app and enhance areas where negative comments where given. Once the app launched it became successful. Because of the success, my hard work and help from my team I was able to get the The AT&T Service Excellence Award.",
       "images": [
         {
-          "src": "cricket.wireless/rebrand01.jpg",
-          "alt": "Cricket Wireless Re-Brand 01"
+          "src": "cricket.wireless/breezeThru01.jpg",
+          "alt": "Breeze-Thru homepage"
         },
         {
-          "src": "cricket.wireless/rebrand03.jpg",
-          "alt": "Cricket Wireless Re-Brand 02"
+          "src": "cricket.wireless/breezeThru02.jpg",
+          "alt": "Breeze-Thru customer check"
         },
         {
-          "src": "cricket.wireless/responsive01.jpg",
-          "alt": "Cricket Wireless Responsive 01"
+          "src": "cricket.wireless/breezeThru03.jpg",
+          "alt": "Breeze-Thru navigation"
         },
         {
-          "src": "cricket.wireless/responsive03.jpg",
-          "alt": "Cricket Wireless Responsive 02"
+          "src": "cricket.wireless/breezeThru04.jpg",
+          "alt": "Breeze-Thru add IMEI and ICCID data"
         }
       ],
       "url": "cricket-wireless/breeze-thru"
@@ -72,7 +72,7 @@
           "alt": "Rove Logix Email New Account"
         },
         {
-          "src": "rove.logix/email03.jpg",
+          "src": "rove.logix/email03.png",
           "alt": "Rove Logix Email Payment"
         },
         {
@@ -156,9 +156,38 @@
       "company": "Freelancing/Concepts",
       "title": "Cosajiou",
       "subtitle": "Design/Development",
-      "thumbnail": "",
+      "thumbnail": "freelancing.concepts/cosajiou-thumbnail.jpg",
       "description": "",
-      "images": [],
+      "images": [
+        {
+          "src": "freelancing.concepts/cosajiou-login.jpg",
+          "alt": "Cosajiou Login"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-whats-next.jpg",
+          "alt": "Cosajiou What's Next Screen"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-projects.jpg",
+          "alt": "Cosajiou Cosplay Screen"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-details.jpg",
+          "alt": "Cosajiou Cosplay Details Screen"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-project-completed.jpg",
+          "alt": "Cosajiou Modal Cosplay Completed"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-form.jpg",
+          "alt": "Cosajiou Form Design"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-modal.jpg",
+          "alt": "Cosajiou Modal Design"
+        }
+      ],
       "url": "freelancing-concepts/cosajiou"
     },
     {
@@ -166,9 +195,18 @@
       "title": "Weather App",
       "subtitle": "Design/Development",
       "thumbnail": "freelancing.concepts/weather-thumbnail.jpg",
-      "description": "",
-      "images": [],
-      "url": "freelancing-concepts/cosajiou"
+      "description": "Using React I designed and developed a small weather app. The app will allow the user to add or remove weather widgets. To ensure the user can come back to the app with the data still there each widget is saved in the local storage. <a href='https://anselmmarie.github.io/react-weather-app/' target='_blank'>Click here to see the app.</a>",
+      "images": [
+        {
+          "src": "freelancing.concepts/weatherApp01.jpg",
+          "alt": "Weather App"
+        },
+        {
+          "src": "freelancing.concepts/weatherApp02.jpg",
+          "alt": "Weather App Modal"
+        }
+      ],
+      "url": "freelancing-concepts/weather-app"
     },
     {
       "company": "Freelancing/Concepts",
@@ -193,7 +231,7 @@
       "title": "Instagram App Concept",
       "subtitle": "Design",
       "thumbnail": "freelancing.concepts/instagram-thumbnail.jpg",
-      "description": "After the release of Instagram on iOS 7 I decided to tweak the design a little bit to seperate certain elements of the app a little better.\n",
+      "description": "After the release of Instagram on iOS 7 I decided to tweak the design a little bit to separate certain elements of the app a little better.",
       "images": [
         {
           "src": "freelancing.concepts/instagram01.jpg",

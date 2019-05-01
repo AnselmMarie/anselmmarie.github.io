@@ -1,5 +1,6 @@
 /* Node Modules */
 import React, {Fragment} from 'react';
+import DOMPurify from 'dompurify';
 /* Modules */
 import {getPortfolio, clearPortfolio} from "../../data/store";
 /* Data */
@@ -108,7 +109,7 @@ class Portfolio extends React.Component {
                 </div>
 
                 <div className="container">
-                    <p className="portfolio-description">{this.state.item.description}</p>
+                    <p className="portfolio-description" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(this.state.item.description)}}></p>
                     <div className="image-container">
                         {this.state.item.images.map((data, index) => <img className="portfolio-image" src={require(`../../assets/images/portfolio/${data.src}`)} alt={data.alt} key={index} /> )}
                     </div>

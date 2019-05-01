@@ -20,9 +20,16 @@
 .portfolio-content {
     text-align: center;
     color: #FFF;
+    padding: 0 15px;
 }
 
 .bg-fade {
     background-color: rgba(0, 0, 0, .7);
     border-radius: 10px;
+}
+
+@media all and (max-width: 770px)  {
+    .portfolio-item {
+        width: 100%;
+    }
 }
