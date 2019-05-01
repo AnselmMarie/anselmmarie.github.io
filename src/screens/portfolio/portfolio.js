@@ -32,6 +32,7 @@ class Portfolio extends React.Component {
      * @memberOf Portfolio
      */
     componentDidMount() {
+        window.scrollTo(0, 0);
         this.checkItem();
     }
 

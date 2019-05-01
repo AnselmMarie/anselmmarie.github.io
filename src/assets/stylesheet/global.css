@@ -60,6 +60,15 @@ li {
 }
 
 @media all and (max-width: 770px)  {
+
+    h1 {
+        font-size: 40px;
+    }
+
+    h2 {
+        font-size: 25px;
+    }
+
     .skills-container {
         margin-top: 200px;
     }
