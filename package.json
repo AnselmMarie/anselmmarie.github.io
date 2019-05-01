@@ -2,9 +2,11 @@
   "name": "anselmmarie.github.io",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://anselmmarie.github.io",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "dompurify": "^1.0.10",
+    "gh-pages": "^2.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
@@ -14,7 +16,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -b master -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
