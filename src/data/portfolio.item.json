@@ -3,7 +3,7 @@
     {
       "company": "Cricket Wireless",
       "title": "Breeze-Thru",
-      "subtitle": "Design/Development",
+      "subtitle": "Design / Development",
       "thumbnail": "cricket.wireless/breezeThru-thumbnail.jpg",
       "description": "Cricket Wireless wanted a way to allow new customers to activate there service on any phone. Using an agile process I lead a team to build an web application to do this. While designing and developing the app there was a strong need to make sure the app was accessible to the color blind, visually impaired and etc. We had an internal focus group to test the app and enhance areas where negative comments where given. Once the app launched it became successful. Because of the success, my hard work and help from my team I was able to get the The AT&T Service Excellence Award.",
       "images": [
@@ -55,7 +55,7 @@
     {
       "company": "Rove Logix",
       "title": "Company Development",
-      "subtitle": "Design/Development",
+      "subtitle": "Design / Development",
       "thumbnail": "rove.logix/app-thumbnail.jpg",
       "description": "Around 2013, a couple of developers and I created a SaaS application for land surveying, engineering, and geospatial services firms. I was tasked to design all the elements for the application then work on any development work.",
       "images": [
@@ -93,7 +93,7 @@
     {
       "company": "Corporate Reports",
       "title": "Caterpillar Inc. News App",
-      "subtitle": "Design/Development",
+      "subtitle": "Design / Development",
       "thumbnail": "corporate.reports/cat-thumbnail.jpg",
       "description": "I created the UI design and some minor development work for this iPhone and Android App. This app was packed with a CAT stock price, latest news from CAT, videos, pdfs and more.",
       "images": [
@@ -129,7 +129,7 @@
     {
       "company": "Corporate Reports",
       "title": "2012 Darden Annual Report",
-      "subtitle": "Design/Development",
+      "subtitle": "Design / Development",
       "thumbnail": "corporate.reports/darden-thumbnail.jpg",
       "description": "With the designers swamped with work I was given the task to design the 2012 Darden annual report website. While I mostly did the design I was able to help out of the development a little bit.",
       "images": [
@@ -155,7 +155,7 @@
     {
       "company": "Freelancing/Concepts",
       "title": "Cosajiou",
-      "subtitle": "Design/Development",
+      "subtitle": "Design / Development",
       "thumbnail": "freelancing.concepts/cosajiou-thumbnail.jpg",
       "description": "",
       "images": [
@@ -193,7 +193,7 @@
     {
       "company": "Freelancing/Concepts",
       "title": "Weather App",
-      "subtitle": "Design/Development",
+      "subtitle": "Design / Development",
       "thumbnail": "freelancing.concepts/weather-thumbnail.jpg",
       "description": "Using React I designed and developed a small weather app. The app will allow the user to add or remove weather widgets. To ensure the user can come back to the app with the data still there each widget is saved in the local storage. <a href='https://anselmmarie.github.io/react-weather-app/' target='_blank'>Click here to see the app.</a>",
       "images": [

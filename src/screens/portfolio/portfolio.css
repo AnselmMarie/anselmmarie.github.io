@@ -13,11 +13,13 @@ header.container {
   border-bottom: 1px #FFF solid;
   padding-bottom: 20px;
   display: inline-block;
+  word-break: break-word;
 }
 
 .portfolio-header-container h2 {
   margin-top: 20px;
   font-size: 30px;
+  word-break: break-word;
 }
 
 .portfolio-header-container h3 {
@@ -38,4 +40,15 @@ header.container {
   display: block;
   margin: 0 auto 90px;
   border: 1px solid #666;
+}
+
+
+@media all and (max-width: 420px)  {
+  .portfolio-header-container h1 {
+    word-break: break-word;
+  }
+
+  .portfolio-header-container h2 {
+    word-break: break-word;
+  }
 }
