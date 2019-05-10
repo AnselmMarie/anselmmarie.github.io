@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4c7ab3e30bae21d7b1bfdde136112c9a",
+    "revision": "2b18632a4cab20ef8c91a5e1a95fb56c",
     "url": "/index.html"
   },
   {
-    "revision": "29e936c26513736d67c0",
+    "revision": "e5885222f2ec025e8783",
     "url": "/static/css/2.22a7d4ef.chunk.css"
   },
   {
-    "revision": "78b514d4fe92ee06523d",
-    "url": "/static/css/main.faa7ad2a.chunk.css"
+    "revision": "bc2bf13ee6307e823d1c",
+    "url": "/static/css/main.ff907644.chunk.css"
   },
   {
-    "revision": "29e936c26513736d67c0",
-    "url": "/static/js/2.71ea6741.chunk.js"
+    "revision": "e5885222f2ec025e8783",
+    "url": "/static/js/2.e2fa1606.chunk.js"
   },
   {
-    "revision": "78b514d4fe92ee06523d",
-    "url": "/static/js/main.e93778e8.chunk.js"
+    "revision": "bc2bf13ee6307e823d1c",
+    "url": "/static/js/main.0d01a877.chunk.js"
   },
   {
     "revision": "42ac5946195a7306e2a5",
@@ -34,6 +34,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "cc1d83289ca51eecd3937304bc682987",
     "url": "/static/media/ADAM.CGPRO.cc1d8328.woff2"
+  },
+  {
+    "revision": "5c3612400952d00538812a7e464f4400",
+    "url": "/static/media/anselm-marie-resume.5c361240.pdf"
   },
   {
     "revision": "11dfd3c4cb598686c6a7bd2e6f2375ec",
@@ -108,8 +112,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/cosajiou-login.71f4e3f2.jpg"
   },
   {
-    "revision": "6b175698b0e281954abed804ca771ed4",
-    "url": "/static/media/cosajiou-modal.6b175698.jpg"
+    "revision": "95eea27775bb90a3bc9021eb84013bc7",
+    "url": "/static/media/cosajiou-modal.95eea277.jpg"
   },
   {
     "revision": "3cf20bb240f06fb29f9f28cd6ed69457",
@@ -120,8 +124,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/cosajiou-projects.de13fee6.jpg"
   },
   {
-    "revision": "e4a3773eadf92b4f420c4c4262c69428",
-    "url": "/static/media/cosajiou-thumbnail.e4a3773e.jpg"
+    "revision": "db0cf58666057109b4fa18fd3a76326c",
+    "url": "/static/media/cosajiou-thumbnail.db0cf586.jpg"
   },
   {
     "revision": "8c5a4eb53e4720f1aaca45040d556e0c",
@@ -176,8 +180,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/filezilla-thumbnail.998e2dfc.jpg"
   },
   {
-    "revision": "3c13f4df0fe7461e19b8c563a7ce9079",
-    "url": "/static/media/hero-image.3c13f4df.jpg"
+    "revision": "0b4007f2efcbefad2bfc7bb55de16837",
+    "url": "/static/media/hero-image.0b4007f2.jpg"
   },
   {
     "revision": "55994da928b5700e9ce1ae476dca08f9",
@@ -216,6 +220,38 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/rebrand03.b9e5af20.jpg"
   },
   {
+    "revision": "75b1e16c1e3c784d1362a7f3fca8a123",
+    "url": "/static/media/redesign-thumbnail.75b1e16c.jpg"
+  },
+  {
+    "revision": "f8b468c318ff9980a4a7215f3f4e7611",
+    "url": "/static/media/redesign01.f8b468c3.jpg"
+  },
+  {
+    "revision": "b3749fc41d56d3df3e4590bb4817800f",
+    "url": "/static/media/redesign02.b3749fc4.jpg"
+  },
+  {
+    "revision": "98deedca9a089beb697266e04f61bba8",
+    "url": "/static/media/redesign03.98deedca.jpg"
+  },
+  {
+    "revision": "6de1e1f7767b5a9f3f33029a7aa68a6b",
+    "url": "/static/media/redesign04.6de1e1f7.jpg"
+  },
+  {
+    "revision": "79547a31e2e529e4c34d86f30d758905",
+    "url": "/static/media/redesign05.79547a31.jpg"
+  },
+  {
+    "revision": "dcc302dab76959324c5777e6d2cdb6bd",
+    "url": "/static/media/redesign06.dcc302da.jpg"
+  },
+  {
+    "revision": "db239e2c9dc00e913f29b22096f6134c",
+    "url": "/static/media/redesign07.db239e2c.jpg"
+  },
+  {
     "revision": "37a9f2193bac876f3bcb9bf5e19ce4d4",
     "url": "/static/media/responsive01.37a9f219.jpg"
   },
@@ -226,10 +262,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "3b3c304e322fd43f922be8abec36695c",
     "url": "/static/media/responsive03.3b3c304e.jpg"
-  },
-  {
-    "revision": "ac8c5a9af45a5ad2938fda1f3dc72596",
-    "url": "/static/media/resume-developer.ac8c5a9a.pdf"
   },
   {
     "revision": "00e2ad417462cdea1c166412ef19cd23",
