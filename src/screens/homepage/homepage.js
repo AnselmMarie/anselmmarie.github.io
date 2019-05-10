@@ -11,26 +11,6 @@ import portfolioData from '../../data/portfolio.item.json';
 class Homepage extends React.Component {
 
     /**
-     * @function componentDidMount
-     * @desc init function once the component mounts
-     * @author Anselm Marie
-     * @memberOf Homepage
-     */
-    componentDidMount() {
-        console.log('componentDidMount');
-    }
-
-    /**
-     * @function componentDidMount
-     * @desc init function once the component unMounts
-     * @author Anselm Marie
-     * @memberOf Homepage
-     */
-    componentWillUnmount() {
-        console.log('componentWillUnmount');
-    }
-
-    /**
      * @function render
      * @desc renders the content for the class
      * @author Anselm Marie

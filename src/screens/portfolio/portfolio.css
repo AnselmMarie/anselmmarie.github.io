@@ -1,9 +1,23 @@
-.portfolio-header-container {
+.portfolio-nav-bg {
+  background-color: #666;
+}
+
+nav.portfolio-nav-container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 15px;
+}
+
+nav.portfolio-nav-container a {
+  color: white;
+}
+
+.portfolio-header-bg {
   background-color: #000;
   margin-bottom: 90px;
 }
 
-header.container {
+header.portfolio-header-container {
   padding-top: 50px;
   padding-bottom: 50px;
 }
@@ -27,7 +41,8 @@ header.container {
 }
 
 .portfolio-description {
-  font-size: 18px;
+  font-size: 23px;
+  line-height: 38px;
   margin-bottom: 90px;
 }
 

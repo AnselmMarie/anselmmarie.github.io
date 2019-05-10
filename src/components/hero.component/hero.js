@@ -1,7 +1,7 @@
 /* Node Modules */
 import React from "react";
 /* Assets */
-import pdf from '../../assets/pdf/resume-developer.pdf';
+import pdf from '../../assets/pdf/anselm-marie-resume.pdf';
 import heroImage from '../../assets/images/hero-image.jpg'
 import resumeIcon from '../../assets/images/resume-icon.png';
 /* Component Styles */

@@ -3,11 +3,18 @@ import React, {Fragment} from 'react';
 import DOMPurify from 'dompurify';
 /* Modules */
 import {getPortfolio, clearPortfolio} from "../../data/store";
+/* Components */
+import FooterComponent from "../../components/footer.component/footer";
 /* Data */
 import portJson from '../../data/portfolio.item.json';
 /* Component Styles */
 import './portfolio.css';
-import FooterComponent from "../../components/footer.component/footer";
+import {NavLink} from "react-router-dom";
+/* Other */
+const config = {
+    ADD_ATTR: ['target'],
+};
+const homepageLink = '< Homepage';
 
 class Portfolio extends React.Component {
 
@@ -101,8 +108,14 @@ class Portfolio extends React.Component {
 
             <Fragment>
 
-                <div className="container-fluid portfolio-header-container">
-                    <header className="container">
+                <div className="portfolio-nav-bg">
+                    <nav className="container portfolio-nav-container">
+                        <NavLink to="/">{homepageLink}</NavLink>
+                    </nav>
+                </div>
+
+                <div className="portfolio-header-bg">
+                    <header className="container portfolio-header-container">
                         <h1>{this.state.item.title}</h1>
                         <h2>{this.state.item.subtitle}</h2>
                         {/*<h3>{this.state.item.company}</h3>*/}
@@ -110,7 +123,7 @@ class Portfolio extends React.Component {
                 </div>
 
                 <div className="container">
-                    <p className="portfolio-description" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(this.state.item.description)}}></p>
+                    <p className="portfolio-description" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(this.state.item.description, config)}}></p>
                     <div className="image-container">
                         {this.state.item.images.map((data, index) => <img className="portfolio-image" src={require(`../../assets/images/portfolio/${data.src}`)} alt={data.alt} key={index} /> )}
                     </div>
