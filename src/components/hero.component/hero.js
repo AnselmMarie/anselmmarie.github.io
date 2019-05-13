@@ -2,7 +2,6 @@
 import React from "react";
 /* Assets */
 import pdf from '../../assets/pdf/anselm-marie-resume.pdf';
-import heroImage from '../../assets/images/hero-image.jpg'
 import resumeIcon from '../../assets/images/resume-icon.png';
 /* Component Styles */
 import './hero.css';
@@ -10,7 +9,7 @@ import './hero.css';
 export default () => {
     return (
 
-        <div className="hero-container" style={{backgroundImage: `url(${heroImage}`}}>
+        <div className="hero-container">
             <header className="hero">
                 <div>
                     <div className="top-hero">
