@@ -9,6 +9,11 @@ let store = {
  * @param {object} item - the contents of the item clicked
  */
 export const updatePortfolio = (item) => {
+    if (!item || typeof item !== 'object') {
+        console.log('Item is not an object');
+        return;
+    }
+
     store.portfolio = item;
 };
 

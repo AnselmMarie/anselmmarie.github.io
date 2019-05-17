@@ -3,7 +3,7 @@ import React from "react";
 /* Component Styles */
 import './portfolio.item.css';
 /* Modules */
-import {updatePortfolio} from '../../data/store';
+import {updatePortfolio} from '../../data/store.data/store';
 
 /**
  * @function goToPortfolio

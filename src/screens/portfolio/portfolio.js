@@ -2,7 +2,7 @@
 import React, {Fragment} from 'react';
 import DOMPurify from 'dompurify';
 /* Modules */
-import {getPortfolio, clearPortfolio} from "../../data/store";
+import {getPortfolio, clearPortfolio} from "../../data/store.data/store";
 /* Components */
 import FooterComponent from "../../components/footer.component/footer";
 /* Data */
@@ -54,6 +54,20 @@ class Portfolio extends React.Component {
     }
 
     /**
+     * @function getContent
+     * @desc returns the data that matches part of the url
+     * @author Anselm Marie
+     * @memberOf Portfolio
+     * @return {object}
+     */
+    getContent() {
+        const url = `${this.props.match.params.company}/${this.props.match.params.project}`;
+        return portJson.data.find((el) => {
+            return el.url === url;
+        });
+    }
+
+    /**
      * @function checkItem
      * @desc update the state with the current portfolio
      * @author Anselm Marie
@@ -76,20 +90,6 @@ class Portfolio extends React.Component {
             item: item
         });
 
-    }
-
-    /**
-     * @function getContent
-     * @desc returns the data that matches part of the url
-     * @author Anselm Marie
-     * @memberOf Portfolio
-     * @return {object}
-     */
-    getContent() {
-        const url = `${this.props.match.params.company}/${this.props.match.params.project}`;
-        return portJson.data.find((el) => {
-            return el.url === url;
-        });
     }
 
     /**

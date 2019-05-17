@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './assets/stylesheet/fonts.css';
 import './assets/stylesheet/global.css';
-import Navigation from './modules/navigation';
+import Navigation from './modules/navigation/navigation';
 import * as serviceWorker from './modules/service.worker';
 
 ReactDOM.render(<Navigation />, document.getElementById('root'));

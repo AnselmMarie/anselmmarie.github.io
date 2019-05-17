@@ -24,7 +24,7 @@ class Homepage extends React.Component {
 
                 <HeroComponent />
 
-                <div className="container skills-container">
+                <div data-testid="skills-row" className="container skills-container">
                     <div className="row">
 
                         <div className="col-one col-xs-12 col-md offset-md-1">
@@ -56,15 +56,29 @@ class Homepage extends React.Component {
 
                 <div className="container my-work-container">
                     <h3>My Work</h3>
-                    <div className="row">
+
+                    {portfolioData && portfolioData.data && portfolioData.data.length !== 0 &&
+                    <div data-testid="portfolio-row" className="row">
+
                         {portfolioData.data.map((data, index) => {
-                            return <PortfolioItemComponent key={index} item={data} history={this.props.history} />
+                            return <PortfolioItemComponent
+                                key={index}
+                                item={data}
+                                history={this.props.history} />
                         })}
-                    </div>
+
+                    </div>}
+
+                    {portfolioData && portfolioData.data && portfolioData.data.length === 0 &&
+                    <div data-testid="portfolio-row" className="row">
+                        <div className="col-md">
+                            <p>Working on new portfolio content.</p>
+                        </div>
+                    </div>}
+
                 </div>
 
                 <FooterComponent />
-
 
             </Fragment>
 
