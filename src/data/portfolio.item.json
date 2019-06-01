@@ -228,41 +228,41 @@
     },
     {
       "company": "Freelancing/Concepts",
-      "title": "Cosajiou",
+      "title": "Project Cosaijou",
       "subtitle": "Design / Development",
       "thumbnail": "freelancing.concepts/cosajiou-thumbnail.jpg",
-      "description": "To help cosplayers and cosmakers organize small to large cosplay projects easier. I'm in the process of creating Cosaijou. I’m using React Native with Expo to build the Mobile Application and PostgresSQL, Node.js and GraphQL for the backend. *Design is not completed",
+      "description": "To help cosplayers and cosmakers organize small to large cosplay projects easier. I'm in the process of creating Cosaijou. I’m using React Native with Expo to build the Mobile Application and PostgresSQL, Node.js and GraphQL for the backend. *Designs are not completed.",
       "images": [
         {
           "src": "freelancing.concepts/cosajiou-login.jpg",
-          "alt": "Cosajiou Login"
+          "alt": "Cosaijou Login"
         },
         {
           "src": "freelancing.concepts/cosajiou-whats-next.jpg",
-          "alt": "Cosajiou What's Next Screen"
+          "alt": "Cosaijou What's Next Screen"
         },
         {
           "src": "freelancing.concepts/cosajiou-projects.jpg",
-          "alt": "Cosajiou Cosplay Screen"
+          "alt": "Cosaijou Cosplay Screen"
         },
         {
           "src": "freelancing.concepts/cosajiou-details.jpg",
-          "alt": "Cosajiou Cosplay Details Screen"
+          "alt": "Cosaijou Cosplay Details Screen"
         },
         {
           "src": "freelancing.concepts/cosajiou-project-completed.jpg",
-          "alt": "Cosajiou Modal Cosplay Completed"
+          "alt": "Cosaijou Modal Cosplay Completed"
         },
         {
           "src": "freelancing.concepts/cosajiou-form.jpg",
-          "alt": "Cosajiou Form Design"
+          "alt": "Cosaijou Form Design"
         },
         {
           "src": "freelancing.concepts/cosajiou-modal.jpg",
-          "alt": "Cosajiou Modal Design"
+          "alt": "Cosaijou Modal Design"
         }
       ],
-      "url": "freelancing-concepts/cosajiou"
+      "url": "freelancing-concepts/cosaijou"
     }
   ]
 }
