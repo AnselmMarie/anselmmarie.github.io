@@ -5,7 +5,7 @@
       "title": "Breeze-Thru",
       "subtitle": "Design / Development",
       "thumbnail": "cricket.wireless/breezeThru-thumbnail.jpg",
-      "description": "Cricket Wireless wanted a way to allow new customers to activate their service on any phone. So I lead a small front-end team to build the web application Breeze-Thru. There was a strong focus on UX and accessibility. Around mid-way of the development, an internal focus group tested the app. Then we enhance areas where negative comments were given. When the app launched, it became a success and this lead to me being rewarded with The AT&T Service Excellence Award.",
+      "description": "<p>Breeze-Thru is an application that allows new customers to activate their service on any phone.</p><p>As the leader of the front-end team, I worked on this application from the beginning to the production. My role was to code, design, and help manage the team. There was a strong focus on UX and accessibility. With great communication with the network, back-end, and business team, we were able to launch the application. After the app launching, it became a success and I was rewarded with \"The AT&T Service Excellence Award\" soon after.</p>",
       "images": [
         {
           "src": "cricket.wireless/breezeThru01.jpg",
@@ -31,7 +31,7 @@
       "title": "aio to Cricket Wireless",
       "subtitle": "Development",
       "thumbnail": "cricket.wireless/rebrand-thumbnail.jpg",
-      "description": "When rebranding the website from aio to Cricket we had to change sections of the site per release. Because of this, we had to figure out certain issues like ensuring new pages and older pages wouldn't conflict with each other. It took about a year to completely re-brand the site.",
+      "description": "<p>When rebranding the website from aio to Cricket we had to change sections of the site per release. Because of this, we had to figure out certain issues like ensuring new pages and older pages wouldn't conflict with each other. It took about a year to completely re-brand the site.</p>",
       "images": [
         {
           "src": "cricket.wireless/rebrand01.jpg",
@@ -57,7 +57,7 @@
       "title": "Company Development",
       "subtitle": "Design / Development",
       "thumbnail": "rove.logix/app-thumbnail.jpg",
-      "description": "Around 2013, I joined a team to create a SaaS application for land surveying, engineering, and geospatial services firms. I was tasked to design all the elements for the application then work on any development.",
+      "description": "<p>Around 2013, I joined a team to create a SaaS application for land surveying, engineering, and geospatial services firms. I was tasked to design all the elements for the application then work on any development.</p>",
       "images": [
         {
           "src": "rove.logix/app01.jpg",
@@ -95,7 +95,7 @@
       "title": "New App Skin",
       "subtitle": "Design",
       "thumbnail": "rove.logix/redesign-thumbnail.jpg",
-      "description": "At some point during the Rove Logix development, I started to update the design for a cleaner modern look. I paid better attention to color contrast and a better choice of colors. If you check out the <a href='https://anselmmarie.github.io//#/portfolio/rove-logix/package' target='_blank' rel='noopener noreferrer'>Company Development</a> page, the email design matches this design. Unfortunately, we never had a chance to use this new design in the client app.",
+      "description": "<p>At some point during the Rove Logix development, I started to update the design for a cleaner modern look. I paid better attention to color contrast and a better choice of colors. If you check out the <a href='https://anselmmarie.github.io//#/portfolio/rove-logix/package' target='_blank' rel='noopener noreferrer'>Company Development</a> page, the email design matches this design. Unfortunately, we never had a chance to use this new design in the client app.</p>",
       "images": [
         {
           "src": "rove.logix/redesign01.jpg",
@@ -133,7 +133,7 @@
       "title": "Caterpillar Inc. News App",
       "subtitle": "Design / Development",
       "thumbnail": "corporate.reports/cat-thumbnail.jpg",
-      "description": "I created the UI and some minor development work for this iPhone and Android App. This app was packed with a CAT stock price, latest news from CAT, videos, pdfs and more.",
+      "description": "<p>I created the UI and some minor development work for this iPhone and Android App. This app was packed with a CAT stock price, latest news from CAT, videos, pdfs and more.</p>",
       "images": [
         {
           "src": "corporate.reports/cat01.jpg",
@@ -147,7 +147,7 @@
       "title": "2013 Clorox Annual Report",
       "subtitle": "Development",
       "thumbnail": "corporate.reports/clorox-thumbnail.jpg",
-      "description": "Being responsive was the main feature for this site. Using the Zurb Foundation Framework I created a mobile-first application. Having creative freedom on the mobile layouts I made sure the navigation and content were easy to use and read.",
+      "description": "<p>Being responsive was the main feature for this site. Using the Zurb Foundation Framework I created a mobile-first application. Having creative freedom on the mobile layouts I made sure the navigation and content were easy to use and read.</p>",
       "images": [
         {
           "src": "corporate.reports/clorox01.jpg",
@@ -169,7 +169,7 @@
       "title": "2012 Darden Annual Report",
       "subtitle": "Design / Development",
       "thumbnail": "corporate.reports/darden-thumbnail.jpg",
-      "description": "With the designers swamped with work, I was given the task to design the 2012 Darden annual report website. While I mostly did the design I did some development work.",
+      "description": "<p>With the designers swamped with work, I was given the task to design the 2012 Darden annual report website. While I mostly did the design I did some development work.</p>",
       "images": [
         {
           "src": "corporate.reports/darden01.jpg",
@@ -195,7 +195,7 @@
       "title": "Weather App",
       "subtitle": "Design / Development",
       "thumbnail": "freelancing.concepts/weather-thumbnail.jpg",
-      "description": "Wanting to understand React better I designed and developed a small weather app. The app will allow the user to add or remove weather widgets. The data will also be persistent, so there are no worries about losing data. <a href='https://anselmmarie.github.io/react-weather-app/' target='_blank' rel='noopener noreferrer'>Click here to see the app.</a>",
+      "description": "<p>A weather app that allows the user to add or remove numerous weather widgets on the dashboard.</p><p>To improve my skills with a modern web framework, I decided to create a simple weather app. Having knowledge of React Native, I created this app in React to compare the frameworks. This app uses the openWeatherMap API and stores the weather information in the browser for later use.</p><p><a href='https://anselmmarie.github.io/react-weather-app/' target='_blank' rel='noopener noreferrer'>See the app in action</a></p><p><a href='https://github.com/AnselmMarie/react-weather-app/tree/version-two' target='_blank' rel='noopener noreferrer'>GitHub Repository</a></p>",
       "images": [
         {
           "src": "freelancing.concepts/weatherApp01.jpg",
@@ -213,7 +213,7 @@
       "title": "Crunchy Roll Website Concept",
       "subtitle": "Design",
       "thumbnail": "freelancing.concepts/crunchyroll-thumbnail.jpg",
-      "description": "A redesign concept I did for the Crunchy Roll website. The purpose was to update the design to a cleaner look and not feel dated.",
+      "description": "<p>A redesign concept I did for the Crunchy Roll website. The purpose was to update the design to a cleaner look and not feel dated.</p>",
       "images": [
         {
           "src": "freelancing.concepts/crunchyroll01.jpg",
@@ -231,7 +231,7 @@
       "title": "Project Cosaijou",
       "subtitle": "Design / Development",
       "thumbnail": "freelancing.concepts/cosajiou-thumbnail.jpg",
-      "description": "To help cosplayers and cosmakers organize small to large cosplay projects easier. I'm in the process of creating Cosaijou. I’m using React Native with Expo to build the Mobile Application and PostgresSQL, Node.js and GraphQL for the backend. *Designs are not completed.",
+      "description": "<p>An app that will allow cosplayers and cosmakers more freedom to organize their work.</p><p>I created this application as a personal need to organize future cosplays with a mix of Trello and Cosplanner features. Being a solo project, I’m building the app from conception to production. With no target date to launch, I’m taking my time to test other technologies. I ended up using GraphQL, PostgreSQL, and Graphile after trying REST, MongoDB and a bunch of ORMs.</p>",
       "images": [
         {
           "src": "freelancing.concepts/cosajiou-login.jpg",
