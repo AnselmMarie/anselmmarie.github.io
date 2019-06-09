@@ -3,6 +3,11 @@ import React from "react";
 /* Component Styles */
 import './footer.css';
 
+/**
+ * @function footer
+ * @desc renders the footer for the website
+ * @author Anselm Marie
+ */
 export default () => {
     return (
 

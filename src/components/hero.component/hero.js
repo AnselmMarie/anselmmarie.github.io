@@ -6,6 +6,11 @@ import resumeIcon from '../../assets/images/resume-icon.png';
 /* Component Styles */
 import './hero.css';
 
+/**
+ * @function heroImage
+ * @desc renders the hero image for the homepage
+ * @author Anselm Marie
+ */
 export default () => {
     return (
 

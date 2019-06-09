@@ -2,6 +2,7 @@
 import React, {Fragment} from 'react';
 import DOMPurify from 'dompurify';
 /* Modules */
+import {trackScreen} from "../../modules/track.module/track";
 import {getPortfolio, clearPortfolio} from "../../data/store.data/store";
 /* Components */
 import FooterComponent from "../../components/footer.component/footer";
@@ -41,6 +42,7 @@ class Portfolio extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         this.checkItem();
+        trackScreen();
     }
 
     /**

@@ -1,10 +1,16 @@
+/* Node Modules */
 import React from 'react';
 import ReactDOM from 'react-dom';
+/* CSS */
 import 'bootstrap/dist/css/bootstrap.css';
 import './assets/stylesheet/fonts.css';
 import './assets/stylesheet/global.css';
-import Navigation from './modules/navigation/navigation';
+/* Modules */
+import Navigation from './modules/navigation.module/navigation';
 import * as serviceWorker from './modules/service.worker';
+import {initTrack} from './modules/track.module/track';
+
+initTrack();
 
 ReactDOM.render(<Navigation />, document.getElementById('root'));
 

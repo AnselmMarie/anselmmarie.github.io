@@ -5,10 +5,22 @@ import './homepage.css';
 import HeroComponent from '../../components/hero.component/hero';
 import FooterComponent from '../../components/footer.component/footer';
 import PortfolioItemComponent from '../../components/portfolio.item.component/portfolio.item';
+/* Modules */
+import {trackScreen} from "../../modules/track.module/track";
 /* JSON */
 import portfolioData from '../../data/portfolio.item.json';
 
 class Homepage extends React.Component {
+
+    /**
+     * @function componentDidMount
+     * @desc init function once the component mounts
+     * @author Anselm Marie
+     * @memberOf Homepage
+     */
+    componentDidMount() {
+        trackScreen();
+    }
 
     /**
      * @function render
