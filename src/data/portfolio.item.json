@@ -228,41 +228,41 @@
     },
     {
       "company": "Freelancing/Concepts",
-      "title": "Project Cosaijou",
+      "title": "CosMikata",
       "subtitle": "Design / Development",
       "thumbnail": "freelancing.concepts/cosajiou-thumbnail.jpg",
       "description": "<p>An app that will allow cosplayers and cosmakers more freedom to organize their work.</p><p>I created this application as a personal need to organize future cosplays with a mix of Trello and Cosplanner features. Being a solo project, I’m building the app from conception to production. With no target date to launch, I’m taking my time to test other technologies. I ended up using GraphQL, PostgreSQL, and Graphile after trying REST, MongoDB and a bunch of ORMs.</p>",
       "images": [
         {
           "src": "freelancing.concepts/cosajiou-login.jpg",
-          "alt": "Cosaijou Login"
+          "alt": "CosMikata Login"
         },
         {
           "src": "freelancing.concepts/cosajiou-whats-next.jpg",
-          "alt": "Cosaijou What's Next Screen"
+          "alt": "CosMikata What's Next Screen"
         },
         {
           "src": "freelancing.concepts/cosajiou-projects.jpg",
-          "alt": "Cosaijou Cosplay Screen"
+          "alt": "CosMikata Cosplay Screen"
         },
         {
           "src": "freelancing.concepts/cosajiou-details.jpg",
-          "alt": "Cosaijou Cosplay Details Screen"
+          "alt": "CosMikata Cosplay Details Screen"
         },
         {
           "src": "freelancing.concepts/cosajiou-project-completed.jpg",
-          "alt": "Cosaijou Modal Cosplay Completed"
+          "alt": "CosMikata Modal Cosplay Completed"
         },
         {
           "src": "freelancing.concepts/cosajiou-form.jpg",
-          "alt": "Cosaijou Form Design"
+          "alt": "CosMikata Form Design"
         },
         {
           "src": "freelancing.concepts/cosajiou-modal.jpg",
-          "alt": "Cosaijou Modal Design"
+          "alt": "CosMikata Modal Design"
         }
       ],
-      "url": "freelancing-concepts/cosaijou"
+      "url": "freelancing-concepts/cosmikata"
     }
   ]
 }
