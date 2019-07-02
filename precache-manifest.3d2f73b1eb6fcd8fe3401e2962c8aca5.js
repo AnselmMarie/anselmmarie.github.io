@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "26de513f23da7e863851d5409b23711f",
+    "revision": "7bbb41d0b4a016ac3641f94ce1dbd422",
     "url": "/index.html"
   },
   {
@@ -8,16 +8,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/css/2.22a7d4ef.chunk.css"
   },
   {
-    "revision": "eb2aebb1990b5e93e939",
-    "url": "/static/css/main.e7bd8baa.chunk.css"
+    "revision": "4548b4050423dd93ac58",
+    "url": "/static/css/main.bc94615e.chunk.css"
   },
   {
     "revision": "e496aed115d3ece34ee0",
     "url": "/static/js/2.a37235ef.chunk.js"
   },
   {
-    "revision": "eb2aebb1990b5e93e939",
-    "url": "/static/js/main.15b62f8d.chunk.js"
+    "revision": "4548b4050423dd93ac58",
+    "url": "/static/js/main.432c32f5.chunk.js"
   },
   {
     "revision": "42ac5946195a7306e2a5",
@@ -36,8 +36,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/ADAM.CGPRO.cc1d8328.woff2"
   },
   {
-    "revision": "e7d857461a585b42bc2a8bfea2aec199",
-    "url": "/static/media/anselm-marie-resume.e7d85746.pdf"
+    "revision": "91186163a6a6f6a913496c85569725f4",
+    "url": "/static/media/anselm-marie-resume.91186163.pdf"
   },
   {
     "revision": "11dfd3c4cb598686c6a7bd2e6f2375ec",
@@ -100,8 +100,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/clorox03.2f80888a.jpg"
   },
   {
-    "revision": "ef8a9cad6cdd20645fa21a08686f6450",
-    "url": "/static/media/cosajiou-details.ef8a9cad.jpg"
+    "revision": "4390a1f74b8bc51846809172a600ae2d",
+    "url": "/static/media/cosajiou-details.4390a1f7.jpg"
   },
   {
     "revision": "21e32a4b0cc71c81e8b47d5fbba7ebbd",
@@ -116,8 +116,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/cosajiou-modal.95eea277.jpg"
   },
   {
-    "revision": "3cf20bb240f06fb29f9f28cd6ed69457",
-    "url": "/static/media/cosajiou-project-completed.3cf20bb2.jpg"
+    "revision": "904438e732fbd9bb6464582680a7ef8f",
+    "url": "/static/media/cosajiou-project-completed.904438e7.jpg"
   },
   {
     "revision": "de13fee638a47926a6ee4809e73787ae",
