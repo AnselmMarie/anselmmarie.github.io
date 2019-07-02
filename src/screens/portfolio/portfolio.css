@@ -46,7 +46,8 @@ header.portfolio-header-container {
   margin-bottom: 90px;
 }
 
-.image-container {
+.image-container,
+.videos-container {
   text-align: center;
 }
 
@@ -57,6 +58,14 @@ header.portfolio-header-container {
   border: 1px solid #666;
 }
 
+.portfolio-video {
+  display: block;
+  margin: 0 auto 90px;
+}
+
+.portfolio-video video {
+  max-width: 100%;
+}
 
 @media all and (max-width: 420px)  {
   .portfolio-header-container h1 {

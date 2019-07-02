@@ -232,6 +232,16 @@
       "subtitle": "Design / Development",
       "thumbnail": "freelancing.concepts/cosajiou-thumbnail.jpg",
       "description": "<p>An app that will allow cosplayers and cosmakers more freedom to organize their work.</p><p>I created this application as a personal need to organize future cosplays with a mix of Trello and Cosplanner features. Being a solo project, I’m building the app from conception to production. With no target date to launch, I’m taking my time to test other technologies. I ended up using GraphQL, PostgreSQL, and Graphile after trying REST, MongoDB and a bunch of ORMs.</p>",
+      "videos": [
+        {
+          "title": "First video talks about the application in detail.",
+          "src": "https://www.youtube.com/embed/GdRP5EWrH9A"
+        },
+        {
+          "title": "This video continues to talk about other parts of the application. Note: Around 2:30 I said \"iOS 5\" but I meant iPhone 5.",
+          "src": "https://www.youtube.com/embed/axvSVI4IeOU"
+        }
+      ],
       "images": [
         {
           "src": "freelancing.concepts/cosajiou-login.jpg",

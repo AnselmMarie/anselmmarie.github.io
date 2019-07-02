@@ -20,18 +20,14 @@ const homepageLink = '< Homepage';
 class Portfolio extends React.Component {
 
     /**
-     * @function constructor
-     * @desc create a local state to store information
+     * @property constructor
+     * @desc init the lexical state
      * @author Anselm Marie
      * @memberOf Portfolio
-     * @param {object} props - properties that are being used for the screen
      */
-    constructor(props) {
-        super(props);
-        this.state = {
-            item: null
-        };
-    }
+    state = {
+        item: null
+    };
 
     /**
      * @function componentDidMount
@@ -126,6 +122,24 @@ class Portfolio extends React.Component {
 
                 <div className="container">
                     <p className="portfolio-description" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(this.state.item.description, config)}}></p>
+
+                    {this.state.item.videos &&
+                    <div className="videos-container">
+                        {this.state.item.videos.map((data, index) => {
+                            return (
+                                <div
+                                    className="portfolio-video"
+                                    key={index}>
+                                    <p>{data.title}</p>
+                                    <iframe width="560" height="315" src={data.src}
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen></iframe>
+                                </div>
+                            )
+                        })}
+                    </div>}
+
                     <div className="image-container">
                         {this.state.item.images.map((data, index) => <img className="portfolio-image" src={require(`../../assets/images/portfolio/${data.src}`)} alt={data.alt} key={index} /> )}
                     </div>
