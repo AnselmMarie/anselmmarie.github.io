@@ -1,4 +1,7 @@
-To access this website use this link -> https://anselmmarie.github.io/react-weather-app/
+To access this website use this link -> https://anselmmarie.github.io/
+
+
+--
 
 
 This project was bootstrapped with [Create React Homepage](https://github.com/facebook/create-react-app).
