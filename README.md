@@ -1,4 +1,4 @@
-To access this website use this link -> https://anselmmarie.github.io/
+To access the production version of the website use this link -> https://anselmmarie.github.io/
 
 
 --
