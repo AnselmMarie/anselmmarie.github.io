@@ -18,14 +18,14 @@ export default () => {
             <header className="hero">
                 <div>
                     <div className="top-hero">
-                        <h1>Application Developer <br/>
+                        <h1>Software Engineer <br/>
                         UI Designer <br/>
                         Web Designer</h1>
                     </div>
 
                     <div className="bottom-hero">
                         <h2>Anselm Marie</h2>
-                        <a className="download-resume-link" href={pdf} target="_blank" rel="noopener noreferrer"><img className="download-resume-icon" src={resumeIcon} alt="Download Resume" />  Download Resume</a>
+                        <a className="download-resume-link" href={pdf} target="_blank" rel="noopener noreferrer"><img className="download-resume-icon" src={resumeIcon} alt="Resume" />  Resume</a>
                     </div>
 
                 </div>
