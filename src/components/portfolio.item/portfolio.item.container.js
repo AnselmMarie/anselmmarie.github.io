@@ -1,9 +1,9 @@
 /* Node Modules */
 import React from "react";
 /* Component Styles */
-import './portfolio.item.css';
+import './portfolio.item.styles.css';
 /* Modules */
-import {updatePortfolio} from '../../data/store.data/store';
+import {updatePortfolio} from '../../data.store/store';
 
 /**
  * @function goToPortfolio

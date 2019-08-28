@@ -4,7 +4,7 @@ import React from "react";
 import pdf from '../../assets/pdf/anselm-marie-resume.pdf';
 import resumeIcon from '../../assets/images/resume-icon.png';
 /* Component Styles */
-import './hero.css';
+import './hero.styles.css';
 
 /**
  * @function heroImage

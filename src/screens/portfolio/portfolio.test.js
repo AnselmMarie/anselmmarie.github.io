@@ -2,10 +2,10 @@
 import React from 'react';
 import {cleanup, render} from "react-testing-library";
 /* Screen */
-import Portfolio from "./portfolio";
+import PortfolioContainer from "./portfolio.container";
 /* JSON */
-import portfolioJSON from '../../data/portfolio.item.json';
-import {getPortfolio, updatePortfolio} from "../../data/store.data/store";
+import portfolioJSON from '../../config/portfolio.item.json';
+import {getPortfolio, updatePortfolio} from "../../data.store/store";
 
 /**
  * @function urlSplit
@@ -50,7 +50,7 @@ afterEach(cleanup);
 describe(`<Portfolio />`, () => {
 
     test('When the portfolio content doesn\'t exist', () => {
-        render(<Portfolio {...props404} />);
+        render(<PortfolioContainer {...props404} />);
         expect(props404.history[0]).toBe('/404');
     });
 

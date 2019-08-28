@@ -2,17 +2,17 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 /* Modules */
-import {trackScreen} from "../../modules/track.module/track";
+import {trackScreen} from "../../modules/track/track.module";
 /* Screen Content */
-import './no.match.css';
+import './no.match.styles.css';
 
-class NoMatch extends React.Component {
+class NoMatchContainer extends React.Component {
 
     /**
      * @function componentDidMount
      * @desc init function once the component mounts
      * @author Anselm Marie
-     * @memberOf NoMatch
+     * @memberOf NoMatchContainer
      */
     componentDidMount() {
         trackScreen();
@@ -22,7 +22,7 @@ class NoMatch extends React.Component {
      * @function render
      * @desc renders the content for the class
      * @author Anselm Marie
-     * @memberOf NoMatch
+     * @memberOf NoMatchContainer
      */
     render() {
         return (
@@ -45,4 +45,4 @@ class NoMatch extends React.Component {
 
 }
 
-export default NoMatch;
+export default NoMatchContainer;

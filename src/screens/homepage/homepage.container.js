@@ -1,22 +1,22 @@
 /* Node Modules */
 import React, {Fragment} from 'react';
-import './homepage.css';
+import './homepage.styles.css';
 /* Components */
-import HeroComponent from '../../components/hero.component/hero';
-import FooterComponent from '../../components/footer.component/footer';
-import PortfolioItemComponent from '../../components/portfolio.item.component/portfolio.item';
+import HeroComponent from '../../components/hero';
+import FooterComponent from '../../components/footer';
+import PortfolioItemComponent from '../../components/portfolio.item';
 /* Modules */
-import {trackScreen} from "../../modules/track.module/track";
+import {trackScreen} from "../../modules/track/track.module";
 /* JSON */
-import portfolioData from '../../data/portfolio.item.json';
+import portfolioData from '../../config/portfolio.item.json';
 
-class Homepage extends React.Component {
+class HomepageContainer extends React.Component {
 
     /**
      * @function componentDidMount
      * @desc init function once the component mounts
      * @author Anselm Marie
-     * @memberOf Homepage
+     * @memberOf HomepageContainer
      */
     componentDidMount() {
         trackScreen();
@@ -26,7 +26,7 @@ class Homepage extends React.Component {
      * @function render
      * @desc renders the content for the class
      * @author Anselm Marie
-     * @memberOf Homepage
+     * @memberOf HomepageContainer
      */
     render() {
 
@@ -99,4 +99,4 @@ class Homepage extends React.Component {
 
 }
 
-export default Homepage;
+export default HomepageContainer;

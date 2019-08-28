@@ -4,7 +4,7 @@ To access the production version of the website use this link -> https://anselmm
 --
 
 
-This project was bootstrapped with [Create React Homepage](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React HomepageContainer](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
@@ -45,7 +45,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Learn More
 
-You can learn more in the [Create React Homepage documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can learn more in the [Create React HomepageContainer documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
@@ -57,7 +57,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/co
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
 
-### Making a Progressive Web Homepage
+### Making a Progressive Web HomepageContainer
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
 

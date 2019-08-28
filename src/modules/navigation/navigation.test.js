@@ -1,7 +1,7 @@
 /* Node Modules */
 import React from 'react';
 
-describe('<Homepage />', () => {
+describe('<HomepageContainer />', () => {
 
     test('should renders without crashing', () => {
     });

@@ -2,9 +2,9 @@
 import React from 'react';
 import {render, cleanup} from "react-testing-library";
 /* Components */
-import PortfolioItem from './portfolio.item';
+import PortfolioItem from './portfolio.item.container';
 /* JSON */
-import portFolioJSON from '../../data/portfolio.item.json';
+import portFolioJSON from '../../config/portfolio.item.json';
 
 /**
  * @function propsMock

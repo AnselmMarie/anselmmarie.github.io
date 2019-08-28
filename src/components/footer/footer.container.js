@@ -1,7 +1,7 @@
 /* Node Modules */
 import React from "react";
 /* Component Styles */
-import './footer.css';
+import './footer.styles.css';
 
 /**
  * @function footer

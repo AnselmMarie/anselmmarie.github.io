@@ -2,7 +2,7 @@
 import React from 'react';
 import {render, cleanup} from 'react-testing-library';
 /* Component */
-import Footer from './footer';
+import Footer from './footer.container';
 
 afterEach(cleanup);
 

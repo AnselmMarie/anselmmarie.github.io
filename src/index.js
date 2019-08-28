@@ -6,9 +6,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './assets/stylesheet/fonts.css';
 import './assets/stylesheet/global.css';
 /* Modules */
-import Navigation from './modules/navigation.module/navigation';
+import Navigation from './modules/navigation/navigation.module';
 import * as serviceWorker from './modules/service.worker';
-import {initTrack} from './modules/track.module/track';
+import {initTrack} from './modules/track/track.module';
 
 initTrack();
 

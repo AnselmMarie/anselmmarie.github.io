@@ -2,14 +2,14 @@
 import React, {Fragment} from 'react';
 import DOMPurify from 'dompurify';
 /* Modules */
-import {trackScreen} from "../../modules/track.module/track";
-import {getPortfolio, clearPortfolio} from "../../data/store.data/store";
+import {trackScreen} from "../../modules/track/track.module";
+import {getPortfolio, clearPortfolio} from "../../data.store/store";
 /* Components */
-import FooterComponent from "../../components/footer.component/footer";
+import FooterComponent from "../../components/footer";
 /* Data */
-import portJson from '../../data/portfolio.item.json';
+import portJson from '../../config/portfolio.item.json';
 /* Component Styles */
-import './portfolio.css';
+import './portfolio.styles.css';
 import {NavLink} from "react-router-dom";
 /* Other */
 const config = {
@@ -17,13 +17,13 @@ const config = {
 };
 const homepageLink = '< Homepage';
 
-class Portfolio extends React.Component {
+class PortfolioContainer extends React.Component {
 
     /**
      * @property constructor
      * @desc init the lexical state
      * @author Anselm Marie
-     * @memberOf Portfolio
+     * @memberOf PortfolioContainer
      */
     state = {
         item: null
@@ -33,7 +33,7 @@ class Portfolio extends React.Component {
      * @function componentDidMount
      * @desc init function once the component mounts
      * @author Anselm Marie
-     * @memberOf Portfolio
+     * @memberOf PortfolioContainer
      */
     componentDidMount() {
         window.scrollTo(0, 0);
@@ -45,7 +45,7 @@ class Portfolio extends React.Component {
      * @function componentDidMount
      * @desc init function once the component unMounts
      * @author Anselm Marie
-     * @memberOf Portfolio
+     * @memberOf PortfolioContainer
      */
     componentWillUnmount() {
         clearPortfolio();
@@ -55,7 +55,7 @@ class Portfolio extends React.Component {
      * @function getContent
      * @desc returns the data that matches part of the url
      * @author Anselm Marie
-     * @memberOf Portfolio
+     * @memberOf PortfolioContainer
      * @return {object}
      */
     getContent() {
@@ -69,7 +69,7 @@ class Portfolio extends React.Component {
      * @function checkItem
      * @desc update the state with the current portfolio
      * @author Anselm Marie
-     * @memberOf Portfolio
+     * @memberOf PortfolioContainer
      */
     checkItem() {
         let item = getPortfolio();
@@ -94,7 +94,7 @@ class Portfolio extends React.Component {
      * @function render
      * @desc renders the content for the class
      * @author Anselm Marie
-     * @memberOf Portfolio
+     * @memberOf PortfolioContainer
      */
     render() {
 
@@ -157,4 +157,4 @@ class Portfolio extends React.Component {
 
 }
 
-export default Portfolio;
+export default PortfolioContainer;

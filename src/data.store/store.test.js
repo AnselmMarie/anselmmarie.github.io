@@ -1,7 +1,7 @@
 /* Module */
 import {clearPortfolio, getPortfolio, updatePortfolio} from './store';
 /* JSON */
-import portfolioData from '../../data/portfolio.item.json';
+import portfolioData from '../config/portfolio.item.json';
 
 describe('Store Functionality', () => {
 
