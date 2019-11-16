@@ -1,6 +1,6 @@
 /* Node Modules */
 import React from 'react';
-import {render, cleanup} from 'react-testing-library';
+import {render, cleanup} from '@testing-library/react';
 /* Component */
 import Footer from './footer.container';
 

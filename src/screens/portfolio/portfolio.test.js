@@ -1,11 +1,11 @@
 /* Node Modules */
 import React from 'react';
-import {cleanup, render} from "react-testing-library";
+import {cleanup, render} from "@testing-library/react";
 /* Screen */
 import PortfolioContainer from "./portfolio.container";
 /* JSON */
 import portfolioJSON from '../../config/portfolio.item.json';
-import {getPortfolio, updatePortfolio} from "../../data.store/store";
+// import {getPortfolio, updatePortfolio} from "../../data.store/store";
 
 /**
  * @function urlSplit
@@ -23,15 +23,15 @@ const props404 = {
     history: [],
     match: {
         params: {
-            company: 'fasfadsf',
-            project: 'dafsasf'
+            company: 'example company',
+            project: 'example project'
         }
     }
 };
 
 
 /**
- * @function setupMount
+ * @function propsCorrect
  * @desc props mock for initializing a correct response
  * @return {object}
  */
@@ -45,12 +45,17 @@ const propsCorrect = {
     }
 };
 
+beforeEach(() => {
+    window.scrollTo = jest.fn();
+});
+
 afterEach(cleanup);
 
 describe(`<Portfolio />`, () => {
 
     test('When the portfolio content doesn\'t exist', () => {
         render(<PortfolioContainer {...props404} />);
+        expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
         expect(props404.history[0]).toBe('/404');
     });
 

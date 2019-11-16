@@ -1,6 +1,6 @@
 /* Node Modules */
 import React from 'react';
-import {cleanup, render} from "react-testing-library";
+import {cleanup, render} from "@testing-library/react";
 /* Components */
 import HomepageContainer from './homepage.container';
 
@@ -29,13 +29,13 @@ describe('<HomepageContainer />', () => {
         expect(skillsRow).toMatchSnapshot();
     });
 
-    test(`portfolio content doesn't have exist`, () => {
+    test(`portfolio content doesn't exist`, () => {
 
-        jest.doMock('../../data/portfolio.item.json', () => ({
+        jest.doMock('../../config/portfolio.item.json', () => ({
             data: []
         }));
 
-        const Homepage = require('./homepage.container').HomepageContainer;
+        const Homepage = require('./homepage.container').default;
         const wrapper = render(<Homepage />);
         const portfolioRow = wrapper.getByTestId('portfolio-row');
         expect(portfolioRow.children.length).toBe(1);
