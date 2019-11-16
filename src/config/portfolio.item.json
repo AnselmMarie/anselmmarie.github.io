@@ -192,6 +192,24 @@
     },
     {
       "company": "Freelancing/Concepts",
+      "title": "CSP Generator App",
+      "subtitle": "Design / Development",
+      "thumbnail": "freelancing.concepts/csp-thumbnail.jpg",
+      "description": "<p>A weather app that allows the user to add or remove numerous weather widgets on the dashboard.</p><p>To improve my skills with a modern web framework, I decided to create a simple weather app. Having knowledge of React Native, I created this app in React to compare the frameworks. This app uses the openWeatherMap API and stores the weather information in the browser for later use.</p><p><a href='https://anselmmarie.github.io/react-weather-app/' target='_blank' rel='noopener noreferrer'>See the app in action</a></p><p><a href='https://github.com/AnselmMarie/react-weather-app/tree/version-two' target='_blank' rel='noopener noreferrer'>GitHub Repository</a></p>",
+      "images": [
+        {
+          "src": "freelancing.concepts/cspGenerator01.jpg",
+          "alt": "Weather App 1"
+        },
+        {
+          "src": "freelancing.concepts/cspGenerator02.jpg",
+          "alt": "Weather App Modal"
+        }
+      ],
+      "url": "freelancing-concepts/csp-generator"
+    },
+    {
+      "company": "Freelancing/Concepts",
       "title": "Weather App",
       "subtitle": "Design / Development",
       "thumbnail": "freelancing.concepts/weather-thumbnail.jpg",
