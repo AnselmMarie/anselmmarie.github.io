@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0e5dc289fa7a5be6ed9116d757f5dbec",
+    "revision": "4331daf31ea57feeab3bfae8f988f688",
     "url": "/index.html"
   },
   {
-    "revision": "86cec13c3680a5a71a3f",
+    "revision": "21556dd2a51ee33810e5",
     "url": "/static/css/2.833dd627.chunk.css"
   },
   {
-    "revision": "d53f5c4604d16ed26514",
+    "revision": "2c862b2638644e348d2b",
     "url": "/static/css/main.a237d51e.chunk.css"
   },
   {
-    "revision": "86cec13c3680a5a71a3f",
-    "url": "/static/js/2.accc8cce.chunk.js"
+    "revision": "21556dd2a51ee33810e5",
+    "url": "/static/js/2.b73fa491.chunk.js"
   },
   {
-    "revision": "d53f5c4604d16ed26514",
-    "url": "/static/js/main.ff6c2e3d.chunk.js"
+    "revision": "2c862b2638644e348d2b",
+    "url": "/static/js/main.07604f96.chunk.js"
   },
   {
     "revision": "c7be0f1087101d149f85",
@@ -142,6 +142,18 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "6921d1a2dda686296381487643ac650a",
     "url": "/static/media/crunchyroll02.6921d1a2.jpg"
+  },
+  {
+    "revision": "8f74740c82254c79cd8c45e2b509271a",
+    "url": "/static/media/csp-thumbnail.8f74740c.jpg"
+  },
+  {
+    "revision": "0da7826b25e22ba10b292bff024a132b",
+    "url": "/static/media/cspGenerator01.0da7826b.jpg"
+  },
+  {
+    "revision": "ea97d3ed1612d48f59545d979f706c35",
+    "url": "/static/media/cspGenerator02.ea97d3ed.jpg"
   },
   {
     "revision": "19d35d10f49225f8a3cd4216255ab917",
