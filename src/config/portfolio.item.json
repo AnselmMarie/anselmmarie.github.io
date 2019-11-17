@@ -195,15 +195,15 @@
       "title": "CSP Generator App",
       "subtitle": "Design / Development",
       "thumbnail": "freelancing.concepts/csp-thumbnail.jpg",
-      "description": "<p>A weather app that allows the user to add or remove numerous weather widgets on the dashboard.</p><p>To improve my skills with a modern web framework, I decided to create a simple weather app. Having knowledge of React Native, I created this app in React to compare the frameworks. This app uses the openWeatherMap API and stores the weather information in the browser for later use.</p><p><a href='https://anselmmarie.github.io/react-weather-app/' target='_blank' rel='noopener noreferrer'>See the app in action</a></p><p><a href='https://github.com/AnselmMarie/react-weather-app/tree/version-two' target='_blank' rel='noopener noreferrer'>GitHub Repository</a></p>",
+      "description": "<p>Creating a CSP is somewhat troublesome especially when you need to restrict and allow a lot of content from your application. With the help of React, TypeScript, and Redux I created an app to help ease the difficulty. Be able to import your CSP content then add additional content based on your needs. Once you are done generate the CSP to add it to your application.</p><p><a href='https://anselmmarie.github.io/csp-generator' target='_blank' rel='noopener noreferrer'>See the app in action</a></p><p><a href='https://github.com/AnselmMarie/csp-generator/tree/development' target='_blank' rel='noopener noreferrer'>GitHub Repository</a></p>",
       "images": [
         {
           "src": "freelancing.concepts/cspGenerator01.jpg",
-          "alt": "Weather App 1"
+          "alt": "Content Security Policy App 1"
         },
         {
           "src": "freelancing.concepts/cspGenerator02.jpg",
-          "alt": "Weather App Modal"
+          "alt": "Content Security Policy App 2"
         }
       ],
       "url": "freelancing-concepts/csp-generator"
