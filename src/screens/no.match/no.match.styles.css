@@ -1,68 +1,64 @@
 .hero-error-container {
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url('../../assets/images/hero-image.jpg');
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('../../assets/images/hero-image.jpg');
 }
 
 header.hero-error {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 25px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px;
 }
 
 .hero-error-container a,
 .hero-error-container a:visited {
-    color: #FFF;
-    text-decoration: underline;
+  color: #fff;
+  text-decoration: underline;
 }
 
 .hero-error-container a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .error-content {
-    text-align: center;
+  text-align: center;
 }
 
 .error-content h1 {
-    font-size: 190px;
-    margin: 0;
+  font-size: 190px;
+  margin: 0;
 }
 
 .error-content p {
-    font-size: 16px;
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: white;
+}
+
+@media all and (max-height: 550px) {
+  header.hero-error h1 {
+    font-size: 100px;
+  }
+
+  header .error-content p {
     margin-bottom: 30px;
-    color: white;
+  }
 }
 
-@media all and (max-height: 550px)  {
+@media all and (max-height: 450px) {
+  header.hero-error h1 {
+    font-size: 90px;
+  }
 
-    header.hero-error h1 {
-        font-size: 100px;
-    }
+  header .error-content p {
+    margin-bottom: 15px;
+  }
 
-    header .error-content p {
-        margin-bottom: 30px;
-    }
-
-}
-
-@media all and (max-height: 450px)  {
-
-    header.hero-error h1 {
-        font-size: 90px;
-    }
-
-    header .error-content p {
-        margin-bottom: 15px;
-    }
-
-    .hero-error-container {
-        background-size: 130%;
-    }
-
+  .hero-error-container {
+    background-size: 130%;
+  }
 }

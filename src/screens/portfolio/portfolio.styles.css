@@ -24,7 +24,7 @@ header.portfolio-header-container {
 
 .portfolio-header-container h1 {
   font-size: 40px;
-  border-bottom: 1px #FFF solid;
+  border-bottom: 1px #fff solid;
   padding-bottom: 20px;
   display: inline-block;
   word-break: break-word;
@@ -67,7 +67,7 @@ header.portfolio-header-container {
   max-width: 100%;
 }
 
-@media all and (max-width: 420px)  {
+@media all and (max-width: 420px) {
   .portfolio-header-container h1 {
     word-break: break-word;
   }

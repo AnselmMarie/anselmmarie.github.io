@@ -1,8 +1,6 @@
 To access the production version of the website use this link -> https://anselmmarie.github.io/
 
-
 --
-
 
 This project was bootstrapped with [Create React HomepageContainer](https://github.com/facebook/create-react-app).
 

@@ -4,6 +4,10 @@
   "private": true,
   "homepage": "https://anselmmarie.github.io",
   "dependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.4.13",
+    "@types/react": "^17.0.16",
+    "@types/react-dom": "^17.0.9",
     "ajv": "^6.10.2",
     "bootstrap": "^4.3.1",
     "dompurify": "^2.0.7",
@@ -12,7 +16,8 @@
     "react-dom": "^16.12.0",
     "react-ga": "^2.7.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "4.0.3"
+    "react-scripts": "4.0.3",
+    "typescript": "^4.3.5"
   },
   "scripts": {
     "start": "react-scripts start -watch",
@@ -39,7 +44,9 @@
   },
   "devDependencies": {
     "@testing-library/react": "^9.3.2",
+    "@types/dompurify": "^2.2.3",
+    "@types/react-router-dom": "^5.1.8",
     "jsdom": "^15.2.1",
-    "prettier": "^2.3.2"
+    "prettier": "2.3.2"
   }
 }

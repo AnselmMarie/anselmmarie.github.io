@@ -1,0 +1,14 @@
+footer {
+  background-color: #000;
+  color: #fff;
+}
+
+.footer-row {
+  min-height: 153px;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-href {
+  margin: 0 25px;
+}

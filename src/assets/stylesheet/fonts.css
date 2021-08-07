@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'ADAMCGPRO';
-    src: url('../fonts/ADAM.CGPRO.woff2') format('woff2'),
+  font-family: 'ADAMCGPRO';
+  src: url('../fonts/ADAM.CGPRO.woff2') format('woff2'),
     url('../fonts/ADAM.CGPRO.woff') format('woff'),
     url('../fonts/ADAM.CGPRO.ttf') format('truetype');
 }
