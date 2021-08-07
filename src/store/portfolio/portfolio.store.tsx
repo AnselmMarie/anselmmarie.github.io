@@ -1,8 +1,8 @@
-import { PortfolioItemInter } from './portfolio.type';
+import { PortfolioItem } from './';
 
-let portfolioItem: PortfolioItemInter | null = null;
+let portfolioItem: PortfolioItem = null;
 
-export const updatePortfolio = (item: PortfolioItemInter): void => {
+export const updatePortfolio = (item: PortfolioItem): void => {
   if (!item || typeof item !== 'object') {
     console.log('Item is not an object');
     return;
@@ -11,7 +11,7 @@ export const updatePortfolio = (item: PortfolioItemInter): void => {
   portfolioItem = item;
 };
 
-export const getPortfolio = () => {
+export const getPortfolio = (): PortfolioItem | null => {
   return portfolioItem;
 };
 

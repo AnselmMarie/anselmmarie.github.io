@@ -81,7 +81,6 @@ const PortfolioView = ({ match, history }: PortfolioProps): ReactElement => {
             )}
           </div>
         )}
-
       </div>
     </>
   );

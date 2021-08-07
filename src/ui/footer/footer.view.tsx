@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, MouseEvent } from 'react';
 
 import './footer.style.css';
 
@@ -13,11 +13,11 @@ const FooterView = (): ReactElement => {
           rel="noopener noreferrer"
         >
           <img
-            onMouseOver={(e) =>
+            onMouseOver={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
                 require('../../assets/images/apple-music-icon.png').default)
             }
-            onMouseOut={(e) =>
+            onMouseOut={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
                 require('../../assets/images/apple-music-icon-white.png').default)
             }
@@ -34,11 +34,11 @@ const FooterView = (): ReactElement => {
           rel="noopener noreferrer"
         >
           <img
-            onMouseOver={(e) =>
+            onMouseOver={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
                 require('../../assets/images/spotify-icon.png').default)
             }
-            onMouseOut={(e) =>
+            onMouseOut={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
                 require('../../assets/images/spotify-icon-white.png').default)
             }
@@ -53,11 +53,11 @@ const FooterView = (): ReactElement => {
           rel="noopener noreferrer"
         >
           <img
-            onMouseOver={(e) =>
+            onMouseOver={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
                 require('../../assets/images/linkedin-icon.png').default)
             }
-            onMouseOut={(e) =>
+            onMouseOut={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
                 require('../../assets/images/linkedin-icon-white.png').default)
             }
@@ -72,11 +72,11 @@ const FooterView = (): ReactElement => {
           rel="noopener noreferrer"
         >
           <img
-            onMouseOver={(e) =>
+            onMouseOver={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
                 require('../../assets/images/GitHub-Mark-32px.png').default)
             }
-            onMouseOut={(e) =>
+            onMouseOut={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
                 require('../../assets/images/GitHub-Mark-Light-32px.png').default)
             }

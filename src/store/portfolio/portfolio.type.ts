@@ -4,7 +4,7 @@ export interface PortfolioImagesInter {
 }
 
 export interface PortfolioVideosInter {
-  alt: string;
+  title: string;
   src: string;
   description: string;
 }

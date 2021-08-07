@@ -19,21 +19,20 @@ const usePortfolioLogic = ({
   match,
   history,
 }: PortfolioLogicProps): PortfolioLogicReturn => {
-  const [item, setItem] = useState<any>(null);
-  console.log('item', item);
-  console.log('match', match);
+  const [item, setItem] = useState<PortfolioItem>(null);
 
-  const getContent = () => {
+  const getContent = (): PortfolioItem => {
     const params: any = match?.params;
     const url = `${params?.company}/${params?.project}`;
-    console.log('portfolioData.data', portfolioData.data);
-    return portfolioData.data.find((el) => {
-      return el.url === url;
+    const data = portfolioData.data.find((el: PortfolioItem): boolean => {
+      return el?.url === url;
     });
+
+    return data ?? null;
   };
 
-  const checkItem = () => {
-    let item: any = getPortfolio();
+  const checkItem = (): void => {
+    let item: PortfolioItem = getPortfolio();
 
     /* If the data doesn't exist the application will try to manually get the data */
     if (!item) {
