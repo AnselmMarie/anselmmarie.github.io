@@ -1,7 +1,5 @@
 import { updatePortfolio } from '../../store/portfolio';
 
-import './portfolio.item.styles.css';
-
 const usePortfolioItemLogic = () => {
   const goToPortfolio = (history, item) => {
     updatePortfolio(item);

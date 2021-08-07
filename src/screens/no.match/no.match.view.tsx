@@ -1,9 +1,9 @@
-import React, { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { trackScreen } from '../../modules/track/track.module';
 
-import './no.match.styles.css';
+import './no.match.style.css';
 
 const NoMatchView = (): ReactElement => {
   useEffect(() => {

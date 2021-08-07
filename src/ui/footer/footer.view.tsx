@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
-import './footer.styles.css';
+import './footer.style.css';
 
 const FooterView = (): ReactElement => {
   return (

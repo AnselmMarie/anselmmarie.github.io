@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement } from 'react';
+import { useEffect, ReactElement } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import UiHero from '../../ui/hero';

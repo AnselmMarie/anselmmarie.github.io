@@ -6,17 +6,13 @@ import {
   getPortfolio,
   clearPortfolio,
   portfolioData,
+  PortfolioItem,
 } from '../../store/portfolio';
 
 interface PortfolioLogicProps extends Partial<RouteComponentProps> {}
 
-interface matchParamsProp {
-  company: string;
-  project: string;
-}
-
-export interface PortfolioLogicReturn {
-  item: any;
+interface PortfolioLogicReturn {
+  item: PortfolioItem;
 }
 
 const usePortfolioLogic = ({

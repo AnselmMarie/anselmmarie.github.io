@@ -1,7 +1,7 @@
 import React from 'react';
 
 import usePortfolioItemLogic from './use.portfolio.item.logic';
-import './portfolio.item.styles.css';
+import './portfolio.item.style.css';
 
 const PortfolioItemView = ({ item, history }) => {
   const { onGoToPortfolio, onGetImagePath } = usePortfolioItemLogic();

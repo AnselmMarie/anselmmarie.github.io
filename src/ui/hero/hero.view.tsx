@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import pdf from '../../assets/pdf/anselm-marie-resume.pdf';
 import resumeIcon from '../../assets/images/resume-icon.png';
 
-import './hero.styles.css';
+import './hero.style.css';
 
 const HeroView = (): ReactElement => {
   return (

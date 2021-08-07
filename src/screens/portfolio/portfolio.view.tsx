@@ -1,9 +1,11 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import DOMPurify from 'dompurify';
 import { NavLink, RouteComponentProps } from 'react-router-dom';
 
-import usePortfolioLogic, { PortfolioLogicReturn } from './use.portfolio.logic';
-import './portfolio.styles.css';
+import { PortfolioImages } from 'src/store/portfolio';
+
+import usePortfolioLogic from './use.portfolio.logic';
+import './portfolio.style.css';
 
 const config = {
   ADD_ATTR: ['target'],
@@ -63,20 +65,23 @@ const PortfolioView = ({ match, history }: PortfolioProps): ReactElement => {
           </div>
         )}
 
-        <div className="image-container">
-          {item.images.map(
-            (data: any, index: number): ReactElement => (
-              <img
-                className="portfolio-image"
-                src={
-                  require(`../../assets/images/portfolio/${data.src}`).default
-                }
-                alt={data.alt}
-                key={index}
-              />
-            )
-          )}
-        </div>
+        {item.images && (
+          <div className="image-container">
+            {item.images.map(
+              (data: PortfolioImages, index: number): ReactElement => (
+                <img
+                  className="portfolio-image"
+                  src={
+                    require(`../../assets/images/portfolio/${data.src}`).default
+                  }
+                  alt={data.alt}
+                  key={index}
+                />
+              )
+            )}
+          </div>
+        )}
+
       </div>
     </>
   );

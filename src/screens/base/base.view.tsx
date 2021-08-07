@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import UiFooter from '../../ui/footer';
