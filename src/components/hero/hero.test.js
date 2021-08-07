@@ -1,7 +1,6 @@
-/* Node Modules */
 import React from 'react';
-import {render, cleanup} from "@testing-library/react";
-/* Components */
+import { render, cleanup } from "@testing-library/react";
+
 import Hero from './index';
 
 afterEach(cleanup);

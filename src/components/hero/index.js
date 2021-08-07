@@ -1,3 +1,3 @@
-import HeroContainer from './hero.container';
+import UiHero from './hero.view';
 
-export default HeroContainer;
+export default UiHero;

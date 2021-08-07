@@ -1,8 +1,7 @@
-/* Node Modules */
 import React from 'react';
-import {cleanup, render} from "@testing-library/react";
-/* Components */
-import HomepageContainer from './homepage.container';
+import { cleanup, render } from '@testing-library/react';
+
+import HomepageScreen from './homepage.container';
 
 beforeEach(() => {
     jest.resetModules();
@@ -10,21 +9,21 @@ beforeEach(() => {
 
 afterEach(cleanup);
 
-describe('<HomepageContainer />', () => {
+describe('<HomepageScreen />', () => {
 
     test('should renders without crashing', () => {
-        const wrapper = render(<HomepageContainer />);
+        const wrapper = render(<HomepageScreen />);
         expect(wrapper).toBeTruthy();
     });
 
     test('portfolio content does exist', () => {
-        const wrapper = render(<HomepageContainer />);
+        const wrapper = render(<HomepageScreen />);
         const portfolioRow = wrapper.getByTestId('portfolio-row');
         expect(portfolioRow.children.length).toBeGreaterThanOrEqual(1);
     });
 
     test('check snapshot of Skills', () => {
-        const wrapper = render(<HomepageContainer />);
+        const wrapper = render(<HomepageScreen />);
         const skillsRow = wrapper.getByTestId('skills-row');
         expect(skillsRow).toMatchSnapshot();
     });

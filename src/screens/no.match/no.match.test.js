@@ -1,14 +1,15 @@
 /* Node Modules */
 import React from 'react';
-import {render, cleanup} from "@testing-library/react";
-import NoMatchContainer from './no.match.container';
+import { render, cleanup } from '@testing-library/react';
+
+import NoMatchScreen from './no.match.container';
 
 afterEach(cleanup);
 
-describe('<NoMatchContainer />', () => {
+describe('<NoMatchScreen />', () => {
 
     test('should renders without crashing', () => {
-        // const wrapper = render(<NoMatchContainer />);
+        // const wrapper = render(<NoMatchScreen />);
         // expect(wrapper).toBeTruthy();
     });
 

@@ -1,3 +1,3 @@
-import NoMatchContainer from "./no.match.container";
+import NoMatchScreen from './no.match.view';
 
-export default NoMatchContainer;
+export default NoMatchScreen;

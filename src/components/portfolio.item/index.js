@@ -1,3 +1,3 @@
-import PortfolioContainer from './portfolio.item.container';
+import UiPortfolioItem from './portfolio.item.view';
 
-export default PortfolioContainer;
+export default UiPortfolioItem;

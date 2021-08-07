@@ -1,3 +1,3 @@
-import HomepageContainer from "./homepage.container";
+import HomepageScreen from './homepage.view';
 
-export default HomepageContainer;
+export default HomepageScreen;

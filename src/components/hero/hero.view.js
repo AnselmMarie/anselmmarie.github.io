@@ -1,26 +1,20 @@
-/* Node Modules */
-import React from "react";
-/* Assets */
+import React from 'react';
+
 import pdf from '../../assets/pdf/anselm-marie-resume.pdf';
 import resumeIcon from '../../assets/images/resume-icon.png';
-/* Component Styles */
+
 import './hero.styles.css';
 
-/**
- * @function heroImage
- * @desc renders the hero image for the homepage
- * @author Anselm Marie
- */
-export default () => {
+const HeroView = () => {
     return (
-
         <div className="hero-container">
             <header className="hero">
                 <div>
                     <div className="top-hero">
-                        <h1>Software Engineer <br/>
-                        UI Designer <br/>
-                        Web Designer</h1>
+                        <h1>Software Engineer <br />
+                            UI Designer <br />
+                            Web Designer
+                        </h1>
                     </div>
 
                     <div className="bottom-hero">
@@ -31,6 +25,7 @@ export default () => {
                 </div>
             </header>
         </div>
-
-    )
+    );
 }
+
+export default HeroView;

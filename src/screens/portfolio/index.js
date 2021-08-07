@@ -1,3 +1,3 @@
-import PortfolioContainer from "./portfolio.container";
+import PortfolioScreen from "./portfolio.view";
 
-export default PortfolioContainer;
+export default PortfolioScreen;

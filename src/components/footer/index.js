@@ -1,3 +1,3 @@
-import FooterContainer from './footer.container';
+import UiFooter from './footer.view';
 
-export default FooterContainer;
+export default UiFooter;
