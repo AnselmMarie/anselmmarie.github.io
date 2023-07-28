@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.0e8058d0.css",
-    "main.js": "/static/js/main.7372a6d1.js",
+    "main.js": "/static/js/main.a8cdf93a.js",
     "static/media/hero-image.jpg": "/static/media/hero-image.a23de6a96d0138a9d0c9.jpg",
     "static/media/crunchyroll01.jpg": "/static/media/crunchyroll01.7fc0fe1a0bdd3d1948dd.jpg",
     "static/media/rebrand01.jpg": "/static/media/rebrand01.78bfc4a1480be022a411.jpg",
@@ -72,10 +72,10 @@
     "static/media/ADAM.CGPRO.woff2": "/static/media/ADAM.CGPRO.fd1d7717824783667e8c.woff2",
     "index.html": "/index.html",
     "main.0e8058d0.css.map": "/static/css/main.0e8058d0.css.map",
-    "main.7372a6d1.js.map": "/static/js/main.7372a6d1.js.map"
+    "main.a8cdf93a.js.map": "/static/js/main.a8cdf93a.js.map"
   },
   "entrypoints": [
     "static/css/main.0e8058d0.css",
-    "static/js/main.7372a6d1.js"
+    "static/js/main.a8cdf93a.js"
   ]
 }
