@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.0e8058d0.css",
-    "main.js": "/static/js/main.a8cdf93a.js",
+    "main.js": "/static/js/main.6e45cd24.js",
     "static/media/hero-image.jpg": "/static/media/hero-image.a23de6a96d0138a9d0c9.jpg",
     "static/media/crunchyroll01.jpg": "/static/media/crunchyroll01.7fc0fe1a0bdd3d1948dd.jpg",
     "static/media/rebrand01.jpg": "/static/media/rebrand01.78bfc4a1480be022a411.jpg",
@@ -47,8 +47,8 @@
     "static/media/responsive02.jpg": "/static/media/responsive02.9d09853aca2b1101446a.jpg",
     "static/media/breezeThru04.jpg": "/static/media/breezeThru04.8d9fe2ef25044cd2fb4b.jpg",
     "static/media/redesign06.jpg": "/static/media/redesign06.3a5f3cda51b7e6107fbf.jpg",
+    "static/media/anselm-marie-resume.pdf": "/static/media/anselm-marie-resume.96fd879342d66dc4baaf.pdf",
     "static/media/cosajiou-whats-next.jpg": "/static/media/cosajiou-whats-next.6be987103bc6f5a20cbd.jpg",
-    "static/media/anselm-marie-resume.pdf": "/static/media/anselm-marie-resume.a325a12c05c5948c0b02.pdf",
     "static/media/breezeThru02.jpg": "/static/media/breezeThru02.adecd61669041be611e8.jpg",
     "static/media/cosajiou-projects.jpg": "/static/media/cosajiou-projects.fd9877f6cfe7b64f8448.jpg",
     "static/media/breezeThru-thumbnail.jpg": "/static/media/breezeThru-thumbnail.4b339e2b37b189e7ad56.jpg",
@@ -72,10 +72,10 @@
     "static/media/ADAM.CGPRO.woff2": "/static/media/ADAM.CGPRO.fd1d7717824783667e8c.woff2",
     "index.html": "/index.html",
     "main.0e8058d0.css.map": "/static/css/main.0e8058d0.css.map",
-    "main.a8cdf93a.js.map": "/static/js/main.a8cdf93a.js.map"
+    "main.6e45cd24.js.map": "/static/js/main.6e45cd24.js.map"
   },
   "entrypoints": [
     "static/css/main.0e8058d0.css",
-    "static/js/main.a8cdf93a.js"
+    "static/js/main.6e45cd24.js"
   ]
 }
