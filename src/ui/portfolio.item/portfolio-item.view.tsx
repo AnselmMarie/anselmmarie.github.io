@@ -1,22 +1,16 @@
 import { ReactElement } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 
 import { PortfolioItem } from 'src/store/portfolio';
 
-import usePortfolioItemLogic from './use.portfolio.item.logic';
-import './portfolio.item.style.css';
+import usePortfolioItemLogic from './use-portfolio-item.logic';
+import './portfolio-item.style.css';
 
-interface PortfolioItemProp extends Partial<RouteComponentProps> {
+interface PortfolioItemProp {
   item: PortfolioItem;
 }
 
-const PortfolioItemView = ({
-  item,
-  history,
-}: PortfolioItemProp): ReactElement => {
-  const { onGoToPortfolio, onGetImagePath } = usePortfolioItemLogic({
-    history,
-  });
+const PortfolioItemView = ({ item }: PortfolioItemProp): ReactElement => {
+  const { onGoToPortfolio, onGetImagePath } = usePortfolioItemLogic();
 
   return (
     <div onClick={() => onGoToPortfolio(item)} className="portfolio-item">

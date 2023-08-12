@@ -1,27 +1,24 @@
-import { RouteComponentProps } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { PortfolioItem, updatePortfolio } from '../../store/portfolio';
-
-interface PortfolioItemProp extends Partial<RouteComponentProps> {}
 
 interface PortfolioItemLogicReturn {
   onGoToPortfolio: (item: PortfolioItem) => void;
   onGetImagePath: (thumbnail: string) => string;
 }
 
-const usePortfolioItemLogic = ({
-  history,
-}: PortfolioItemProp): PortfolioItemLogicReturn => {
+const usePortfolioItemLogic = (): PortfolioItemLogicReturn => {
+  const navigate = useNavigate();
   const goToPortfolio = (item: PortfolioItem): void => {
     updatePortfolio(item);
-    history?.push(`/portfolio/${item?.url}`);
+    navigate(`/portfolio/${item?.url}`);
   };
 
   const getImagePath = (thumbnail: string = ''): string => {
     let path;
 
     try {
-      path = require(`../../assets/images/portfolio/${thumbnail}`).default;
+      path = require(`../../assets/images/portfolio/${thumbnail}`);
     } catch (e) {
       path = '';
     }

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import UiFooter from '../../ui/footer';
 
@@ -7,19 +7,25 @@ import HomepageScreen from '../homepage';
 import PortfolioScreen from '../portfolio';
 import NoMatchScreen from '../no.match';
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomepageScreen />,
+  },
+  {
+    path: '/portfolio/:company/:project',
+    element: <PortfolioScreen />,
+  },
+  {
+    element: <NoMatchScreen />,
+  },
+]);
+
 const BaseView = (): ReactElement => (
-  <HashRouter>
-    <Switch>
-      <Route exact path="/" component={HomepageScreen} />
-      <Route
-        exact
-        path="/portfolio/:company/:project"
-        component={PortfolioScreen}
-      />
-      <Route exact component={NoMatchScreen} />
-    </Switch>
+  <>
+    <RouterProvider router={router} />
     <UiFooter />
-  </HashRouter>
+  </>
 );
 
 export default BaseView;

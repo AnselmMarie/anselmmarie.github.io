@@ -1,5 +1,4 @@
 import { useEffect, ReactElement } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 
 import { portfolioData, PortfolioItem } from '../../store/portfolio';
 
@@ -9,9 +8,7 @@ import { trackScreen } from '../../modules/track/track.module';
 
 import './homepage.style.css';
 
-interface HomepageProps extends RouteComponentProps {}
-
-const HomepageView = ({ history }: HomepageProps): ReactElement => {
+const HomepageView = (): ReactElement => {
   useEffect(() => {
     trackScreen();
   }, []);
@@ -25,23 +22,24 @@ const HomepageView = ({ history }: HomepageProps): ReactElement => {
           <div className="col-one col-xs-12 col-md offset-md-1">
             <h3>Design</h3>
             <ul>
-              <li>Mobile Design</li>
-              <li>Desktop Design</li>
-              <li>UX</li>
-              <li>UI</li>
+              <li>Desktop</li>
+              <li>Mobile</li>
+              <li>UI/UX</li>
+              <li>Figma</li>
               <li>Sketch</li>
-              <li>Photoshop</li>
+              <li>Adobe XD</li>
             </ul>
           </div>
 
           <div className="col-two col-xs-12 col-md offset-md-1">
             <h3>Development</h3>
             <ul>
-              <li>Mobile Development</li>
-              <li>Desktop Development</li>
-              <li>Backend Development</li>
-              <li>Modern Javascript</li>
-              <li>Rest</li>
+              <li>Desktop</li>
+              <li>Backend</li>
+              <li>Mobile</li>
+              <li>Design System</li>
+              <li>Micro Frontend</li>
+              <li>Rest APIs</li>
               <li>GraphQL</li>
             </ul>
           </div>
@@ -55,9 +53,7 @@ const HomepageView = ({ history }: HomepageProps): ReactElement => {
           <div data-testid="portfolio-row" className="row">
             {portfolioData.data.map(
               (data: PortfolioItem, index: number): ReactElement => {
-                return (
-                  <UiPortfolioItem key={index} item={data} history={history} />
-                );
+                return <UiPortfolioItem key={index} item={data} />;
               }
             )}
           </div>

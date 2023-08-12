@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 
 import PortfolioItem from './portfolio.item.container';
@@ -17,7 +16,7 @@ describe('<PortfolioItem />', () => {
     expect(wrapper).toBeTruthy();
   });
 
-  test('on click should redirect to portfolio url', () => {});
+  test('on click should redirect to portfolio url', () => { });
 
   test('should display the correct portfolio content', () => {
     const { getByText } = render(<PortfolioItem {...propsMock} />);

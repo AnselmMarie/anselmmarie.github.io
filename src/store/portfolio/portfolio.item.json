@@ -1,11 +1,79 @@
 {
   "data": [
     {
+      "company": "Freelancing/Concepts",
+      "title": "CosMikata",
+      "subtitle": "Design / Development",
+      "thumbnail": "freelancing.concepts/cosajiou-thumbnail.jpg",
+      "description": "<p>An app that will allow cosplayers and cosmakers more freedom to organize their work.</p><p>I created this application as a personal need to organize future cosplays with a mix of Trello and Cosplanner features. Being a solo project, I’m building the app from conception to production. With no target date to launch, I’m taking my time to test a bunch of technologies. I used GraphQL, PostgreSQL, and Graphile after trying REST, MongoDB, and a bunch of ORMs.</p>",
+      "videos": [
+        {
+          "description": "First video talks about the application in detail.",
+          "src": "https://www.youtube.com/embed/GdRP5EWrH9A",
+          "title": "CosMikata Video 1"
+        },
+        {
+          "description": "This video continues to talk about other parts of the application. Note: Around 2:30 I said \"iOS 5\" but I meant iPhone 5.",
+          "src": "https://www.youtube.com/embed/axvSVI4IeOU",
+          "title": "CosMikata Video 2"
+        }
+      ],
+      "images": [
+        {
+          "src": "freelancing.concepts/cosajiou-login.jpg",
+          "alt": "CosMikata Login"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-whats-next.jpg",
+          "alt": "CosMikata What's Next Screen"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-projects.jpg",
+          "alt": "CosMikata Cosplay Screen"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-details.jpg",
+          "alt": "CosMikata Cosplay Details Screen"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-project-completed.jpg",
+          "alt": "CosMikata Modal Cosplay Completed"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-form.jpg",
+          "alt": "CosMikata Form Design"
+        },
+        {
+          "src": "freelancing.concepts/cosajiou-modal.jpg",
+          "alt": "CosMikata Modal Design"
+        }
+      ],
+      "url": "freelancing-concepts/cosmikata"
+    },
+    {
+      "company": "Freelancing/Concepts",
+      "title": "CSP Generator App",
+      "subtitle": "Design / Development",
+      "thumbnail": "freelancing.concepts/csp-thumbnail.jpg",
+      "description": "<p>Creating a CSP is somewhat troublesome especially when you need to restrict and allow a lot of content from your application. With the help of React, TypeScript, and Redux, I created an app to help ease the difficulty. Be able to import your CSP content then add additional content based on your needs. Once you are done generate the CSP to add it to your application.</p><p><a href='https://anselmmarie.github.io/csp-generator' target='_blank' rel='noopener noreferrer'>See the app in action</a></p><p><a href='https://github.com/AnselmMarie/csp-generator/tree/development' target='_blank' rel='noopener noreferrer'>GitHub Repository</a></p>",
+      "images": [
+        {
+          "src": "freelancing.concepts/cspGenerator01.jpg",
+          "alt": "Content Security Policy App 1"
+        },
+        {
+          "src": "freelancing.concepts/cspGenerator02.jpg",
+          "alt": "Content Security Policy App 2"
+        }
+      ],
+      "url": "freelancing-concepts/csp-generator"
+    },
+    {
       "company": "Cricket Wireless",
       "title": "Breeze-Thru",
       "subtitle": "Design / Development",
       "thumbnail": "cricket.wireless/breezeThru-thumbnail.jpg",
-      "description": "<p>Breeze-Thru is an application that allows new customers to activate their service on any phone.</p><p>As the leader of the front-end team, I worked on this application from the beginning to the production. My role was to code, design, and help manage the team. There was a strong focus on UX and accessibility. With great communication with the network, back-end, and business team, we were able to launch the application. After the app launching, it became a success and I was rewarded with \"The AT&T Service Excellence Award\" soon after.</p>",
+      "description": "<p>Breeze-Thru is an application that allows new customers to activate their service on any phone.</p><p>As the leader of the front-end team, I worked on this application from the beginning to production. My role was to code, design, and help manage the team. There was a strong focus on UX and accessibility. With great communication with the network, back-end, and business team, we launched the application. It became a success, and I was rewarded with \"The AT&T Service Excellence Award\" soon after.</p>",
       "images": [
         {
           "src": "cricket.wireless/breezeThru01.jpg",
@@ -31,7 +99,7 @@
       "title": "aio to Cricket Wireless",
       "subtitle": "Development",
       "thumbnail": "cricket.wireless/rebrand-thumbnail.jpg",
-      "description": "<p>When rebranding the website from aio to Cricket we had to change sections of the site per release. Because of this, we had to figure out certain issues like ensuring new pages and older pages wouldn't conflict with each other. It took about a year to completely re-brand the site.</p>",
+      "description": "<p>When rebranding the website from aio to Cricket we changed sections of the website one at a time. Because of this,  we had to make sure new pages and older pages wouldn't conflict. It took about a year to completely re-brand the site.</p>",
       "images": [
         {
           "src": "cricket.wireless/rebrand01.jpg",
@@ -57,7 +125,7 @@
       "title": "Company Development",
       "subtitle": "Design / Development",
       "thumbnail": "rove.logix/app-thumbnail.jpg",
-      "description": "<p>Around 2013, I joined a team to create a SaaS application for land surveying, engineering, and geospatial services firms. I was tasked to design all the elements for the application then work on any development.</p>",
+      "description": "<p>I briefly joined a team to create a SaaS application for land surveying, engineering, and geospatial services firms. I was tasked to design all the elements for the application and then work on any development.</p>",
       "images": [
         {
           "src": "rove.logix/app01.jpg",
@@ -133,7 +201,7 @@
       "title": "Caterpillar Inc. News App",
       "subtitle": "Design / Development",
       "thumbnail": "corporate.reports/cat-thumbnail.jpg",
-      "description": "<p>I created the UI and some minor development work for this iPhone and Android App. This app was packed with a CAT stock price, latest news from CAT, videos, pdfs and more.</p>",
+      "description": "<p>I created the UI and some minor development work for this iPhone and Android App. This app had a CAT stock price, the latest news from CAT, videos, pdfs, and more.</p>",
       "images": [
         {
           "src": "corporate.reports/cat01.jpg",
@@ -147,7 +215,7 @@
       "title": "2013 Clorox Annual Report",
       "subtitle": "Development",
       "thumbnail": "corporate.reports/clorox-thumbnail.jpg",
-      "description": "<p>Being responsive was the main feature for this site. Using the Zurb Foundation Framework I created a mobile-first application. Having creative freedom on the mobile layouts I made sure the navigation and content were easy to use and read.</p>",
+      "description": "<p>Being responsive was the main feature of this site. Using the Zurb Foundation Framework I created a mobile-first application. Having creative freedom on the mobile layouts, I made sure the navigation and content were easy to use and read.</p>",
       "images": [
         {
           "src": "corporate.reports/clorox01.jpg",
@@ -169,7 +237,7 @@
       "title": "2012 Darden Annual Report",
       "subtitle": "Design / Development",
       "thumbnail": "corporate.reports/darden-thumbnail.jpg",
-      "description": "<p>With the designers swamped with work, I was given the task to design the 2012 Darden annual report website. While I mostly did the design I did some development work.</p>",
+      "description": "<p>With the designers swamped with work, I was given the task to design the 2012 Darden annual report website. While I mostly did the design, I did some development work.</p>",
       "images": [
         {
           "src": "corporate.reports/darden01.jpg",
@@ -192,28 +260,10 @@
     },
     {
       "company": "Freelancing/Concepts",
-      "title": "CSP Generator App",
-      "subtitle": "Design / Development",
-      "thumbnail": "freelancing.concepts/csp-thumbnail.jpg",
-      "description": "<p>Creating a CSP is somewhat troublesome especially when you need to restrict and allow a lot of content from your application. With the help of React, TypeScript, and Redux I created an app to help ease the difficulty. Be able to import your CSP content then add additional content based on your needs. Once you are done generate the CSP to add it to your application.</p><p><a href='https://anselmmarie.github.io/csp-generator' target='_blank' rel='noopener noreferrer'>See the app in action</a></p><p><a href='https://github.com/AnselmMarie/csp-generator/tree/development' target='_blank' rel='noopener noreferrer'>GitHub Repository</a></p>",
-      "images": [
-        {
-          "src": "freelancing.concepts/cspGenerator01.jpg",
-          "alt": "Content Security Policy App 1"
-        },
-        {
-          "src": "freelancing.concepts/cspGenerator02.jpg",
-          "alt": "Content Security Policy App 2"
-        }
-      ],
-      "url": "freelancing-concepts/csp-generator"
-    },
-    {
-      "company": "Freelancing/Concepts",
       "title": "Weather App",
       "subtitle": "Design / Development",
       "thumbnail": "freelancing.concepts/weather-thumbnail.jpg",
-      "description": "<p>A weather app that allows the user to add or remove numerous weather widgets on the dashboard.</p><p>To improve my skills with a modern web framework, I decided to create a simple weather app. Having knowledge of React Native, I created this app in React to compare the frameworks. This app uses the openWeatherMap API and stores the weather information in the browser for later use.</p><p><a href='https://anselmmarie.github.io/react-weather-app/' target='_blank' rel='noopener noreferrer'>See the app in action</a></p><p><a href='https://github.com/AnselmMarie/react-weather-app/tree/version-two' target='_blank' rel='noopener noreferrer'>GitHub Repository</a></p>",
+      "description": "<p>A weather app that allows the user to add or remove numerous weather widgets on the dashboard.</p><p>This app uses the OpenWeatherMap API and stores the weather information in the browser for later use.</p><p><a href='https://anselmmarie.github.io/react-weather-app/' target='_blank' rel='noopener noreferrer'>See the app in action</a></p><p><a href='https://github.com/AnselmMarie/react-weather-app/tree/version-two' target='_blank' rel='noopener noreferrer'>GitHub Repository</a></p>",
       "images": [
         {
           "src": "freelancing.concepts/weatherApp01.jpg",
@@ -243,56 +293,6 @@
         }
       ],
       "url": "freelancing-concepts/crunchy-roll-website"
-    },
-    {
-      "company": "Freelancing/Concepts",
-      "title": "CosMikata",
-      "subtitle": "Design / Development",
-      "thumbnail": "freelancing.concepts/cosajiou-thumbnail.jpg",
-      "description": "<p>An app that will allow cosplayers and cosmakers more freedom to organize their work.</p><p>I created this application as a personal need to organize future cosplays with a mix of Trello and Cosplanner features. Being a solo project, I’m building the app from conception to production. With no target date to launch, I’m taking my time to test a bunch of technologies. I ended up using GraphQL, PostgreSQL, and Graphile after trying REST, MongoDB and a bunch of ORMs.</p>",
-      "videos": [
-        {
-          "description": "First video talks about the application in detail.",
-          "src": "https://www.youtube.com/embed/GdRP5EWrH9A",
-          "title": "CosMikata Video 1"
-        },
-        {
-          "description": "This video continues to talk about other parts of the application. Note: Around 2:30 I said \"iOS 5\" but I meant iPhone 5.",
-          "src": "https://www.youtube.com/embed/axvSVI4IeOU",
-          "title": "CosMikata Video 2"
-        }
-      ],
-      "images": [
-        {
-          "src": "freelancing.concepts/cosajiou-login.jpg",
-          "alt": "CosMikata Login"
-        },
-        {
-          "src": "freelancing.concepts/cosajiou-whats-next.jpg",
-          "alt": "CosMikata What's Next Screen"
-        },
-        {
-          "src": "freelancing.concepts/cosajiou-projects.jpg",
-          "alt": "CosMikata Cosplay Screen"
-        },
-        {
-          "src": "freelancing.concepts/cosajiou-details.jpg",
-          "alt": "CosMikata Cosplay Details Screen"
-        },
-        {
-          "src": "freelancing.concepts/cosajiou-project-completed.jpg",
-          "alt": "CosMikata Modal Cosplay Completed"
-        },
-        {
-          "src": "freelancing.concepts/cosajiou-form.jpg",
-          "alt": "CosMikata Form Design"
-        },
-        {
-          "src": "freelancing.concepts/cosajiou-modal.jpg",
-          "alt": "CosMikata Modal Design"
-        }
-      ],
-      "url": "freelancing-concepts/cosmikata"
     }
   ]
 }

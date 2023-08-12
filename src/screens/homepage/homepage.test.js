@@ -1,4 +1,3 @@
-import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 
 import HomepageScreen from './homepage.container';
@@ -32,7 +31,7 @@ describe('<HomepageScreen />', () => {
       data: [],
     }));
 
-    const Homepage = require('./homepage.container').default;
+    const Homepage = require('./homepage.container');
     const wrapper = render(<Homepage />);
     const portfolioRow = wrapper.getByTestId('portfolio-row');
     expect(portfolioRow.children.length).toBe(1);

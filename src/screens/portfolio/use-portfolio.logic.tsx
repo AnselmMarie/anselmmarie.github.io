@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { trackScreen } from '../../modules/track/track.module';
 import {
@@ -9,20 +9,16 @@ import {
   PortfolioItem,
 } from '../../store/portfolio';
 
-interface PortfolioLogicProps extends Partial<RouteComponentProps> {}
-
 interface PortfolioLogicReturn {
   item: PortfolioItem;
 }
 
-const usePortfolioLogic = ({
-  match,
-  history,
-}: PortfolioLogicProps): PortfolioLogicReturn => {
+const usePortfolioLogic = (): PortfolioLogicReturn => {
   const [item, setItem] = useState<PortfolioItem>(null);
+  const navigate = useNavigate();
+  const params = useParams();
 
   const getContent = (): PortfolioItem => {
-    const params: any = match?.params;
     const url = `${params?.company}/${params?.project}`;
     const data = portfolioData.data.find((el: PortfolioItem): boolean => {
       return el?.url === url;
@@ -41,7 +37,7 @@ const usePortfolioLogic = ({
 
     /* If the data still doesn't exist then redirect to the error screen */
     if (!item) {
-      history?.push(`/404`);
+      navigate('/404');
     }
 
     setItem(item);

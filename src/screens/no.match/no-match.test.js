@@ -1,5 +1,3 @@
-/* Node Modules */
-import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 
 import NoMatchScreen from './no.match.container';
@@ -12,5 +10,5 @@ describe('<NoMatchScreen />', () => {
     // expect(wrapper).toBeTruthy();
   });
 
-  test('click homepage link to go back to homepage', () => {});
+  test('click homepage link to go back to homepage', () => { });
 });

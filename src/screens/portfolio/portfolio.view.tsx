@@ -1,10 +1,10 @@
 import { ReactElement } from 'react';
 import DOMPurify from 'dompurify';
-import { NavLink, RouteComponentProps } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { PortfolioImages } from 'src/store/portfolio';
 
-import usePortfolioLogic from './use.portfolio.logic';
+import usePortfolioLogic from './use-portfolio.logic';
 import './portfolio.style.css';
 
 const config = {
@@ -12,10 +12,8 @@ const config = {
 };
 const homepageLink = '< Homepage';
 
-interface PortfolioProps extends RouteComponentProps {}
-
-const PortfolioView = ({ match, history }: PortfolioProps): ReactElement => {
-  const { item } = usePortfolioLogic({ match, history });
+const PortfolioView = (): ReactElement => {
+  const { item } = usePortfolioLogic();
 
   if (!item) {
     return <p>loading....</p>;
@@ -71,9 +69,7 @@ const PortfolioView = ({ match, history }: PortfolioProps): ReactElement => {
               (data: PortfolioImages, index: number): ReactElement => (
                 <img
                   className="portfolio-image"
-                  src={
-                    require(`../../assets/images/portfolio/${data.src}`).default
-                  }
+                  src={require(`../../assets/images/portfolio/${data.src}`)}
                   alt={data.alt}
                   key={index}
                 />

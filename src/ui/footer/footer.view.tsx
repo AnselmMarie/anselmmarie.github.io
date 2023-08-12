@@ -15,14 +15,14 @@ const FooterView = (): ReactElement => {
           <img
             onMouseOver={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
-                require('../../assets/images/apple-music-icon.png').default)
+                require('../../assets/images/apple-music-icon.png'))
             }
             onMouseOut={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
-                require('../../assets/images/apple-music-icon-white.png').default)
+                require('../../assets/images/apple-music-icon-white.png'))
             }
             src={
-              require('../../assets/images/apple-music-icon-white.png').default
+              require('../../assets/images/apple-music-icon-white.png')
             }
             alt="Apple Music Icon"
           />
@@ -36,13 +36,13 @@ const FooterView = (): ReactElement => {
           <img
             onMouseOver={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
-                require('../../assets/images/spotify-icon.png').default)
+                require('../../assets/images/spotify-icon.png'))
             }
             onMouseOut={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
-                require('../../assets/images/spotify-icon-white.png').default)
+                require('../../assets/images/spotify-icon-white.png'))
             }
-            src={require('../../assets/images/spotify-icon-white.png').default}
+            src={require('../../assets/images/spotify-icon-white.png')}
             alt="Spotify Icon"
           />
         </a>
@@ -55,13 +55,13 @@ const FooterView = (): ReactElement => {
           <img
             onMouseOver={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
-                require('../../assets/images/linkedin-icon.png').default)
+                require('../../assets/images/linkedin-icon.png'))
             }
             onMouseOut={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
-                require('../../assets/images/linkedin-icon-white.png').default)
+                require('../../assets/images/linkedin-icon-white.png'))
             }
-            src={require('../../assets/images/linkedin-icon-white.png').default}
+            src={require('../../assets/images/linkedin-icon-white.png')}
             alt="LinkedIn Icon"
           />
         </a>
@@ -74,14 +74,14 @@ const FooterView = (): ReactElement => {
           <img
             onMouseOver={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
-                require('../../assets/images/GitHub-Mark-32px.png').default)
+                require('../../assets/images/GitHub-Mark-32px.png'))
             }
             onMouseOut={(e: MouseEvent<HTMLImageElement>): void =>
               (e.currentTarget.src =
-                require('../../assets/images/GitHub-Mark-Light-32px.png').default)
+                require('../../assets/images/GitHub-Mark-Light-32px.png'))
             }
             src={
-              require('../../assets/images/GitHub-Mark-Light-32px.png').default
+              require('../../assets/images/GitHub-Mark-Light-32px.png')
             }
             alt="GitHub Icon"
           />

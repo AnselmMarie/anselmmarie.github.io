@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { trackScreen } from '../../modules/track/track.module';
 
-import './no.match.style.css';
+import './no-match.style.css';
 
 const NoMatchView = (): ReactElement => {
   useEffect(() => {

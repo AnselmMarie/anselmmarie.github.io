@@ -13,8 +13,7 @@ const HeroView = (): ReactElement => {
           <div className="top-hero">
             <h1>
               Software Engineer <br />
-              UI Designer <br />
-              Web Designer
+              UI/UX Designer
             </h1>
           </div>
 

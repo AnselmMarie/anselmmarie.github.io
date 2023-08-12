@@ -1,3 +1,3 @@
-import NoMatchScreen from './no.match.view';
+import NoMatchScreen from './no-match.view';
 
 export default NoMatchScreen;
