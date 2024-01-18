@@ -15,12 +15,27 @@ interface PageProps {
   params: ParamDataInter;
 }
 
+interface StaticProps {
+  params: ParamDataInter;
+}
+
+// export async function generateStaticParams({ params }: StaticProps) {
+//   console.log('params', params);
+//   return [
+//     {
+//       params: params?.id,
+//     },
+//   ];
+// }
+
 export default function Page({ params }: PageProps): ReactElement {
   const item = usePortfolioStore((state) => state.item);
   const otherData = usePortfolioStore((state) => state.otherData);
   const activeData = usePortfolioStore((state) => state.activeData);
 
   let finalItem = item;
+
+  console.log('params', params);
 
   if (!finalItem) {
     const combineData = [...otherData, ...activeData];
@@ -46,7 +61,7 @@ export default function Page({ params }: PageProps): ReactElement {
               <h3 className="mt-0">{finalItem?.subtitle}</h3>
               <p
                 dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(finalItem?.description, {
+                  __html: DOMPurify?.sanitize(finalItem?.description, {
                     ADD_ATTR: ['target'],
                   }),
                 }}
