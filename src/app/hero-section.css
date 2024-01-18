@@ -1,0 +1,12 @@
+/* https://freefrontend.com/css-background-patterns/ */
+.hero-section-container {
+  background-color: #e2e8f0;
+  background-image: linear-gradient(
+      135deg,
+      transparent 0%,
+      #e2e8f0 25%,
+      #e2e8f0 75%,
+      transparent 100%
+    ),
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAIklEQVQoU2N89+7dfwYsQEhIiBEkzDgkFGDzAbIY2Cv4AACvrBgJjYNGfwAAAABJRU5ErkJggg==);
+}
