@@ -1,6 +1,6 @@
 export const otherData = [
   {
-    id: 'other-cosmikata',
+    id: 'older-cosmikata',
     company: 'Freelancing/Concepts',
     title: 'CosMikata (older version)',
     subtitle: 'Design / Development',
