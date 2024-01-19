@@ -1,5 +1,4 @@
 'use client';
-
 import { ImagesDataInter, VideosDataInter, usePortfolioStore } from '@/store';
 import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
@@ -7,39 +6,16 @@ import Link from 'next/link';
 import { ReactElement } from 'react';
 import DOMPurify from 'dompurify';
 
-interface ParamDataInter {
-  id: string;
-}
-
-interface PageProps {
-  params: ParamDataInter;
-}
-
-interface StaticProps {
-  params: ParamDataInter;
-}
-
-// export async function generateStaticParams({ params }: StaticProps) {
-//   console.log('params', params);
-//   return [
-//     {
-//       params: params?.id,
-//     },
-//   ];
-// }
-
-export default function Page({ params }: PageProps): ReactElement {
+export default function Page(): ReactElement {
   const item = usePortfolioStore((state) => state.item);
   const otherData = usePortfolioStore((state) => state.otherData);
   const activeData = usePortfolioStore((state) => state.activeData);
 
   let finalItem = item;
 
-  console.log('params', params);
-
   if (!finalItem) {
     const combineData = [...otherData, ...activeData];
-    finalItem = combineData.find((el) => el?.id === params?.id) || null;
+    finalItem = combineData.find((el) => el?.id === 'cw-breeze-thru') || null;
   }
 
   return (
@@ -74,7 +50,7 @@ export default function Page({ params }: PageProps): ReactElement {
                         <p>{el.title}</p>
                         <p
                           dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(el?.description, {
+                            __html: DOMPurify?.sanitize(el?.description, {
                               ADD_ATTR: ['target'],
                             }),
                           }}
