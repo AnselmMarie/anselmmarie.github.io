@@ -4,7 +4,7 @@ import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ReactElement } from 'react';
-import DOMPurify from 'dompurify';
+import DOMPurify from 'isomorphic-dompurify';
 
 export default function Page(): ReactElement {
   const item = usePortfolioStore((state) => state.item);
