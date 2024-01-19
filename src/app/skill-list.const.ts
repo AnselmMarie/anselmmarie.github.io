@@ -21,7 +21,7 @@ export const developerToolsConst = [
   'Rspack',
   'Module Federation',
   'Storybook',
-  'Redux toolkit',
+  'Redux Toolkit',
   'Zustand',
   'Github',
   'Tailwind',
