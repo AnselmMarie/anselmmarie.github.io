@@ -83,6 +83,7 @@ export default function Page(): ReactElement {
                         width={Number(el.width)}
                         height={Number(el.height)}
                         quality={85}
+                        unoptimized
                       />
                     </div>
                   );
