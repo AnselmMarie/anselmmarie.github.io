@@ -7,7 +7,7 @@ export const activeData = [
     thumbnail:
       '/images/portfolio/freelancing-concepts/new-cosmikata-thumbnail.png',
     description: `<p>I decided to revisit the Cosmikata project after a few years of initial development. The goal is to rebuild the project from the ground up, incorporating the knowledge and techniques they have acquired over time. The ultimate intention is to publish the revamped Cosmikata to both the Apple App Store and Google Play Store.</p>
-      <p>The timeline for completing this project is set for the first half of 2024. The technology stack, commonly referred to as the "Tech Stack," outlines the various tools and technologies that will be utilized in the redevelopment process.The specified Tech Stack includes:</p>
+      <p>The timeline for completing this project is set for the first half of 2024. The technology stack, commonly referred to as the "Tech Stack," outlines the various tools and technologies that will be utilized in the redevelopment process. The specified Tech Stack includes:</p>
       <ul>
         <li>React</li>
         <li>React Native</li>
