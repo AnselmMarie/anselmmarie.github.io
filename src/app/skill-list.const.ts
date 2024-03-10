@@ -7,7 +7,7 @@ export const developerConst = [
   'TypeScript',
   'Next.js',
   'HTML 5',
-  'CSS/SCSS',
+  'Tailwind/CSS/SCSS',
   'Node.js',
   'REST APIs',
   'PostgreSQL',
@@ -18,13 +18,11 @@ export const developerConst = [
 export const developerToolsConst = [
   'Webpack',
   'Vite',
-  'Rspack',
   'Module Federation',
   'Storybook',
-  'Redux Toolkit',
+  'Redux Toolkit/RTK Query',
   'Zustand',
   'Github',
-  'Tailwind',
   'Nx Monorepo',
   'CI/CD',
 ];
