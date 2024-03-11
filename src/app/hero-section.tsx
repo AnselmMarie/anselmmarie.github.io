@@ -33,7 +33,7 @@ export const HeroSection = () => {
                       <div>
                         <div className="text-5xl font-light">Anselm Marie</div>
                         <div className="text-2xl font-bold">
-                          Full Stack Engineer
+                          Senior Software Engineer
                         </div>
                         <div className="text-2xl font-bold">UI/UX designer</div>
                       </div>
