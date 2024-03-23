@@ -1,17 +1,16 @@
 export const developerConst = [
+  'JavaScript (ES6+)',
+  'TypeScript',
   'React',
   'React Native',
   'Expo',
-  'Angular',
-  'JavaScript (ES6+)',
-  'TypeScript',
   'Next.js',
-  'HTML 5',
+  'Angular',
   'Tailwind/CSS/SCSS',
   'Node.js',
   'REST APIs',
   'PostgreSQL',
-  'Go (Learning)',
+  'Rust (Learning)',
   'Python (Learning)',
 ];
 
