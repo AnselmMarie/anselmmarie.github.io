@@ -11,7 +11,7 @@ export const SkillList = () => {
   return (
     <>
       <div className="px-5 mt-72">
-        <div className="max-w-7xl mx-auto mt-20 flex flex-col lg:flex-row justify-center">
+        <div className="max-w-7xl mx-auto mt-20 flex flex-col lg:flex-row justify-center gap-4">
           <div className="md:w-full lg:w-2/3 flex mb-9 p-10 rounded-md border border-slate-200 drop-shadow-sm bg-white">
             <div className="mr-1 mt-1">
               <CodeIcon width="25" height="25" color="#0369a1" />
