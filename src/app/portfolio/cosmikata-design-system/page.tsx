@@ -15,7 +15,8 @@ export default function Page(): ReactElement {
 
   if (!finalItem) {
     const combineData = [...otherData, ...activeData];
-    finalItem = combineData.find((el) => el?.id === 'cosmikata') || null;
+    finalItem =
+      combineData.find((el) => el?.id === 'cosmikata-design-system') || null;
   }
 
   return (

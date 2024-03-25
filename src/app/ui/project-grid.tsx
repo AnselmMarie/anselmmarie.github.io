@@ -28,13 +28,13 @@ export const UiProjectGrid = ({
             className={`${paddingClass} text-center mb-10 opacity-75 hover:opacity-90 hover:drop-shadow-2xl hover:transition-all`}
           >
             <Link href={`portfolio/${el.id}`} onClick={() => onClick(el)}>
-              <div className="h-96 overflow-hidden relative rounded-lg mb-5">
+              <div className="h-96 relative rounded-lg mb-5">
                 <Image
                   src={el.thumbnail}
-                  alt=""
+                  alt="portfolio image"
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="rounded-lg object-cover"
+                  className="rounded-lg object-cover m-0"
                 />
               </div>
               <span className="font-bold">{el.title}</span>
