@@ -15,8 +15,7 @@ export default function Page(): ReactElement {
 
   if (!finalItem) {
     const combineData = [...otherData, ...activeData];
-    finalItem =
-      combineData.find((el) => el?.id === 'cosmikata-design-system') || null;
+    finalItem = combineData.find((el) => el?.id === 'cosmikata') || null;
   }
 
   return (
@@ -36,13 +35,13 @@ export default function Page(): ReactElement {
               <h4 className="mt-0 mb-1">{finalItem?.company}</h4>
               <h1 className="mb-1">{finalItem?.title}</h1>
               <h3 className="mt-0">{finalItem?.subtitle}</h3>
-              <p
+              <div
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify?.sanitize(finalItem?.description, {
                     ADD_ATTR: ['target'],
                   }),
                 }}
-              ></p>
+              ></div>
               {finalItem?.videos?.map(
                 (el: VideosDataInter, i: number): ReactElement => {
                   return (
