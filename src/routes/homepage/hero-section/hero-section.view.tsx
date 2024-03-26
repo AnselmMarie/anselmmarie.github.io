@@ -1,9 +1,9 @@
-import { Container } from '@radix-ui/themes';
 import {
   FileTextIcon,
   GitHubLogoIcon,
   LinkedInLogoIcon,
 } from '@radix-ui/react-icons';
+import { Container } from '@radix-ui/themes';
 
 import './hero-section.css';
 
@@ -43,6 +43,7 @@ export const HeroSection = () => {
                     <a
                       href="https://www.linkedin.com/in/anselm-marie/"
                       target="_blank"
+                      rel="noreferrer"
                     >
                       <LinkedInLogoIcon
                         width="30"
@@ -51,7 +52,11 @@ export const HeroSection = () => {
                       />
                     </a>
                     <div className="mx-5">
-                      <a href="https://github.com/AnselmMarie" target="_blank">
+                      <a
+                        href="https://github.com/AnselmMarie"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         <GitHubLogoIcon
                           width="30"
                           height="30"

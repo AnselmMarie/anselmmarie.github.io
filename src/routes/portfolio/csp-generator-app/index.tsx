@@ -1,6 +1,8 @@
 'use client';
-import { usePortfolioStore } from '@/store';
 import { ReactElement } from 'react';
+
+import { usePortfolioStore } from '@/store';
+
 import { PortfolioDataContainer } from '../ui/portfolio-data-container';
 
 const PortfolioCSPRoute = (): ReactElement => {

@@ -1,8 +1,9 @@
-import { HeroSection } from './hero-section';
-import { SkillList } from './skill-list';
-import { ActiveProjects } from './active-projects';
-import { OtherProjects } from './other-projects';
 import { ReactElement } from 'react';
+
+import { ActiveProjects } from './active-projects';
+import { HeroSection } from './hero-section';
+import { OtherProjects } from './other-projects';
+import { SkillList } from './skill-list';
 
 const HomepageRoute = (): ReactElement => {
   return (
