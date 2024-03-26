@@ -11,13 +11,11 @@ export const metadata: Metadata = {
     'Anselm Marie is a seasoned full-stack engineer with more than a decade of experience, coupled with expertise in UI/UX design.',
 };
 
-interface RootLayoutProps {
-  children: ReactElement;
-}
-
 export default function RootLayout({
   children,
-}: RootLayoutProps): ReactElement {
+}: {
+  children: ReactElement;
+}): ReactElement {
   return (
     <html lang="en">
       <body className={`prose prose-slate max-w-full`}>

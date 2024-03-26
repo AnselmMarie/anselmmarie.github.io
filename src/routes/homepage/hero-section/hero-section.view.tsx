@@ -4,6 +4,7 @@ import {
   GitHubLogoIcon,
   LinkedInLogoIcon,
 } from '@radix-ui/react-icons';
+
 import './hero-section.css';
 
 export const HeroSection = () => {

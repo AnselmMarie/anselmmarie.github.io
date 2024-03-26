@@ -1,3 +1,8 @@
+/** @todo
+ * When building Next.js to static files the dynamic routing doesn't work.
+ * Until I find a workaround that allows dynamic routing I will create each portfolio page
+ **/
+
 import { ImagesDataInter, VideosDataInter, usePortfolioStore } from '@/store';
 import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
