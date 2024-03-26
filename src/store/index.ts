@@ -2,10 +2,12 @@ import { create } from 'zustand';
 import { activeData } from './active.data';
 import { otherData } from './other.data';
 
+export type PortfolioStoreItem = PortfolioDataInter | null;
+
 interface PortfolioStoreInter {
   activeData: Array<PortfolioDataInter>;
   otherData: Array<PortfolioDataInter>;
-  item: PortfolioDataInter | null;
+  item: PortfolioStoreItem;
   addItem: (item: PortfolioDataInter) => void;
   clearItem: () => void;
 }
