@@ -67,7 +67,7 @@ export const activeData = [
     subtitle: 'Design / Development',
     thumbnail:
       '/images/portfolio/freelancing-concepts/cosmikata-design-system-thumbnail.png',
-    description: `<p>I developed a comprehensive design system that centralizes all shared components of the application, including UI elements, hooks, interfaces, configurations, and more. The design system uses tools such as:</p>
+    description: `<p>An evolving endeavor, our comprehensive design system serves as a centralized repository for all shared application components, encompassing UI elements, hooks, interfaces, configurations, and beyond. This dynamic system is supported by a range of tools, including:</p>
     <ul>
     <li>Storybook</li>
     <li>React Native</li>

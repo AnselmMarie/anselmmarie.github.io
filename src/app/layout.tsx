@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
-
-import { Theme } from '@radix-ui/themes';
-import './globals.css';
 import { ReactElement } from 'react';
+
+import './globals.css';
+import '@radix-ui/themes/styles.css';
+import { Theme } from '@radix-ui/themes';
 
 export const metadata: Metadata = {
   title: 'Anselm Marie Portfolio',
@@ -10,13 +11,11 @@ export const metadata: Metadata = {
     'Anselm Marie is a seasoned full-stack engineer with more than a decade of experience, coupled with expertise in UI/UX design.',
 };
 
-interface RootLayoutProps {
-  children: React.ReactNode;
-}
-
 export default function RootLayout({
   children,
-}: RootLayoutProps): ReactElement {
+}: {
+  children: ReactElement;
+}): ReactElement {
   return (
     <html lang="en">
       <body className={`prose prose-slate max-w-full`}>

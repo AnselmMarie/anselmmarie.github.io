@@ -1,11 +1,10 @@
-import '@radix-ui/themes/styles.css';
 import {
   developerConst,
   developerToolsConst,
   uiUxConst,
 } from './skill-list.const';
 import { CodeIcon, LayersIcon } from '@radix-ui/react-icons';
-import { SkillListSection } from './skill-list-section';
+import { SkillListSection } from './skill-list-section.view';
 
 export const SkillList = () => {
   return (

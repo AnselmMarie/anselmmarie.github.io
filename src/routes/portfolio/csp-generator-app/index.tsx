@@ -1,0 +1,22 @@
+'use client';
+import { usePortfolioStore } from '@/store';
+import { ReactElement } from 'react';
+import { PortfolioDataContainer } from '../ui/portfolio-data-container';
+
+const PortfolioCSPRoute = (): ReactElement => {
+  const item = usePortfolioStore((state) => state.item);
+  const otherData = usePortfolioStore((state) => state.otherData);
+  const activeData = usePortfolioStore((state) => state.activeData);
+
+  let finalItem = item;
+
+  if (!finalItem) {
+    const combineData = [...otherData, ...activeData];
+    finalItem =
+      combineData.find((el) => el?.id === 'csp-generator-app') || null;
+  }
+
+  return <PortfolioDataContainer data={finalItem} />;
+};
+
+export { PortfolioCSPRoute };

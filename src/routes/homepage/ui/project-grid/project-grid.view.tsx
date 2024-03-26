@@ -1,18 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import '@radix-ui/themes/styles.css';
 import { ReactElement } from 'react';
-
-interface ProjectItem {
-  id: string;
-  thumbnail: string;
-  title: string;
-}
-
-interface ProjectGridProps {
-  data: Array<ProjectItem>;
-  onClick: (...params: any) => void;
-}
+import { ProjectGridProps, ProjectItemProps } from './project-grid.interface';
 
 export const UiProjectGrid = ({
   data,
@@ -20,7 +9,7 @@ export const UiProjectGrid = ({
 }: ProjectGridProps): ReactElement => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
-      {data.map((el: ProjectItem, i: number) => {
+      {data.map((el: ProjectItemProps, i: number) => {
         const paddingClass = i % 2 ? 'md:ml-5' : 'md:mr-5';
         return (
           <div
