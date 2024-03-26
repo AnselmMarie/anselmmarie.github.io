@@ -11,7 +11,7 @@ export const SkillListSection = ({
     <>
       <Heading
         as="h4"
-        className={`flex items-center text-sky-700 ${
+        className={`flex items-center text-sky-700 mt-0 ${
           !hideHeader ? '' : 'invisible'
         }`}
       >
