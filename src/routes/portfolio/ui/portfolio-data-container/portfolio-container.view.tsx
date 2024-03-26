@@ -1,13 +1,16 @@
+import { ReactElement } from 'react';
+
 import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
-import { ReactElement } from 'react';
+
+import { PortfolioStoreItem } from '@/store';
+
 import { PortfolioLeftContent } from './portfolio-left-content.view';
-import { PortfolioDataInter } from '@/store';
 
 const PortfolioDataContainer = ({
   data,
 }: {
-  data: PortfolioDataInter;
+  data: PortfolioStoreItem;
 }): ReactElement => {
   return (
     <>
