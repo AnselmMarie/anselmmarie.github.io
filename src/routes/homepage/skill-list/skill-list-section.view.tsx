@@ -1,12 +1,6 @@
-import '@radix-ui/themes/styles.css';
 import { Heading } from '@radix-ui/themes';
 import { ReactElement } from 'react';
-
-interface SkillListSectionProps {
-  sectionName?: string | null;
-  dataList: Array<String>;
-  hideHeader?: boolean;
-}
+import { SkillListSectionProps } from './skill-list-section.interface';
 
 export const SkillListSection = ({
   dataList,
