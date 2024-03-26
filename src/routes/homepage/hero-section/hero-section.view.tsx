@@ -1,12 +1,10 @@
-import '@radix-ui/themes/styles.css';
-import { Card, Container, Switch } from '@radix-ui/themes';
+import { Container } from '@radix-ui/themes';
 import {
   FileTextIcon,
   GitHubLogoIcon,
-  SunIcon,
   LinkedInLogoIcon,
-  MoonIcon,
 } from '@radix-ui/react-icons';
+
 import './hero-section.css';
 
 export const HeroSection = () => {

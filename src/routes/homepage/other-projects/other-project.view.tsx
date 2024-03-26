@@ -1,8 +1,7 @@
 'use client';
 
-import '@radix-ui/themes/styles.css';
 import { Container } from '@radix-ui/themes';
-import { UiProjectGrid } from './ui/project-grid';
+import { UiProjectGrid } from '../ui/project-grid/project-grid.view';
 import { PortfolioDataInter, usePortfolioStore } from '@/store';
 
 export const OtherProjects = () => {
