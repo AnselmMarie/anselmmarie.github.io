@@ -1,16 +1,7 @@
 import { create } from 'zustand';
+
 import { activeData } from './active.data';
 import { otherData } from './other.data';
-
-export type PortfolioStoreItem = PortfolioDataInter | null;
-
-interface PortfolioStoreInter {
-  activeData: Array<PortfolioDataInter>;
-  otherData: Array<PortfolioDataInter>;
-  item: PortfolioStoreItem;
-  addItem: (item: PortfolioDataInter) => void;
-  clearItem: () => void;
-}
 
 export interface PortfolioDataInter {
   id: string;
@@ -21,6 +12,16 @@ export interface PortfolioDataInter {
   description: string;
   images?: Array<ImagesDataInter>;
   videos?: Array<VideosDataInter>;
+}
+
+export type PortfolioStoreItem = PortfolioDataInter | null;
+
+interface PortfolioStoreInter {
+  activeData: Array<PortfolioDataInter>;
+  otherData: Array<PortfolioDataInter>;
+  item: PortfolioStoreItem;
+  addItem: (item: PortfolioDataInter) => void;
+  clearItem: () => void;
 }
 
 export interface ImagesDataInter {

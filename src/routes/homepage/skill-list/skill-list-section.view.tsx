@@ -1,5 +1,7 @@
-import { Heading } from '@radix-ui/themes';
 import { ReactElement } from 'react';
+
+import { Heading } from '@radix-ui/themes';
+
 import { SkillListSectionProps } from './skill-list-section.interface';
 
 export const SkillListSection = ({

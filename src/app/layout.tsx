@@ -1,9 +1,10 @@
-import type { Metadata } from 'next';
 import { ReactElement } from 'react';
+
+import { Theme } from '@radix-ui/themes';
+import type { Metadata } from 'next';
 
 import './globals.css';
 import '@radix-ui/themes/styles.css';
-import { Theme } from '@radix-ui/themes';
 
 export const metadata: Metadata = {
   title: 'Anselm Marie Portfolio',

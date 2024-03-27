@@ -1,8 +1,10 @@
 'use client';
-import { ImagesDataInter, PortfolioDataInter, VideosDataInter } from '@/store';
-import Image from 'next/image';
 import { ReactElement } from 'react';
+
 import DOMPurify from 'isomorphic-dompurify';
+import Image from 'next/image';
+
+import { ImagesDataInter, PortfolioDataInter, VideosDataInter } from '@/store';
 
 const PortfolioLeftContent = ({
   data,
