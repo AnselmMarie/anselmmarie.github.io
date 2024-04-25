@@ -6,8 +6,8 @@ export const activeData = [
     subtitle: 'Design / Development',
     thumbnail:
       '/images/portfolio/freelancing-concepts/new-cosmikata-thumbnail.png',
-    description: `<p>I decided to revisit the Cosmikata project after a few years of initial development. The goal is to rebuild the project from the ground up, incorporating the knowledge and techniques they have acquired over time. The ultimate intention is to publish the revamped app to both the Apple App Store and Google Play Store.</p>
-      <p>The timeline for completing this project is set for the first half of 2024. The tech stack includes:</p>
+    description: `<p>After a few years since its initial development, I've chosen to drive back into the Cosmikata project. My aim is to completely overhaul the application, leveraging the insights and skills I've gained over time. I plan to create a versatile codebase that can be utilized across both mobile and web platforms as well as sharing code between the frontend and backend. The ultimate objective is to launch a redesigned version on both the Apple App Store and Google Play Store.</p>
+      <p>The tech stack includes:</p>
       <ul>
         <li>React</li>
         <li>React Native</li>
