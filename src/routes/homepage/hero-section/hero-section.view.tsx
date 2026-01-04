@@ -64,14 +64,14 @@ export const HeroSection = () => {
                         />
                       </a>
                     </div>
-                    <a
+                    {/* <a
                       className="flex items-center"
                       href="/pdf/anselm-marie-resume.pdf"
                       target="_blank"
                     >
                       <FileTextIcon width="30" height="30" color="#1e293b" />
                       <span className="text-slate-800">Resume</span>
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>

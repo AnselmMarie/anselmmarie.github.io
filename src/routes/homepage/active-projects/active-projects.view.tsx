@@ -17,9 +17,7 @@ export const ActiveProjects = () => {
     <>
       <div className="px-5 mt-72">
         <Container size="4">
-          <h2 className="text-center text-sky-700">
-            Active Project - Cosmikata
-          </h2>
+          <h2 className="text-center text-sky-700">Active Projects</h2>
           <div className="grid">
             <UiProjectGrid data={activeData} onClick={toGoScreen} />
           </div>
