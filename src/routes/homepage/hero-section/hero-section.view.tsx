@@ -1,5 +1,5 @@
 import {
-  FileTextIcon,
+  // FileTextIcon,
   GitHubLogoIcon,
   LinkedInLogoIcon,
 } from '@radix-ui/react-icons';
