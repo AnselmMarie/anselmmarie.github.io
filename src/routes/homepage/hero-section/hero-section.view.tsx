@@ -31,9 +31,10 @@ export const HeroSection = () => {
                       <div>
                         <div className="text-5xl font-light">Anselm Marie</div>
                         <div className="text-2xl font-bold">
-                          Senior Software Engineer
+                          Senior Software Engineer & Tech Lead | Web
+                          Architecture & Product Impact
                         </div>
-                        <div className="text-2xl font-bold">UI/UX designer</div>
+                        {/* <div className="text-2xl font-bold">UI/UX designer</div> */}
                       </div>
                       <div className="border-solid border-2 border-gray-300 absolute inset-1 rounded-2xl"></div>
                     </div>
