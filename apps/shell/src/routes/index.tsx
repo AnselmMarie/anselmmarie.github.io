@@ -4,6 +4,8 @@ import type { ReactElement } from 'react';
 import { ShellLayout } from '@portfolio/feature-shell';
 import { HOME_METADATA } from '@portfolio/shared-fixtures';
 
+import HeaderRemote from '../remotes/header-remote.js';
+
 /**
  * D27 — the route mounts a component from `@portfolio/feature-shell` and holds
  * nothing of its own. If a component appears in this file, the slice has broken
@@ -23,5 +25,5 @@ export const Route = createFileRoute('/')({
 });
 
 function HomeRoute(): ReactElement {
-  return <ShellLayout />;
+  return <ShellLayout header={<HeaderRemote />} />;
 }

@@ -1,18 +1,29 @@
 import type { RemoteEntry, RemoteName, RemoteRegistry } from '@portfolio/shared-types';
 
+import { readEnv } from './read-env.js';
+
 /**
- * Where the shell resolves each remote at runtime (D19).
+ * Where the shell resolves each remote (D19).
  *
- * ⚠️ **Empty in Slice 1, and that is the whole point.** No remote exists yet.
- * The Header lands at Slice 3 and the other three across Slices 5 to 7, each
- * adding its own entry here. The module exists now so those slices extend a
- * file rather than create one during a parallel wave, which is what
- * `plan-parallelization.md` pre-creates seams to avoid.
- *
- * The URL is read from the environment and never imported, so a remote can be
- * redeployed without rebuilding the shell — the property D12 rests on.
+ * Slice 3 fills the Header's row. Footer, Homepage and Portfolio Item are
+ * added by Slices 5 to 7 — Slice 4 pre-creates their entries so three
+ * concurrent agents extend this file rather than racing to create it.
  */
-export const REMOTE_REGISTRY: RemoteRegistry = {};
+
+/** The Header remote's dev origin. Matches `strictPort` in `apps/header`. */
+export const DEFAULT_HEADER_ORIGIN = 'http://localhost:4174';
+
+export const HEADER_ORIGIN: string = readEnv('PORTFOLIO_HEADER_ORIGIN') ?? DEFAULT_HEADER_ORIGIN;
+
+export const REMOTE_REGISTRY: RemoteRegistry = {
+  header: {
+    name: 'header',
+    entryUrl: `${HEADER_ORIGIN}/remoteEntry.js`,
+    // The specifier `apps/header`'s `exposes` map declares. The two are one
+    // string in two files; a typo here is a runtime 404, not a type error.
+    exposedModule: './Header',
+  },
+};
 
 /**
  * Looks a remote up by name. Returns `undefined` when it has no entry, which

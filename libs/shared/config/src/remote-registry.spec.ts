@@ -1,23 +1,33 @@
 import { describe, expect, it } from 'vitest';
 
-import { REMOTE_REGISTRY, remoteEntryFor } from './remote-registry.js';
+import { DEFAULT_HEADER_ORIGIN, REMOTE_REGISTRY, remoteEntryFor } from './remote-registry.js';
 
 describe('remoteEntryFor', () => {
-  it('returns undefined for a remote that has no entry yet', () => {
-    // Slice 1 builds no remotes. The Header arrives at Slice 3 and this
-    // assertion changes there — deliberately, so the registry filling up is
-    // visible in a diff rather than silent.
-    expect(remoteEntryFor('header')).toBeUndefined();
+  it('resolves the header, which Slice 3 built', () => {
+    // Slice 1 asserted this was `undefined`. The assertion flipping here is
+    // deliberate: the registry filling up should be visible in a diff.
+    const entry = remoteEntryFor('header');
+
+    expect(entry).toBeDefined();
+    expect(entry?.name).toBe('header');
+    expect(entry?.exposedModule).toBe('./Header');
   });
 
-  it.each(['header', 'footer', 'homepage', 'portfolio-item'] as const)(
-    'returns undefined for %s while the registry is empty',
+  it('points the header at its remoteEntry.js on the remote origin, not the shell', () => {
+    // D42's failure mode in miniature: a same-origin default would pass a
+    // localhost check and 404 behind CloudFront.
+    expect(remoteEntryFor('header')?.entryUrl).toBe(`${DEFAULT_HEADER_ORIGIN}/remoteEntry.js`);
+    expect(DEFAULT_HEADER_ORIGIN).not.toBe('http://localhost:3000');
+  });
+
+  it.each(['footer', 'homepage', 'portfolio-item'] as const)(
+    'returns undefined for %s, whose slice has not been built',
     (name) => {
       expect(remoteEntryFor(name)).toBeUndefined();
     }
   );
 
-  it('starts empty, so no remote resolves before its slice is built', () => {
-    expect(Object.keys(REMOTE_REGISTRY)).toHaveLength(0);
+  it('holds exactly the remotes that exist', () => {
+    expect(Object.keys(REMOTE_REGISTRY)).toEqual(['header']);
   });
 });
