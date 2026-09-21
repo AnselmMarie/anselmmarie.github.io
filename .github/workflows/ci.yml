@@ -1,0 +1,92 @@
+# Gates-only CI. Slice 8 (docs/planning/mfe-architecture/slices/08-independent-deployment.md)
+# owns deployment and extends THIS workflow with its deploy jobs, the project-tag
+# check and the React-major check (D39) — it should not add a second workflow,
+# per D23's one-workflow rule.
+#
+# Why this exists before Slice 8: every gate in this repo runs from the
+# `lint-staged` pre-commit hook, which only covers commits made locally. A push
+# from anywhere that skips hooks bypassed all of them, including the 200-line cap
+# D52 added. `nx sync:check` is the new one — TypeScript project references are
+# generated from the Nx graph (D57), and they drift silently.
+name: CI
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    name: typecheck / lint / test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The file-size step diffs against the base commit, so the history
+          # has to be there.
+          fetch-depth: 0
+
+      # Reads the pnpm version from `packageManager` in package.json rather than
+      # restating it, per D46.
+      - uses: pnpm/action-setup@v4
+
+      # Reads .nvmrc rather than restating the Node version, per D45/D46.
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # D57. `nx sync` generates each project's TypeScript `references` from the
+      # Nx dependency graph; `sync:check` fails when a committed tsconfig no
+      # longer matches the graph. This runs first because stale references make
+      # the typecheck below misleading rather than merely red.
+      - name: Project references are in sync
+        run: pnpm nx sync:check
+
+      # `run-many`, not `affected`, deliberately: this workspace is ten projects
+      # and a full run is seconds, while `affected` given a wrong base silently
+      # checks nothing and reports green. `nx affected` is where Slice 8's deploy
+      # jobs earn it (D23) — there, skipping unchanged work is the point.
+      - name: Gates
+        run: pnpm nx run-many -t typecheck lint test
+
+      # D52. ⚠️ Pass the changed paths explicitly — with no arguments the script
+      # diffs against HEAD, which in a fresh CI checkout is empty, so it would
+      # run, pass, and check nothing.
+      #
+      # ⚠️ Source files are hard-gated here exactly as they are locally. The
+      # PLAN-DOC ratchet is weaker in CI than at a desk: it grandfathers a doc
+      # against its own line count at HEAD, and CI's HEAD already contains the
+      # change, so an over-cap plan doc degrades to a warning instead of failing.
+      # Slice 8 should tighten this by teaching the script a base ref.
+      - name: File-size caps
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          set -euo pipefail
+          if [ -z "${BASE_SHA}" ] || ! git cat-file -e "${BASE_SHA}^{commit}" 2>/dev/null; then
+            echo "No usable base commit; checking every tracked source and plan file."
+            git ls-files -- '*.ts' '*.tsx' '*.js' '*.jsx' '*.mjs' '*.cjs' 'docs/planning/**/*.md' \
+              | xargs --no-run-if-empty node tools/scripts/check-file-size.mjs
+            exit 0
+          fi
+          CHANGED="$(git diff --name-only "${BASE_SHA}...HEAD")"
+          if [ -z "${CHANGED}" ]; then
+            echo "No files changed against ${BASE_SHA}."
+            exit 0
+          fi
+          echo "${CHANGED}" | xargs --no-run-if-empty node tools/scripts/check-file-size.mjs
+
+      # Biome owns formatting (D44). `--write` is never used in CI.
+      - name: Formatting
+        run: pnpm biome check

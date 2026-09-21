@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "ui-theme",
+  "projectType": "library",
+  "sourceRoot": "libs/ui/theme/src",
+  "tags": ["type:ui-theme", "scope:shared"]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@portfolio/ui-primitives",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@portfolio/shared-utils": "workspace:*",
+    "react": "^19.3.0"
+  },
+  "devDependencies": {
+    "react-dom": "^19.3.0"
+  }
+}

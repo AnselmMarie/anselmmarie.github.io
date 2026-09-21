@@ -1,0 +1,22 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "shell",
+  "projectType": "application",
+  "sourceRoot": "apps/shell/src",
+  "tags": ["type:app", "scope:shell"],
+  "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": { "command": "vite dev", "cwd": "apps/shell" }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/.output", "{projectRoot}/.nitro"],
+      "options": { "command": "vite build", "cwd": "apps/shell" }
+    },
+    "serve-built": {
+      "executor": "nx:run-commands",
+      "options": { "command": "node .output/server/index.mjs", "cwd": "apps/shell" }
+    }
+  }
+}

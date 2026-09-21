@@ -1,36 +1,82 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# compiled output
+dist
+tmp
+out-tsc
+**/tsconfig.tsbuildinfo
+**/tsconfig.*.tsbuildinfo
+_design
+.watchman-cookie-*
+
+
+# hiding sensitive files
+.agents/*
+.claude/*
+.cursor/*
+.codex/*
+.gemini/*
+
+# Claude settings
+.claude/worktrees/
 
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
-.yarn/install-state.gz
+node_modules
+.playwright-mcp
 
-# testing
-/coverage
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # misc
+/.sass-cache
+/connect.lock
+coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+/uploads
+
+# System Files
 .DS_Store
-*.pem
+Thumbs.db
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.nx/cache
+.nx/workspace-data
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
+.env
+.env.local
+.env.production
 
-# local env files
-.env*.local
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
+test-output
+.nx/polygraph
 
-# vercel
-.vercel
+# TanStack Start / Nitro build output (D4, D31). `.output` is the built Lambda
+# bundle; `.nitro` is its intermediate directory.
+.output
+.nitro
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# AWS CDK synth output (D37). Generated, and it lands inside the workspace.
+cdk.out
+
+# Playwright artifacts (Slice 9, D20).
+playwright-report
+.playwright
+test-results

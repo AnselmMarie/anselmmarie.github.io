@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "feature-shell",
+  "projectType": "library",
+  "sourceRoot": "libs/features/shell/src",
+  "tags": ["type:feature", "scope:shell"]
+}

@@ -1,0 +1,6 @@
+packages:
+  - 'apps/*'
+  - 'libs/features/*'
+  - 'libs/ui/*'
+  - 'libs/shared/*'
+  - 'infra'

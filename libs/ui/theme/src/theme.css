@@ -1,0 +1,29 @@
+/*
+ * The one theme every app extends (D26), as a Tailwind 4 `@theme` block
+ * rather than a `tailwind.config.ts` preset (D51 — Tailwind 4 configures in
+ * CSS; there is no config-object artifact). An app consumes this by
+ * `@import`ing this file from its own stylesheet instead of declaring its
+ * own colors.
+ *
+ * Values are read off the live v3 site (D34): a white page, slate-700 body
+ * text. Carried over unchanged from Slice 1's interim `apps/shell/src/styles.css`.
+ */
+@theme {
+  --color-page: #ffffff;
+  --color-ink: oklch(0.372 0.044 257.287);
+}
+
+/*
+ * ⚠️ **R3 fired once already, in Slice 1** (see docs/planning/mfe-architecture/risks.md#r3).
+ * Tailwind 4 auto-detects sources from the Vite root and skips `node_modules` —
+ * every workspace lib is a symlink in `node_modules`, so a lib's classes
+ * resolve to nothing unless declared here. It fails by rendering **unstyled**,
+ * not by erroring: a green build, a green typecheck and a green test run all
+ * survive it. Verify by rendering a lib-only class and looking at the page,
+ * never by reading build output.
+ *
+ * One line per lib whose classes must survive. A missing line is silent.
+ */
+@source '../../../features/shell/src';
+@source '../../components/src';
+@source '../../primitives/src';
