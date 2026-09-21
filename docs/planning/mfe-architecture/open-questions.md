@@ -8,14 +8,17 @@ When one is answered: write the answer as a numbered decision in
 [questions-closed.md](./questions-closed.md) with a closure note, update the table below,
 and update the binding block of every slice that named it. All four, in the same change.
 
-**Two are open.** [Q2](#q2) is a spike gate that
-[Slice 3](./slices/03-federation-header.md) answers by building, not something anyone can
-settle at a desk. [Q17](#q17) is a real question, raised by
-[D53](./decisions-d53.md#d53), and it wants an answer before Slice 6.
+**One is open.** [Q17](#q17), raised by [D53](./decisions-d53.md#d53), and it wants an
+answer before Slice 6.
+
+[Q2](./questions-closed.md#q2) — the spike gate Slice 3 answered by building rather than
+deciding — **closed on 2026-09-21** as [D55](./decisions-d55.md#d55): all four checks
+passed, and the configuration it proved is recorded there. Its full entry moved to
+[questions-closed.md](./questions-closed.md#q2) with its closure note.
 [Q14](./questions-closed-q9-q16.md#q14) closed on 2026-09-20 as
 [D48](./decisions-d48-d52.md#d48), which is what unblocked the route tree in Slice 1.
 
-The other fifteen closed on 2026-09-20 and live in
+The other sixteen — fifteen closed on 2026-09-20, plus Q2 on 2026-09-21 — live in
 [questions-closed.md](./questions-closed.md), full text and closure notes intact. ⚠️ **This
 file was split at 548 lines**, over the 500-line cap in
 [plan-split-into-files.md](../../../.claude/rules/plan-split-into-files.md); nothing was
@@ -24,7 +27,7 @@ dropped in the cut.
 | Q | Blocks | Status |
 |---|---|---|
 | [Q1](./questions-closed.md#q1) | Slices 4, 5, 6, 7 | ✅ → [D34](./decisions-d33-d41.md#d34) |
-| [**Q2**](#q2) | Slice 3 | **open — a spike gate, not a decision** |
+| [Q2](./questions-closed.md#q2) | Slice 3 | ✅ → [D55](./decisions-d55.md#d55) |
 | [Q3](./questions-closed.md#q3) | Slice 8 | ✅ → [D35](./decisions-d33-d41.md#d35) |
 | [Q4](./questions-closed.md#q4) | Slice 3 | ✅ → [D39](./decisions-d33-d41.md#d39) |
 | [Q5](./questions-closed.md#q5) | Slice 8 | ✅ → [D31](./decisions-d17-d32.md#d31) |
@@ -40,33 +43,6 @@ dropped in the cut.
 | [Q15](./questions-closed-q9-q16.md#q15) | Slice 1 | ✅ → [D46](./decisions-d42-d47.md#d46) |
 | [Q16](./questions-closed-q9-q16.md#q16) | Slice 1 | ✅ → [D45](./decisions-d42-d47.md#d45) |
 | [**Q17**](#q17) | Slices 6, 7 | **open** |
-
----
-
-<a id="q2"></a>
-## Q2 — Does `@module-federation/vite` compose with TanStack Start? (open, narrowed)
-
-**Raised:** 2026-09-20 · **Partially answered:** 2026-09-20 · **Blocks:** Slice 3, and
-therefore 5, 6, 7
-
-**What is now settled** → [D30](./decisions-d17-d32.md#d30), [D31](./decisions-d17-d32.md#d31). Cloudflare
-confirmed that Module Federation cannot run server-side on `workerd` (no `eval` /
-`new Function`, no dynamic `import()` of a remote URL), while client-side federation works
-normally. That blocked only federated SSR, which [D9](./decisions-d01-d16.md#d9) had already
-declined — and the host has since moved to AWS anyway, so the `workerd` constraint no
-longer applies to this plan at all.
-
-**What is still open.** The plugin-coexistence half. The `@cloudflare/vite-plugin`
-conflict is gone with the host, but TanStack Start still owns the Vite config and the
-Lambda build output, and `@module-federation/vite` still participates in that build.
-Federation must be **scoped to the client environment only** and must not transform the SSR
-build. Nothing has proven that, and no amount of planning will.
-
-**Answer path:** the spike gate in [Slice 3](./slices/03-federation-header.md). If the two
-do not compose, **stop and report** rather than building three more remotes on a broken
-seam. Fallback positions, in order of preference: load remotes purely client-side outside
-Start's build graph; host the MF runtime in a client-only boundary; or back out to monorepo
-imports (cheap, because of [D27](./decisions-d17-d32.md#d27)) and revisit.
 
 ---
 

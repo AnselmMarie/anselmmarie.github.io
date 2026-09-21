@@ -1,6 +1,6 @@
 # Slice 2 — The design system: primitives, components, theme
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slice 1
+**Status:** ✅ built 2026-09-21, awaiting review · **Visible?** ✅ screen · **Depends on:** Slice 1
 **Design:** the live v3 site ([D34](../decisions-d33-d41.md#d34)) — appearance only; no Next.js
 code is ported ([D6](../decisions-d01-d16.md#d6))
 
@@ -98,15 +98,22 @@ outcome: this slice changes where the styling comes from, not what it looks like
 **`libs/ui/primitives`**
 
 - `project.json`, `components.json` with the shadcn CLI aliased to write **only** into this
-  package, `src/index.ts`
+  package, `src/index.ts`. ⚠️ Its `utils` alias points at `@portfolio/shared-utils`
+  ([D56](../decisions-d56.md#d56)) — left at the default `src/lib/utils`, the next
+  `shadcn add` scaffolds a third `cn` and the duplication comes back silently
 - Only the primitives this slice's consumers actually import ([D40](../decisions-d33-d41.md#d40))
 - A `README.md` stating the do-not-hand-edit rule at the point of temptation
 
 **`libs/ui/components`**
 
 - `project.json`, `src/index.ts`
-- The `cn` helper, plus any wrapper that earns its place under [D40](../decisions-d33-d41.md#d40),
-  each with a spec
+- Any wrapper that earns its place under [D40](../decisions-d33-d41.md#d40), each with a spec
+- ⚠️ **Not the `cn` helper.** This slice's file list said `cn` belonged here, and that
+  instruction is what produced two copies of it, neither of them a real Tailwind merge.
+  Corrected by [D56](../decisions-d56.md#d56): `cn` is **one** `clsx` + `tailwind-merge`
+  implementation in `libs/shared/utils`, which is the only home
+  `type:ui-primitives`, `type:ui-components` and `type:feature` can all reach — and the home
+  `tools/eslint/module-boundaries.mjs` already named. `libs/ui/components` does not export it.
 
 **Modified**
 

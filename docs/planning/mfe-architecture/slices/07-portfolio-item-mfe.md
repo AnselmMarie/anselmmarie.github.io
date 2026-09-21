@@ -60,11 +60,13 @@ think about navigation.
   question is settled: raw `dangerouslySetInnerHTML`, sanitized HTML, or structured data.
   ⚠️ The ported copy also carries `target="_blank"` without `rel="noopener noreferrer"`
   throughout — fixed in the port under any of the three options, not carried over.
-- **[Q2](../open-questions.md#q2)** — not a decision anyone can make at a desk, but this
-  slice **does not exist in its current form if the spike gate in
-  [Slice 3](./03-federation-header.md) fails.** Federation must compose with TanStack Start
-  scoped to the client build; if it does not, the fallback is monorepo imports and this
-  slice becomes a lib, not a remote.
+- **[Q2](../questions-closed.md#q2)** — ✅ **closed 2026-09-21 as
+  [D55](../decisions-d55.md#d55): this slice exists in its current form.** The existential
+  risk it carried is gone — the spike gate passed, federation does compose with TanStack
+  Start scoped to the client build, and the fallback to monorepo imports is not needed. This
+  slice is a remote, not a lib. ⚠️ Build its vite config from
+  [D55](../decisions-d55.md#d55) rather than from scratch: the `applyToEnvironment` scoping
+  and the `type: 'module'` remote form were each found by failing first.
 
 [Q12](../questions-closed-q9-q16.md#q12) closed as [D42](../decisions-d42-d47.md#d42) — the item's images
 arrive as props from the shell, which matters more here than anywhere else, since an item

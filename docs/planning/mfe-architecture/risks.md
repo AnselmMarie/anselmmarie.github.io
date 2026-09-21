@@ -23,9 +23,14 @@ scoped to the **client environment only** and must leave the SSR build untransfo
 Nothing has proven that.
 
 *Mitigation:* the spike gate in [Slice 3](./slices/03-federation-header.md), run before any
-other remote exists. Tracked as [Q2](./open-questions.md#q2). The cheap fallback is monorepo
-imports, which stays cheap only because the logic lives in `libs/features/*` and not inside
-the remote apps ([D27](./decisions-d17-d32.md#d27)).
+other remote exists. ✅ **Run on 2026-09-21, and it passed** — [Q2](./questions-closed.md#q2)
+closed as [D55](./decisions-d55.md#d55), so **this risk is retired**: federation composes with
+Start's build and stays out of the `aws-lambda` server bundle when scoped with
+`applyToEnvironment`. The cheap fallback — monorepo imports, which stays cheap only because
+the logic lives in `libs/features/*` and not inside the remote apps
+([D27](./decisions-d17-d32.md#d27)) — was not needed. ⚠️ What D55 did **not** prove travels
+on: no Lambda invocation, no multi-remote interaction, and a dev-mode remote against a
+built shell does not work.
 
 <a id="r2"></a>
 ### R2 — Two copies of React in one page

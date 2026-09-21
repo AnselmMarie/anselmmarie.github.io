@@ -1,6 +1,8 @@
 # Slice 3 — Module Federation, proved with the Header
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slice 2
+**Status:** not started — but its **spike gate has passed**, run early in parallel with
+Slice 2 ([D54](../decisions-d54.md#d54)). The seam is proven and the config to build from is
+[D55](../decisions-d55.md#d55) · **Visible?** ✅ screen · **Depends on:** Slice 2
 **Design:** the live v3 site ([D34](../decisions-d33-d41.md#d34)) — appearance only; no Next.js
 code is ported ([D6](../decisions-d01-d16.md#d6))
 
@@ -49,7 +51,15 @@ an unproven seam is not.
 
 ## Open questions blocking this slice
 
-- **[Q2](../open-questions.md#q2)** — **narrowed, not closed.** The runtime half is
+- **[Q2](../questions-closed.md#q2)** — ✅ **closed 2026-09-21 as
+  [D55](../decisions-d55.md#d55).** The spike gate below was run early under
+  [D54](../decisions-d54.md#d54) and **passed all four checks**; federation stays out of the
+  `aws-lambda` server bundle when scoped with `applyToEnvironment`, and D55 carries the
+  verbatim config, the versions, and the four things the spike did **not** prove. ⚠️ **Read
+  D55 before writing this slice's vite configs** — two of its findings (the
+  `applyToEnvironment` override, and `remotes` needing the object form with `type: 'module'`)
+  were each found by failing first, and the throwaway worktree that found them is deleted.
+  The history, for context: the runtime half was
   answered: server-side federation was impossible on `workerd`
   ([D30](../decisions-d17-d32.md#d30)) and the host has since moved to Lambda
   ([D31](../decisions-d17-d32.md#d31)), while client-side federation works on both. What is still
@@ -74,7 +84,10 @@ Two more were raised on 2026-09-20 and both closed the same day:
 
 ## The spike gate
 
-**Before building anything in the file list below**, prove the seam:
+✅ **Already run, and passed, on 2026-09-21** — early, in its own worktree, under
+[D54](../decisions-d54.md#d54). [D55](../decisions-d55.md#d55) records the result, the proven
+configuration, and the gaps. **Do not re-run it**; build from D55. What it proved, for
+reference:
 
 1. A throwaway remote exposing a component that renders one string.
 2. The shell loading it at runtime, after SSR, **from the built Lambda handler** — not

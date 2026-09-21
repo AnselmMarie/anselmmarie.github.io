@@ -126,7 +126,7 @@ that uses it.
 
 <a id="d30"></a>**D30 — Module Federation cannot run server-side on the Workers runtime.**
 Established by a Cloudflare support answer, 2026-09-20, in response to
-[Q2](./open-questions.md#q2). Two hard constraints in `workerd`:
+[Q2](./questions-closed.md#q2). Two hard constraints in `workerd`:
 
 1. **No `eval` / `new Function`.** Module Federation's runtime fetches a remote entry and
    evaluates it from a string, which `workerd` disallows.

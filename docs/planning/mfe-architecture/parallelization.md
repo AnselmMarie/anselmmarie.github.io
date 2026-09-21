@@ -13,7 +13,7 @@ decides whether any of this actually runs in parallel.
 | Edge | The dependency |
 |---|---|
 | 1 → 2 | The ui libs need the workspace, the Tailwind pipeline, and the Vitest harness. |
-| 2 → 3 | The Header is built from `libs/ui/components`, and `@portfolio/ui-*` must exist before it can be declared an MF shared dependency. |
+| 2 → 3 | The Header is built from `libs/ui/components`, and `@portfolio/ui-*` must exist before it can be declared an MF shared dependency. ⚠️ **This binds Slice 3's Header build, not its spike gate** — see [D54](./decisions-d54.md#d54) and the section below. |
 | 3 → 4 | The boundary wraps a real remote. Writing it against no remote means the specs cannot be seen failing, which [prove-the-spec-can-fail.md](../../../.claude/rules/prove-the-spec-can-fail.md) forbids. |
 | 4 → {5,6,7} | Slice 4 pre-creates the seams the three remotes would otherwise all edit at once: registry entries, fallback slots, route-tree lines, `use-content-stub.ts`, **and the six-project scaffold plus the single `pnpm install`**. |
 | {5,6,7} → 8 | Nothing to deploy independently until more than one remote exists. |
@@ -38,6 +38,30 @@ nobody and are omitted.
 
 Specs count as files a slice touches. A slice editing a registry almost always edits that
 registry's spec too, and that spec is shared.
+
+## The spike gate runs against the graph, deliberately
+
+⚠️ **Added 2026-09-21 as [D54](./decisions-d54.md#d54).** The `2 → 3` edge above is real for
+Slice 3's Header build and **over-constrains Slice 3's spike gate**, which is therefore run
+concurrently with Slice 2 rather than after it.
+
+The spike's four checks — client-scoped federation in Start's build, no federation in the
+SSR/Lambda bundle, a single React instance, and a remote-owned asset resolving from the
+remote's origin — touch no `libs/ui/*` file. The spike is a throwaway remote rendering one
+string and it is discarded before the real slice starts, so it has no shared-file set worth
+tabulating: its only output is a report.
+
+It is worth moving because it answers [Q2](./questions-closed.md#q2), the plan's last
+architectural unknown, and a failure sends slices 3 through 9 to one of Q2's three fallback
+positions. ⚠️ **A passing spike does not unblock Slice 3 proper**, which still waits for
+Slice 2. This moves the question, not the slice.
+
+**Why worktrees and not the shared tree.** The two units both touch `apps/shell` — Slice 2
+rewrites `src/styles.css`, the spike edits `vite.config.ts` — so they are in the same Nx
+project and each agent's gates would see the other's in-flight edits. Both would also race
+`pnpm-lock.yaml` (the spike installs `@module-federation/vite`; Slice 2 installs Tailwind and
+shadcn). Two worktrees off `feat/amarie/new-design`, each with its own `pnpm install`.
+The spike's worktree is discarded, so there is nothing to reconcile from it.
 
 ## The one wave: slices 5, 6, 7
 

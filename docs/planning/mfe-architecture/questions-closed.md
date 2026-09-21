@@ -1,7 +1,8 @@
 # Questions Closed
 
-The fifteen questions answered on 2026-09-20, in full, each with the closure note recorded
-when it was answered. Split out of [open-questions.md](./open-questions.md) when that file
+The fifteen questions answered on 2026-09-20 — plus [Q2](#q2), which closed on 2026-09-21
+by being built rather than decided — in full, each with the closure note recorded when it
+was answered. Split out of [open-questions.md](./open-questions.md) when that file
 passed the 500-line cap.
 
 ⚠️ **Split in two on 2026-09-20** at the 500-line cap: Q1 through Q8 are below, and
@@ -16,6 +17,7 @@ originally weighed.
 | Q | Closed by | One line |
 |---|---|---|
 | [Q1](#q1) | [D34](./decisions-d33-d41.md#d34) | The live v3 site is the visual reference |
+| [Q2](#q2) | [D55](./decisions-d55.md#d55) | Federation composes with Start, scoped to the client |
 | [Q3](#q3) | [D35](./decisions-d33-d41.md#d35) | AWS; the repo name constrains nothing |
 | [Q4](#q4) | [D39](./decisions-d33-d41.md#d39) | Singleton React, non-strict, plus a CI major check |
 | [Q5](#q5) | [D31](./decisions-d17-d32.md#d31) | Remotes on S3 behind CloudFront |
@@ -61,6 +63,44 @@ Two things survive the closure and must not be read as settled:
 - **The fallback states have no v3 equivalent**, because a site with no remotes has no
   remote-failure UI. Slice 4 still invents those, and still flags each one in its
   completion report, one line each.
+
+---
+
+<a id="q2"></a>
+## Q2 — Does `@module-federation/vite` compose with TanStack Start? (closed)
+
+**Closed:** 2026-09-21 → **[D55](./decisions-d55.md#d55)**. ⚠️ **Answered by building, not by
+deciding** — the spike gate in [Slice 3](./slices/03-federation-header.md), run early and in
+parallel with Slice 2 under [D54](./decisions-d54.md#d54). All four checks passed: federation
+coexists with Start's build; it stays out of the `aws-lambda` server bundle when scoped with
+`applyToEnvironment`; React resolves to one instance; and a remote-owned asset resolves from
+the remote's own origin. None of the three fallback positions below was needed.
+[D55](./decisions-d55.md#d55) carries the verbatim configuration, the versions, and the four
+things the spike did **not** prove.
+
+**Raised:** 2026-09-20 · **Partially answered:** 2026-09-20 · **Blocks:** Slice 3, and
+therefore 5, 6, 7
+
+**What is now settled** → [D30](./decisions-d17-d32.md#d30), [D31](./decisions-d17-d32.md#d31). Cloudflare
+confirmed that Module Federation cannot run server-side on `workerd` (no `eval` /
+`new Function`, no dynamic `import()` of a remote URL), while client-side federation works
+normally. That blocked only federated SSR, which [D9](./decisions-d01-d16.md#d9) had already
+declined — and the host has since moved to AWS anyway, so the `workerd` constraint no
+longer applies to this plan at all.
+
+**What is still open.** The plugin-coexistence half. The `@cloudflare/vite-plugin`
+conflict is gone with the host, but TanStack Start still owns the Vite config and the
+Lambda build output, and `@module-federation/vite` still participates in that build.
+Federation must be **scoped to the client environment only** and must not transform the SSR
+build. Nothing has proven that, and no amount of planning will.
+
+**Answer path:** the spike gate in [Slice 3](./slices/03-federation-header.md), which was
+**run early, in parallel with Slice 2** ([D54](./decisions-d54.md#d54)) — its four checks
+touched no `libs/ui/*` file, so the question did not have to wait for the design system. The
+instruction at the time was: if the two do not compose, **stop and report** rather than
+building three more remotes on a broken seam. Fallback positions, in order of preference: load remotes purely client-side outside
+Start's build graph; host the MF runtime in a client-only boundary; or back out to monorepo
+imports (cheap, because of [D27](./decisions-d17-d32.md#d27)) and revisit.
 
 ---
 

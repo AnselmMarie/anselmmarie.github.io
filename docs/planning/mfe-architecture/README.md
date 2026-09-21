@@ -5,7 +5,7 @@ React + Vite Module Federation remotes (Header, Footer, Homepage, Portfolio Item
 with shadcn/ui + Tailwind. Contentful is deliberately **not** in this plan; it gets its
 own plan directory after the MVP.
 
-**Status:** Slice 1 built, awaiting review · **Created:** 2026-09-20 · **Branch:** `feat/amarie/new-design`
+**Status:** Slices 1 and 2 awaiting review · Slice 3's spike gate ✅ passed ([D55](./decisions-d55.md#d55)) · **Created:** 2026-09-20 · **Branch:** `feat/amarie/new-design`
 
 **Why this exists:** the architecture is the portfolio piece; the site is the vehicle
 ([D33](./decisions-d33-d41.md#d33)). That is the tiebreaker wherever a later choice is between
@@ -85,9 +85,9 @@ silent:**
 
 | # | Scope | Layer | Visible? | Files | Status |
 |---|---|---|---|---|---|
-| [1](./slices/01-workspace-and-shell.md) | Nx workspace, `apps/shell` + `libs/features/shell` + `libs/shared/*`, Vitest, CDK `infra` | fe | ✅ screen | ~66 | not started |
-| [2](./slices/02-ui-libs.md) | `libs/ui/primitives` + `libs/ui/components` + `libs/ui/theme` | fe | ✅ screen | ~40 | not started |
-| [3](./slices/03-federation-header.md) | `apps/header` + `libs/features/header`; shell consumes the remote | fe | ✅ screen | ~36 | not started |
+| [1](./slices/01-workspace-and-shell.md) | Nx workspace, `apps/shell` + `libs/features/shell` + `libs/shared/*`, Vitest, CDK `infra` | fe | ✅ screen | ~66 | ✅ built 2026-09-20, awaiting review |
+| [2](./slices/02-ui-libs.md) | `libs/ui/primitives` + `libs/ui/components` + `libs/ui/theme` | fe | ✅ screen | ~40 | ✅ built 2026-09-21, awaiting review |
+| [3](./slices/03-federation-header.md) | `apps/header` + `libs/features/header`; shell consumes the remote | fe | ✅ screen | ~36 | not started — spike gate ✅ passed ([D55](./decisions-d55.md#d55)) |
 | [4](./slices/04-error-boundaries.md) | `MfeErrorBoundary` + shell-owned fallbacks, bounded retry | fe | ✅ screen | ~22 | not started |
 | [5](./slices/05-footer-mfe.md) | `apps/footer` + `libs/features/footer` | fe | ✅ screen | ~22 | not started |
 | [6](./slices/06-homepage-mfe.md) | `apps/homepage` + `libs/features/homepage`, on fixtures | fe | ✅ screen | ~32 | not started |
@@ -106,7 +106,7 @@ is explicit that a passing test suite is not a visible surface. Every slice is u
 - [model.md](./model.md) — the finalized architecture: stack, workspace shape, data flow,
   what reaches the browser versus what stays server-side, the Module Federation strategy,
   and the shadcn/Tailwind sharing strategy.
-- [decisions.md](./decisions.md) — the **index** to D1 through D52, split into range files
+- [decisions.md](./decisions.md) — the **index** to D1 through D56, split into range files
   when the log passed its 500-line cap. The source of truth; each slice restates only the
   ones that bind it. Start at [D33](./decisions-d33-d41.md#d33): the project's purpose is the
   tiebreaker the rest were decided against. The ranges themselves:
@@ -115,10 +115,13 @@ is explicit that a passing test suite is not a visible surface. Every slice is u
   [D33–D41](./decisions-d33-d41.md) and [D42–D47](./decisions-d42-d47.md) (the two rounds of
   questions closing), and [D48–D52](./decisions-d48-d52.md) (Q14's answer, and the four
   things building Slice 1 forced), and [D53](./decisions-d53.md) (where the portfolio
-  content comes from).
-- [open-questions.md](./open-questions.md) — the **two** still open:
-  [Q2](./open-questions.md#q2), a spike gate Slice 3 answers by building rather than
-  deciding, and [Q17](./open-questions.md#q17), how the ported HTML descriptions render.
+  content comes from), [D54](./decisions-d54.md) (the Slice 3 spike gate
+  running in parallel with Slice 2), [D55](./decisions-d55.md) (what that spike proved,
+  and the federation config to build Slice 3 from), and [D56](./decisions-d56.md) (`cn` is one
+  real Tailwind merge, in `libs/shared/utils`).
+- [open-questions.md](./open-questions.md) — **one** still open:
+  [Q17](./open-questions.md#q17), how the ported HTML descriptions render. Q2 closed on
+  2026-09-21 as [D55](./decisions-d55.md#d55), answered by building rather than deciding.
   Q14 closed on 2026-09-20 as [D48](./decisions-d48-d52.md#d48).
 - [questions-closed.md](./questions-closed.md) — the **fifteen** answered on 2026-09-20,
   in full, each with its closure note, with the index table to both halves. Split out of the

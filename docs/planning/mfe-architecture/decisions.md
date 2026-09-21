@@ -16,6 +16,9 @@ decision is separated from the ones that explain it. This file is now the index 
 - [**D42–D47** — The second round, and the tooling prune](decisions-d42-d47.md)
 - [**D48–D52** — Q14 closed, and what building Slice 1 forced](decisions-d48-d52.md)
 - [**D53** — Where the portfolio content comes from](decisions-d53.md)
+- [**D54** — The Slice 3 spike gate runs in parallel with Slice 2](decisions-d54.md)
+- [**D55** — Federation composes with TanStack Start, and the config that proves it](decisions-d55.md)
+- [**D56** — `cn` is one real Tailwind merge, in `libs/shared/utils`](decisions-d56.md)
 
 ## Every decision
 
@@ -74,6 +77,9 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D51](decisions-d48-d52.md#d51) | Tailwind 4, configured in CSS. There is no `tailwind.config.ts` | `d48-d52` |
 | [D52](decisions-d48-d52.md#d52) | Slice 1 builds the file-size checker the rules already claim exists | `d48-d52` |
 | [D53](decisions-d53.md#d53) | Portfolio content and images are ported from `39bbe56` (`version-2` = `version-3`) | `d53` |
+| [D54](decisions-d54.md#d54) | The Slice 3 spike gate runs in parallel with Slice 2, in its own worktree | `d54` |
+| [D55](decisions-d55.md#d55) | Federation composes with TanStack Start when scoped to the client environment; Q2 closes | `d55` |
+| [D56](decisions-d56.md#d56) | `cn` is one `clsx` + `tailwind-merge` helper in `libs/shared/utils` | `d56` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.
