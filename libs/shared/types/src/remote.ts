@@ -19,6 +19,17 @@ export interface RemoteEntry {
   readonly entryUrl: string;
   /** The module the shell mounts, as the remote's `exposes` map names it. */
   readonly exposedModule: string;
+  /**
+   * Which deployment of the remote the shell is pointing at.
+   *
+   * ⚠️ **Added in Slice 4, and it is not decoration.** The architecture doc's
+   * *Error Reporting* asks for the MFE's deployment/version in every diagnostic
+   * payload, and its *Immutable Deployment Interaction* turns on the shell
+   * knowing which version it referenced when the failure happened — without it
+   * a rollback is guesswork about what was actually live. `dev` locally; Slice
+   * 8 supplies the real identifier per environment.
+   */
+  readonly version: string;
 }
 
 /**
