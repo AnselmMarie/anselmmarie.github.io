@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@portfolio/feature-shell": ["libs/features/shell/src/index.ts"],
+      "@portfolio/shared-config": ["libs/shared/config/src/index.ts"],
+      "@portfolio/shared-fixtures": ["libs/shared/fixtures/src/index.ts"],
+      "@portfolio/shared-types": ["libs/shared/types/src/index.ts"],
+      "@portfolio/shared-utils": ["libs/shared/utils/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "dist", ".output", ".nitro", "cdk.out"]
+}

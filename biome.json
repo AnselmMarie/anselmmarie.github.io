@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.13/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.14/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -11,8 +11,14 @@
       "**/*.tsx",
       "**/*.js",
       "**/*.jsx",
+      "**/*.mjs",
+      "**/*.cjs",
       "**/*.json",
-      "**/*.jsonc"
+      "**/*.jsonc",
+      "!**/routeTree.gen.ts",
+      "!**/.output",
+      "!**/.nitro",
+      "!**/cdk.out"
     ]
   },
   "formatter": {
@@ -39,10 +45,7 @@
               [
                 ":NODE:",
                 {
-                  "source": [
-                    ":PACKAGE:",
-                    "!@portfolio/**"
-                  ]
+                  "source": [":PACKAGE:", "!@portfolio/**"]
                 }
               ],
               ":BLANK_LINE:",

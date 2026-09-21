@@ -1,7 +1,7 @@
 /**
  * Dependency constraints for `@nx/enforce-module-boundaries`.
  *
- * This table is the *mechanism* behind three decisions in
+ * This table is the *mechanism* behind four decisions in
  * docs/planning/mfe-architecture/decisions.md that are otherwise only
  * conventions a reviewer has to catch by eye:
  *
@@ -26,7 +26,7 @@
  *   type:feature         libs/features/*           the code
  *   type:ui-components   libs/ui/components        hand-written
  *   type:ui-primitives   libs/ui/primitives        shadcn CLI output
- *   type:ui-theme        libs/ui/theme             the Tailwind preset
+ *   type:ui-theme        libs/ui/theme             the theme stylesheet (D51)
  *   type:shared          libs/shared/*             types, config, fixtures, utils
  *   type:infra           infra                     the CDK project
  *
@@ -116,7 +116,8 @@ export const depConstraints = [
     onlyDependOnLibsWithTags: ['type:ui-theme', 'type:shared'],
   },
   // The theme is the root of the design system. It imports nothing internal,
-  // which is what lets every app extend one preset (D26) without a cycle.
+  // which is what lets every app @import one stylesheet (D26, D51) without a
+  // cycle.
   {
     sourceTag: 'type:ui-theme',
     onlyDependOnLibsWithTags: [],
