@@ -1,0 +1,20 @@
+{
+  "name": "@portfolio/shell",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@portfolio/feature-shell": "workspace:*",
+    "@portfolio/shared-config": "workspace:*",
+    "@portfolio/shared-fixtures": "workspace:*",
+    "@portfolio/shared-types": "workspace:*",
+    "@portfolio/shared-utils": "workspace:*",
+    "@tanstack/react-router": "^1.170.38",
+    "@tanstack/react-start": "^1.168.56",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "nitro": "^3.0.260903-beta"
+  }
+}
