@@ -1,0 +1,26 @@
+{
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "name": "infra",
+  "projectType": "application",
+  "sourceRoot": "infra/src",
+  "tags": ["type:infra", "scope:infra"],
+  "targets": {
+    "synth": {
+      "executor": "nx:run-commands",
+      "outputs": ["{projectRoot}/cdk.out"],
+      "options": { "command": "cdk synth", "cwd": "infra" }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": { "command": "tsc --noEmit -p tsconfig.json", "cwd": "infra" }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": { "command": "eslint . --max-warnings 0", "cwd": "infra" }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": { "command": "vitest run", "cwd": "infra" }
+    }
+  }
+}
