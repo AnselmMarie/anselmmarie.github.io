@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+
+/*
+ * D26 / D51 — the same one theme the shell imports, not a second copy. This is
+ * what lets the Header and the shell agree on a color and on the header-height
+ * token (D43) at build time rather than across the federation boundary.
+ *
+ * ⚠️ Standalone only. When the Header renders inside the shell, the shell's
+ * stylesheet is already on the page; this file exists so `vite dev` in this
+ * app is a real, styled surface rather than unstyled markup.
+ */
+@import '@portfolio/ui-theme/theme.css';

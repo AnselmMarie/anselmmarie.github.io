@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "feature-header",
+  "projectType": "library",
+  "sourceRoot": "libs/features/header/src",
+  "tags": ["type:feature", "scope:header"]
+}

@@ -29,6 +29,12 @@
     },
     {
       "path": "./infra"
+    },
+    {
+      "path": "./libs/features/header"
+    },
+    {
+      "path": "./apps/header"
     }
   ]
 }
