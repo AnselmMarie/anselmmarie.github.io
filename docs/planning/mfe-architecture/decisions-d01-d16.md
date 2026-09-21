@@ -62,6 +62,13 @@ available complexity multiplier, and deliberately declined. See
 `CONTENTFUL_SPACE_ID`, `CONTENTFUL_ACCESS_TOKEN`, `CONTENTFUL_ENVIRONMENT` are Worker
 environment variables and secrets.
 
+⚠️ **Superseded in form by [D31](./decisions-d17-d32.md#d31), 2026-09-20** — the same note
+[D11](#d11) carries, and it was missed here. The host is AWS, so the three variables are
+**Lambda environment configuration**, held in the deployment environment and injected by the
+CDK stack ([D37](./decisions-d33-d41.md#d37)); "Worker environment variables" names a runtime
+this plan no longer uses. What is unchanged, and is the whole point of the entry: the secrets
+live wherever the function runs and **never in the repo or in GitHub**.
+
 <a id="d11"></a>**D11 — The public repo carries only safe example configuration.** An
 example env file with placeholders, never a real value. This repo is public, which is
 the whole reason D7 and D10 exist.

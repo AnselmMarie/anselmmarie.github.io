@@ -46,6 +46,13 @@ current site was just deleted from this branch:
    lives on `master` / `version-3`. [D6](./decisions-d01-d16.md#d6) is unchanged — nothing in this plan reaches
    for Next.js, and no v3 component is ported. What is reused is what the site *looks
    like*.
+
+   ⚠️ **"`master` / `version-3`" is precise only about the *remote* master.** Established
+   2026-09-21 by [D53](./decisions-d53.md#d53): `version-2` and `version-3` are the same
+   commit `39bbe56`, which is an ancestor of `origin/master` with byte-identical content —
+   but the **local `master` branch has diverged and is stale**, missing the Pokémon Pet Shop
+   item. Read the design from the deployed site or from `version-3`; never from local
+   `master`.
 2. **The fallback states have no v3 equivalent** and are still invented, because a site
    with no remotes has no remote-failure UI. Slice 4's completion report still flags each
    fallback's visual treatment, one line each. That is the residue of Q1, and it is the
@@ -62,7 +69,7 @@ architectural question. The old Pages site remains on `master` until the new one
 nothing in this plan depends on when it is switched off.
 
 <a id="d36"></a>**D36 — All four surfaces stay federated and client-rendered.** Closes
-[Q9](./questions-closed.md#q9), choosing its option 1. [D8](./decisions-d01-d16.md#d8), [D9](./decisions-d01-d16.md#d9) and [D32](./decisions-d17-d32.md#d32)
+[Q9](./questions-closed-q9-q16.md#q9), choosing its option 1. [D8](./decisions-d01-d16.md#d8), [D9](./decisions-d01-d16.md#d9) and [D32](./decisions-d17-d32.md#d32)
 all hold unchanged, and federated SSR stays declined.
 
 ⚠️ **The SEO consequence is now an accepted cost, not an open question.**
@@ -75,15 +82,16 @@ would have bought indexability by removing half the architecture being demonstra
 Do not reopen this as a bug report. If it is ever reopened it is as a deliberate reversal,
 against [D33](#d33), with a new numbered decision.
 
-⚠️ **One half of the cost may be recoverable without touching this decision.**
-[Q14](./open-questions.md#q14) asks whether the shell should server-render *metadata* —
-`<title>`, description, Open Graph — from the same fixtures, per route, while the visible
-content still arrives via federation exactly as decided here. That would fix link previews
-without federating anything. It is a question about D36's blast radius, not a challenge to
-D36.
+✅ **One half of the cost was recovered, without touching this decision.**
+[Q14](./questions-closed-q9-q16.md#q14) asked whether the shell should server-render
+*metadata* — `<title>`, description, Open Graph — from the same fixtures, per route, while
+the visible content still arrives via federation exactly as decided here. It closed on
+2026-09-20 as [D48](./decisions-d48-d52.md#d48): **yes.** Link previews work; nothing is
+federated; D36 stands unchanged. It was a question about D36's blast radius, not a challenge
+to it.
 
 <a id="d37"></a>**D37 — AWS CDK describes the infrastructure.** Closes
-[Q10](./questions-closed.md#q10). CDK in TypeScript, as its own registered Nx project in the
+[Q10](./questions-closed-q9-q16.md#q10). CDK in TypeScript, as its own registered Nx project in the
 monorepo, covering the S3 buckets, the CloudFront distribution and its cache behaviors, the
 Lambda function and its invocation path, and the IAM roles.
 
@@ -142,6 +150,10 @@ is a prop-drilling wrapper by another name.
 <a id="d41"></a>**D41 — The fixtures carry real portfolio copy, and the MVP is publishable.**
 Closes [Q6](./questions-closed.md#q6), the last open question in the plan. Maintainer's call,
 2026-09-20.
+
+➡️ **Where that copy comes from is [D53](./decisions-d53.md#d53)** (2026-09-21): commit
+`39bbe56`'s `src/store/*.data.ts` and `public/images/portfolio/**` — nine items, 65
+referenced images, none missing.
 
 `libs/shared/fixtures` is not placeholder data. It holds the site's **actual** portfolio
 content — titles, summaries, case-study copy, image paths — ported from the live v3 site,

@@ -65,11 +65,17 @@ buys reproducibility this project has no evidence of needing, and a local dev co
 adds a layer between the maintainer and five Vite dev servers that already start with one
 command.
 
-⚠️ **Premise check, 2026-09-20 — see [Q16](./questions-closed.md#q16).** "The Actions runner
-already pins Node and pnpm" describes a state this repo does **not** yet have: no `.nvmrc`,
-no `engines`, no `packageManager`, and no workflow until Slice 8. The reasoning is sound and
-Slice 1 makes it true; it is flagged here so the decision is not defended on an untrue
-premise if someone reopens Docker.
+⚠️ **Premise check, 2026-09-20 — see [Q16](./questions-closed-q9-q16.md#q16).** "The Actions
+runner already pins Node and pnpm" described a state this repo did **not** have when D24 was
+taken: no `.nvmrc`, no `engines`, no `packageManager`, and no workflow.
+
+✅ **Resolved: three of the four now exist.** [D45](./decisions-d42-d47.md#d45) added `.nvmrc`
+(Node 22) and [D46](./decisions-d42-d47.md#d46) pinned `packageManager` to pnpm 10.33.0 and
+`engines` to Node 22 — all three are on disk and were verified there on 2026-09-20. The
+workflow itself is still [Slice 8](./slices/08-independent-deployment.md)'s, and it reads
+`.nvmrc` rather than restating the version. So the premise is now true of the repo and
+pending only on the workflow that consumes it; the decision no longer rests on anything
+untrue.
 
 ⚠️ **Reasoning revised 2026-09-20 under [D31](#d31).** The original entry also argued "the
 runtime is serverless, so no container runs in production", which was true of Workers and
@@ -88,6 +94,13 @@ is **never hand-edited** — behavior changes go into a wrapper in `components`.
 extends it rather than declaring its own colors, so the four remotes cannot drift apart
 visually.
 
+⚠️ **Superseded in form by [D51](./decisions-d48-d52.md#d51), 2026-09-20.** "Preset" was a
+Tailwind 3 word: this entry was written assuming a `tailwind.config.ts` object each app
+spreads. Tailwind 4 configures in CSS, so the artifact is a **stylesheet** with an `@theme`
+block that each app `@import`s, and the content globs are `@source` declarations. **The rule
+is unchanged** — one theme, one place, every app consumes it rather than declaring its own
+colors. Only the file type moved.
+
 <a id="d27"></a>**D27 — `apps/*` are skeletons; the logic lives in `libs/features/*`.**
 An app carries config, an entry point, routes, and a mount. Nothing else. See
 [model.md §2](./model.md#2-workspace-shape) for the two consequences that make this worth
@@ -98,7 +111,12 @@ enforcing.
 `apps/shell/components/mfe-error-boundary/` before [D27](#d27) existed. The doc's actual
 requirement is that the boundary and its fallbacks are **shell-owned and never federated**,
 which is a statement about ownership, not about which directory they sit in, and it holds
-unchanged from a feature lib. Applied in Slice 4.
+unchanged from a feature lib.
+
+✅ **Already applied.** The doc was corrected when it was committed (`031b8fc`), not deferred
+to Slice 4 — it carries both the `libs/features/shell/src/mfe-error-boundary/` tree and the
+ownership-not-directory sentence today. Slice 4 **verifies** the path and does not rewrite
+it.
 
 <a id="d29"></a>**D29 — Reused non-UI code lives in `libs/shared/*`, one package per
 concern.** Types, config, fixtures, utils — never one grab-bag lib. Extracted at the
@@ -141,7 +159,7 @@ after [D30](#d30).
 ⚠️ **Recorded plainly so it is not rediscovered later: this move does not unblock anything
 in the current architecture.** [D30](#d30) only blocked federated SSR, which
 [D9](./decisions-d01-d16.md#d9) had already declined. What the move buys is the *option* of federated SSR — see
-[Q9](./questions-closed.md#q9) — and it carries real costs: Lambda cold starts where Workers
+[Q9](./questions-closed-q9-q16.md#q9) — and it carries real costs: Lambda cold starts where Workers
 had effectively none, and a materially larger infrastructure surface (S3 buckets, a
 CloudFront distribution, cache invalidation, IAM, a Lambda adapter) in place of one
 `wrangler deploy`. Those costs are accepted, not overlooked.
@@ -151,7 +169,7 @@ request to introduce it, and the host change is not that request. Lambda runs No
 `@module-federation/node` now makes server-side federation *technically possible* — but
 until it is explicitly adopted, the shell SSRs its own chrome and the remotes render on the
 client. The consequence is recorded in [model.md §4](./model.md#4-ssr-model) and was settled by
-[Q9](./questions-closed.md#q9)'s closure as [D36](./decisions-d33-d41.md#d36) rather than by
+[Q9](./questions-closed-q9-q16.md#q9)'s closure as [D36](./decisions-d33-d41.md#d36) rather than by
 inference.
 
 ## The open questions closed (2026-09-20)

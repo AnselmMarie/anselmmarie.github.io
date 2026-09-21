@@ -1,6 +1,6 @@
 # Slice 9 — Playwright over the composed application
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slice 8
+**Status:** not started · **Visible?** — none · **Depends on:** Slice 8
 **Design:** not applicable — asserts behavior, not appearance
 
 The last slice, and the only one that can verify the claim the whole architecture rests on:
@@ -18,6 +18,13 @@ that one MFE failing does not take down the others.
   shared-design-system component per remote, not merely that the element is present — an
   element can be present and completely unpainted, which is exactly how
   [R3](../risks.md#r3) fails.
+- **[D51](../decisions-d48-d52.md#d51)** — ⚠️ **R3 is a demonstrated failure in this repo, not
+  a theoretical one.** It fired in Slice 1: `libs/features/shell` is a symlinked workspace
+  package, Tailwind 4 skips `node_modules` when auto-detecting sources, and the page rendered
+  **completely unstyled with a green build**. It was found by looking at the screen — which
+  is the capability this slice is standing in for. Every remote whose classes depend on an
+  `@source` line in `libs/ui/theme` is one forgotten line away from the same thing, so the
+  computed-style assertion is the only automated check in the plan that catches it.
 
 ## Open questions blocking this slice
 

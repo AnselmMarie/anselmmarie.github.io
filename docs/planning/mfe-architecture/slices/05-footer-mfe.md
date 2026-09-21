@@ -16,10 +16,21 @@ deliberately the smallest of the three.
 - **[D8](../decisions-d01-d16.md#d8)** / **[D36](../decisions-d33-d41.md#d36)** — client-side load and
   hydrate. No SSR for the remote, and that is now settled rather than provisional.
 - **[D19](../decisions-d17-d32.md#d19)** — registered in the runtime registry, same as the header.
-- **[D26](../decisions-d17-d32.md#d26)** — extends the shared Tailwind preset. It must not ship its
-  own theme.
+- **[D26](../decisions-d17-d32.md#d26)** — `@import`s the shared theme stylesheet
+  ([D51](../decisions-d48-d52.md#d51) changed the artifact, not the rule). It must not ship
+  its own theme.
 - **[D27](../decisions-d17-d32.md#d27)** — `apps/footer` is a skeleton; the footer lives in
   `libs/features/footer`.
+- **[D21](../decisions-d17-d32.md#d21)** / **[D50](../decisions-d48-d52.md#d50)** — the packages
+  are `@portfolio/footer` and `@portfolio/feature-footer`; their `project.json` names are the
+  bare `footer` and `feature-footer`, which is what the gate command below uses.
+- **[D44](../decisions-d42-d47.md#d44)** — both projects are tagged `scope:footer`, `type:app`
+  and `type:feature` respectively. ⚠️ **Slice 4 creates and tags them**; if either arrives
+  untagged, the boundary rule is silently inert for it — say so rather than proceeding.
+- **[D51](../decisions-d48-d52.md#d51)** — Tailwind 4 in CSS: `src/styles.css` `@import`s
+  `@portfolio/ui-theme`. There is no `tailwind.config.ts`.
+- **[D42](../decisions-d42-d47.md#d42)** — Vite `base` is set to this remote's deployed origin,
+  copying the pattern Slice 3 established. Invisible on localhost, broken behind CloudFront.
 
 - **[D34](../decisions-d33-d41.md#d34)** — the footer is built to match the **live v3 site's**
   footer. Its content and layout are no longer invented, so the report describes divergences
@@ -49,8 +60,10 @@ for the first time with two remotes in play.
 
 **`apps/footer`** — skeleton
 
-- `project.json`, `vite.config.ts` with the MF plugin and the `exposes` map,
-  `tailwind.config.ts`, `src/main.tsx`, `src/bootstrap.tsx`
+- `vite.config.ts` with the MF plugin, the `exposes` map and `base`
+  ([D42](../decisions-d42-d47.md#d42)); `src/styles.css`; `src/main.tsx`; `src/bootstrap.tsx`
+- ⚠️ `project.json` and `package.json` are **pre-created and tagged by Slice 4** — fill them
+  in, do not create them, and do not touch the root manifests
 
 **`libs/features/footer`**
 

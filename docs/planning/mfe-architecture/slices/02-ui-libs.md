@@ -11,8 +11,21 @@ code is ported ([D6](../decisions-d01-d16.md#d6))
 - **[D25](../decisions-d17-d32.md#d25)** — `libs/ui/primitives` holds shadcn CLI output and is
   **never hand-edited**; `libs/ui/components` holds everything written by hand. A primitive
   that needs different behavior gets a wrapper, not a patch.
-- **[D26](../decisions-d17-d32.md#d26)** — one Tailwind preset and one CSS-variable theme, in
-  `libs/ui/theme`. Every app extends it rather than declaring its own colors.
+- **[D26](../decisions-d17-d32.md#d26)** — one theme, in `libs/ui/theme`. Every app consumes it
+  rather than declaring its own colors. ⚠️ **The artifact changed under
+  [D51](../decisions-d48-d52.md#d51):** Tailwind 4 is configured in CSS, so this is a
+  stylesheet with an `@theme` block that each app `@import`s — **not** a `tailwind.config.ts`
+  preset object each app spreads. D26's substance is untouched; only its shape is.
+- **[D21](../decisions-d17-d32.md#d21)** — `@portfolio/*` package scope. The three packages this
+  slice creates are `@portfolio/ui-theme`, `@portfolio/ui-primitives` and
+  `@portfolio/ui-components`, with [D50](../decisions-d48-d52.md#d50)'s bare names
+  (`ui-theme`, `ui-primitives`, `ui-components`) in their `project.json`.
+- **[D44](../decisions-d42-d47.md#d44)** — ⚠️ **tag all three projects.**
+  `@nx/enforce-module-boundaries` is **silently inert** for a project with no matching tag: it
+  is unconstrained and the rule passes rather than failing. `ui-theme` is `type:ui-theme`,
+  `ui-primitives` is `type:ui-primitives`, `ui-components` is `type:ui-components`, and all
+  three are `scope:shared`. Untagged, [D25](../decisions-d17-d32.md#d25)'s
+  primitives/components split is a convention again.
 - **[D29](../decisions-d17-d32.md#d29)** — this is UI, so it is `libs/ui/*` and not
   `libs/shared/*`. The two hierarchies do not mix.
 - **[D40](../decisions-d33-d41.md#d40)** — primitives are pulled **on demand, never
@@ -29,10 +42,19 @@ code is ported ([D6](../decisions-d01-d16.md#d6))
 2026-09-20, as [D40](../decisions-d33-d41.md#d40) and [D38](../decisions-d33-d41.md#d38). The slice keeps
 its original size — the ~15 Storybook files and their coverage gate are not built.
 
-⚠️ **The Q8 decline hands an obligation forward.** [R3](../risks.md#r3) — Tailwind content
-globs tree-shaking a lib's classes, which fails silently by rendering unstyled — now has no
-browser-level check until Slice 9. This slice's completion report must say that plainly, so
-the gap travels with the decision rather than being rediscovered.
+⚠️ **The Q8 decline hands an obligation forward.** [R3](../risks.md#r3) — a lib's classes
+tree-shaken away, which fails silently by rendering unstyled — has no browser-level check
+until Slice 9. This slice's completion report must say that plainly, so the gap travels with
+the decision rather than being rediscovered.
+
+⚠️ **R3 is not hypothetical: it fired in Slice 1.** Tailwind auto-detects sources from the
+Vite root and skips `node_modules`, and `@portfolio/feature-shell` is a symlinked workspace
+package — so every class in the shell's layout resolved to nothing and the page rendered
+**completely unstyled, with a green build and no warning**. It was caught by looking at the
+screen. Slice 1 fixed it with an `@source` directive in `apps/shell/src/styles.css`; **this
+slice owns moving that declaration into `libs/ui/theme`** so one stylesheet covers every lib
+and no app has to remember. Each new lib still needs its own line, and a missing line is
+still silent.
 
 ## ⚠️ This slice owes a design-system rule
 
@@ -63,9 +85,15 @@ outcome: this slice changes where the styling comes from, not what it looks like
 
 **`libs/ui/theme`**
 
-- `project.json`, the Tailwind preset, the CSS-variable theme (light and dark)
-- The content-glob list, owned here rather than restated per app — see
-  [R3](../risks.md#r3)
+- `project.json`, `package.json`, and the theme stylesheet: an `@theme` block holding the
+  CSS-variable theme (light and dark). No `tailwind.config.ts`
+  ([D51](../decisions-d48-d52.md#d51))
+- **The `@source` declarations**, owned here rather than restated per app — one line per lib
+  whose classes must survive. This replaces Slice 1's interim declaration in
+  `apps/shell/src/styles.css`; see [R3](../risks.md#r3)
+- The **header-height token** [Slice 3](./03-federation-header.md) needs for
+  [D43](../decisions-d42-d47.md#d43) may land here or there — whichever, it is one token in one
+  place, because the Header and Homepage remotes must agree on the number at build time
 
 **`libs/ui/primitives`**
 
@@ -82,9 +110,11 @@ outcome: this slice changes where the styling comes from, not what it looks like
 
 **Modified**
 
-- `apps/shell/tailwind.config.ts` — extends the preset instead of standing alone
+- `apps/shell/src/styles.css` — `@import`s the theme stylesheet instead of declaring its own
+  `@theme` and `@source` lines ([D51](../decisions-d48-d52.md#d51))
 - `libs/features/shell` — imports from `@portfolio/ui-components`
-- Root manifests for the three new projects
+- Root manifests for the three new projects — `pnpm-workspace.yaml` already globs
+  `libs/ui/*`, so this is `tsconfig.base.json` paths plus one `pnpm install`
 
 ## Gates
 
@@ -96,10 +126,12 @@ Plus a screenshot, and a before/after if the page shifted at all.
 
 ## Notes for whoever builds this
 
-- **The glob list is the trap.** A class used only inside `libs/ui/components` is absent
-  from an app's CSS unless that app's content globs reach the lib. It fails by rendering
-  unstyled, not by erroring, so it survives a green build. Put the globs in the preset and
-  verify by rendering a lib-only class in the shell.
+- **The `@source` list is the trap, and it has already caught this project once.** A class
+  used only inside `libs/ui/components` is absent from the CSS unless something declares that
+  directory as a source. It fails by rendering unstyled, not by erroring, so it survives a
+  green build, a green typecheck and a green test run — see the R3 note above for how Slice 1
+  hit exactly this. Put the declarations in the theme stylesheet and **verify by rendering a
+  lib-only class in the shell and looking at it**, not by reading the build output.
 - **Theme variables are injected once, by the shell.** A remote that ships its own copy of
   the theme can repaint the whole page. Slice 3 is where that first becomes possible.
 - Keep primitives boring. Every wrapper added now is a wrapper to maintain against future

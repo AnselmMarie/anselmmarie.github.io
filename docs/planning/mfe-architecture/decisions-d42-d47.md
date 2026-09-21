@@ -19,7 +19,7 @@ renumbered and never deleted, are in [decisions.md](./decisions.md).
 
 <a id="d42"></a>**D42 — Content images travel in the props payload from the shell; only
 component-owned UI assets ship with a remote.** Closes
-[Q12](./questions-closed.md#q12). Two rules, because there are two kinds of asset and they
+[Q12](./questions-closed-q9-q16.md#q12). Two rules, because there are two kinds of asset and they
 have opposite answers.
 
 **1. Content images — portfolio photos, thumbnails — live with the shell** and their URL is
@@ -45,7 +45,7 @@ Homepage and Portfolio Item bundles, which two remotes needing one image otherwi
 component looks — ship with the remote**, and each remote's Vite `base` **must** be set to
 its deployed CloudFront URL.
 
-This is where [Q12](./questions-closed.md#q12)'s dev/prod trap actually lives, and it does not
+This is where [Q12](./questions-closed-q9-q16.md#q12)'s dev/prod trap actually lives, and it does not
 go away under rule 1. A relative asset URL in a federated remote resolves against the
 **page's** origin, not the bundle's. On localhost they are the same and every check passes;
 behind CloudFront, with the remote under a versioned key prefix ([R12](./risks.md#r12)),
@@ -53,7 +53,7 @@ it 404s. [Slice 3](./slices/03-federation-header.md) sets `base` and the other r
 the pattern.
 
 <a id="d43"></a>**D43 — The Header navigates by anchor, so no router is shared.** Closes
-[Q13](./questions-closed.md#q13). The Header's links are in-page jumps to sections, not route
+[Q13](./questions-closed-q9-q16.md#q13). The Header's links are in-page jumps to sections, not route
 changes, which removes the coupling the question was about: **the shared-dependency set
 stays `react`, `react-dom`, and `@portfolio/ui-*`.** No router singleton, no `onNavigate`
 prop, no injected `Link`. The Header emits plain `<a href="#id">`.
@@ -82,7 +82,7 @@ intercepts same-origin anchor clicks with one listener — still without the rem
 a router.
 
 <a id="d44"></a>**D44 — ESLint owns correctness and the module boundaries; Biome owns
-formatting.** Closes [Q11](./questions-closed.md#q11). The maintainer added
+formatting.** Closes [Q11](./questions-closed-q9-q16.md#q11). The maintainer added
 `eslint.config.mjs` on 2026-09-20 with `@nx/enforce-module-boundaries` at `error`, which is
 the half that matters: [D27](./decisions-d17-d32.md#d27) and [D29](./decisions-d17-d32.md#d29) are import-graph rules and now have a
 mechanism rather than a convention. `biome.json` stays as the formatter and import
@@ -90,12 +90,12 @@ organizer.
 
 ⚠️ **As committed, neither file ran correctly**, and both were repaired the same day under
 [D46](#d46) — `tools/eslint/module-boundaries.mjs` now exists and the plugins are declared.
-[Q15](./questions-closed.md#q15) closed with that repair. Slice 1 no longer owns the repair;
+[Q15](./questions-closed-q9-q16.md#q15) closed with that repair. Slice 1 no longer owns the repair;
 it owns installing and proving it, and tagging every project so the constraints are not
 silently inert.
 
 <a id="d45"></a>**D45 — Node 22, pinned by `.nvmrc`.** Closes
-[Q16](./questions-closed.md#q16) in substance. `.nvmrc` (22) and `.npmrc` were added
+[Q16](./questions-closed-q9-q16.md#q16) in substance. `.nvmrc` (22) and `.npmrc` were added
 2026-09-20, so [D24](./decisions-d17-d32.md#d24)'s premise is on its way to being true.
 
 One residue for [Slice 8](./slices/08-independent-deployment.md), which is not a decision:
@@ -104,7 +104,7 @@ its workflow must read the same `.nvmrc` rather than restating a version. The ot
 which pinned pnpm 10.33.0 and Node 22.
 
 <a id="d46"></a>**D46 — The cosmikata tooling is pruned; 15 rules are archived, not deleted.**
-Closes [Q15](./questions-closed.md#q15) and discharges [R10](./risks.md#r10)'s mitigation,
+Closes [Q15](./questions-closed-q9-q16.md#q15) and discharges [R10](./risks.md#r10)'s mitigation,
 which had no owner until now. Done 2026-09-20.
 
 **Archived to `.claude/rules-archive/`** — 15 of 47, leaving 32 active. They describe a

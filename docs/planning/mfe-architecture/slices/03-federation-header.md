@@ -11,8 +11,22 @@ an unproven seam is not.
 ## Decisions that bind this slice
 
 - **[D1](../decisions-d01-d16.md#d1)** — the remote is a standalone React + Vite app.
-- **[D2](../decisions-d01-d16.md#d2)** — the shell consumes it; it knows nothing of the shell
-  beyond the props it receives.
+- **[D2](../decisions-d01-d16.md#d2)** — the shell consumes the remotes, and **the remotes do
+  not know about each other.** (That the Header knows nothing of the *shell* beyond its props
+  is true, but it is [D15](../decisions-d01-d16.md#d15) and
+  [D42](../decisions-d42-d47.md#d42)'s claim, not D2's.)
+- **[D21](../decisions-d17-d32.md#d21)** — `@portfolio/*` scope: this slice creates
+  `@portfolio/header` and `@portfolio/feature-header`, whose `project.json` files carry
+  [D50](../decisions-d48-d52.md#d50)'s bare names `header` and `feature-header`.
+- **[D44](../decisions-d42-d47.md#d44)** — ⚠️ **tag both projects.** `apps/header` is
+  `type:app` + `scope:header`; `libs/features/header` is `type:feature` + `scope:header`.
+  The `scope:header` pair is what makes D2 a lint error rather than a convention — untagged,
+  a remote importing a sibling remote passes.
+- **[D42](../decisions-d42-d47.md#d42)** — content images arrive as props, but
+  **component-owned UI assets ship with the remote**, so this slice sets Vite `base` to the
+  remote's deployed origin and the other three copy the pattern. A relative asset URL
+  resolves against the *page's* origin — the shell's — which is identical on localhost and
+  wrong behind CloudFront.
 - **[D8](../decisions-d01-d16.md#d8)** / **[D9](../decisions-d01-d16.md#d9)** / **[D36](../decisions-d33-d41.md#d36)**
   — the shell SSRs the page and the remote loads and hydrates on the client. **No federated
   SSR.** Not as a first pass, not as an experiment. D36 closed the question of whether to
@@ -46,12 +60,12 @@ an unproven seam is not.
 
 Two more were raised on 2026-09-20 and both closed the same day:
 
-- **[Q13](../questions-closed.md#q13) → [D43](../decisions-d42-d47.md#d43)** — ⚠️ **the Header
+- **[Q13](../questions-closed-q9-q16.md#q13) → [D43](../decisions-d42-d47.md#d43)** — ⚠️ **the Header
   navigates by anchor, not by route.** Its links are in-page jumps to sections. So the
   shared-dependency set this slice writes stays `react`, `react-dom`, `@portfolio/ui-*` —
   **no router singleton**, no `onNavigate` prop, no injected `Link`. The Header emits plain
   `<a href="#id">`, and `/#id` when it is not on the homepage.
-- **[Q12](../questions-closed.md#q12) → [D42](../decisions-d42-d47.md#d42)** — content images
+- **[Q12](../questions-closed-q9-q16.md#q12) → [D42](../decisions-d42-d47.md#d42)** — content images
   arrive as props from the shell, so a remote never builds a content URL. But
   **component-owned** UI assets ship with the remote, so ⚠️ **this slice sets Vite `base` to
   the remote's deployed CloudFront URL** and the other remotes copy the pattern. A relative
@@ -68,7 +82,12 @@ Two more were raised on 2026-09-20 and both closed the same day:
    must come out untransformed by the federation plugin; if federation has leaked into the
    server bundle, this is where it shows.
    ⚠️ Note what the spike does **not** need to prove any more: that the server can load a
-   remote. It cannot, and it is not meant to ([D32](../decisions-d17-d32.md#d32)).
+   remote. It is **declined, not impossible** — the flat "cannot" was
+   [D30](../decisions-d17-d32.md#d30)'s finding about `workerd`, and
+   [D31](../decisions-d17-d32.md#d31) retired that runtime. Lambda runs Node, so
+   [D32](../decisions-d17-d32.md#d32) keeps federated SSR out **by choice**. The spike must
+   still confirm federation has not leaked into the SSR build, which is a different claim
+   from "it could not have".
 3. React confirmed as a single instance (a hook in the remote, state that survives a
    re-render from the shell).
 4. ⚠️ **An asset referenced by the remote resolves from the remote's origin, not the
@@ -95,12 +114,23 @@ fallback yet, which is Slice 4.
 **Stubbed:** the header's content is hardcoded in its feature lib. Navigation targets may
 point at routes that do not exist yet.
 
+⚠️ **Hardcoded here, deliberately, and it is not a [D22](../decisions-d17-d32.md#d22)
+violation.** D22 makes `libs/shared/fixtures` the MVP's content source; the header's labels
+have exactly one consumer, and [D29](../decisions-d17-d32.md#d29)'s threshold is extraction at
+the **second** consumer, not in anticipation of one. If a second surface ever needs the nav
+labels they move to the fixtures then. Recorded so the choice reads as a decision rather than
+an oversight.
+
 ## Files this slice creates and modifies
 
 **`apps/header`** — skeleton only
 
-- `project.json`, `vite.config.ts` with the MF plugin, `tailwind.config.ts` extending the
-  preset, `src/main.tsx` (standalone dev entry), `src/bootstrap.tsx`
+- `project.json`, `package.json`, `src/main.tsx` (standalone dev entry), `src/bootstrap.tsx`
+- `src/styles.css` — `@import`s `@portfolio/ui-theme`'s stylesheet. No `tailwind.config.ts`
+  ([D51](../decisions-d48-d52.md#d51))
+- `vite.config.ts` with the MF plugin **and `base` set to the remote's deployed origin**
+  ([D42](../decisions-d42-d47.md#d42)). ⚠️ Named here because it is one line that is invisible
+  on localhost and breaks every component-owned asset in production
 - The `exposes` map, pointing at `@portfolio/feature-header`
 - The `shared` config: `react`, `react-dom`, `@portfolio/ui-components`,
   `@portfolio/ui-theme`

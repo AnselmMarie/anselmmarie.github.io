@@ -35,12 +35,13 @@ libs/features/portfolio-item
 
 libs/ui/primitives      shadcn/ui output — the CLI writes here, nowhere else
 libs/ui/components      hand-written components, composed from primitives
-libs/ui/theme           the Tailwind preset + CSS-variable theme everything shares
+libs/ui/theme           the theme stylesheet everything imports (@theme + @source)
 
 libs/shared/types       content shapes, remote contracts
 libs/shared/config      the remote registry + environment-specific remote URLs
-libs/shared/fixtures    the site's real portfolio copy, ported from v3 (D41) —
-                        moved to Contentful by a later plan, not deleted as placeholder
+libs/shared/fixtures    the site's real portfolio copy, ported from commit 39bbe56
+                        (D41, D53) — moved to Contentful by a later plan, not
+                        deleted as placeholder
 libs/shared/utils       cross-cutting helpers
 
 infra                   the AWS CDK app and stack, its own Nx project (D37)
@@ -150,7 +151,7 @@ Three consequences that matter for a portfolio site:
 This is a property of client-side-only federation, not of the host — it was equally true on
 Cloudflare Workers.
 
-⚠️ **This is an accepted cost, not an open question.** [Q9](./questions-closed.md#q9) asked
+⚠️ **This is an accepted cost, not an open question.** [Q9](./questions-closed-q9-q16.md#q9) asked
 whether to trade it away and closed on 2026-09-20 as [D36](./decisions-d33-d41.md#d36): all four
 surfaces stay federated and client-rendered. The cheap alternative — de-federating the two
 content surfaces so they server-render as ordinary shell imports — was considered and
@@ -245,15 +246,19 @@ knows nothing of the shell beyond the props it receives.
 
 ## 7. shadcn/ui and Tailwind sharing strategy
 
-One preset, one theme, one CSS build path.
+One theme, one CSS build path. ⚠️ Under [D51](./decisions-d48-d52.md#d51) this is Tailwind 4,
+configured **in CSS** — there is no `tailwind.config.ts` anywhere in the workspace.
 
-- **`libs/ui/theme`** owns the Tailwind preset and the CSS-variable theme. The shell and
-  every remote extend that preset rather than declaring their own colors, so classes
-  generate from one source and no remote can drift its palette.
-- **Tailwind content globs** in each app must include the `libs/ui/*` and
-  `libs/features/*` paths it consumes, or classes used only inside a lib get tree-shaken
-  out of that app's CSS. This is the most common way a federated Tailwind setup breaks,
-  and it fails silently — the component renders unstyled rather than erroring.
+- **`libs/ui/theme`** owns the theme stylesheet: an `@theme` block holding the CSS
+  variables. The shell and every remote `@import` it rather than declaring their own colors,
+  so classes generate from one source and no remote can drift its palette.
+- **`@source` declarations** must cover every `libs/ui/*` and `libs/features/*` path a build
+  consumes, or classes used only inside a lib get tree-shaken out of the CSS. This is the
+  most common way a federated Tailwind setup breaks, it fails silently — the component
+  renders unstyled rather than erroring — and **it already happened here once**, in Slice 1
+  ([R3](./risks.md#r3)). Tailwind auto-detects from the build root and skips `node_modules`,
+  which is where every workspace lib is symlinked, so a lib is invisible until something
+  names it.
 - **CSS loading.** The theme's variables are injected once by the shell. Remotes ship
   component CSS but not a second copy of the theme, so a remote cannot repaint the page.
 - **Component ownership.** `libs/ui/primitives` holds shadcn output; `libs/ui/components`

@@ -5,7 +5,7 @@ React + Vite Module Federation remotes (Header, Footer, Homepage, Portfolio Item
 with shadcn/ui + Tailwind. Contentful is deliberately **not** in this plan; it gets its
 own plan directory after the MVP.
 
-**Status:** not started · **Created:** 2026-09-20 · **Branch:** `feat/amarie/new-design`
+**Status:** Slice 1 built, awaiting review · **Created:** 2026-09-20 · **Branch:** `feat/amarie/new-design`
 
 **Why this exists:** the architecture is the portfolio piece; the site is the vehicle
 ([D33](./decisions-d33-d41.md#d33)). That is the tiebreaker wherever a later choice is between
@@ -16,6 +16,11 @@ demonstrating the architecture and shaving complexity.
 **The live v3 site**, on the `version-3` / `master` branches and deployed today at
 `anselmmarie.github.io`. Nominated 2026-09-20 ([D34](./decisions-d33-d41.md#d34), closing
 [Q1](./questions-closed.md#q1)).
+
+**The content and images are ported from commit `39bbe56`** —
+[D53](./decisions-d53.md#d53), 2026-09-21. `version-2` and `version-3` are that same commit,
+and `origin/master` carries byte-identical content. ⚠️ **The local `master` branch is stale
+and is not a source**: it is missing the Pokémon Pet Shop item entirely.
 
 | Screen | Design | Status | Source |
 |---|---|---|---|
@@ -62,6 +67,20 @@ Contentful plan moves them; this one does not delete them.
 **Base in parallel:** none. The backend half is out of scope, so there is no other half
 for a base agent to scaffold.
 
+⚠️ **Two deliberate deviations from
+[plan-flow-order.md](../../../.claude/rules/plan-flow-order.md), recorded rather than
+silent:**
+
+- **The Layer column uses `fe` and `ops`, not the rule's `db` / `api` / `services` /
+  `fe-form` / `fe-list` / `connect`.** Four of those name backend layers this plan does not
+  have, and the form/list split presumes a data-entry shape no surface here takes — this is a
+  portfolio site, not a CRUD app. `fe` and `ops` are the honest tokens. Flagged because the
+  frontend-only exemption permits skipping backend *rows*, not inventing vocabulary.
+- **No slice deletes the placeholder data**, which the rule's worked example expects. Per
+  [D41](./decisions-d33-d41.md#d41) the fixtures hold the site's real published copy, so there
+  is nothing to delete: the Contentful plan **moves** them. The rule asks which slice removes
+  them; the answer is none, and that is a decision, not an omission.
+
 ## Slices
 
 | # | Scope | Layer | Visible? | Files | Status |
@@ -74,26 +93,37 @@ for a base agent to scaffold.
 | [6](./slices/06-homepage-mfe.md) | `apps/homepage` + `libs/features/homepage`, on fixtures | fe | ✅ screen | ~32 | not started |
 | [7](./slices/07-portfolio-item-mfe.md) | `apps/portfolio-item` + feature lib + `/portfolio/$slug` | fe | ✅ screen | ~34 | not started |
 | [8](./slices/08-independent-deployment.md) | GitHub Actions (`nx affected`) → CDK-described S3/CloudFront/Lambda, rollback | ops | — none | ~26 | not started |
-| [9](./slices/09-e2e-composition.md) | Playwright over the composed app, incl. failure isolation | fe | ✅ screen | ~16 | not started |
+| [9](./slices/09-e2e-composition.md) | Playwright over the composed app, incl. failure isolation | fe | — none | ~16 | not started |
 
-No run of three invisible slices. Every slice is under the 250-file cap from
-[plan-parallelization.md](../../../.claude/rules/plan-parallelization.md).
+Slices 8 and 9 are the plan's two invisible slices and they sit together at the end, so no
+run of three can form. ⚠️ **Slice 9 was marked `✅ screen` until 2026-09-20** — it adds no
+route and no component, and [plan-visible-first.md](../../../.claude/rules/plan-visible-first.md)
+is explicit that a passing test suite is not a visible surface. Every slice is under the
+250-file cap from [plan-parallelization.md](../../../.claude/rules/plan-parallelization.md).
 
 ## The other files in this directory
 
 - [model.md](./model.md) — the finalized architecture: stack, workspace shape, data flow,
   what reaches the browser versus what stays server-side, the Module Federation strategy,
   and the shadcn/Tailwind sharing strategy.
-- [decisions.md](./decisions.md) — the **index** to D1 through D47, split into four range
-  files when the log passed its 500-line cap. The source of truth; each slice restates only
-  the ones that bind it. Start at [D33](./decisions-d33-d41.md#d33): the project's purpose
-  is the tiebreaker the rest were decided against.
-- [open-questions.md](./open-questions.md) — the **two** still open, and only
-  [Q14](./open-questions.md#q14) wants an answer;
-  [Q2](./open-questions.md#q2) is a spike gate Slice 3 answers by building.
-- [questions-closed.md](./questions-closed.md) — the **fourteen** answered on 2026-09-20,
-  in full, each with its closure note. Split out of the file above when it passed the
-  500-line cap.
+- [decisions.md](./decisions.md) — the **index** to D1 through D52, split into range files
+  when the log passed its 500-line cap. The source of truth; each slice restates only the
+  ones that bind it. Start at [D33](./decisions-d33-d41.md#d33): the project's purpose is the
+  tiebreaker the rest were decided against. The ranges themselves:
+  [D1–D16](./decisions-d01-d16.md) (architecture),
+  [D17–D32](./decisions-d17-d32.md) (the plan's own, and the host change),
+  [D33–D41](./decisions-d33-d41.md) and [D42–D47](./decisions-d42-d47.md) (the two rounds of
+  questions closing), and [D48–D52](./decisions-d48-d52.md) (Q14's answer, and the four
+  things building Slice 1 forced), and [D53](./decisions-d53.md) (where the portfolio
+  content comes from).
+- [open-questions.md](./open-questions.md) — the **two** still open:
+  [Q2](./open-questions.md#q2), a spike gate Slice 3 answers by building rather than
+  deciding, and [Q17](./open-questions.md#q17), how the ported HTML descriptions render.
+  Q14 closed on 2026-09-20 as [D48](./decisions-d48-d52.md#d48).
+- [questions-closed.md](./questions-closed.md) — the **fifteen** answered on 2026-09-20,
+  in full, each with its closure note, with the index table to both halves. Split out of the
+  file above when it passed the 500-line cap, then split again at Q9 when closing Q14 pushed
+  it over: [Q9–Q16 are in their own file](./questions-closed-q9-q16.md).
 - [parallelization.md](./parallelization.md) — dependency graph, shared-file table, the
   one wave, and per-slice file counts.
 - [risks.md](./risks.md) — production considerations and failure modes.

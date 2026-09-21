@@ -7,6 +7,7 @@ this file covers everything else that can go wrong, and what the plan does about
 
 ## The risks that could end the plan
 
+<a id="r1"></a>
 ### R1 — Module Federation may not compose with TanStack Start's build
 
 **Likelihood:** unknown. **Impact:** total — it invalidates the composition model.
@@ -41,14 +42,26 @@ mismatch from a visitor's browser to a red build. Plus a Slice 9 E2E assertion t
 composes rather than only that it renders.
 
 <a id="r3"></a>
+⚠️ **R3 occurred on 2026-09-20, in Slice 1.** It is no longer a predicted risk; it is a
+demonstrated one, with a known trigger. Tailwind 4 auto-detects sources from the Vite root
+and skips `node_modules` — and every workspace lib is a symlink in `node_modules` — so the
+shell's layout classes resolved to nothing and the page rendered **completely unstyled with
+a green build, a green typecheck and a green test run**. It was caught by looking at the
+screen. The fix is an `@source` declaration per lib ([D51](./decisions-d48-d52.md#d51)), held
+in `libs/ui/theme` from [Slice 2](./slices/02-ui-libs.md); the automated check is
+[Slice 9](./slices/09-e2e-composition.md)'s computed-style assertion, which is the only one
+in the plan. **Every new lib is one forgotten line away from a repeat.**
+
 
 ### R3 — Tailwind classes tree-shaken out of a lib
 
-**Likelihood:** high, if the content globs are written carelessly. **Impact:** moderate,
-and it **fails silently** — the component renders unstyled rather than erroring.
+**Likelihood:** ⚠️ **occurred** — see the note above. **Impact:** moderate, and it **fails
+silently** — the component renders unstyled rather than erroring, past every gate.
 
-Each app's Tailwind content globs must cover every `libs/ui/*` and `libs/features/*` path
-it consumes.
+The `@source` declarations must cover every `libs/ui/*` and `libs/features/*` path a build
+consumes ([D51](./decisions-d48-d52.md#d51)). Tailwind 4 auto-detects from the build root and
+**skips `node_modules`**, which is exactly where pnpm symlinks every workspace lib — so a lib
+contributes no classes at all until something names it explicitly.
 
 *Mitigation:* the shared preset in `libs/ui/theme` owns the glob list rather than each app
 restating it ([D26](./decisions-d17-d32.md#d26)).
@@ -60,6 +73,7 @@ stylesheet until Slice 9**, and the decline carries its obligation there: Slice 
 **computed style** on a shared-design-system component per remote. Asserting an element is
 present does not catch a class that was tree-shaken away.
 
+<a id="r4"></a>
 ### R4 — A `VITE_`-prefixed secret ships to the browser
 
 **Likelihood:** low in this plan, higher once Contentful lands. **Impact:** severe and
@@ -75,6 +89,7 @@ gate for this, and it should be written the day that plan starts, not the day it
 
 ## Operational risks
 
+<a id="r5"></a>
 ### R5 — A remote's deployment and the shell's expectation drift apart
 
 The shell references a remote at a URL. If that URL serves a bundle built against a
@@ -163,6 +178,7 @@ remembers. This is the AWS-shaped version of the immutable-deployment requiremen
 
 ## Plan-process risks
 
+<a id="r9"></a>
 ### R9 — Building the UI with no design ✅ mostly closed → [D34](./decisions-d33-d41.md#d34)
 
 [Q1](./questions-closed.md#q1) closed on 2026-09-20: **the live v3 site is the visual

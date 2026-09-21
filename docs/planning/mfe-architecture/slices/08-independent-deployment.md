@@ -3,8 +3,10 @@
 **Status:** not started · **Visible?** — none · **Depends on:** Slices 5, 6, 7
 **Design:** not applicable — no UI surface
 
-The only invisible slice in the plan, and it sits at the end where a run of invisibles
-cannot form. It exists to make [D12](../decisions-d01-d16.md#d12) true rather than aspirational.
+The **first of the plan's two invisible slices** — [Slice 9](./09-e2e-composition.md) is the
+other — and they sit together at the end, where a run of three cannot form. (This file
+claimed to be the only one until 2026-09-21; Slice 9 was mis-marked `✅ screen` and adds no
+surface.) It exists to make [D12](../decisions-d01-d16.md#d12) true rather than aspirational.
 
 ## Decisions that bind this slice
 
@@ -13,7 +15,22 @@ cannot form. It exists to make [D12](../decisions-d01-d16.md#d12) true rather th
 - **[D10](../decisions-d01-d16.md#d10)** / **[D11](../decisions-d01-d16.md#d11)** — configuration lives in
   the deployment environment; the repo carries only `.env.example`. No real credential
   enters the repo or a workflow file. Contentful's own secrets are the Contentful plan's
-  job, but the mechanism is established here.
+  job, but the mechanism is established here. ⚠️ **D10's own text says "Cloudflare"** — it
+  was written before the host moved and now carries a *superseded in form by D31* note
+  pointing at Lambda environment configuration. The rule it states is unchanged: the secrets
+  live wherever the function runs, never in the repo or in GitHub.
+- **[D49](../decisions-d48-d52.md#d49)** — ⚠️ **the Lambda is `arm64`.** The CDK function
+  definition, the workflow's build step and `.npmrc`'s `supportedArchitectures` must all
+  agree; a mismatch fetches native binaries for the wrong architecture and surfaces at
+  runtime, in the host. Slice 1 pinned the constants in `infra/src/portfolio-stack.ts`; this
+  slice is where they become a deployed function.
+- **[D50](../decisions-d48-d52.md#d50)** — the project-tag check below reads
+  `nx show projects --json`, which returns the **bare** names. So does every `nx affected`
+  call in the workflow. The `@portfolio/` scope appears only in `package.json`.
+- **[D52](../decisions-d48-d52.md#d52)** — `pnpm check:file-size` exists from Slice 1 and runs
+  in `lint-staged` at commit time. ⚠️ **That only covers commits made locally**, so the
+  pull-request workflow runs it too, alongside the gates — otherwise a push from anywhere
+  that skips hooks bypasses the 200-line cap entirely.
 - **[D12](../decisions-d01-d16.md#d12)** — an MFE deploys without rebuilding the application.
 - **[D23](../decisions-d17-d32.md#d23)** — one workflow, driven by `nx affected`. Not five
   path-filtered workflows, which never fire for a `libs/ui/*` change and so silently leave
@@ -41,7 +58,7 @@ cannot form. It exists to make [D12](../decisions-d01-d16.md#d12) true rather th
 
 ## Open questions blocking this slice
 
-**None.** [Q3](../questions-closed.md#q3) and [Q10](../questions-closed.md#q10) both closed on
+**None.** [Q3](../questions-closed.md#q3) and [Q10](../questions-closed-q9-q16.md#q10) both closed on
 2026-09-20, as [D35](../decisions-d33-d41.md#d35) and [D37](../decisions-d33-d41.md#d37).
 
 ## What this slice delivers
@@ -67,6 +84,9 @@ cannot form. It exists to make [D12](../decisions-d01-d16.md#d12) true rather th
   path, IAM roles. The CDK project exists from Slice 1; this slice fills it in.
 - **The React-major CI check** required by [D39](../decisions-d33-d41.md#d39), in the pull-request
   workflow alongside the gates.
+- **`pnpm check:file-size`** in the same pull-request workflow
+  ([D52](../decisions-d48-d52.md#d52)), so the cap holds for commits that never ran the
+  pre-commit hook.
 - **A project-tag check.** ⚠️ `@nx/enforce-module-boundaries` is **silently inert** for any
   project carrying no matching tag — it is unconstrained, and the rule passes rather than
   failing. So CI asserts every project in `nx show projects --json` has both a `type:` and a

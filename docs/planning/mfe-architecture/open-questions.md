@@ -8,11 +8,14 @@ When one is answered: write the answer as a numbered decision in
 [questions-closed.md](./questions-closed.md) with a closure note, update the table below,
 and update the binding block of every slice that named it. All four, in the same change.
 
-**Two are open, and only one wants an answer: [Q14](#q14).** [Q2](#q2) is a spike gate that
+**Two are open.** [Q2](#q2) is a spike gate that
 [Slice 3](./slices/03-federation-header.md) answers by building, not something anyone can
-settle at a desk.
+settle at a desk. [Q17](#q17) is a real question, raised by
+[D53](./decisions-d53.md#d53), and it wants an answer before Slice 6.
+[Q14](./questions-closed-q9-q16.md#q14) closed on 2026-09-20 as
+[D48](./decisions-d48-d52.md#d48), which is what unblocked the route tree in Slice 1.
 
-The other fourteen closed on 2026-09-20 and live in
+The other fifteen closed on 2026-09-20 and live in
 [questions-closed.md](./questions-closed.md), full text and closure notes intact. ⚠️ **This
 file was split at 548 lines**, over the 500-line cap in
 [plan-split-into-files.md](../../../.claude/rules/plan-split-into-files.md); nothing was
@@ -28,14 +31,15 @@ dropped in the cut.
 | [Q6](./questions-closed.md#q6) | Slice 9, launch | ✅ → [D41](./decisions-d33-d41.md#d41) |
 | [Q7](./questions-closed.md#q7) | Slice 2 | ✅ → [D40](./decisions-d33-d41.md#d40) |
 | [Q8](./questions-closed.md#q8) | Slice 2 | ✅ → [D38](./decisions-d33-d41.md#d38) |
-| [Q9](./questions-closed.md#q9) | Slices 6, 7, SSR model | ✅ → [D36](./decisions-d33-d41.md#d36) |
-| [Q10](./questions-closed.md#q10) | Slices 1 and 8 | ✅ → [D37](./decisions-d33-d41.md#d37) |
-| [Q11](./questions-closed.md#q11) | Slice 1, D27/D29 enforcement | ✅ → [D44](./decisions-d42-d47.md#d44) |
-| [Q12](./questions-closed.md#q12) | Slices 3, 6, 7 | ✅ → [D42](./decisions-d42-d47.md#d42) |
-| [Q13](./questions-closed.md#q13) | Slice 3 | ✅ → [D43](./decisions-d42-d47.md#d43) |
-| [**Q14**](#q14) | Slices 1, 6, 7 | **open** |
-| [Q15](./questions-closed.md#q15) | Slice 1 | ✅ → [D46](./decisions-d42-d47.md#d46) |
-| [Q16](./questions-closed.md#q16) | Slice 1 | ✅ → [D45](./decisions-d42-d47.md#d45) |
+| [Q9](./questions-closed-q9-q16.md#q9) | Slices 6, 7, SSR model | ✅ → [D36](./decisions-d33-d41.md#d36) |
+| [Q10](./questions-closed-q9-q16.md#q10) | Slices 1 and 8 | ✅ → [D37](./decisions-d33-d41.md#d37) |
+| [Q11](./questions-closed-q9-q16.md#q11) | Slice 1, D27/D29 enforcement | ✅ → [D44](./decisions-d42-d47.md#d44) |
+| [Q12](./questions-closed-q9-q16.md#q12) | Slices 3, 6, 7 | ✅ → [D42](./decisions-d42-d47.md#d42) |
+| [Q13](./questions-closed-q9-q16.md#q13) | Slice 3 | ✅ → [D43](./decisions-d42-d47.md#d43) |
+| [Q14](./questions-closed-q9-q16.md#q14) | Slices 1, 6, 7 | ✅ → [D48](./decisions-d48-d52.md#d48) |
+| [Q15](./questions-closed-q9-q16.md#q15) | Slice 1 | ✅ → [D46](./decisions-d42-d47.md#d46) |
+| [Q16](./questions-closed-q9-q16.md#q16) | Slice 1 | ✅ → [D45](./decisions-d42-d47.md#d45) |
+| [**Q17**](#q17) | Slices 6, 7 | **open** |
 
 ---
 
@@ -66,25 +70,35 @@ imports (cheap, because of [D27](./decisions-d17-d32.md#d27)) and revisit.
 
 ---
 
-<a id="q14"></a>
-## Q14 — Should the shell server-render metadata even though it does not server-render content?
+<a id="q17"></a>
+## Q17 — How does the HTML in a portfolio `description` render?
 
-**Raised:** 2026-09-20 · **Blocks:** Slices 1, 6, 7
+**Raised:** 2026-09-21 · **Blocks:** Slices 6 and 7 · **From:** [D53](./decisions-d53.md#d53)
 
-[D36](./decisions-d33-d41.md#d36) accepted, in full, that "link previews get nothing from the
-content surfaces". That is true of the *rendered content*. It is **not** necessarily true of
-the metadata, and the difference is cheap.
+Every ported item's `description` is an **HTML string**, not plain text:
 
-The shell runs on Lambda, owns the route, and imports `libs/shared/fixtures` at build time —
-the same fixtures the Homepage and Portfolio Item render from. So it can emit a real
-`<title>`, description, and Open Graph tags **server-side, per route**, while the visible
-content still arrives via federation exactly as D36 decided. A link to
-`/portfolio/pokemon-pet-shop` would then preview correctly even though its body is
-client-rendered.
+```html
+<p>As a personal challenge, I designed and built …
+   <a href="https://github.com/…" target="_blank">Github mfe branch</a>.</p>
+<p>The tech stack includes:</p>
+<ul><li>React</li><li>React Native/Expo</li>…</ul>
+```
 
-This does not reopen [D36](./decisions-d33-d41.md#d36) and does not federate anything. It recovers
-the link-preview half of the cost D36 accepted, at the price of the shell reading the
-fixtures — which it may already do for the not-found case in
-[Slice 7](./slices/07-portfolio-item-mfe.md).
+Paragraphs, lists, and external links with `target="_blank"`. The v3 site rendered these
+with `dangerouslySetInnerHTML`. Three ways forward:
 
-Also unanswered alongside it: `robots.txt`, a sitemap, and whether either is wanted at all.
+1. **Keep the HTML, render it with `dangerouslySetInnerHTML`.** Cheapest, and it is the
+   maintainer's own content in the maintainer's own repo, so the injection risk today is
+   nil. ⚠️ But the Contentful plan makes this field **editor-supplied**, and at that point
+   the same component is rendering third-party HTML — so the decision outlives the fixture.
+2. **Keep the HTML and sanitize it** on the way in. Costs a dependency and a little size in
+   a federated remote; survives the Contentful transition unchanged.
+3. **Convert to structured data now** — `paragraphs: string[]`, `bullets: string[]`,
+   `links: {href, label}[]` — and render it as components. Most work up front, no HTML in
+   the payload at all, and the cleanest thing to map Contentful's rich text onto later.
+
+⚠️ Note `target="_blank"` without `rel="noopener noreferrer"` appears throughout the ported
+copy. Whichever option is taken, that gets fixed in the port rather than carried over.
+
+**Not urgent for Slice 1**, which ships only route metadata. It blocks the first slice that
+renders an item body.

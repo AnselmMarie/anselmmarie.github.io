@@ -5,7 +5,7 @@ local meaning; when the two disagree, **this file's log wins** and the slice is 
 the same change. Decisions are **never renumbered and never deleted** — a reversal is a new
 entry that supersedes an old one ([D5](./decisions-d01-d16.md#d5) is the worked example).
 
-⚠️ **Split into four range files on 2026-09-20**, at 491 lines against the 500-line cap in
+⚠️ **Split into range files on 2026-09-20**, at 491 lines against the 500-line cap in
 [plan-split-into-files.md](../../../.claude/rules/plan-split-into-files.md). Nothing was
 reworded in the cut; the ranges follow the section boundaries the log already had, so no
 decision is separated from the ones that explain it. This file is now the index only.
@@ -14,6 +14,8 @@ decision is separated from the ones that explain it. This file is now the index 
 - [**D17–D32** — The plan's own decisions, and the host change](decisions-d17-d32.md)
 - [**D33–D41** — The first round of questions closed](decisions-d33-d41.md)
 - [**D42–D47** — The second round, and the tooling prune](decisions-d42-d47.md)
+- [**D48–D52** — Q14 closed, and what building Slice 1 forced](decisions-d48-d52.md)
+- [**D53** — Where the portfolio content comes from](decisions-d53.md)
 
 ## Every decision
 
@@ -66,6 +68,12 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D45](decisions-d42-d47.md#d45) | Node 22, pinned by `.nvmrc` | `d42-d47` |
 | [D46](decisions-d42-d47.md#d46) | The cosmikata tooling is pruned; 15 rules are archived, not deleted | `d42-d47` |
 | [D47](decisions-d42-d47.md#d47) | `worktree-safety.md`'s base branch is unresolved and stays that way | `d42-d47` |
+| [D48](decisions-d48-d52.md#d48) | The shell server-renders per-route metadata, though not per-route content | `d48-d52` |
+| [D49](decisions-d48-d52.md#d49) | The Lambda is `arm64`, and `.npmrc` is corrected to match | `d48-d52` |
+| [D50](decisions-d48-d52.md#d50) | An Nx project's name is the bare form; its package name carries the scope | `d48-d52` |
+| [D51](decisions-d48-d52.md#d51) | Tailwind 4, configured in CSS. There is no `tailwind.config.ts` | `d48-d52` |
+| [D52](decisions-d48-d52.md#d52) | Slice 1 builds the file-size checker the rules already claim exists | `d48-d52` |
+| [D53](decisions-d53.md#d53) | Portfolio content and images are ported from `39bbe56` (`version-2` = `version-3`) | `d53` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.
