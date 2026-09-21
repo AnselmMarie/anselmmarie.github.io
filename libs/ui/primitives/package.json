@@ -1,5 +1,5 @@
 {
-  "name": "@portfolio/feature-shell",
+  "name": "@portfolio/ui-primitives",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -12,8 +12,7 @@
     }
   },
   "dependencies": {
-    "@portfolio/shared-types": "workspace:*",
-    "@portfolio/ui-components": "workspace:*",
+    "@portfolio/shared-utils": "workspace:*",
     "react": "^19.3.0"
   },
   "devDependencies": {

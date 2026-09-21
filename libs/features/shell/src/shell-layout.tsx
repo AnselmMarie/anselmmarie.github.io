@@ -24,7 +24,7 @@ interface ShellLayoutProps {
  */
 const ShellLayout = ({ header, children, footer }: ShellLayoutProps): ReactElement => {
   return (
-    <div className="flex min-h-screen flex-col bg-white text-slate-700">
+    <div className="flex min-h-screen flex-col bg-page text-ink">
       <ShellHeaderRegion>{header}</ShellHeaderRegion>
       <ShellContentRegion>{children}</ShellContentRegion>
       <ShellFooterRegion>{footer}</ShellFooterRegion>

@@ -20,7 +20,7 @@ const ShellHeaderRegion = ({ children }: ShellHeaderRegionProps): ReactElement =
   return (
     <header
       data-testid="shell-header-region"
-      className="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur"
+      className="sticky top-0 z-10 border-b border-slate-200 bg-page/80 backdrop-blur"
     >
       <div className="mx-auto flex h-16 max-w-5xl items-center px-6">
         {children ?? (

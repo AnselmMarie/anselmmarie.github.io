@@ -1,0 +1,9 @@
+{
+  "name": "@portfolio/ui-theme",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./theme.css": "./src/theme.css"
+  }
+}

@@ -1,32 +1,10 @@
 @import 'tailwindcss';
 
 /*
- * ⚠️ **R3 fired here, in Slice 1.** Tailwind auto-detects sources from the Vite
- * root — `apps/shell` — and skips `node_modules`. `@portfolio/feature-shell` is
- * a symlinked workspace package, so every class in the layout resolved to
- * nothing and the page rendered completely unstyled with no error, no warning
- * and a green build. That is R3's exact failure mode, four slices earlier than
- * the risk register expected it.
- *
- * `@source` is the Tailwind 4 answer (D51): the consumer declares where its
- * classes live. Slice 2 moves this declaration into `libs/ui/theme` so one
- * stylesheet covers every lib and no app has to remember (D26).
- *
- * Every lib whose classes must survive needs a line here. A missing line is
- * silent — check the rendered page, not the build output.
+ * D26 / D51 — one theme, in `libs/ui/theme`, that every app `@import`s
+ * instead of declaring its own `@theme` block. This also carries the
+ * `@source` declarations that used to live here (Slice 1's interim fix for
+ * R3, see docs/planning/mfe-architecture/risks.md#r3): they now live in the
+ * theme stylesheet so one file covers every lib and no app has to remember.
  */
-@source '../../../libs/features/shell/src';
-
-/*
- * Slice 1 keeps Tailwind in its plainest form (D51 — Tailwind 4 is configured
- * in CSS, so there is no `tailwind.config.ts`). The shared theme is Slice 2's
- * job: D26 moves these tokens into `libs/ui/theme` and every app imports that
- * one stylesheet instead of declaring its own.
- *
- * The values are read off the live v3 site (D34): a white page, slate-700 body
- * text, and a blue accent on section headings.
- */
-@theme {
-  --color-page: #ffffff;
-  --color-ink: oklch(0.372 0.044 257.287);
-}
+@import '@portfolio/ui-theme/theme.css';
