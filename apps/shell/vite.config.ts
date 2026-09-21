@@ -5,6 +5,12 @@ import { nitro } from 'nitro/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  // Pin the project root to this file's directory rather than letting Vite
+  // default it to `process.cwd()`. Nx's `@nx/vite` plugin loads this config
+  // from the workspace root to infer targets, and TanStack Start resolves its
+  // router entry (`src/router.tsx`) relative to the root — so without this it
+  // looks in `<workspaceRoot>/src` and graph construction fails.
+  root: import.meta.dirname,
   server: { port: 3000 },
   plugins: [
     tailwindcss(),

@@ -80,6 +80,7 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D54](decisions-d54.md#d54) | The Slice 3 spike gate runs in parallel with Slice 2, in its own worktree | `d54` |
 | [D55](decisions-d55.md#d55) | Federation composes with TanStack Start when scoped to the client environment; Q2 closes | `d55` |
 | [D56](decisions-d56.md#d56) | `cn` is one `clsx` + `tailwind-merge` helper in `libs/shared/utils` | `d56` |
+| [D57](decisions-d57.md#d57) | Nx drives the workspace through its own plugins and TS project references; libs stay source-only | `d57` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.

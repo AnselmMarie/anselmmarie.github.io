@@ -15,19 +15,9 @@
     "isolatedModules": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
-    "baseUrl": ".",
-    "paths": {
-      "@portfolio/feature-shell": ["libs/features/shell/src/index.ts"],
-      "@portfolio/shared-config": ["libs/shared/config/src/index.ts"],
-      "@portfolio/shared-fixtures": ["libs/shared/fixtures/src/index.ts"],
-      "@portfolio/shared-types": ["libs/shared/types/src/index.ts"],
-      "@portfolio/shared-utils": ["libs/shared/utils/src/index.ts"],
-      "@portfolio/ui-components": ["libs/ui/components/src/index.ts"],
-      "@portfolio/ui-primitives": ["libs/ui/primitives/src/index.ts"]
-    }
-  },
-  "exclude": ["node_modules", "dist", ".output", ".nitro", "cdk.out"]
+    "sourceMap": true
+  }
 }

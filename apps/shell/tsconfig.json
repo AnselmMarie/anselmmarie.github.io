@@ -3,7 +3,25 @@
   "compilerOptions": {
     "outDir": "out-tsc",
     "jsx": "react-jsx",
-    "types": ["vite/client", "vitest/globals", "node"]
+    "types": ["vite/client", "vitest/globals", "node"],
+    "tsBuildInfoFile": "out-tsc/tsconfig.tsbuildinfo"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts"],
+  "references": [
+    {
+      "path": "../../libs/shared/utils"
+    },
+    {
+      "path": "../../libs/shared/types"
+    },
+    {
+      "path": "../../libs/shared/fixtures"
+    },
+    {
+      "path": "../../libs/shared/config"
+    },
+    {
+      "path": "../../libs/features/shell"
+    }
+  ]
 }

@@ -1,0 +1,34 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {},
+  "files": [],
+  "references": [
+    {
+      "path": "./libs/shared/fixtures"
+    },
+    {
+      "path": "./libs/features/shell"
+    },
+    {
+      "path": "./libs/shared/config"
+    },
+    {
+      "path": "./libs/ui/components"
+    },
+    {
+      "path": "./libs/ui/primitives"
+    },
+    {
+      "path": "./libs/shared/types"
+    },
+    {
+      "path": "./libs/shared/utils"
+    },
+    {
+      "path": "./apps/shell"
+    },
+    {
+      "path": "./infra"
+    }
+  ]
+}

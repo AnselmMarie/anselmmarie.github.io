@@ -11,24 +11,12 @@
     },
     "build": {
       "executor": "nx:run-commands",
-      "outputs": ["{projectRoot}/dist", "{projectRoot}/.output"],
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/.output", "{projectRoot}/.nitro"],
       "options": { "command": "vite build", "cwd": "apps/shell" }
     },
     "serve-built": {
       "executor": "nx:run-commands",
       "options": { "command": "node .output/server/index.mjs", "cwd": "apps/shell" }
-    },
-    "typecheck": {
-      "executor": "nx:run-commands",
-      "options": { "command": "tsc --noEmit -p tsconfig.json", "cwd": "apps/shell" }
-    },
-    "lint": {
-      "executor": "nx:run-commands",
-      "options": { "command": "eslint . --max-warnings 0", "cwd": "apps/shell" }
-    },
-    "test": {
-      "executor": "nx:run-commands",
-      "options": { "command": "vitest run --passWithNoTests", "cwd": "apps/shell" }
     }
   }
 }
