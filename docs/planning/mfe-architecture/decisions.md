@@ -22,6 +22,11 @@ decision is separated from the ones that explain it. This file is now the index 
 - [**D57** — Nx drives the workspace through its own plugins](decisions-d57.md)
 - [**D58–D62** — What building Slice 3 forced](decisions-d58-d62.md)
 - [**D63–D68** — What building Slice 4 forced](decisions-d63-d67.md)
+- [**D69** — How the ported HTML descriptions render; Q17 closes](decisions-d69.md)
+- [**D70** — The v3 site has no footer either](decisions-d70.md)
+- [**D71–D72** — What building Slice 6 forced](decisions-d71-d72.md)
+- [**D73–D74** — What building Slice 7 forced](decisions-d73-d74.md)
+- [**D75** — The brand marks are Tabler, drawn by one shared component](decisions-d75.md)
 
 ## Every decision
 
@@ -95,6 +100,13 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D66](decisions-d63-d67.md#d66) | An unknown portfolio slug is a shell-level not-found, never a remote fallback | `d63-d67` |
 | [D67](decisions-d63-d67.md#d67) | The Slice 5–7 wave's per-file split, settled before any agent starts | `d63-d67` |
 | [D68](decisions-d63-d67.md#d68) | Slice 4 ships all four remotes runnable, with placeholder components | `d63-d67` |
+| [D69](decisions-d69.md#d69) | A portfolio `description` stays HTML and is sanitized with `dompurify`; Q17 closes | `d69` |
+| [D70](decisions-d70.md#d70) | v3 has no footer either; Slice 5's footer is invented but for the two social URLs | `d70` |
+| [D71](decisions-d71-d72.md#d71) | Eight live portfolio items, not nine; `cosmikata-design-system` is commented out and not ported | `d71-d72` |
+| [D72](decisions-d71-d72.md#d72) | The homepage tile ships without a thumbnail; homepage membership lives in `HomepageContent` | `d71-d72` |
+| [D73](decisions-d73-d74.md#d73) | The shell never passes the resolved item to the remote; `/portfolio/$slug` renders the wrong item | `d73-d74` |
+| [D74](decisions-d73-d74.md#d74) | No portfolio image is ported; the port was assigned to a slice that was forbidden to do it | `d73-d74` |
+| [D75](decisions-d75.md#d75) | The brand marks are Tabler, via one `SocialIcon`; the name union lives in `shared-types` | `d75` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.

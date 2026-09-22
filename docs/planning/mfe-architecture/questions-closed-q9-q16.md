@@ -1,4 +1,4 @@
-# Questions Closed — Q9 through Q16
+# Questions Closed — Q9 through Q17
 
 The second half of [questions-closed.md](./questions-closed.md), split out on 2026-09-20
 when closing [Q14](#q14) pushed that file to 522 lines, over the 500-line cap in
@@ -7,6 +7,10 @@ reworded in the cut.
 
 ⚠️ **The split point is Q9, chosen so the Q1–Q8 links already written across the plan keep
 resolving.** The index table stays in the first file and covers both halves.
+
+⚠️ **The filename records the split point, not the range.** [Q17](#q17) closed on
+2026-09-21 and was appended here; the file is not renamed, because every link already
+written to `questions-closed-q9-q16.md` would break for the sake of a name.
 
 **This is history, not a to-do list.** The decision each question produced is the binding
 record — see [decisions.md](./decisions.md).
@@ -321,3 +325,56 @@ before [Slice 1](./slices/01-workspace-and-shell.md) wrote the route tree.
 ⚠️ **The `robots.txt` and sitemap half was NOT answered**, only the metadata half. D48 says
 so explicitly. They are a separate surface at a separate cost and nothing blocks on them; if
 they are wanted they come back as a new question, not as residue of this one.
+
+---
+
+<a id="q17"></a>
+## Q17 — How does the HTML in a portfolio `description` render? ✅ closed → [D69](./decisions-d69.md#d69)
+
+**Raised:** 2026-09-21 · **Blocked:** Slice 7 (and, as raised, Slice 6) · **From:**
+[D53](./decisions-d53.md#d53)
+
+Every ported item's `description` is an **HTML string**, not plain text:
+
+```html
+<p>As a personal challenge, I designed and built …
+   <a href="https://github.com/…" target="_blank">Github mfe branch</a>.</p>
+<p>The tech stack includes:</p>
+<ul><li>React</li><li>React Native/Expo</li>…</ul>
+```
+
+Paragraphs, lists, and external links with `target="_blank"`. The v3 site rendered these
+with `dangerouslySetInnerHTML`. Three ways forward:
+
+1. **Keep the HTML, render it with `dangerouslySetInnerHTML`.** Cheapest, and it is the
+   maintainer's own content in the maintainer's own repo, so the injection risk today is
+   nil. ⚠️ But the Contentful plan makes this field **editor-supplied**, and at that point
+   the same component is rendering third-party HTML — so the decision outlives the fixture.
+2. **Keep the HTML and sanitize it** on the way in. Costs a dependency and a little size in
+   a federated remote; survives the Contentful transition unchanged.
+3. **Convert to structured data now** — `paragraphs: string[]`, `bullets: string[]`,
+   `links: {href, label}[]` — and render it as components. Most work up front, no HTML in
+   the payload at all, and the cleanest thing to map Contentful's rich text onto later.
+
+⚠️ Note `target="_blank"` without `rel="noopener noreferrer"` appears throughout the ported
+copy. Whichever option is taken, that gets fixed in the port rather than carried over.
+
+**Not urgent for Slice 1**, which ships only route metadata. It blocks the first slice that
+renders an item body.
+
+### Closure note — 2026-09-21
+
+**Option 2.** Maintainer's call. The field stays an HTML string and is sanitized with
+`dompurify` at the render boundary; the coordinator installs the dependency before the wave
+so three worktrees do not race `pnpm-lock.yaml`. The full reasoning, including what options
+1 and 3 were declined on, is [D69](./decisions-d69.md#d69).
+
+⚠️ **This question blocked Slice 7, not Slice 6 — corrected here on closing.** The entry
+above and both slice files said "Slices 6 and 7". Checked against the source: at `39bbe56`,
+`dangerouslySetInnerHTML` appears in exactly one file,
+`src/routes/portfolio/ui/portfolio-data-container/portfolio-left-content.view.tsx` — the
+item page. The homepage listing renders thumbnail and title and never touches
+`description`. Slice 6 was never blocked by this, and under the
+[D67](./decisions-d63-d67.md#d67) per-file split it could not have been: `description` lands
+on `PortfolioItem`, which is Slice 7's module. The over-statement cost nothing because the
+question closed before the wave started, but it would have held a slice for no reason.

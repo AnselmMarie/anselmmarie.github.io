@@ -51,7 +51,9 @@ current site was just deleted from this branch:
    2026-09-21 by [D53](./decisions-d53.md#d53): `version-2` and `version-3` are the same
    commit `39bbe56`, which is an ancestor of `origin/master` with byte-identical content —
    but the **local `master` branch has diverged and is stale**, missing the Pokémon Pet Shop
-   item. Read the design from the deployed site or from `version-3`; never from local
+   item. Read the design from the deployed site or from commit `39bbe56` (the `version-2`
+   branch; ⚠️ **`version-3` was repointed to the new workspace on 2026-09-21** and no longer
+   reaches the old site — see [D53](./decisions-d53.md#d53)); never from local
    `master`.
 2. **The fallback states have no v3 equivalent** and are still invented, because a site
    with no remotes has no remote-failure UI. Slice 4's completion report still flags each

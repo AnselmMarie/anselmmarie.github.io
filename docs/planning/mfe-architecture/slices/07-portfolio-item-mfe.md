@@ -1,6 +1,6 @@
 # Slice 7 — Portfolio Item MFE and its route
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slice 4
+**Status:** ✅ built 2026-09-21 in worktree `claude/slice-7-portfolio-item`, awaiting review — ⚠️ eight items, not nine ([D71](../decisions-d71-d72.md#d71)); the page shows the wrong item until the shell forwards it ([D73](../decisions-d73-d74.md#d73)) · **Visible?** ✅ screen · **Depends on:** Slice 4
 **Design:** the live v3 site ([D34](../decisions-d33-d41.md#d34)) — appearance only; no Next.js
 code is ported ([D6](../decisions-d01-d16.md#d6))
 **Wave:** runs concurrently with Slices 5 and 6
@@ -28,10 +28,13 @@ think about navigation.
 - **[D22](../decisions-d17-d32.md#d22)** / **[D41](../decisions-d33-d41.md#d41)** — fixtures, and the
   report says so. The item copy is real.
 - **[D53](../decisions-d53.md#d53)** — ported from commit `39bbe56`'s
-  `src/store/{active,other}.data.ts`. The **nine ids are this route's slugs**:
-  `pokemon-pet-shop`, `cosmikata`, `cosmikata-design-system`, `older-cosmikata`,
-  `csp-generator-app`, `cw-breeze-thru`, `rove-logix`, `rove-logix-ui-update`,
-  `cr-caterpillar`. ⚠️ **The image folder names do not match the slugs** —
+  `src/store/{active,other}.data.ts`. ⚠️ **This said "nine ids" until 2026-09-21 and was
+  wrong — there are eight** ([D71](../decisions-d71-d72.md#d71)). The **eight ids are this
+  route's slugs**: `pokemon-pet-shop`, `cosmikata`, `older-cosmikata`, `csp-generator-app`,
+  `cw-breeze-thru`, `rove-logix`, `rove-logix-ui-update`, `cr-caterpillar`.
+  `cosmikata-design-system` is **commented out** in `active.data.ts` — the whole object, not
+  just its id — so it is **not ported and not uncommented**; re-publishing disabled content
+  is the maintainer's call. Its route correctly becomes a not-found (D66). ⚠️ **The image folder names do not match the slugs** —
   `cricket-wireless` holds `cw-breeze-thru`'s images and `corporate-reports` holds
   `cr-caterpillar`'s. The `thumbnail` and `images[].src` strings in the data are
   authoritative; never infer an item's images from a directory name.
@@ -64,11 +67,31 @@ think about navigation.
   previewed as nothing. So this slice owns the per-slug `head`: the item's title,
   description and `og:image`, emitted server-side from the fixtures while the visible item
   stays client-rendered by the remote.
-- **[Q17](../open-questions.md#q17)** — ⚠️ **this is the slice Q17 actually blocks.** The
-  item body *is* the `description` HTML, so this slice cannot render a page until the
-  question is settled: raw `dangerouslySetInnerHTML`, sanitized HTML, or structured data.
-  ⚠️ The ported copy also carries `target="_blank"` without `rel="noopener noreferrer"`
-  throughout — fixed in the port under any of the three options, not carried over.
+- ✅ **[Q17](../questions-closed-q9-q16.md#q17) closed 2026-09-21 →
+  [D69](../decisions-d69.md#d69) — and it was this slice it blocked, alone.** (It was
+  recorded as blocking Slices 6 and 7; at `39bbe56` only the item page renders the body, so
+  Slice 6 was never held by it.) **The answer is option 2: the field stays an HTML string
+  and is sanitized on render with `dompurify`.** What that obliges here:
+
+  - `PortfolioItem.description` is a `string` holding **HTML**, added to
+    `libs/shared/types/src/portfolio-item.ts` — this slice's module — with a doc comment
+    saying so, so nobody downstream reads it as plain text.
+  - ⚠️ **`dompurify` is installed by the coordinator before this slice starts**, on
+    `@portfolio/feature-portfolio-item`. Adding a dependency mutates `pnpm-lock.yaml`,
+    which is closed to every wave agent. **If it is not already in this lib's
+    `package.json`, stop and report** — do not install it from a worktree.
+  - Sanitizing runs **client-side only**: under [D36](../decisions-d33-d41.md#d36) the body
+    never reaches the SSR HTML. The Vitest environment is `jsdom`, so specs exercise the
+    real sanitizer.
+  - ⚠️ **The route's `head` description is a different field.** It is authored plain text
+    in `route-metadata.fixture.ts` ([D48](../decisions-d48-d52.md#d48)). Do **not** derive
+    it by stripping tags from this HTML.
+  - **Choose the allow-list from what the eight bodies actually contain** and record it in
+    the report. A default-everything configuration passes every spec and is not what D69
+    asked for.
+  - ⚠️ The ported copy carries `target="_blank"` without `rel="noopener noreferrer"`
+    throughout. The sanitizer adds the `rel`, and **a spec asserts it** on a rendered body
+    with a link — that is the check that turns a thing-to-remember into a thing enforced.
 - **[Q2](../questions-closed.md#q2)** — ✅ **closed 2026-09-21 as
   [D55](../decisions-d55.md#d55): this slice exists in its current form.** The existential
   risk it carried is gone — the spike gate passed, federation does compose with TanStack

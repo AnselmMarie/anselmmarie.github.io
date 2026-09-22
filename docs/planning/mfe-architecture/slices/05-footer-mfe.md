@@ -1,6 +1,6 @@
 # Slice 5 — Footer MFE
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slice 4
+**Status:** ✅ built 2026-09-21 in worktree `claude/slice-5-footer`, awaiting review — ⚠️ v3 has no footer ([D70](../decisions-d70.md#d70)); the footer is invented but for the two social URLs · **Visible?** ✅ screen · **Depends on:** Slice 4
 **Design:** the live v3 site ([D34](../decisions-d33-d41.md#d34)) — appearance only; no Next.js
 code is ported ([D6](../decisions-d01-d16.md#d6))
 **Wave:** runs concurrently with Slices 6 and 7 — see
