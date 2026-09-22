@@ -7,16 +7,23 @@ interface ShellFooterRegionProps {
 /**
  * The slot the Footer remote mounts into (Slice 5).
  *
- * ⚠️ **Placeholder in Slice 1.** See `ShellHeaderRegion` — same reasoning.
+ * **Slice 10 re-skinned it** onto the design's ink strip. Like the content
+ * sections it runs edge to edge and carries its own padding, so it is clipped
+ * to the card's bottom corners by the card's `overflow-hidden` rather than by
+ * a radius of its own.
+ *
+ * [Slice 16](docs/planning/mfe-architecture/slices/16-footer-strip.md) builds
+ * the strip's contents.
  */
 const ShellFooterRegion = ({ children }: ShellFooterRegionProps): ReactElement => {
   return (
-    <footer data-testid="shell-footer-region" className="border-t border-slate-200 bg-slate-50">
-      <div className="mx-auto flex h-16 max-w-5xl items-center px-6">
-        {children ?? (
-          <span className="text-sm font-medium tracking-wide text-slate-500">footer region</span>
-        )}
-      </div>
+    <footer
+      data-testid="shell-footer-region"
+      className="w-full bg-ink px-[18px] py-6 text-paper frame:px-[26px]"
+    >
+      {children ?? (
+        <span className="font-mono text-eyebrow text-paper/50 uppercase">footer region</span>
+      )}
     </footer>
   );
 };

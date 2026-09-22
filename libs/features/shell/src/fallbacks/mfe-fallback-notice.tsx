@@ -17,10 +17,15 @@ interface MfeFallbackNoticeProps {
 /**
  * The one piece of markup every page-level fallback shares.
  *
- * ⚠️ **Invented — there is no v3 reference.** D34 makes the live v3 site the
- * design source for every surface, but a site with no remotes has no
- * remote-failure UI. Every visual choice here is ours: the bordered card, the
- * muted body copy, the single outlined button. Flagged per plan-design-links.md.
+ * ⚠️ **Invented — neither design export has a reference.** D76 makes the two
+ * exports the design of record, but a static design has no remote to fail.
+ * Every visual choice here is ours: the bordered card, the muted body copy,
+ * the single outlined pill. Flagged per plan-design-links.md.
+ *
+ * Slice 10 re-skinned it onto the new palette — `PanelCard`'s treatment and
+ * `PillLink`'s outline shape, written out rather than imported: this renders
+ * *because something failed*, and reaching across a package boundary here adds
+ * a moving part to the one component that has to survive.
  *
  * ⚠️ **It imports no remote, and must not start.** Not transitively either —
  * `@nx/enforce-module-boundaries` blocks `scope:shell` from reaching
@@ -38,17 +43,17 @@ const MfeFallbackNotice = ({
     <div
       data-testid={`mfe-fallback-${mfe}`}
       role="status"
-      className="mx-auto flex max-w-xl flex-col items-start gap-3 rounded-lg border border-slate-200 p-6"
+      className="mx-auto flex max-w-xl flex-col items-start gap-3 rounded-panel border border-rule bg-surface p-6"
     >
-      <h2 className="text-lg font-semibold text-ink">{title}</h2>
-      <p className="text-sm text-slate-500">{message}</p>
+      <h2 className="font-display text-xl font-bold tracking-tight text-ink">{title}</h2>
+      <p className="text-sm leading-relaxed text-muted">{message}</p>
 
       <div className="flex items-center gap-3">
         {attemptsRemaining > 0 ? (
           <button
             type="button"
             onClick={onRetry}
-            className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-ink"
+            className="rounded-pill border border-rule px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface-sunk"
           >
             Try again
           </button>
@@ -56,7 +61,7 @@ const MfeFallbackNotice = ({
           // The architecture doc asks for the bound to be visible, not only
           // enforced: after the last attempt the button goes away rather than
           // staying and quietly doing nothing.
-          <p data-testid={`mfe-retry-exhausted-${mfe}`} className="text-sm text-slate-500">
+          <p data-testid={`mfe-retry-exhausted-${mfe}`} className="text-sm text-muted">
             We have stopped retrying. Reload the page to try again.
           </p>
         )}

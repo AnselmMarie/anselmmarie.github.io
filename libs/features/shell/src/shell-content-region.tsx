@@ -9,23 +9,27 @@ interface ShellContentRegionProps {
 /**
  * The slot the Homepage and Portfolio Item remotes mount into (Slices 6, 7).
  *
- * ⚠️ **Placeholder in Slice 1**, same as the other two regions. The `main`
- * element and the page's max width are settled here so the content slices
- * inherit them instead of each picking their own.
+ * ⚠️ **Slice 10 removed this region's max-width and padding.** The design's
+ * sections each run **edge to edge** inside the card and carry their own
+ * padding (`64px 26px`, `40px 18px` under 760px), because the alternating
+ * `surface` and `ink` backgrounds have to touch the card's sides. A width
+ * constraint here would inset those backgrounds and leave paper-coloured
+ * gutters down both edges of every dark section.
  *
- * Slice 2 moves the placeholder's markup into `@portfolio/ui-components`'
- * `ProfileCard` — the styling now comes from the shared design system rather
- * than ad-hoc Tailwind classes in this feature lib (D3, D25, D26).
+ * The placeholder keeps its own padding, since it is not one of those
+ * sections.
  */
 const ShellContentRegion = ({ children }: ShellContentRegionProps): ReactElement => {
   return (
-    <main data-testid="shell-content-region" className="mx-auto w-full max-w-5xl flex-1 px-6 py-12">
+    <main data-testid="shell-content-region" className="w-full flex-1">
       {children ?? (
-        <ProfileCard
-          name="Anselm Marie"
-          title="Senior Software Engineer & Tech Lead | Web Architecture & Product Impact"
-          description="This page is served by the TanStack Start shell. The header, footer and content regions above and below are the slots the four federated remotes mount into — none of them exist yet."
-        />
+        <div className="px-[18px] py-10 frame:px-[26px] frame:py-16">
+          <ProfileCard
+            name="Anselm Marie"
+            title="Senior Software Engineer & Tech Lead | Web Architecture & Product Impact"
+            description="This page is served by the TanStack Start shell. The header, footer and content regions above and below are the slots the four federated remotes mount into."
+          />
+        </div>
       )}
     </main>
   );

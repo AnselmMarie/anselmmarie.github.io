@@ -14,7 +14,9 @@ interface PortfolioNotFoundProps {
  * not-found. The shell owns this state because the shell owns routing (D4) and
  * resolves the item before the remote is ever asked for.
  *
- * ⚠️ **Invented** — v3 has no equivalent page. Flagged per plan-design-links.md.
+ * ⚠️ **Invented** — neither design export has an equivalent page (D66).
+ * Flagged per plan-design-links.md. Slice 10 re-skinned it onto the new
+ * palette; the copy and the structure are unchanged.
  */
 const PortfolioNotFound = ({ slug }: PortfolioNotFoundProps): ReactElement => {
   return (
@@ -22,11 +24,14 @@ const PortfolioNotFound = ({ slug }: PortfolioNotFoundProps): ReactElement => {
       data-testid="portfolio-not-found"
       className="mx-auto flex max-w-xl flex-col items-start gap-3 p-6"
     >
-      <h1 className="text-lg font-semibold text-ink">No such project</h1>
-      <p className="text-sm text-slate-500">
-        There is no portfolio item at <code>{slug}</code>.
+      <h1 className="font-display text-section font-bold text-ink">No such project</h1>
+      <p className="text-sm text-muted">
+        There is no portfolio item at <code className="font-mono text-accent">{slug}</code>.
       </p>
-      <a href="/#active-projects" className="text-sm font-medium text-ink underline">
+      <a
+        href="/#active-projects"
+        className="text-sm font-medium text-accent underline underline-offset-4"
+      >
         Back to the portfolio
       </a>
     </div>

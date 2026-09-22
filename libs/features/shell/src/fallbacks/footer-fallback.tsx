@@ -13,10 +13,14 @@ import { SITE_NAME } from '@portfolio/shared-fixtures';
  * matters.
  *
  * ⚠️ **No retry.** Same reasoning as the header, more so.
+ *
+ * ⚠️ **Slice 10 moved it onto ink.** The footer strip's background is now
+ * `--color-ink`, so this reads `paper/60` rather than the muted brown it used
+ * on the white page — `--color-muted` on ink is barely legible.
  */
 const FooterFallback = (): ReactElement => {
   return (
-    <p data-testid="mfe-fallback-footer" className="text-sm text-slate-500">
+    <p data-testid="mfe-fallback-footer" className="text-sm text-paper/60">
       © {new Date().getFullYear()} {SITE_NAME}
     </p>
   );
