@@ -10,7 +10,7 @@ When one is answered: write the answer as a numbered decision in
 table below, and update the binding block of every slice that named it. All
 four, in the same change.
 
-**Four are open**, all raised on 2026-09-22 by reading the two design exports
+**Three are open.** All four were raised on 2026-09-22 by reading the two design exports
 ([D76](./decisions-d76-d81.md#d76)). ⚠️ **None of them blocks a whole slice** —
 each blocks one field or one region, so the slice that owns it builds everything
 else and reports the blocked part as pending rather than filling it in.
@@ -19,8 +19,8 @@ else and reports the blocked part as pending rather than filling it in.
 |---|---|---|
 | [Q18](#q18) | Slices 11, 13, 15 — the hero images only | 🔴 open |
 | [Q19](#q19) | Slice 15 — the gallery contents only | 🔴 open |
-| [Q20](#q20) | Slice 10 — the font delivery only | 🔴 open |
 | [Q21](#q21) | Slices 11, 13, 14 — one figure | 🔴 open |
+| [Q20](./questions-closed-q9-q16.md#q20) | *(was Slice 10 — font delivery)* | ✅ closed → [D82](./decisions-d82-d83.md#d82) |
 
 ---
 
@@ -81,34 +81,6 @@ tiles, which is not the rhythm the design draws.
 
 ---
 
-<a id="q20"></a>
-## Q20 — how are Carlito, JetBrains Mono and Inter served?
-
-**Raised 2026-09-22. Blocks:** the font half of
-[Slice 10](./slices/10-design-foundation.md) only — the palette, the spacing and
-the page frame are buildable while this is open.
-
-The exports inline every `@font-face` as a base64 woff2, which is a property of
-being a single-file bundle and not a delivery decision. The repo has **no font
-setup at all** today.
-
-1. **Google Fonts CDN** — a `<link>` in the shell's document head. Simplest,
-   and a third-party request on every page load.
-2. **Self-hosted woff2** in the shell's `public/` — one origin, no third party,
-   and the subsetting becomes ours to get right.
-
-⚠️ **This is not purely cosmetic and that is why it is a question.** It reaches
-[Slice 8](./slices/08-independent-deployment.md) twice: a CDN needs a CSP
-`font-src` entry and adds a DNS round trip to the cold start
-[R11](./risks.md#r11) already flags, while self-hosting adds bytes to the
-CloudFront origin and a cache-busting concern for immutable deploys.
-
-Note the irony worth naming: [D33](./decisions-d33-d41.md#d33) says the
-architecture is the portfolio piece, and the site's own
-[CSP Generator](./slices/15-portfolio-detail-redesign.md) project is about
-getting exactly this kind of header right.
-
----
 
 <a id="q21"></a>
 ## Q21 — is it 13+ years or 10+?

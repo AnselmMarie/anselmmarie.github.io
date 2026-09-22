@@ -114,6 +114,9 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D79](decisions-d76-d81.md#d79) | The footer remote keeps the strip only; the dark blocks above it belong to their pages | `d76-d81` |
 | [D80](decisions-d76-d81.md#d80) | The redesign runs before deployment and E2E; Slices 8 and 9 keep their numbers | `d76-d81` |
 | [D81](decisions-d76-d81.md#d81) | `SITE_SECTIONS` becomes the design's five anchors; `--spacing-header` splits in two | `d76-d81` |
+| [D82](decisions-d82-d83.md#d82) | The three typefaces come from the Google Fonts CDN, via a `<link>` — a CSS `@import` is silently dropped; Q20 closes | `d82-d83` |
+| [D83](decisions-d82-d83.md#d83) | `libs/ui/components` gains a `shared-utils` dependency for `cn`; the slice's file list said it needed none | `d82-d83` |
+| [D84](decisions-d82-d83.md#d84) | The nav bar is flush to the top and full-bleed; the design floats it at the frame inset | `d82-d83` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.

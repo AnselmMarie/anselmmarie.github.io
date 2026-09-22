@@ -7,8 +7,13 @@ decides whether any of this actually runs in parallel.
 ## Dependency graph
 
 ```text
-1 → 2 → 3 → 4 → {5, 6, 7} → 8 → 9
+1 → 2 → 3 → 4 → {5, 6, 7} → 10 → 11 → {12, 13→14, 15, 16} → 8 → 9
 ```
+
+⚠️ **Slices 8 and 9 run last despite their numbers**
+([D80](./decisions-d76-d81.md#d80)): the redesign lands before deployment and E2E, and the
+two keep their labels because renumbering would rewrite 97 references across 40 files,
+including `apps/*/vite.config.ts`, `infra/`, `ci.yml` and `tools/eslint/`.
 
 | Edge | The dependency |
 |---|---|
@@ -17,6 +22,11 @@ decides whether any of this actually runs in parallel.
 | 3 → 4 | The boundary wraps a real remote. Writing it against no remote means the specs cannot be seen failing, which [prove-the-spec-can-fail.md](../../../.claude/rules/prove-the-spec-can-fail.md) forbids. ⚠️ **Harder than it reads, since 2026-09-21:** Slice 3 as built does not survive a downed remote — the whole route dies ([D62](./decisions-d58-d62.md#d62)). This is not only a sequencing preference; Slice 3 is not deployable without Slice 4. |
 | 4 → {5,6,7} | Slice 4 pre-creates the seams the three remotes would otherwise all edit at once: registry entries, fallback slots, route-tree lines, `use-content-stub.ts`, **and the six-project scaffold plus the single `pnpm install`**. |
 | {5,6,7} → 8 | Nothing to deploy independently until more than one remote exists. |
+| {5,6,7} → 10 | The redesign re-skins what those three built. Re-skinning a remote that does not exist yet means writing it twice. |
+| 10 → 11 | The content model is authored against the design's field set, and Slice 10 is where the design is first read end to end. Ordering them the other way means authoring fields nobody has checked against a token set. |
+| 11 → {12,13,15,16} | Every wave slice reads the new types and fixtures. ⚠️ This is the edge the 2026-09-21 wave got wrong by treating `shared-types` / `shared-fixtures` as disjoint; see the correction above. |
+| 13 → 14 | **Same Nx project** (`libs/features/homepage`). Not a content dependency — a file-set one. One agent runs them in sequence. |
+| {12,…,16} → 8 | Deploying markup that is about to be replaced. |
 | 8 → 9 | E2E asserts the composed, deployed app including failure isolation. |
 
 ## Shared-file table
@@ -35,6 +45,13 @@ nobody and are omitted.
 | 7 | `libs/shared/config` registry, shell route tree, **`libs/shared/types` + `libs/shared/fixtures` (co-owned with 6)**, root manifests |
 | 8 | `.github/workflows/`, the AWS infrastructure definitions, root `package.json` scripts, `libs/shared/config` (env-read remote URLs), `docs/` (the runbook) |
 | 9 | `playwright.config.ts`, root `package.json` scripts, `.github/workflows/` (the E2E job added to Slice 8's workflow) |
+| 10 | `libs/ui/theme/src/theme.css` (**rewritten**), `libs/ui/components` barrel + 5 new components, `libs/features/shell` layout + 3 regions + **all 5 fallbacks**, `apps/shell/src/styles.css`, root manifests **iff [Q20](./open-questions.md#q20) resolves to self-hosting** |
+| 11 | `libs/shared/types/src/{portfolio-item,homepage-content}.ts` + barrel, all three `portfolio-items-*.fixture.ts`, `homepage.fixture.ts` |
+| 12 | ⚠️ **`libs/shared/fixtures/src/site-sections.fixture.ts` + spec** and `libs/shared/types/src/site-section.ts` — the [D81](./decisions-d76-d81.md#d81) contract; plus `libs/features/shell/src/shell-header-region.tsx` and `fallbacks/header-fallback.tsx` |
+| 13 | `libs/features/homepage/**` only |
+| 14 | `libs/features/homepage/**` only — **the same files as 13** |
+| 15 | `libs/features/portfolio-item/**`, plus **the `head` function only** of `apps/shell/src/routes/portfolio.$slug.tsx` |
+| 16 | `libs/features/footer/**` only |
 
 Specs count as files a slice touches. A slice editing a registry almost always edits that
 registry's spec too, and that spec is shared.
@@ -172,6 +189,58 @@ run per agent on that agent's own projects.
 
 Three agents at roughly 30 files each is well inside the 250-file cap.
 
+## The second wave: slices 12, 13→14, 15, 16
+
+The redesign's four remotes, and the plan's second genuinely parallel-safe group. The
+app-skeleton / feature-lib split ([D27](./decisions-d17-d32.md#d27)) makes them so for the
+same reason it did the first time: each agent owns `apps/<name>` and `libs/features/<name>`.
+
+⚠️ **This wave is safe for a reason the first one was not, and the reason is Slice 11.**
+The 2026-09-21 wave collided because slices 6 and 7 co-owned `libs/shared/types` and
+`libs/shared/fixtures` while the plan claimed they were disjoint
+([D67](./decisions-d63-d67.md#d67) settled the per-file split only after the problem
+surfaced). Here the whole content model is **one solo slice that finishes before any agent
+starts**, so the shared packages are read-only for the entire wave. That is the correction
+applied rather than described.
+
+### Three seams, each with exactly one owner
+
+| Seam | Owner for the wave | Everyone else |
+|---|---|---|
+| `libs/shared/types` + `libs/shared/fixtures` | **nobody** — frozen by Slice 11 | read-only |
+| `site-sections.fixture.ts` + `site-section.ts` | **Slice 12** ([D81](./decisions-d76-d81.md#d81)) | read-only, via `SITE_SECTIONS`, **never a literal** |
+| `apps/shell/**` + `libs/features/shell/**` | **the coordinator**, in Slice 10 | closed — except the `head` function of `portfolio.$slug.tsx`, which is Slice 15's, and `shell-header-region.tsx` + `header-fallback.tsx`, which are Slice 12's |
+
+⚠️ **`libs/ui/theme` and `libs/ui/components` are closed to every wave agent.** A slice that
+finds it needs a sixth shared component or a tenth colour **reports it** and waits; it does
+not add one. Two agents adding to the same barrel is the collision this table exists to
+prevent, and unlike a type error it merges cleanly and silently.
+
+### The pairing that is not parallel
+
+**13 and 14 are the same Nx project.** They appear as one unit in the wave because one agent
+runs them in sequence, 13 first. Running them as two concurrent agents in one tree would put
+both inside `libs/features/homepage` — each agent's gates would see the other's
+half-finished edits, which is the exact condition
+[plan-parallelization.md](../../../.claude/rules/plan-parallelization.md) requires worktrees
+for, and they would still both rewrite `homepage.tsx`.
+
+### If it fans out
+
+Four agents — header, homepage (13 then 14), portfolio-item, footer — at ~20, ~36, ~26 and
+~6 files. Well inside the 250-file cap, per agent and in total. Same conditions as the first
+wave: a worktree each ([branch-creation-approval.md](../../../.claude/rules/branch-creation-approval.md),
+then [worktree-safety.md](../../../.claude/rules/worktree-safety.md) and
+[worktree-pnpm-install.md](../../../.claude/rules/worktree-pnpm-install.md)), an exact file
+set each, gates per agent on that agent's own projects.
+
+⚠️ **Expect this wave to hand back findings about the design, not just code.** Four of the
+five decisions the last wave produced were corrections to the plan, found by the agent sent
+to build against it — and this plan's design table has already been wrong twice
+([design-sources.md](./design-sources.md)). Budget a coordinator pass for closing them, the
+way [D75](./decisions-d75.md#d75) closed the icon divergence that two agents reported and
+neither was permitted to fix.
+
 ## No database slice
 
 This plan has no database layer, so the unconditional solo-database rule never fires.
@@ -191,6 +260,13 @@ oversight.
 | 7 | ~34 | Carries the route and its fallback. |
 | 8 | ~26 | Workflow, the CDK stack filled in, deploy scripts, **and the React-major CI check** ([D39](./decisions-d33-d41.md#d39)). |
 | 9 | ~16 | Plus the per-remote computed-style assertions that stand in for the declined Storybook ([D38](./decisions-d33-d41.md#d38)). |
+| 10 | ~34 | Theme, five shared components, the frame, five fallbacks. Solo. |
+| 11 | ~14 | Types and fixtures only. No JSX. Solo. |
+| 12 | ~20 | Two of them outside its own projects — the section fixture and the shell's header region. |
+| 13 | ~16 | |
+| 14 | ~20 | The largest of the wave: four sections with no existing counterpart. |
+| 15 | ~26 | Twelve regions, plus the two invented blocks ([D78](./decisions-d76-d81.md#d78)). |
+| 16 | ~6 | The same size Slice 5 turned out to be. |
 
 Every slice is under the cap, so no slice needs splitting on size alone.
 

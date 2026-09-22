@@ -1,6 +1,6 @@
 # Slice 10 — Design foundation: tokens, type, the page frame
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slices 5, 6, 7
+**Status:** built, awaiting review (2026-09-22) · **Visible?** ✅ screen · **Depends on:** Slices 5, 6, 7
 **Design:** [`_design/Anselm Marie Portfolio.html`](../../../../_design/Anselm%20Marie%20Portfolio.html) — drawn ✅ (both exports specify the frame identically)
 
 The first slice of the redesign, and the one every other slice reads. It
@@ -36,18 +36,24 @@ names as the ones that serialize everything else.
 - **[D56](../decisions-d56.md#d56)** — `cn` is the one `clsx` + `tailwind-merge`
   helper in `@portfolio/shared-utils`. Every new component takes a `className`
   and merges with it.
+- **[D83](../decisions-d82-d83.md#d83)** — ⚠️ **this slice's file list was
+  wrong about `libs/ui/components/package.json`.** It said "nothing new"; all
+  five components take a `className` and so need `cn`, which lives in
+  `@portfolio/shared-utils` — a package `ui-components` did not depend on.
 - **[D75](../decisions-d75.md#d75)** — icons are Tabler, already a dependency of
   `libs/ui/components`. The design needs seven more marks than `SocialIcon`
   draws; they are pulled from the same package.
 
 ## Open questions blocking this slice
 
-- **[Q20](../open-questions.md#q20)** — how the three typefaces are served:
-  Google Fonts CDN, or self-hosted woff2 in the shell's `public/`. ⚠️ **Blocks
-  the font half of this slice only.** The palette, spacing and frame can be
-  built while it is open; do those first and report the fonts as pending rather
-  than picking a delivery mechanism by default. It has a CSP and a cold-start
-  consequence that belongs to [Slice 8](./08-independent-deployment.md).
+- ✅ **[Q20](../questions-closed-q9-q16.md#q20) — closed 2026-09-22 →
+  [D82](../decisions-d82-d83.md#d82).** The maintainer chose the Google Fonts
+  CDN. ⚠️ **It must be a `<link>`, not a CSS `@import`** — the `@import` was
+  written first and Vite silently dropped it, leaving the page in system faces
+  with every gate green. Slice 8 inherits the CSP entries D82 names.
+
+**Nothing blocks this slice.** Q18, Q19 and Q21 belong to Slices 11, 13, 14
+and 15 and none of them touches a token, a component or the frame.
 
 ## What this slice delivers
 
@@ -130,6 +136,60 @@ would guess it.
 white palette. All five (four remote fallbacks plus the not-found) move to the
 new tokens **in this slice**, by the coordinator — not by the wave slices that
 follow, which never touch `apps/shell` or `libs/features/shell`.
+
+## What this slice leaves open
+
+### ⚠️ The bar is taller than its spacer at mobile widths
+
+`--spacing-nav` is 56px, which is the height of the **design's** nav. The bar
+actually on the page is still Slice 3's header remote, and at 375px its brand
+mark and three links wrap onto two lines, making the bar **81px**. The spacer
+is 56px, so **25px of the page's first content sits under the bar** at mobile
+widths. At desktop it measures 57px against the 56px spacer and clears
+correctly.
+
+**This closes in [Slice 12](./12-header-redesign.md) without further work
+here:** the design's mobile nav is a 44px hamburger, not wrapped links, so the
+bar is 56px at every width once that slice lands.
+
+It is recorded rather than patched because every available patch is worse than
+the wait: widening the spacer hard-codes a number the design contradicts,
+sizing it from the bar needs a `ResizeObserver` in a slice whose job is tokens,
+and restyling the nav *is* Slice 12.
+
+⚠️ **The same shape caused a 41px desktop overlap earlier in this slice**, from
+the same cause — the remote's `h-header` (64px) plus the bar's own padding made
+it 97px. That reader is now gone, which is what took desktop from −41px to
++27px of clearance. Mobile is the remainder.
+
+### The five components are not mounted anywhere yet
+
+`Eyebrow`, `SectionHeading`, `PillLink`, `MetaChip` and `PanelCard` have specs
+and are exported, but no app renders one until Slices 12–16. Per
+[design-system.md](../../../../.claude/rules/design-system.md) that means they
+carry [R3](../risks.md#r3)'s exposure until something mounts them: a class that
+fails to survive Tailwind's `@source` detection renders unstyled, not broken.
+
+Mitigated, not eliminated: every utility the five emit was applied in the
+running page and read back off `getComputedStyle`, and `libs/ui/components/src`
+already has its `@source` line. `text-display` is the one token deliberately
+left unverified-in-place — it is unused, so Tailwind tree-shakes it; it was
+proved correct by a temporary probe (97.28px = 9.5vw, line-height ×0.92,
+tracking ×−0.04) that was then reverted.
+
+### `--spacing-header` now has zero readers
+
+D81 assigned its removal to Slice 12, on the reasoning that the token's readers
+were spread across the three-way `SITE_SECTIONS` contract. They were not — they
+were four spacing call sites, and the anchor-offset fix re-pointed all four.
+The token is still defined and is now inert; Slice 12 can delete the line.
+
+⚠️ **Deleting it is not purely cosmetic under independent deployment.** A
+header remote built before this change still asks for `h-header`, and the class
+is only generated if some source in the shell's `@source` set still names it.
+An old remote against a new shell would get no height rather than a wrong one —
+it degrades to content height. Worth knowing when [Slice 8](./08-independent-deployment.md)
+makes skew real.
 
 ## Files this slice creates and modifies
 

@@ -76,6 +76,20 @@ lives in the trailing inline `<script>`.
 Each is flagged **control by control** in its slice's completion report, not
 summarised in a line.
 
+### Design → code delta
+
+Where the built site deliberately differs from the exports. Required by
+[plan-design-links.md](../../../.claude/rules/plan-design-links.md): a control
+that differs and is *not* in this table is a defect, not a decision.
+
+| Surface | The design | The code | Why |
+|---|---|---|---|
+| Nav bar | floats at the 14px frame inset, carries the card's top radius | flush to the viewport top, full-bleed, square corners | maintainer's call, 2026-09-22 — [D84](./decisions-d82-d83.md#d84) |
+| Webfonts | every `@font-face` inlined as base64 | three families from the Google Fonts CDN, via `<link>` | a single-file export bundles its fonts; that is not a delivery decision — [D82](./decisions-d82-d83.md#d82) |
+
+⚠️ **Slice 12 owns the nav and inherits D84.** Building the export's floating
+bar from the design alone would silently revert a decision the maintainer made.
+
 ### ⚠️ Two contradictions inside the exports themselves
 
 Found while reading them on 2026-09-22, before any slice was written:
