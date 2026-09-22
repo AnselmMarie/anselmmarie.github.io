@@ -1,7 +1,11 @@
 import type { ReactElement } from 'react';
 
-import { useHomepageContent } from '@portfolio/shared-fixtures';
-import type { HomepageContent } from '@portfolio/shared-types';
+import { useHomepageContent, usePortfolioItems } from '@portfolio/shared-fixtures';
+import type { HomepageContent, PortfolioItem } from '@portfolio/shared-types';
+
+import HomepageHero from './homepage-hero.js';
+import HomepageProjectSection from './homepage-project-section.js';
+import HomepageSkills from './homepage-skills.js';
 
 interface HomepageProps {
   /**
@@ -9,45 +13,44 @@ interface HomepageProps {
    * default reads the one fixture seam so the remote also runs standalone.
    */
   content?: HomepageContent;
+  /** The listing's items, same seam, same reason. */
+  items?: readonly PortfolioItem[];
 }
 
 /**
- * 🧭 **OWNER: Slice 6. This is a placeholder — replace the body, keep the file.**
+ * The homepage remote, ported from the live v3 site section for section (D34,
+ * D53 — commit `39bbe56`). Appearance only; no v3 code is ported (D6).
  *
- * Scaffolded by Slice 4 so the remote is runnable end to end: `nx dev homepage`
- * serves it standalone on 4176, and the shell loads it over Module Federation.
- * Slice 6 ports the real sections from commit `39bbe56` (D53).
- *
- * ⚠️ **The section `id`s are already correct and are a contract (D43).** They
- * come from `SITE_SECTIONS`, which the Header remote and the shell's header
- * fallback both read. Slice 6 fills these sections with content; it must not
- * rename their ids without changing the fixture all three read.
- *
- * ⚠️ **`scroll-mt-header` is the other half of D43** — the header is fixed, so
- * a section scrolled to by anchor would otherwise sit underneath it. The value
- * is the `--spacing-header` token from the shared theme (D26), which is how two
- * separate remotes agree on it at build time instead of across the federation
- * boundary.
+ * ⚠️ **The section `id`s are a contract (D43).** They come from
+ * `SITE_SECTIONS`, which the Header remote and the shell's header fallback both
+ * read. The hero is not one of them — the anchors start at `#skills`.
  */
-const Homepage = ({ content }: HomepageProps): ReactElement => {
-  // ⚠️ **Called unconditionally, never inside the `??`.** `useHomepageContent`
-  // reads a fixture today and calls no React hook, so `content ?? useHomepageContent()`
-  // would work — right up until the Contentful plan gives it a real hook body,
-  // at which point the call order changes with the prop and React breaks. The
-  // seam only pays off if every consumer treats it as a hook from the first
-  // line written against it.
+const Homepage = ({ content, items }: HomepageProps): ReactElement => {
+  // ⚠️ **Called unconditionally, never inside the `??`.** These read fixtures
+  // and call no React hook today, so `content ?? useHomepageContent()` would
+  // work — right up until the Contentful plan gives them real hook bodies, at
+  // which point the call order changes with the prop and React breaks.
   const fixtureContent = useHomepageContent();
+  const fixtureItems = usePortfolioItems();
   const resolved = content ?? fixtureContent;
+  const resolvedItems = items ?? fixtureItems;
+
+  const skillsSection = resolved.sections.find((section) => section.id === 'skills');
 
   return (
-    <div data-testid="homepage-remote" className="flex flex-col gap-12">
-      {resolved.sections.map((section) => (
-        <section key={section.id} id={section.id} className="scroll-mt-header">
-          <h2 className="text-xl font-semibold text-ink">{section.label}</h2>
-          <p className="mt-2 text-sm text-slate-500">
-            homepage remote — Slice 6 fills this section
-          </p>
-        </section>
+    <div data-testid="homepage-remote" className="flex flex-col">
+      <HomepageHero hero={resolved.hero} />
+
+      {skillsSection === undefined ? null : (
+        <HomepageSkills
+          sectionId={skillsSection.id}
+          label={skillsSection.label}
+          groups={resolved.skillGroups}
+        />
+      )}
+
+      {resolved.projectGroups.map((group) => (
+        <HomepageProjectSection key={group.sectionId} group={group} items={resolvedItems} />
       ))}
     </div>
   );
