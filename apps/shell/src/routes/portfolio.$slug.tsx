@@ -3,7 +3,7 @@ import type { ReactElement } from 'react';
 
 import { PortfolioNotFound, ShellLayout } from '@portfolio/feature-shell';
 import { SITE_ORIGIN } from '@portfolio/shared-config';
-import { portfolioItemBySlug, SITE_NAME } from '@portfolio/shared-fixtures';
+import { metadataForPath, portfolioItemBySlug, SITE_NAME } from '@portfolio/shared-fixtures';
 import { absoluteUrl } from '@portfolio/shared-utils';
 
 import FooterRemote from '../remotes/footer-remote.js';
@@ -32,12 +32,30 @@ export const Route = createFileRoute('/portfolio/$slug')({
   head: ({ params }) => {
     const item = portfolioItemBySlug(params.slug);
     const title = item ? `${item.title} — ${SITE_NAME}` : `Project — ${SITE_NAME}`;
+    const path = `/portfolio/${params.slug}`;
+    const metadata = metadataForPath(path);
+    const url = absoluteUrl(SITE_ORIGIN, path);
+
+    // ⚠️ The description is authored plain text in `route-metadata.fixture.ts`
+    // (D48/D69), never the item's `description` — that field is HTML and
+    // stripping its tags would produce meta copy nobody wrote.
+    const description = metadata?.description;
+    const imageUrl = metadata?.imageUrl;
 
     return {
       meta: [
         { title },
         { property: 'og:title', content: title },
-        { property: 'og:url', content: absoluteUrl(SITE_ORIGIN, `/portfolio/${params.slug}`) },
+        { property: 'og:url', content: url },
+        ...(description
+          ? [
+              { name: 'description', content: description },
+              { property: 'og:description', content: description },
+            ]
+          : []),
+        ...(imageUrl
+          ? [{ property: 'og:image', content: absoluteUrl(SITE_ORIGIN, imageUrl) }]
+          : []),
       ],
     };
   },
@@ -50,7 +68,7 @@ function PortfolioItemRoute(): ReactElement {
 
   return (
     <ShellLayout header={<HeaderRemote />} footer={<FooterRemote />}>
-      {item ? <PortfolioItemRemote slug={slug} /> : <PortfolioNotFound slug={slug} />}
+      {item ? <PortfolioItemRemote slug={slug} item={item} /> : <PortfolioNotFound slug={slug} />}
     </ShellLayout>
   );
 }

@@ -19,7 +19,7 @@ import MfeLoadingPlaceholder from './mfe-loading-placeholder.js';
 /** How long a pending import may hang before it is treated as a failure (R7). */
 export const REMOTE_LOAD_TIMEOUT_MS = 10_000;
 
-interface MfeRemoteMountProps {
+interface MfeRemoteMountProps<TRemoteProps extends object = Record<string, never>> {
   mfe: RemoteName;
   /** The remote's deployment identifier, for the diagnostic payload. */
   version: string;
@@ -28,6 +28,20 @@ interface MfeRemoteMountProps {
   timeoutMs?: number;
   /** Reserves the region's height while the remote is in flight. */
   placeholderClassName?: string;
+  /**
+   * Props handed to the remote component itself (D73).
+   *
+   * ⚠️ **Without this the mount renders `<RemoteComponent />` bare**, which is
+   * what it did until 2026-09-21 — correct for Header, Footer and Homepage,
+   * which take no props, and silently wrong for Portfolio Item, which needs the
+   * resolved item (D4 / D15). The symptom was the worst kind: `/portfolio/<slug>`
+   * drew the remote's standalone preview item while the server-rendered `<head>`
+   * described the slug that was actually asked for.
+   *
+   * It is a plain data prop, not a callback, so it carries no `on` prefix and
+   * sits in the data tier.
+   */
+  remoteProps?: TRemoteProps;
   /** Shell-owned, never federated (D16). Returns an element, so no `on` prefix. */
   fallback: (props: MfeFallbackProps) => ReactElement;
   /** Whether this region is the one a `location.hash` can point into (D43). */
@@ -44,7 +58,7 @@ interface MfeRemoteMountProps {
    * puts it in the `on*` tier under prop-naming-and-order.md despite reading
    * like a loader.
    */
-  onLoadRemote: () => Promise<{ default: ComponentType }>;
+  onLoadRemote: () => Promise<{ default: ComponentType<TRemoteProps> }>;
 }
 
 /**
@@ -61,17 +75,18 @@ interface MfeRemoteMountProps {
  * satisfies the architecture doc's *"reset its error state when the MFE is
  * successfully retried"*.
  */
-const MfeRemoteMount = ({
+const MfeRemoteMount = <TRemoteProps extends object = Record<string, never>>({
   mfe,
   version,
   route,
   maxRetries = MAX_MFE_RETRIES,
   timeoutMs = REMOTE_LOAD_TIMEOUT_MS,
   placeholderClassName,
+  remoteProps,
   fallback,
   isHashTarget = false,
   onLoadRemote,
-}: MfeRemoteMountProps): ReactElement => {
+}: MfeRemoteMountProps<TRemoteProps>): ReactElement => {
   const [attempt, setAttempt] = useState(0);
   const [hasTimedOut, setHasTimedOut] = useState(false);
 
@@ -127,7 +142,7 @@ const MfeRemoteMount = ({
           />
         }
       >
-        <RemoteComponent />
+        <RemoteComponent {...((remoteProps ?? {}) as TRemoteProps)} />
         {isHashTarget ? <MfeHashReapply /> : null}
       </Suspense>
     </MfeErrorBoundary>
