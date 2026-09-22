@@ -15,7 +15,7 @@ import { remoteVersion } from './remote-version.js';
  */
 const loadFooter = () => import('footer/Footer');
 
-const PLACEHOLDER_CLASS = 'h-header w-full';
+const PLACEHOLDER_CLASS = 'h-nav w-full';
 
 const FooterRemote = (): ReactElement => {
   return (

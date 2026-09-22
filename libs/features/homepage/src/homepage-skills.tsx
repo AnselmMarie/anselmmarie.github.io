@@ -16,10 +16,10 @@ interface HomepageSkillsProps {
 /**
  * The skills section — v3's `skill-list.view.tsx` at `39bbe56`.
  *
- * ⚠️ **`id` and `scroll-mt-header` are D43's contract.** The Header remote and
+ * ⚠️ **`id` and `scroll-mt-anchor` are D43's contract.** The Header remote and
  * the shell's header fallback both build `href="#<id>"` from `SITE_SECTIONS`;
  * a rename that only one of the three follows scrolls nowhere and throws
- * nothing. `scroll-mt-header` reads `--spacing-header` from the shared theme,
+ * nothing. `scroll-mt-anchor` reads `--spacing-header` from the shared theme,
  * which is how two separately deployed remotes agree on the fixed header's
  * height at build time.
  *
@@ -34,7 +34,7 @@ const HomepageSkills = ({ sectionId, label, groups }: HomepageSkillsProps): Reac
   const cardIds = [...new Set(groups.map((group) => group.cardId))];
 
   return (
-    <section id={sectionId} className="scroll-mt-header px-5">
+    <section id={sectionId} className="scroll-mt-anchor px-5">
       <h2 className="sr-only">{label}</h2>
       <div className="mx-auto flex max-w-7xl flex-col justify-center gap-4 lg:flex-row">
         {cardIds.map((cardId) => (

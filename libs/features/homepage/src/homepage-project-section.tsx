@@ -34,7 +34,7 @@ const HomepageProjectSection = ({ group, items }: HomepageProjectSectionProps): 
     .filter((item): item is PortfolioItem => item !== undefined);
 
   return (
-    <section id={group.sectionId} className="scroll-mt-header px-5">
+    <section id={group.sectionId} className="scroll-mt-anchor px-5">
       <div className="mx-auto max-w-7xl">
         <h2 className="text-center text-sky-700">{group.heading}</h2>
         {listed.length === 0 ? (

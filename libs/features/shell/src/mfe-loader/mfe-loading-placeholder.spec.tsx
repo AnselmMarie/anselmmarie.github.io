@@ -13,7 +13,7 @@ afterEach(() => {
 
 describe('MfeLoadingPlaceholder', () => {
   it('reserves the region so the page does not jump when the remote arrives', () => {
-    render(<MfeLoadingPlaceholder className="h-header" timeoutMs={1000} onTimeout={vi.fn()} />);
+    render(<MfeLoadingPlaceholder className="h-nav" timeoutMs={1000} onTimeout={vi.fn()} />);
 
     expect(screen.getByTestId('mfe-loading')).toHaveAttribute('aria-hidden');
   });

@@ -34,10 +34,7 @@ const Header = ({ pathname }: HeaderProps): ReactElement => {
     pathname ?? (typeof window === 'undefined' ? HOME_PATH : window.location.pathname);
 
   return (
-    <div
-      data-testid="header-remote"
-      className="flex h-header w-full items-center justify-between gap-6"
-    >
+    <div data-testid="header-remote" className="flex w-full items-center justify-between gap-6">
       <a href={HOME_PATH} className="text-base font-semibold tracking-tight text-ink">
         {SITE_NAME}
       </a>

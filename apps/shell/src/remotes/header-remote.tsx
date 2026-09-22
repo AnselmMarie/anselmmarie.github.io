@@ -23,7 +23,7 @@ import { remoteVersion } from './remote-version.js';
 const loadHeader = () => import('header/Header');
 
 /** Reserves the header's height so the page does not jump when it hydrates. */
-const PLACEHOLDER_CLASS = 'h-header w-full';
+const PLACEHOLDER_CLASS = 'h-nav w-full';
 
 const HeaderRemote = (): ReactElement => {
   return (
