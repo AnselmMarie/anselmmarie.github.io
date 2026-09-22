@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { HOMEPAGE_CONTENT } from './homepage.fixture.js';
+import { PORTFOLIO_ITEMS } from './portfolio-items.fixture.js';
 import { SITE_SECTIONS } from './site-sections.fixture.js';
 import { useHomepageContent, usePortfolioItem, usePortfolioItems } from './use-content-stub.js';
 
@@ -17,18 +18,24 @@ describe('use-content-stub', () => {
     expect(useHomepageContent().sections).toEqual(SITE_SECTIONS);
   });
 
-  it('serves the portfolio list, empty until Slice 7 ports it', () => {
-    // ⚠️ This assertion is expected to change in Slice 7, and it should be
-    // visible in that diff. It is here so "the list is empty" is a recorded
-    // state rather than something nobody looked at.
-    expect(usePortfolioItems()).toEqual([]);
+  it('serves the portfolio list from the fixture module Slice 7 owns', () => {
+    // ⚠️ Was `toEqual([])` until Slice 7 ported the eight live items — the
+    // change this assertion existed to make visible in that diff. Eight, not
+    // the nine D53 names: `cosmikata-design-system` is commented out at
+    // `39bbe56` and stays a not-found.
+    expect(usePortfolioItems()).toBe(PORTFOLIO_ITEMS);
+    expect(usePortfolioItems()).toHaveLength(8);
+  });
+
+  it('resolves a real slug through the seam', () => {
+    expect(usePortfolioItem('pokemon-pet-shop')?.title).toBe('Pokémon Pet Shop');
   });
 
   it('returns undefined for a slug with no item, rather than throwing', () => {
     // `undefined` is "no such item", which the route turns into a shell-level
     // not-found. A throw here would surface as a REMOTE failure and tell the
     // visitor to retry something that can never succeed.
-    expect(usePortfolioItem('pokemon-pet-shop')).toBeUndefined();
+    expect(usePortfolioItem('not-a-project')).toBeUndefined();
     expect(usePortfolioItem('')).toBeUndefined();
   });
 });

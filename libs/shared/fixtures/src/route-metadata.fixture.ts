@@ -1,5 +1,7 @@
 import type { RouteMetadata } from '@portfolio/shared-types';
 
+import { PORTFOLIO_ITEM_METADATA } from './portfolio-route-metadata.fixture.js';
+
 /**
  * The per-route metadata the shell emits server-side (D48).
  *
@@ -21,7 +23,17 @@ export const HOME_METADATA: RouteMetadata = {
   path: '/',
 };
 
-const BY_PATH: ReadonlyMap<string, RouteMetadata> = new Map([['/', HOME_METADATA]]);
+/**
+ * ⚠️ Slice 7's rows live in `portfolio-route-metadata.fixture.ts`, not inline —
+ * `HOME_METADATA` above is Slice 6's copy and this module is co-owned, so the
+ * per-slug copy is kept in a module of its own that only Slice 7 opens.
+ */
+const BY_PATH: ReadonlyMap<string, RouteMetadata> = new Map([
+  ['/', HOME_METADATA],
+  ...PORTFOLIO_ITEM_METADATA.map(
+    (metadata): readonly [string, RouteMetadata] => [metadata.path, metadata] as const
+  ),
+]);
 
 /**
  * Looks metadata up by route path. Returns `undefined` for a path with no
