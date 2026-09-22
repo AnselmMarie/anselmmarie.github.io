@@ -21,6 +21,7 @@ decision is separated from the ones that explain it. This file is now the index 
 - [**D56** — `cn` is one real Tailwind merge, in `libs/shared/utils`](decisions-d56.md)
 - [**D57** — Nx drives the workspace through its own plugins](decisions-d57.md)
 - [**D58–D62** — What building Slice 3 forced](decisions-d58-d62.md)
+- [**D63–D68** — What building Slice 4 forced](decisions-d63-d67.md)
 
 ## Every decision
 
@@ -88,6 +89,12 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D60](decisions-d58-d62.md#d60) | `@portfolio/ui-*` are not MF shared modules; they share at build time | `d58-d62` |
 | [D61](decisions-d58-d62.md#d61) | The remote URL is baked at build time; D12 is not yet satisfied | `d58-d62` |
 | [D62](decisions-d58-d62.md#d62) | A downed remote takes the whole page down until Slice 4 lands | `d58-d62` |
+| [D63](decisions-d63-d67.md#d63) | The section list moves to `@portfolio/shared-fixtures`; the shell's fallback is its third reader | `d63-d67` |
+| [D64](decisions-d63-d67.md#d64) | `RemoteEntry` carries a `version`, defaulting to `dev` | `d63-d67` |
+| [D65](decisions-d63-d67.md#d65) | `fallback` is a render prop, and the retry counter lives in the mount, not the boundary | `d63-d67` |
+| [D66](decisions-d63-d67.md#d66) | An unknown portfolio slug is a shell-level not-found, never a remote fallback | `d63-d67` |
+| [D67](decisions-d63-d67.md#d67) | The Slice 5–7 wave's per-file split, settled before any agent starts | `d63-d67` |
+| [D68](decisions-d63-d67.md#d68) | Slice 4 ships all four remotes runnable, with placeholder components | `d63-d67` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.

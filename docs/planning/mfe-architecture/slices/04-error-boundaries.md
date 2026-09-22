@@ -1,6 +1,15 @@
 # Slice 4 — Error boundaries, shell-owned fallbacks, bounded retry
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slice 3
+**Status:** ✅ **built 2026-09-21, awaiting review** — 90 files (estimated ~40) · **Visible?** ✅ screen ·
+**Depends on:** Slice 3
+
+> **Built.** The boundary, loader, four fallbacks and the not-found are in
+> `libs/features/shell`; all four wave seams are pre-created and the six projects are
+> scaffolded, tagged and installed. Five decisions came out of it:
+> [D63–D67](../decisions-d63-d67.md). The per-file split for the wave is in
+> [parallelization.md](../parallelization.md#the-named-per-file-split-for-the-wave)
+> ([D67](../decisions-d63-d67.md#d67)).
+
 **Design:** ⚠️ **the one slice with no reference.** [Q1](../questions-closed.md#q1) closed as
 [D34](../decisions-d33-d41.md#d34) — the live v3 site is the visual reference for every other
 surface — but a site with no remotes has no remote-failure UI, so the fallbacks have no v3
@@ -62,6 +71,82 @@ Four things a reviewer can do by hand:
 3. Click **try again** — the remote reloads and, on success, the boundary resets and the
    real header appears.
 4. Click it repeatedly — the retry is bounded and the UI says so. It does not loop.
+
+### Correction, same day: the scaffolded apps could not be run
+
+⚠️ **Found by the maintainer, not by the gates**, in two rounds — and the second round
+changed this slice's scope ([D68](../decisions-d63-d67.md#d68)).
+
+**Round 2 — *"I can't run footer, homepage and portfolio-item by itself."*** Removing the
+targets made the failure honest but left three directories that could not be started. Slice
+4 now ships all four remotes **runnable**: full app skeletons (`vite.config.ts` from
+`apps/header` per [D55](../decisions-d55.md), `index.html`, `main.tsx`, `bootstrap.tsx`,
+`styles.css`, targets) plus a **placeholder component** at the real name in each feature
+lib. `pnpm nx dev <remote>` works for all four on its `strictPort` port, and
+`.claude/launch.json` carries all five apps.
+
+⚠️ **Three placeholders are now on the composed page.** Each one's spec asserts
+`"Slice N fills this"`, which fails the moment the real component lands — the guard against
+a placeholder shipping unnoticed.
+
+**Round 1 was the original defect, and is kept because the failure mode repeats:**
+
+⚠️ **Found by the maintainer, not by the gates** — *"footer is not loading correctly. This
+localhost page can't be found."*
+
+Slice 4 first scaffolded `apps/footer|homepage|portfolio-item` with `dev` / `build` /
+`preview` targets copied from `apps/header`. With no `vite.config.ts` behind them,
+`nx dev footer` started Vite on its defaults: it found no `index.html`, bound a **random
+free port** instead of 4175, printed a URL, and **exited 0**. The port the shell's registry
+actually points at was never bound, so both that URL and 4175 gave *"This localhost page
+can't be found"*.
+
+Every gate passed throughout. `typecheck`, `lint`, `test` and `check:file-size` have
+nothing to say about a target that starts a server serving nothing — which is the same
+shape as [R3](../risks.md#r3) and the `i18n` example the rules keep citing: **a green run
+and a broken surface**.
+
+**Fixed** by writing the configs properly (see Round 2 above). Each app carries a
+`README.md` with its port, its override env var, and what its slice still owns.
+
+⚠️ **The footer region on the composed page was never broken.** It rendered its shell-owned
+fallback, correctly, throughout — there was no Footer remote to load. The defect was
+entirely in the scaffold's dev ergonomics.
+
+### What was actually seen, 2026-09-21
+
+⚠️ **The list above says "the header's" throughout because it was written when the Header
+was the only remote. As built, the observable surface is larger and one item was checked on
+a different remote than the list names.** Stated exactly:
+
+- ✅ **Failure isolation, live** — at `http://localhost:3000/` with the Header remote up and
+  the Footer and Homepage origins dead: the **real** Header rendered
+  (`[data-testid="header-remote"]`) while `mfe-fallback-footer` and `mfe-fallback-homepage`
+  rendered in their own regions. Three regions, three independent outcomes, one page.
+- ✅ **The bounded retry, live** — clicking **Try again** on the homepage fallback twice
+  replaced the button with *"We have stopped retrying. Reload the page to try again."*
+- ✅ **The diagnostic payload, live** — the console carried
+  `[mfe:homepage] load failure {mfe, version: dev, route: /, kind: load, errorType, …}` plus
+  the component stack, for each failed remote.
+- ✅ **`/portfolio/cosmikata`** rendered the shell-level not-found beside the real Header,
+  with `<title>` `Project — Anselm Marie` from the route's `head`
+  ([D48](../decisions-d48-d52.md#d48)).
+- ✅ **Four live remotes, after [D68](../decisions-d63-d67.md#d68)** — with all five servers
+  up, `/` rendered `header-remote`, `homepage-remote` and `footer-remote` with **no fallback
+  on the page at all**. Federation composes end to end.
+- ✅ **[D43](../decisions-d42-d47.md#d43) verified live, both halves.** A cold load of
+  `/#other-projects` scrolled on arrival — `scrollY` 190 of a 190px maximum, with the
+  section's `scroll-margin-top` computing to `64px` from the shared theme token. ⚠️ It reads
+  as doing nothing on a full-height window, because the placeholder page is shorter than the
+  viewport and there is nowhere to scroll; check it in a short window.
+- ⚠️ **The header fallback was NOT seen in the browser.** It is covered by its own specs and
+  by the identical code path the footer and homepage fallbacks exercised — but "seen on
+  screen" is a stronger claim than this slice can make for that one fallback, so it is not
+  made. With D68 it is now one `Ctrl-C` away: stop `nx dev header` and reload.
+- ⚠️ **A successful retry restoring a real remote was verified in a spec, not in the
+  browser.** The spec counts the import calls ([D65](../decisions-d63-d67.md#d65)), which is
+  the assertion that distinguishes a working retry from the cached-rejection trap. D68 makes
+  the live version reachable too: stop a remote, reload, restart it, click **Try again**.
 
 **Stubbed:** error reporting logs to the console with the full diagnostic payload the doc
 requires (MFE name, version, route, error type and message, runtime info, timestamp,
