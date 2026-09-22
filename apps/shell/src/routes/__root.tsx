@@ -27,7 +27,36 @@ export const Route = createRootRoute({
       { property: 'og:url', content: absoluteUrl(SITE_ORIGIN, HOME_METADATA.path) },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'stylesheet', href: appCss }],
+    links: [
+      /*
+       * Q20 → D82 — the three families come from the Google Fonts CDN.
+       *
+       * ⚠️ **A `<link>` here, not an `@import` in CSS, and that is not a
+       * style preference.** Slice 10 first put
+       * `@import url('https://fonts.googleapis.com/...')` at the top of
+       * `libs/ui/theme/src/theme.css`; Vite's CSS pipeline **silently dropped
+       * it**. The build was green, the page rendered, and the served
+       * stylesheet contained no `@import` and no `@font-face` — the site just
+       * showed system fallbacks. Caught by looking at `document.fonts` in the
+       * running page, which is the only thing that could have caught it.
+       *
+       * A `<link>` is also the faster shape: a CSS `@import` cannot start its
+       * request until the importing stylesheet has been fetched and parsed,
+       * which serializes two round trips. The design export uses `<link>` too.
+       *
+       * ⚠️ **Slice 8 owns the CSP consequence:** `style-src` must allow
+       * `https://fonts.googleapis.com` and `font-src`
+       * `https://fonts.gstatic.com`, or these are blocked in production and
+       * the site silently falls back again.
+       */
+      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+      { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap',
+      },
+      { rel: 'stylesheet', href: appCss },
+    ],
   }),
   component: RootComponent,
 });
