@@ -26,6 +26,10 @@ import { defineConfig } from 'vite';
  * worked around.
  */
 const HEADER_ORIGIN = process.env.PORTFOLIO_HEADER_ORIGIN ?? 'http://localhost:4174';
+const FOOTER_ORIGIN = process.env.PORTFOLIO_FOOTER_ORIGIN ?? 'http://localhost:4175';
+const HOMEPAGE_ORIGIN = process.env.PORTFOLIO_HOMEPAGE_ORIGIN ?? 'http://localhost:4176';
+const PORTFOLIO_ITEM_ORIGIN =
+  process.env.PORTFOLIO_PORTFOLIO_ITEM_ORIGIN ?? 'http://localhost:4177';
 
 const mfPlugins = federation({
   name: 'shell',
@@ -43,7 +47,20 @@ const mfPlugins = federation({
     // the runtime `registerRemotes` / `mf-manifest.json` path UNPROVEN, so
     // Slice 3 builds on what was proven and the gap is reported rather than
     // papered over. Closing it is a scoped follow-up, not a rewrite.
+    //
+    // ⚠️ **Slice 4 added the other three, and their remotes do not exist yet.**
+    // This map is a seam: slices 5, 6 and 7 run concurrently and would all edit
+    // it otherwise. An entry pointing at a dead origin is not a build error —
+    // the runtime fetches `remoteEntry.js` lazily, in the browser — so the
+    // failure lands exactly where Slice 4's boundary is waiting for it.
     header: { type: 'module', name: 'header', entry: `${HEADER_ORIGIN}/remoteEntry.js` },
+    footer: { type: 'module', name: 'footer', entry: `${FOOTER_ORIGIN}/remoteEntry.js` },
+    homepage: { type: 'module', name: 'homepage', entry: `${HOMEPAGE_ORIGIN}/remoteEntry.js` },
+    'portfolio-item': {
+      type: 'module',
+      name: 'portfolio-item',
+      entry: `${PORTFOLIO_ITEM_ORIGIN}/remoteEntry.js`,
+    },
   },
   // D39 — singleton React, `strictVersion: false`, the version pinned once at
   // the workspace root. Slice 8 adds the CI check that every app resolves the
