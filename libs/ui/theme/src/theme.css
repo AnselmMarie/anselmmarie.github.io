@@ -40,7 +40,10 @@
  *
  * One line per lib whose classes must survive. A missing line is silent.
  */
+@source '../../../features/footer/src';
 @source '../../../features/header/src';
+@source '../../../features/homepage/src';
+@source '../../../features/portfolio-item/src';
 @source '../../../features/shell/src';
 @source '../../components/src';
 @source '../../primitives/src';

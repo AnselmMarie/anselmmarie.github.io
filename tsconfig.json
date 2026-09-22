@@ -35,6 +35,24 @@
     },
     {
       "path": "./apps/header"
+    },
+    {
+      "path": "./libs/features/portfolio-item"
+    },
+    {
+      "path": "./libs/features/homepage"
+    },
+    {
+      "path": "./libs/features/footer"
+    },
+    {
+      "path": "./apps/portfolio-item"
+    },
+    {
+      "path": "./apps/homepage"
+    },
+    {
+      "path": "./apps/footer"
     }
   ]
 }
