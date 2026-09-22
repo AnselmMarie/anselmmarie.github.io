@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { SITE_NAME } from '@portfolio/shared-fixtures';
 
 import Footer from './footer.js';
+import { FOOTER_SOCIAL_LINKS } from './footer-social-links.const.js';
 
 describe('Footer', () => {
   it('identifies itself as the remote, not the shell-owned fallback', () => {
@@ -22,12 +23,44 @@ describe('Footer', () => {
     expect(screen.getByTestId('footer-remote')).toHaveTextContent(SITE_NAME);
   });
 
-  it('says out loud that it is a placeholder', () => {
-    // ⚠️ This assertion is expected to be DELETED by Slice 5, and that is the
-    // point: it fails the moment the real footer lands, so the placeholder
-    // cannot ship to production unnoticed.
+  it('attributes the current year, not a year frozen at build time', () => {
     render(<Footer />);
 
-    expect(screen.getByTestId('footer-remote')).toHaveTextContent('Slice 5 fills this');
+    expect(screen.getByTestId('footer-remote')).toHaveTextContent(`© ${new Date().getFullYear()}`);
+  });
+
+  it('does not render a second contentinfo landmark inside the shell footer region', () => {
+    // ShellFooterRegion already supplies the <footer>. A landmark here would
+    // nest two, which is the bug this assertion exists to catch.
+    const { container } = render(<Footer />);
+
+    expect(container.querySelector('footer')).toBeNull();
+  });
+
+  // spec-through-the-parent.md — the link rows are supplied BY the Footer, so
+  // the props have to be asserted at this call site. A FooterSocialLinkItem
+  // spec renders with props the spec itself invented and would stay green if
+  // the Footer stopped passing them.
+  it('forwards every configured link into the nav, in order', () => {
+    render(<Footer />);
+
+    const links = screen.getAllByRole('link');
+
+    // ⚠️ **Accessible name, not `textContent`** — this read the text node until
+    // the Tabler marks landed (D75), at which point every link's text is empty
+    // and an icon-only link's name comes from `aria-label` alone. Asserting the
+    // name keeps this a real forwarding check instead of comparing '' to ''.
+    expect(links.map((link) => link.getAttribute('aria-label'))).toEqual(
+      FOOTER_SOCIAL_LINKS.map((link) => link.label)
+    );
+    expect(links.map((link) => link.getAttribute('href'))).toEqual(
+      FOOTER_SOCIAL_LINKS.map((link) => link.href)
+    );
+  });
+
+  it('labels the outbound nav so its links are reachable by role', () => {
+    render(<Footer />);
+
+    expect(screen.getByRole('navigation', { name: 'Elsewhere' })).toBeInTheDocument();
   });
 });
