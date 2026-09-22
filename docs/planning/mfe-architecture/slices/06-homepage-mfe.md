@@ -1,6 +1,6 @@
 # Slice 6 — Homepage MFE, on fixtures
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slice 4
+**Status:** ✅ built 2026-09-21 in worktree `claude/slice-6-homepage`, awaiting review — ⚠️ the listing renders empty until the images land, and the tile has no thumbnail ([D72](../decisions-d71-d72.md#d72)) · **Visible?** ✅ screen · **Depends on:** Slice 4
 **Design:** the live v3 site ([D34](../decisions-d33-d41.md#d34)) — appearance only; no Next.js
 code is ported ([D6](../decisions-d01-d16.md#d6))
 **Wave:** runs concurrently with Slices 5 and 7
@@ -38,7 +38,11 @@ fixture seam matters.
   not a disclaimer: this slice writes the **real** portfolio copy, and it is reviewed as
   published content rather than skimmed as a stub.
 - **[D53](../decisions-d53.md#d53)** — ⚠️ **the copy is ported from commit `39bbe56`, not
-  retyped and not read off the rendered page.** `git show version-3:<path>`:
+  retyped and not read off the rendered page.** ⚠️ **Use the commit, not a branch:**
+  `git show 39bbe56:<path>`. The `version-3` branch this line used to name was **reused for
+  the new workspace** and now points at `7b3bf60` — see the correction in
+  [D53](../decisions-d53.md#d53). `version-2` still resolves to `39bbe56`; `version-3` does
+  not.
   - `src/store/active.data.ts` and `src/store/other.data.ts` — **nine items**, ids already
     matching Slice 7's `/portfolio/$slug` slugs
   - `src/store/index.ts` — `PortfolioDataInter` / `ImagesDataInter` / `VideosDataInter`, the
@@ -81,12 +85,18 @@ fixture seam matters.
   it reads this slice's fixtures as well as the remote doing so. This slice supplies the
   homepage route's `title` and `description` values alongside its content — it is no longer
   an open question, it is a deliverable.
-- **[Q17](../open-questions.md#q17)** — ⚠️ **how the ported `description` HTML renders.**
-  Every item's description is an HTML string (`<p>`, `<ul>`, `<a target="_blank">`), not
-  plain text. The listing may only need the title and thumbnail, in which case this blocks
-  [Slice 7](./07-portfolio-item-mfe.md) harder than it blocks this slice — but the **shape**
-  of the field is decided here, because this slice writes the fixtures. Settle it before
-  typing `description`.
+- ✅ **[Q17](../questions-closed-q9-q16.md#q17) closed 2026-09-21 →
+  [D69](../decisions-d69.md#d69), and ⚠️ it never blocked this slice.** The entry here said
+  the field's shape "is decided here, because this slice writes the fixtures" — **that was
+  wrong on both halves.** `description` lands on `PortfolioItem`, which the
+  [D67](../decisions-d63-d67.md#d67) split assigns to **Slice 7**, and at `39bbe56`
+  `dangerouslySetInnerHTML` appears in exactly one file — the item page. The homepage
+  listing renders thumbnail and title and never touches `description`. So this slice was
+  held by a question it did not depend on; it is not held now, and it does not add a
+  `description` field to anything.
+
+  For the record, the answer is: the field stays an HTML string, sanitized with `dompurify`
+  at the render boundary, in Slice 7's component.
 - **[Q2](../questions-closed.md#q2)** — ✅ **closed 2026-09-21 as
   [D55](../decisions-d55.md#d55): this slice exists in its current form.** The existential
   risk it carried is gone — the spike gate passed, federation does compose with TanStack
@@ -157,6 +167,18 @@ place** fixture data is read: a section importing a fixture directly has broken 
 the Contentful plan will pay for it.
 
 **`libs/shared/types`** and **`libs/shared/fixtures`** — ⚠️ **co-owned with Slice 7**
+
+> ⚠️ **The portfolio listing on this page reads a fixture this slice does not own.**
+> `usePortfolioItems()` returns `PORTFOLIO_ITEMS` from
+> `portfolio-items.fixture.ts`, which the split assigns to **Slice 7** and which is an
+> **empty array** until Slice 7 lands. So the listing section renders zero items in this
+> slice's own dev server and in the composed page, and that is **correct, not a bug to
+> work around**. Build the section against the seam, give its spec its own items, and
+> render the empty state deliberately — do not seed the fixture to see something on
+> screen, and do not import the homepage's own copy of the item list. Say in the report
+> that the listing was verified against spec data and an empty live fixture, so the
+> screenshot is read for what it is. The listing fills in when Slice 7 ports the nine
+> items; if the wave lands out of order, that is the moment to re-screenshot.
 
 - The homepage's content shapes and fixture data, **in the specific modules the coordinator
   named before the wave started**. Both projects are shared with Slice 7, so the split is by

@@ -120,6 +120,27 @@ the remote registry and its spec, `apps/shell/**` (mounts, `remotes.d.ts`, both 
 `vite.config.ts` remotes map), `libs/features/shell/**`, `libs/ui/theme/src/theme.css`'s
 `@source` lines, and every root manifest.
 
+### ⚠️ Correction, 2026-09-21 — one named exception inside `apps/shell`, for Slice 7
+
+The blanket "`apps/shell/**`" above **contradicted [Slice 7](./slices/07-portfolio-item-mfe.md)**,
+which lists `src/routes/portfolio.$slug.tsx` among the files it fills in, and contradicted
+that file's own header, which says *"created by Slice 4 as a seam, filled in by Slice 7."*
+Two of the three statements had to be wrong; resolved by reading the file.
+
+**Slice 7 may edit `apps/shell/src/routes/portfolio.$slug.tsx`, and only its `head`
+function.** Slice 4 wired the route completely — the slug resolution, the not-found split,
+the boundary mount, and a `title` / `og:title` / `og:url` head. What is missing is the part
+that needs fixture data Slice 7 has not written yet: the per-item `description` and
+`og:image` ([D48](./decisions-d48-d52.md#d48)). The component body, the imports and the
+not-found branch stay as they are.
+
+Everything else under `apps/shell/**` stays closed, to Slice 7 as much as to the others —
+including `routeTree.gen.ts`, which is generated and must not be hand-edited or regenerated
+by a wave agent. **Slices 5 and 6 touch no file in `apps/shell` at all**: the homepage
+route's `head` already reads `HOME_METADATA`, so Slice 6's metadata deliverable is
+discharged by Slice 4 unless the copy itself changes — and changing it is a report, not an
+edit ([D67](./decisions-d63-d67.md#d67)).
+
 A wave agent that finds it needs a change in any of those **reports it and stops**; it does
 not make the edit. That is the whole point of settling the seams first.
 

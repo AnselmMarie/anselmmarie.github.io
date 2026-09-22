@@ -3,3 +3,4 @@ export type { PortfolioItem } from './portfolio-item.js';
 export type { RemoteEntry, RemoteName, RemoteRegistry } from './remote.js';
 export type { RouteMetadata } from './route-metadata.js';
 export type { SiteSection } from './site-section.js';
+export type { SocialIconName } from './social-icon-name.js';

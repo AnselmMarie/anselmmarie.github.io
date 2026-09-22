@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { PORTFOLIO_ITEMS } from './portfolio-items.fixture.js';
 import { HOME_METADATA, metadataForPath } from './route-metadata.fixture.js';
 
 describe('metadataForPath', () => {
@@ -8,9 +9,28 @@ describe('metadataForPath', () => {
   });
 
   it('returns undefined for a path with no entry, rather than inventing one', () => {
-    // Slice 7 adds `/portfolio/$slug`. Until then the shell's root route
-    // supplies the default, and this assertion is what says so.
-    expect(metadataForPath('/portfolio/pokemon-pet-shop')).toBeUndefined();
+    expect(metadataForPath('/not-a-route')).toBeUndefined();
+    expect(metadataForPath('/portfolio/not-a-project')).toBeUndefined();
+  });
+
+  it('resolves every portfolio item path with its own title, description and image', () => {
+    // D48 — /portfolio/$slug is the link people actually share, so an empty
+    // description here is a blank preview that looks fine in the DOM.
+    for (const item of PORTFOLIO_ITEMS) {
+      const metadata = metadataForPath(`/portfolio/${item.slug}`);
+
+      expect(metadata?.title).toBe(item.title);
+      expect(metadata?.description.length).toBeGreaterThan(0);
+      expect(metadata?.imageUrl).toBe(item.thumbnail);
+    }
+  });
+
+  it('authors the meta description rather than stripping tags from the item HTML', () => {
+    // D69 point 4. The item body is HTML; the meta copy is written by hand.
+    const metadata = metadataForPath('/portfolio/pokemon-pet-shop');
+
+    expect(metadata?.description).not.toContain('<');
+    expect(metadata?.description).not.toContain('As a personal challenge');
   });
 
   it('gives the home route a non-empty title and description', () => {

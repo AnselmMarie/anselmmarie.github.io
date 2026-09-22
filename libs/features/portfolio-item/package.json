@@ -15,6 +15,7 @@
     "@portfolio/shared-fixtures": "workspace:*",
     "@portfolio/shared-types": "workspace:*",
     "@portfolio/ui-components": "workspace:*",
+    "dompurify": "^3.4.15",
     "react": "^19.3.0"
   },
   "devDependencies": {

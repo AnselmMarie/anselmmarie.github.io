@@ -35,7 +35,7 @@ const DEV_PORT = 4176;
  */
 const REMOTE_ORIGIN = process.env.PORTFOLIO_HOMEPAGE_ORIGIN ?? `http://localhost:${DEV_PORT}`;
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   root: import.meta.dirname,
   base: `${REMOTE_ORIGIN}/`,
   server: { port: DEV_PORT, strictPort: true, cors: true },
@@ -43,6 +43,33 @@ export default defineConfig({
   // D55 §4 — the federation runtime emits ESM; an older target downlevels the
   // top-level await the shared-module init depends on.
   build: { target: 'esnext' },
+  /**
+   * ⚠️ **Not a performance flag — the standalone dev server does not work
+   * without it.**
+   *
+   * `@module-federation/vite` learns which shared packages this app actually
+   * uses from the esbuild pass that pre-bundles dependencies: that scan is the
+   * only thing in dev that marks `react-dom` used, and the generated
+   * `hostAutoInit` module publishes exactly the marked packages into the share
+   * scope before the entry runs.
+   *
+   * On a WARM `node_modules/.vite` cache Vite skips that scan, so `react-dom`
+   * and `react-dom/client` are never marked. `hostAutoInit` skips them, the
+   * `loadShare` virtual module's re-exports stay `undefined`, and
+   * `react-dom/client` dies reading `ReactDOMSharedInternals.d` off nothing:
+   * `Cannot read properties of undefined (reading 'd')`, on a blank page. Only
+   * `react` and `react/jsx-dev-runtime` survive, on the automatic-JSX-runtime
+   * code path.
+   *
+   * What makes it confusing: the FIRST run after anything busts the dep cache
+   * re-optimises, so the scan runs and the remote works. Every restart after
+   * that fails. Forcing the scan makes `vite dev` behave the same every time.
+   *
+   * Scoped to `serve` — the production build never reads a warm dev cache.
+   * Remove it if @module-federation/vite starts registering its shares from the
+   * dev transform as well (still open as of 1.22.1).
+   */
+  optimizeDeps: { force: command === 'serve' },
   plugins: [
     tailwindcss(),
     federation({
@@ -65,4 +92,4 @@ export default defineConfig({
     }),
     viteReact(),
   ],
-});
+}));
