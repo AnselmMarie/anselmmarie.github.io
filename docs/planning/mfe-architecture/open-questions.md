@@ -1,35 +1,148 @@
 # Open Questions
 
-Every unanswered question lives here, with the slice it blocks. A question is never raised
-inside a slice's prose and left there — that is how a discussion gets lost.
+Every unanswered question lives here, with the slice it blocks. A question is
+never raised inside a slice's prose and left there — that is how a discussion
+gets lost.
 
 When one is answered: write the answer as a numbered decision in
 [decisions.md](./decisions.md), move the entry to
-[questions-closed.md](./questions-closed.md) with a closure note, update the table below,
-and update the binding block of every slice that named it. All four, in the same change.
+[questions-closed.md](./questions-closed.md) with a closure note, update the
+table below, and update the binding block of every slice that named it. All
+four, in the same change.
 
-**None are open.** [Q17](./questions-closed-q9-q16.md#q17) — the last one — closed on
-2026-09-21 as [D69](./decisions-d69.md#d69): a portfolio `description` stays an HTML string
-and is sanitized with `dompurify` at the render boundary. Its full entry and closure note
-moved to [questions-closed-q9-q16.md](./questions-closed-q9-q16.md#q17).
+**Four are open**, all raised on 2026-09-22 by reading the two design exports
+([D76](./decisions-d76-d81.md#d76)). ⚠️ **None of them blocks a whole slice** —
+each blocks one field or one region, so the slice that owns it builds everything
+else and reports the blocked part as pending rather than filling it in.
 
-⚠️ **An empty file is a state, not an invitation.** Slices 8 and 9 have not been built, and
-a question they raise belongs here rather than inside a slice's prose — that is the burial
-this file exists to prevent.
+| Q | Blocks | Status |
+|---|---|---|
+| [Q18](#q18) | Slices 11, 13, 15 — the hero images only | 🔴 open |
+| [Q19](#q19) | Slice 15 — the gallery contents only | 🔴 open |
+| [Q20](#q20) | Slice 10 — the font delivery only | 🔴 open |
+| [Q21](#q21) | Slices 11, 13, 14 — one figure | 🔴 open |
 
-[Q2](./questions-closed.md#q2) — the spike gate Slice 3 answered by building rather than
-deciding — **closed on 2026-09-21** as [D55](./decisions-d55.md#d55): all four checks
-passed, and the configuration it proved is recorded there. Its full entry moved to
-[questions-closed.md](./questions-closed.md#q2) with its closure note.
-[Q14](./questions-closed-q9-q16.md#q14) closed on 2026-09-20 as
-[D48](./decisions-d48-d52.md#d48), which is what unblocked the route tree in Slice 1.
+---
 
-All seventeen — fifteen closed on 2026-09-20, plus Q2 and Q17 on 2026-09-21 — live in
-[questions-closed.md](./questions-closed.md) and its second half, full text and closure
-notes intact. ⚠️ **This
-file was split at 548 lines**, over the 500-line cap in
-[plan-split-into-files.md](../../../.claude/rules/plan-split-into-files.md); nothing was
-dropped in the cut.
+<a id="q18"></a>
+## Q18 — what are the real hero images?
+
+**Raised 2026-09-22. Blocks:** the homepage's featured image
+([Slice 13](./slices/13-homepage-hero-work.md)) and each item's `hero` field
+([Slice 11](./slices/11-content-model.md), rendered by
+[Slice 15](./slices/15-portfolio-detail-redesign.md)).
+
+Both exports point their hero `<img>` at an **Unsplash URL** behind a
+`((window.__resources||{}).heroX) ||` fallback — i.e. the design says
+explicitly that these are placeholders awaiting real assets.
+
+The repo has **43 real portfolio images** under
+`apps/shell/public/images/portfolio/`, across six folders. None of them is a
+16/7 hero; they are screenshots at their authored intrinsic dimensions.
+
+The options, none of which a builder should pick alone:
+
+1. Commission or capture a hero per item (8 needed, plus 1 for the homepage).
+2. Crop an existing screenshot to 16/7 and accept the composition.
+3. Drop the hero region and let the page start at the tech/summary block —
+   a real design change, not a fallback.
+
+⚠️ **Do not hotlink Unsplash.** It is a third-party runtime dependency on a
+page whose whole point is that it degrades well, and it is not licensed for it.
+
+---
+
+<a id="q19"></a>
+## Q19 — what fills the detail gallery?
+
+**Raised 2026-09-22. Blocks:** the gallery region of
+[Slice 15](./slices/15-portfolio-detail-redesign.md) only.
+
+The export draws the grid — two columns, per-tile `span` and `ratio`
+(`span 2` at `16/9`, `span 1` at `3/4`), collapsing to one column at `4/3` on
+mobile — but fills every tile with a **striped placeholder and a label**
+("Catalog grid — desktop", "Cart drawer"). The labels are notes to the
+designer; the literal "Drop images here" heading beside the grid certainly is.
+
+So the design specifies the container and not the contents, while the fixtures
+hold 43 real images with authored `width`/`height` strings.
+
+The question is how the two meet:
+
+1. Derive `span` and `ratio` from each image's authored dimensions — landscape
+   takes `span 2`, portrait `span 1` — and drop the labels.
+2. Author a `span`/`ratio`/label per image, matching the design's rhythm, and
+   accept that as 43 hand-written entries.
+3. Keep the design's tile count per item and pick which images make the cut.
+
+⚠️ **Option 1 is the cheapest and most likely right**, and it is still a
+decision: it means an item with six landscape screenshots renders six full-width
+tiles, which is not the rhythm the design draws.
+
+---
+
+<a id="q20"></a>
+## Q20 — how are Carlito, JetBrains Mono and Inter served?
+
+**Raised 2026-09-22. Blocks:** the font half of
+[Slice 10](./slices/10-design-foundation.md) only — the palette, the spacing and
+the page frame are buildable while this is open.
+
+The exports inline every `@font-face` as a base64 woff2, which is a property of
+being a single-file bundle and not a delivery decision. The repo has **no font
+setup at all** today.
+
+1. **Google Fonts CDN** — a `<link>` in the shell's document head. Simplest,
+   and a third-party request on every page load.
+2. **Self-hosted woff2** in the shell's `public/` — one origin, no third party,
+   and the subsetting becomes ours to get right.
+
+⚠️ **This is not purely cosmetic and that is why it is a question.** It reaches
+[Slice 8](./slices/08-independent-deployment.md) twice: a CDN needs a CSP
+`font-src` entry and adds a DNS round trip to the cold start
+[R11](./risks.md#r11) already flags, while self-hosting adds bytes to the
+CloudFront origin and a cache-busting concern for immutable deploys.
+
+Note the irony worth naming: [D33](./decisions-d33-d41.md#d33) says the
+architecture is the portfolio piece, and the site's own
+[CSP Generator](./slices/15-portfolio-detail-redesign.md) project is about
+getting exactly this kind of header right.
+
+---
+
+<a id="q21"></a>
+## Q21 — is it 13+ years or 10+?
+
+**Raised 2026-09-22. Blocks:** one entry in the specs strip
+([Slice 13](./slices/13-homepage-hero-work.md)) and one stat card
+([Slice 14](./slices/14-homepage-experience-contact.md)), authored in
+[Slice 11](./slices/11-content-model.md).
+
+⚠️ **The design contradicts itself, in one file.**
+
+| Where | Says |
+|---|---|
+| the specs strip above the hero | `13+ years shipping` |
+| the About stats card | `10+` · `Years shipping production front-ends` |
+
+The experience list in the same file runs from **2011** to now, which reads as
+14 years and supports neither figure exactly. The two may also be measuring
+different things — total career versus front-end specifically — in which case
+both are right and the labels need to say so.
+
+A builder cannot pick: one of these is on the page twice, in different words,
+and getting it wrong is the kind of detail a reader notices on a portfolio site.
+
+---
+
+## Closed
+
+All seventeen earlier questions — Q1 through Q17 — are closed, full text and
+closure notes intact, in [questions-closed.md](./questions-closed.md) and its second half
+[questions-closed-q9-q16.md](./questions-closed-q9-q16.md). ⚠️ That file was
+split at 548 lines, over the 500-line cap in
+[plan-split-into-files.md](../../../.claude/rules/plan-split-into-files.md);
+nothing was dropped in the cut.
 
 | Q | Blocks | Status |
 |---|---|---|

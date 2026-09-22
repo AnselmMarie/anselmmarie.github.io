@@ -27,6 +27,7 @@ decision is separated from the ones that explain it. This file is now the index 
 - [**D71–D72** — What building Slice 6 forced](decisions-d71-d72.md)
 - [**D73–D74** — What building Slice 7 forced](decisions-d73-d74.md)
 - [**D75** — The brand marks are Tabler, drawn by one shared component](decisions-d75.md)
+- [**D76–D81** — The 2026-09-22 redesign](decisions-d76-d81.md)
 
 ## Every decision
 
@@ -107,6 +108,12 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D73](decisions-d73-d74.md#d73) | The shell never passes the resolved item to the remote; `/portfolio/$slug` renders the wrong item | `d73-d74` |
 | [D74](decisions-d73-d74.md#d74) | No portfolio image is ported; the port was assigned to a slice that was forbidden to do it | `d73-d74` |
 | [D75](decisions-d75.md#d75) | The brand marks are Tabler, via one `SocialIcon`; the name union lives in `shared-types` | `d75` |
+| [D76](decisions-d76-d81.md#d76) | The two `_design/` exports supersede the live v3 site as the design source, site-wide | `d76-d81` |
+| [D77](decisions-d76-d81.md#d77) | Eight ported items survive; the design's six-project list is a layout spec, not content | `d76-d81` |
+| [D78](decisions-d76-d81.md#d78) | The HTML `description` and the videos are kept, as blocks the design does not draw | `d76-d81` |
+| [D79](decisions-d76-d81.md#d79) | The footer remote keeps the strip only; the dark blocks above it belong to their pages | `d76-d81` |
+| [D80](decisions-d76-d81.md#d80) | The redesign runs before deployment and E2E; Slices 8 and 9 keep their numbers | `d76-d81` |
+| [D81](decisions-d76-d81.md#d81) | `SITE_SECTIONS` becomes the design's five anchors; `--spacing-header` splits in two | `d76-d81` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.
