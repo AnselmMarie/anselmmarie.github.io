@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "feature-homepage",
+  "projectType": "library",
+  "sourceRoot": "libs/features/homepage/src",
+  "tags": ["type:feature", "scope:homepage"]
+}

@@ -1,10 +1,20 @@
 # Slice 3 — Module Federation, proved with the Header
 
-**Status:** not started — but its **spike gate has passed**, run early in parallel with
-Slice 2 ([D54](../decisions-d54.md#d54)). The seam is proven and the config to build from is
+**Status:** ✅ **built 2026-09-21, awaiting review.** Its spike gate passed earlier the same
+day, run in parallel with Slice 2 ([D54](../decisions-d54.md#d54)); the config it produced is
 [D55](../decisions-d55.md#d55) · **Visible?** ✅ screen · **Depends on:** Slice 2
-**Design:** the live v3 site ([D34](../decisions-d33-d41.md#d34)) — appearance only; no Next.js
-code is ported ([D6](../decisions-d01-d16.md#d6))
+**Design:** ⚠️ **none.** [D34](../decisions-d33-d41.md#d34) makes the live v3 site the
+reference for every surface, but **v3 has no header** — see
+[D59](../decisions-d58-d62.md#d59) for what was verified and what was invented. No Next.js
+code is ported either way ([D6](../decisions-d01-d16.md#d6)).
+
+⚠️ **Building this slice produced five decisions, three of which correct this file:**
+[D58](../decisions-d58-d62.md#d58) (`hostInitInjectLocation: 'entry'`, or `vite dev` never
+hydrates), [D59](../decisions-d58-d62.md#d59) (no v3 header),
+[D60](../decisions-d58-d62.md#d60) (two of the four shared dependencies below cannot be
+shared), [D61](../decisions-d58-d62.md#d61) (the remote URL is baked at build time, so
+[D12](../decisions-d01-d16.md#d12) is not yet met) and
+[D62](../decisions-d58-d62.md#d62) (a downed remote takes the whole page down).
 
 ⚠️ **The riskiest slice in the plan.** It carries a spike gate, and it may end in a report
 rather than a working remote. That is an acceptable outcome; building slices 5 through 7 on
@@ -38,9 +48,14 @@ an unproven seam is not.
   writes the shared-dependency config, so it also **records the CI requirement that Slice 8
   implements**: a check that every app resolves the same React major. Without it,
   `strictVersion: false` is a disabled guard rather than a relocated one.
-- **[D19](../decisions-d17-d32.md#d19)** — `@module-federation/vite`, using **runtime** remote
-  resolution. The remote URL comes from `libs/shared/config` at runtime and is never baked
-  into the shell's bundle; that property is what [D12](../decisions-d01-d16.md#d12) depends on.
+- **[D19](../decisions-d17-d32.md#d19)** — `@module-federation/vite`. ⚠️ **This bullet used
+  to say the remote URL "is never baked into the shell's bundle". As built, it is**
+  ([D61](../decisions-d58-d62.md#d61)): a static `remotes` map resolves the entry at build
+  time, so [D12](../decisions-d01-d16.md#d12) is **not yet satisfied** and redeploying the
+  Header at a new origin needs a shell rebuild. D55 proved this path and left runtime
+  `registerRemotes` unproven, so Slice 3 built on the proven one and the gap is commented at
+  both sites. Close it before [Slice 8](./08-independent-deployment.md), whose whole subject
+  is independent deployment.
 - **[D27](../decisions-d17-d32.md#d27)** — `apps/header` is a skeleton whose `exposes` map points
   at `libs/features/header`. The remote's public surface is one line of config.
 - **[D43](../decisions-d42-d47.md#d43)** — the Header is fixed, and the offset it creates is handled
@@ -71,10 +86,12 @@ an unproven seam is not.
 Two more were raised on 2026-09-20 and both closed the same day:
 
 - **[Q13](../questions-closed-q9-q16.md#q13) → [D43](../decisions-d42-d47.md#d43)** — ⚠️ **the Header
-  navigates by anchor, not by route.** Its links are in-page jumps to sections. So the
-  shared-dependency set this slice writes stays `react`, `react-dom`, `@portfolio/ui-*` —
-  **no router singleton**, no `onNavigate` prop, no injected `Link`. The Header emits plain
-  `<a href="#id">`, and `/#id` when it is not on the homepage.
+  navigates by anchor, not by route.** Its links are in-page jumps to sections, so there is
+  **no router singleton**, no `onNavigate` prop and no injected `Link`. The Header emits
+  plain `<a href="#id">`, and `/#id` when it is not on the homepage — which is why it needs
+  no router import at all. ⚠️ This bullet also listed `@portfolio/ui-*` in the shared set;
+  as built the set is `react` and `react-dom` only, per
+  [D60](../decisions-d58-d62.md#d60).
 - **[Q12](../questions-closed-q9-q16.md#q12) → [D42](../decisions-d42-d47.md#d42)** — content images
   arrive as props from the shell, so a remote never builds a content URL. But
   **component-owned** UI assets ship with the remote, so ⚠️ **this slice sets Vite `base` to
@@ -120,9 +137,17 @@ graph; host the MF runtime inside a client-only boundary; back out to monorepo i
 ## What is on screen at the end
 
 The shell's page with a **real Header**, rendered from a separately built bundle, styled by
-the shared theme so it is visually indistinguishable from the rest of the page. Stopping
-the header's dev server and reloading shows the page still rendering — without a graceful
-fallback yet, which is Slice 4.
+the shared theme so it is visually indistinguishable from the rest of the page. ✅ Confirmed
+2026-09-21, in `vite dev` and against the built `aws-lambda` output.
+
+⚠️ **This section used to claim that stopping the header's dev server and reloading "shows
+the page still rendering — without a graceful fallback yet". It does not, and the claim is
+withdrawn** ([D62](../decisions-d58-d62.md#d62)). The rejected `lazy()` import escapes
+`Suspense` to the router's own `CatchBoundary`, so the **entire route** is replaced by
+*"Something went wrong!"* — the shell's own content and the footer region included. The
+blast radius is the route, not the region, until
+[Slice 4](./04-error-boundaries.md) puts a boundary around each remote
+([D16](../decisions-d01-d16.md#d16)). Slice 3 is reviewable; it is not deployable alone.
 
 **Stubbed:** the header's content is hardcoded in its feature lib. Navigation targets may
 point at routes that do not exist yet.
@@ -145,8 +170,11 @@ an oversight.
   ([D42](../decisions-d42-d47.md#d42)). ⚠️ Named here because it is one line that is invisible
   on localhost and breaks every component-owned asset in production
 - The `exposes` map, pointing at `@portfolio/feature-header`
-- The `shared` config: `react`, `react-dom`, `@portfolio/ui-components`,
-  `@portfolio/ui-theme`
+- The `shared` config: `react`, `react-dom` — and ⚠️ **only those two.**
+  `@portfolio/ui-components` and `@portfolio/ui-theme` were named here and **cannot be
+  Module Federation shared modules**; both were tried and removed
+  ([D60](../decisions-d58-d62.md#d60)). They share at build time instead. Keep this block
+  byte-identical to the shell's: a module shared by one side only is duplicated, silently.
 
 **`libs/features/header`**
 

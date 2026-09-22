@@ -5,7 +5,21 @@ React + Vite Module Federation remotes (Header, Footer, Homepage, Portfolio Item
 with shadcn/ui + Tailwind. Contentful is deliberately **not** in this plan; it gets its
 own plan directory after the MVP.
 
-**Status:** Slices 1 and 2 awaiting review · Slice 3's spike gate ✅ passed ([D55](./decisions-d55.md#d55)) · **Created:** 2026-09-20 · **Branch:** `feat/amarie/new-design`
+**Status:** Slices 1–4 built. 1 and 2 are **merged** (`7b3bf60`, PR #42); 3 and 4 are
+awaiting review · **Created:** 2026-09-20 · **Branch:** `feat/amarie/build-out`
+
+✅ **[D62](./decisions-d58-d62.md#d62) is closed by Slice 4.** A downed remote no longer takes
+the page down: each remote is wrapped in its own boundary with a shell-owned fallback, and
+the composed page has been seen rendering the real Header beside the footer's and homepage's
+fallbacks. Slices 3 and 4 are reviewable together.
+
+🚦 **The Slice 5–7 wave is unblocked, and smaller than its files describe.** Per
+[D68](./decisions-d63-d67.md#d68) Slice 4 ships **all four remotes runnable** —
+`pnpm nx dev <remote>` works for each, and the composed page renders four live remotes with
+no fallback on it. Slices 5–7 replace a placeholder component and its spec; most likely
+they touch nothing in their `apps/` directory. The per-file split is in
+[parallelization.md](./parallelization.md#the-named-per-file-split-for-the-wave). Fanning
+out still needs the maintainer's go-ahead and three approved branches.
 
 **Why this exists:** the architecture is the portfolio piece; the site is the vehicle
 ([D33](./decisions-d33-d41.md#d33)). That is the tiebreaker wherever a later choice is between
@@ -24,21 +38,31 @@ and is not a source**: it is missing the Pokémon Pet Shop item entirely.
 
 | Screen | Design | Status | Source |
 |---|---|---|---|
-| Header | live v3 site | ✅ exists | the deployed site + `master` |
+| Header | ⚠️ **none — v3 has no header** | **invented** ([D59](./decisions-d58-d62.md#d59)) | — |
 | Footer | live v3 site | ✅ exists | the deployed site + `master` |
 | Homepage | live v3 site | ✅ exists | the deployed site + `master` |
 | Portfolio Item | live v3 site | ✅ exists | the deployed site + `master` |
 | Shell layout | live v3 site | ✅ exists | the deployed site + `master` |
 | Remote-failure fallbacks | — | **no equivalent** | invented — see below |
+| Portfolio not-found | — | **no equivalent** | invented ([D66](./decisions-d63-d67.md#d66)) |
 
 ⚠️ **The design carries over; the implementation does not.** The v3 site is Next.js.
 [D6](./decisions-d01-d16.md#d6) is unchanged — no v3 component is ported and nothing in this plan
 reaches for Next.js. What is reused is what the site looks like.
 
-**The fallbacks are the one exception**, and the only residue of Q1. A site with no remotes
-has no remote-failure UI, so Slice 4 invents every fallback's visual treatment and flags
-each one in its completion report, one line each, per
-[plan-design-links.md](../../../.claude/rules/plan-design-links.md).
+**Three rows above have no v3 reference and are invented**, each flagged control by control per
+[plan-design-links.md](../../../.claude/rules/plan-design-links.md):
+
+- **The remote-failure fallbacks**, the residue of Q1 — a site with no remotes has no
+  remote-failure UI. Slice 4 invented four, plus the portfolio not-found
+  ([D66](./decisions-d63-d67.md#d66)), and flagged each one control by control in its
+  completion report.
+- **The Header**, found while building Slice 3 and recorded as
+  [D59](./decisions-d58-d62.md#d59). ⚠️ **This row read `✅ exists` until 2026-09-21 and was
+  simply wrong**: v3 has no header, no nav component, and no element carrying an `id`. What
+  is ported is the brand text and two section headings; the bar, the label set and the three
+  section `id`s are ours. Those ids are a contract [Slice 6](./slices/06-homepage-mfe.md)
+  must match, and a mismatch fails silently.
 
 ## First visible checkpoint
 
@@ -85,10 +109,10 @@ silent:**
 
 | # | Scope | Layer | Visible? | Files | Status |
 |---|---|---|---|---|---|
-| [1](./slices/01-workspace-and-shell.md) | Nx workspace, `apps/shell` + `libs/features/shell` + `libs/shared/*`, Vitest, CDK `infra` | fe | ✅ screen | ~66 | ✅ built 2026-09-20, awaiting review |
-| [2](./slices/02-ui-libs.md) | `libs/ui/primitives` + `libs/ui/components` + `libs/ui/theme` | fe | ✅ screen | ~40 | ✅ built 2026-09-21, awaiting review |
-| [3](./slices/03-federation-header.md) | `apps/header` + `libs/features/header`; shell consumes the remote | fe | ✅ screen | ~36 | not started — spike gate ✅ passed ([D55](./decisions-d55.md#d55)) |
-| [4](./slices/04-error-boundaries.md) | `MfeErrorBoundary` + shell-owned fallbacks, bounded retry | fe | ✅ screen | ~22 | not started |
+| [1](./slices/01-workspace-and-shell.md) | Nx workspace, `apps/shell` + `libs/features/shell` + `libs/shared/*`, Vitest, CDK `infra` | fe | ✅ screen | ~66 | ✅ merged (`7b3bf60`) |
+| [2](./slices/02-ui-libs.md) | `libs/ui/primitives` + `libs/ui/components` + `libs/ui/theme` | fe | ✅ screen | ~40 | ✅ merged (`7b3bf60`) |
+| [3](./slices/03-federation-header.md) | `apps/header` + `libs/features/header`; shell consumes the remote | fe | ✅ screen | 37 | ✅ built 2026-09-21, awaiting review |
+| [4](./slices/04-error-boundaries.md) | `MfeErrorBoundary` + shell-owned fallbacks, bounded retry, **and every wave seam** | fe | ✅ screen | **~120 as built** (est. ~40) | ✅ built 2026-09-21, awaiting review |
 | [5](./slices/05-footer-mfe.md) | `apps/footer` + `libs/features/footer` | fe | ✅ screen | ~22 | not started |
 | [6](./slices/06-homepage-mfe.md) | `apps/homepage` + `libs/features/homepage`, on fixtures | fe | ✅ screen | ~32 | not started |
 | [7](./slices/07-portfolio-item-mfe.md) | `apps/portfolio-item` + feature lib + `/portfolio/$slug` | fe | ✅ screen | ~34 | not started |
@@ -117,8 +141,12 @@ is explicit that a passing test suite is not a visible surface. Every slice is u
   things building Slice 1 forced), and [D53](./decisions-d53.md) (where the portfolio
   content comes from), [D54](./decisions-d54.md) (the Slice 3 spike gate
   running in parallel with Slice 2), [D55](./decisions-d55.md) (what that spike proved,
-  and the federation config to build Slice 3 from), and [D56](./decisions-d56.md) (`cn` is one
-  real Tailwind merge, in `libs/shared/utils`).
+  and the federation config to build Slice 3 from), [D56](./decisions-d56.md) (`cn` is one
+  real Tailwind merge, in `libs/shared/utils`), [D57](./decisions-d57.md) (Nx drives the
+  workspace through its own plugins), and [D58–D62](./decisions-d58-d62.md) (the five things
+  building Slice 3 forced — three of which **correct** something this plan already
+  asserted), and [D63–D67](./decisions-d63-d67.md) (the five things building Slice 4
+  forced, including the wave's per-file split).
 - [open-questions.md](./open-questions.md) — **one** still open:
   [Q17](./open-questions.md#q17), how the ported HTML descriptions render. Q2 closed on
   2026-09-21 as [D55](./decisions-d55.md#d55), answered by building rather than deciding.

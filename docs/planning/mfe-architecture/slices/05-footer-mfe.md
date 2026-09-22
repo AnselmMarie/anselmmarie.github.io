@@ -6,6 +6,15 @@ code is ported ([D6](../decisions-d01-d16.md#d6))
 **Wave:** runs concurrently with Slices 6 and 7 — see
 [parallelization.md](../parallelization.md)
 
+> 🧭 **Read the per-file split before you start**:
+> [parallelization.md → The named per-file split for the wave](../parallelization.md#the-named-per-file-split-for-the-wave)
+> ([D67](../decisions-d63-d67.md#d67)). It names every file you may open in the co-owned
+> `libs/shared/types` and `libs/shared/fixtures`, and every file that is closed to you.
+> Each module also carries an `OWNER:` banner in its own header. A file outside your set
+> reporting as modified is a **halt**
+> ([no-cross-plan-drift.md](../../../../.claude/rules/no-cross-plan-drift.md)).
+
+
 The second remote, and the one that proves the Slice 3 pattern generalizes. It is
 deliberately the smallest of the three.
 
@@ -64,7 +73,22 @@ for the first time with two remotes in play.
 
 - `vite.config.ts` with the MF plugin, the `exposes` map and `base`
   ([D42](../decisions-d42-d47.md#d42)); `src/styles.css`; `src/main.tsx`; `src/bootstrap.tsx`
-- ⚠️ `project.json` and `package.json` are **pre-created and tagged by Slice 4** — fill them
+- ⚠️ `project.json` and `package.json` are **pre-created and tagged by Slice 4**
+- ✅ **The whole app skeleton is already built and runnable** — `vite.config.ts` (federation,
+  `exposes`, `base`, port 4175 with `strictPort`), `index.html`, `src/main.tsx`,
+  `src/bootstrap.tsx`, `src/styles.css`, and the `dev` / `build` / `preview` targets.
+  `pnpm nx dev footer` serves this remote standalone on 4175 and publishes
+  `remoteEntry.js`; the shell loads it and renders it today. ⚠️ **This slice most likely
+  changes nothing in `apps/footer`** — see [`apps/footer/README.md`](../../../../apps/footer/README.md).
+- ⚠️ **What it renders is a placeholder, and replacing it is this slice's job**:
+  `libs/features/footer/src/footer.tsx` exports `Footer` with a stand-in body. Its spec
+  asserts the string `"Slice 5 fills this"`, which **fails the moment the real component
+  lands** — that assertion exists so the placeholder cannot ship unnoticed, and deleting it
+  is part of this slice.
+- ⚠️ **The dev port is 4175 with `strictPort: true`, and it is not negotiable.** The shell
+  resolves this remote at `http://localhost:4175/remoteEntry.js` (`DEFAULT_FOOTER_ORIGIN` in
+  `libs/shared/config`). A silently reassigned port makes the registry point at nothing, and
+  the only symptom is this remote's fallback rendering forever. — fill them
   in, do not create them, and do not touch the root manifests
 
 **`libs/features/footer`**

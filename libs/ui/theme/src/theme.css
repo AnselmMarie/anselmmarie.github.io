@@ -11,6 +11,22 @@
 @theme {
   --color-page: #ffffff;
   --color-ink: oklch(0.372 0.044 257.287);
+
+  /*
+   * D43 — the header is fixed, so a section scrolled to by anchor would sit
+   * underneath it. This one number is what the Header's own height and the
+   * Homepage's `scroll-margin-top` both read.
+   *
+   * ⚠️ **They are different remotes and must agree on it.** D26's shared
+   * theme is what lets them agree at build time instead of across the
+   * federation boundary — the alternative is passing a pixel count through
+   * props, which couples two independently deployed units.
+   *
+   * It lives in the `--spacing-*` namespace on purpose: that is the one
+   * Tailwind reads for both `h-header` (the Header, Slice 3) and
+   * `scroll-mt-header` (the sections, Slice 6).
+   */
+  --spacing-header: 4rem;
 }
 
 /*
@@ -24,6 +40,10 @@
  *
  * One line per lib whose classes must survive. A missing line is silent.
  */
+@source '../../../features/footer/src';
+@source '../../../features/header/src';
+@source '../../../features/homepage/src';
+@source '../../../features/portfolio-item/src';
 @source '../../../features/shell/src';
 @source '../../components/src';
 @source '../../primitives/src';

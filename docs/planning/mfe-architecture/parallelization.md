@@ -13,8 +13,8 @@ decides whether any of this actually runs in parallel.
 | Edge | The dependency |
 |---|---|
 | 1 → 2 | The ui libs need the workspace, the Tailwind pipeline, and the Vitest harness. |
-| 2 → 3 | The Header is built from `libs/ui/components`, and `@portfolio/ui-*` must exist before it can be declared an MF shared dependency. ⚠️ **This binds Slice 3's Header build, not its spike gate** — see [D54](./decisions-d54.md#d54) and the section below. |
-| 3 → 4 | The boundary wraps a real remote. Writing it against no remote means the specs cannot be seen failing, which [prove-the-spec-can-fail.md](../../../.claude/rules/prove-the-spec-can-fail.md) forbids. |
+| 2 → 3 | The Header is built from `libs/ui/components`, and the theme it is styled by must exist. ⚠️ **The second half of this reason was wrong** — it read *"`@portfolio/ui-*` must exist before it can be declared an MF shared dependency"*, and neither package can be one ([D60](./decisions-d58-d62.md#d60)). The edge holds on the first half alone. ⚠️ **It binds Slice 3's Header build, not its spike gate** — see [D54](./decisions-d54.md#d54) and the section below. |
+| 3 → 4 | The boundary wraps a real remote. Writing it against no remote means the specs cannot be seen failing, which [prove-the-spec-can-fail.md](../../../.claude/rules/prove-the-spec-can-fail.md) forbids. ⚠️ **Harder than it reads, since 2026-09-21:** Slice 3 as built does not survive a downed remote — the whole route dies ([D62](./decisions-d58-d62.md#d62)). This is not only a sequencing preference; Slice 3 is not deployable without Slice 4. |
 | 4 → {5,6,7} | Slice 4 pre-creates the seams the three remotes would otherwise all edit at once: registry entries, fallback slots, route-tree lines, `use-content-stub.ts`, **and the six-project scaffold plus the single `pnpm install`**. |
 | {5,6,7} → 8 | Nothing to deploy independently until more than one remote exists. |
 | 8 → 9 | E2E asserts the composed, deployed app including failure isolation. |
@@ -28,7 +28,7 @@ nobody and are omitted.
 |---|---|
 | 1 | — (creates the workspace) |
 | 2 | `apps/shell/src/styles.css`, root `tsconfig`, `nx.json`, `pnpm-lock.yaml`, `apps/shell` imports |
-| 3 | `libs/shared/config` remote registry, `apps/shell` route tree, root manifests, `libs/ui/components` barrel |
+| 3 | `libs/shared/config` remote registry (+ `read-env.ts`, barrel, spec), `apps/shell` vite config + route, `libs/ui/theme` (the `--spacing-header` token and a new `@source` line), root manifests |
 | 4 | `libs/features/shell` barrel, the shell layout and route tree, `libs/shared/config`, **the whole of `libs/shared/types` and `libs/shared/fixtures`**, root `tsconfig` + `pnpm-lock.yaml` (the six-project scaffold) |
 | 5 | `libs/shared/config` registry, shell layout, root manifests |
 | 6 | `libs/shared/config` registry, shell route tree, **`libs/shared/types` + `libs/shared/fixtures` (co-owned with 7)**, root manifests |
@@ -91,6 +91,38 @@ the coordinator before any fan-out**:
    of slices 6 and 7 may open. A barrel alone is not enough.
 4. Root manifests — `nx.json`, root `tsconfig`, `pnpm-lock.yaml`.
 
+### The named per-file split for the wave
+
+⚠️ **Settled by the coordinator on 2026-09-21, before any agent starts
+([D67](./decisions-d63-d67.md#d67)).** Both packages below are **co-owned**: pre-creating a
+barrel does not make the data modules inside it disjoint, so the split is by file and it is
+named here. Every module also carries an `OWNER:` banner in its own header, so an agent
+that opens the wrong file is told so by the file rather than by this table.
+
+| File | Owner | State at the end of Slice 4 |
+|---|---|---|
+| `libs/shared/types/src/homepage-content.ts` | **Slice 6** | `HomepageContent` with `sections` only |
+| `libs/shared/types/src/portfolio-item.ts` | **Slice 7** | `PortfolioItem` with `slug` + `title` only |
+| `libs/shared/types/src/site-section.ts` | coordinator | done — `SiteSection` ([D63](./decisions-d63-d67.md#d63)) |
+| `libs/shared/types/src/index.ts` | **coordinator only** | all five exports in place |
+| `libs/shared/fixtures/src/homepage.fixture.ts` | **Slice 6** | seeded with `sections`; the copy is Slice 6's |
+| `libs/shared/fixtures/src/portfolio-items.fixture.ts` | **Slice 7** | empty array + `portfolioItemBySlug` |
+| `libs/shared/fixtures/src/site-sections.fixture.ts` | coordinator | done — `SITE_SECTIONS` |
+| `libs/shared/fixtures/src/route-metadata.fixture.ts` | **Slice 7** | ⚠️ Slice 7 adds the per-slug rows (D48). **Slice 6's homepage title and description are already here** as `HOME_METADATA` — if Slice 6 wants that copy changed it **reports it**, it does not edit this file |
+| `libs/shared/fixtures/src/use-content-stub.ts` | **coordinator only** | all three signatures stubbed — **no agent edits this** |
+| `libs/shared/fixtures/src/index.ts` | **coordinator only** | all five exports in place |
+| `libs/features/footer/**` · `apps/footer/**` | **Slice 5** | ✅ **runnable** — full app skeleton on 4175 + placeholder `Footer` ([D68](./decisions-d63-d67.md#d68)) |
+| `libs/features/homepage/**` · `apps/homepage/**` | **Slice 6** | ✅ **runnable** — full app skeleton on 4176 + placeholder `Homepage` carrying the real D43 section ids |
+| `libs/features/portfolio-item/**` · `apps/portfolio-item/**` | **Slice 7** | ✅ **runnable** — full app skeleton on 4177 + placeholder `PortfolioItem` |
+
+**Closed to all three agents** — the coordinator built these and no wave agent edits them:
+the remote registry and its spec, `apps/shell/**` (mounts, `remotes.d.ts`, both routes, the
+`vite.config.ts` remotes map), `libs/features/shell/**`, `libs/ui/theme/src/theme.css`'s
+`@source` lines, and every root manifest.
+
+A wave agent that finds it needs a change in any of those **reports it and stops**; it does
+not make the edit. That is the whole point of settling the seams first.
+
 ### Workspace-manifest work is solo
 
 Adding an Nx project mutates the root `tsconfig` references and `nx.json`, and installing
@@ -99,6 +131,13 @@ slices: the coordinator scaffolds all six projects (`apps/footer`, `apps/homepag
 `apps/portfolio-item`, and their three feature libs), registers them, adds the empty
 registry and barrel entries, and runs `pnpm install` **once**. Only then do the agents
 start, and each writes code into a project that already exists.
+
+✅ **Done in Slice 4, 2026-09-21.** All six projects exist and are tagged
+([D44](./decisions-d42-d47.md#d44)); `nx sync` registered the three feature libs in the root
+`tsconfig.json`; `pnpm install` ran once and `pnpm-lock.yaml` carries the six new workspace
+packages. ⚠️ **Superseded the same day by [D68](./decisions-d63-d67.md#d68):** the three apps now have
+`tsconfig.json`, a full Vite + federation config and root references, because a remote that
+cannot be started is not a scaffold. `pnpm nx dev <remote>` works for all four.
 
 ### If it fans out
 
@@ -124,8 +163,8 @@ oversight.
 |---|---|---|
 | 1 | ~66 | The largest. Workspace scaffold, four `libs/shared/*` packages, the shell, the test harness, **plus the CDK `infra` project** ([D37](./decisions-d33-d41.md#d37)) — defined, not deployed. |
 | 2 | ~40 | **Unchanged at ~40, but now a ceiling rather than a floor.** [Q8](./questions-closed.md#q8) closed as [D38](./decisions-d33-d41.md#d38), so the ~15 Storybook files and their coverage gate are not built — the slice keeps its original size instead of growing past it. [Q7](./questions-closed.md#q7) closed as [D40](./decisions-d33-d41.md#d40) — on-demand primitives, so this number is a ceiling rather than a floor. |
-| 3 | ~36 | Includes the spike, which is discarded before the slice is reported. Plus the shared-dependency config under [D39](./decisions-d33-d41.md#d39). |
-| 4 | ~40 | ~22 for the boundary and fallbacks, plus the six-project scaffold for the wave (~18 more: three apps, three feature libs, their `project.json`/`package.json`/tsconfig). ⚠️ The architecture-doc edit this row used to carry is **already applied** in `031b8fc`; Slice 4 verifies the path rather than rewriting it. |
+| 3 | **37 as built** (27 new, 10 modified) | Estimated ~36. The spike was discarded before the slice, as planned. |
+| 4 | **90 as built** (est. ~40) | ⚠️ **The estimate was 2.25× low, and the reasons are worth carrying into slices 5–7.** It counted the boundary and the scaffold and omitted three things: (a) **specs, which are 1:1 with sources here** — 13 of the 24 new `libs/features/shell` files are specs; (b) the **shell's mount points** — four `apps/shell/src/remotes/*` files, the `/portfolio/$slug` route and the regenerated `routeTree.gen.ts`, which the "seams" line described but never counted; (c) the **feature libs' own scaffolding** — `tsconfig.json`, `vitest.config.ts`, `test-setup.ts` and a barrel each, four files per lib rather than the three the row assumed. 81 of the 90 are code; 9 are plan docs. Well inside the 250-file cap. |
 | 5 | ~22 | |
 | 6 | ~32 | |
 | 7 | ~34 | Carries the route and its fallback. |

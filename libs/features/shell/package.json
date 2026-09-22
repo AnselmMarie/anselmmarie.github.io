@@ -12,6 +12,7 @@
     }
   },
   "dependencies": {
+    "@portfolio/shared-fixtures": "workspace:*",
     "@portfolio/shared-types": "workspace:*",
     "@portfolio/ui-components": "workspace:*",
     "react": "^19.3.0"

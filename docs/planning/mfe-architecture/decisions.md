@@ -19,6 +19,9 @@ decision is separated from the ones that explain it. This file is now the index 
 - [**D54** — The Slice 3 spike gate runs in parallel with Slice 2](decisions-d54.md)
 - [**D55** — Federation composes with TanStack Start, and the config that proves it](decisions-d55.md)
 - [**D56** — `cn` is one real Tailwind merge, in `libs/shared/utils`](decisions-d56.md)
+- [**D57** — Nx drives the workspace through its own plugins](decisions-d57.md)
+- [**D58–D62** — What building Slice 3 forced](decisions-d58-d62.md)
+- [**D63–D68** — What building Slice 4 forced](decisions-d63-d67.md)
 
 ## Every decision
 
@@ -81,6 +84,17 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D55](decisions-d55.md#d55) | Federation composes with TanStack Start when scoped to the client environment; Q2 closes | `d55` |
 | [D56](decisions-d56.md#d56) | `cn` is one `clsx` + `tailwind-merge` helper in `libs/shared/utils` | `d56` |
 | [D57](decisions-d57.md#d57) | Nx drives the workspace through its own plugins and TS project references; libs stay source-only | `d57` |
+| [D58](decisions-d58-d62.md#d58) | The shell sets `hostInitInjectLocation: 'entry'`; the default breaks `vite dev` | `d58-d62` |
+| [D59](decisions-d58-d62.md#d59) | The v3 site has no header, so the Header's visual treatment is invented | `d58-d62` |
+| [D60](decisions-d58-d62.md#d60) | `@portfolio/ui-*` are not MF shared modules; they share at build time | `d58-d62` |
+| [D61](decisions-d58-d62.md#d61) | The remote URL is baked at build time; D12 is not yet satisfied | `d58-d62` |
+| [D62](decisions-d58-d62.md#d62) | A downed remote takes the whole page down until Slice 4 lands | `d58-d62` |
+| [D63](decisions-d63-d67.md#d63) | The section list moves to `@portfolio/shared-fixtures`; the shell's fallback is its third reader | `d63-d67` |
+| [D64](decisions-d63-d67.md#d64) | `RemoteEntry` carries a `version`, defaulting to `dev` | `d63-d67` |
+| [D65](decisions-d63-d67.md#d65) | `fallback` is a render prop, and the retry counter lives in the mount, not the boundary | `d63-d67` |
+| [D66](decisions-d63-d67.md#d66) | An unknown portfolio slug is a shell-level not-found, never a remote fallback | `d63-d67` |
+| [D67](decisions-d63-d67.md#d67) | The Slice 5–7 wave's per-file split, settled before any agent starts | `d63-d67` |
+| [D68](decisions-d63-d67.md#d68) | Slice 4 ships all four remotes runnable, with placeholder components | `d63-d67` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.

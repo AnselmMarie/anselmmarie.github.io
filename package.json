@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.13",
+    "@module-federation/vite": "^1.22.1",
     "@nx/eslint": "21.6.11",
     "@nx/eslint-plugin": "^21.0.0",
     "@nx/js": "21.6.11",
