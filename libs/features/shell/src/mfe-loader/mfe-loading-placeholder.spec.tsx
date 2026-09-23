@@ -18,6 +18,16 @@ describe('MfeLoadingPlaceholder', () => {
     expect(screen.getByTestId('mfe-loading')).toHaveAttribute('aria-hidden');
   });
 
+  it('draws the region skeleton it is given', () => {
+    render(
+      <MfeLoadingPlaceholder timeoutMs={1000} onTimeout={vi.fn()}>
+        <span data-testid="bone" />
+      </MfeLoadingPlaceholder>
+    );
+
+    expect(screen.getByTestId('mfe-loading')).toContainElement(screen.getByTestId('bone'));
+  });
+
   it('reports a timeout when the remote never arrives', () => {
     // R7. An import that neither resolves nor rejects is the one failure that
     // looks like success, because a spinner is indistinguishable from a slow

@@ -19,3 +19,6 @@ export { default as ShellContentRegion } from './shell-layout/shell-content-regi
 export { default as ShellFooterRegion } from './shell-layout/shell-footer-region.js';
 export { default as ShellHeaderRegion } from './shell-layout/shell-header-region.js';
 export { default as ShellLayout } from './shell-layout/shell-layout.js';
+export { default as ContentSkeleton } from './skeletons/content-skeleton.js';
+export { default as FooterSkeleton } from './skeletons/footer-skeleton.js';
+export { default as HeaderSkeleton } from './skeletons/header-skeleton.js';
