@@ -69,11 +69,11 @@ describe('Homepage — composition', () => {
     expect(screen.queryByText(/Senior SWE/u)).not.toBeInTheDocument();
   });
 
-  it('renders the specs strip with the corrected years figure (D87)', () => {
+  it('renders the specs strip with the years figure D103 settled on', () => {
     render(<Homepage />);
 
-    expect(screen.getByText('15+ years shipping')).toBeInTheDocument();
-    expect(screen.queryByText('13+ years shipping')).not.toBeInTheDocument();
+    expect(screen.getByText('13+ years shipping')).toBeInTheDocument();
+    expect(screen.queryByText('15+ years shipping')).not.toBeInTheDocument();
   });
 });
 

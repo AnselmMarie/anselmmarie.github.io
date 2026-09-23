@@ -39,7 +39,7 @@ const HomepageExperienceSection = ({
   return (
     <section
       id={sectionId}
-      className="scroll-mt-anchor border-t border-rule px-[18px] py-10 frame:px-[26px] frame:py-16"
+      className="scroll-mt-anchor border-t border-rule px-page py-10 frame:py-16"
     >
       <div className="mb-8 flex flex-wrap items-end justify-between gap-[18px]">
         <SectionHeading

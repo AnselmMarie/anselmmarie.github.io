@@ -7,8 +7,8 @@ interface HomepageSpecsStripProps {
 /**
  * The five mono items above the hero, each behind an accent rule.
  *
- * ⚠️ **The fourth reads `15+ years shipping`, and the number is not this
- * component's business** (D87). It is authored in `homepage.fixture.ts` and
+ * ⚠️ **The fourth reads `13+ years shipping`, and the number is not this
+ * component's business** (D87, D103). It is authored in `homepage.fixture.ts` and
  * derivable from the Experience list further down the page — which is the
  * property that stops it drifting from the About stat the way the export's own
  * pair did.

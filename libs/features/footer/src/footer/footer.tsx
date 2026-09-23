@@ -3,7 +3,7 @@ import type { ReactElement } from 'react';
 import { SITE_NAME } from '@portfolio/shared-fixtures';
 
 import FooterSocialLinkItem from './footer-social-link.js';
-import { FOOTER_SOCIAL_LINKS } from './footer-social-links.const.js';
+import { FOOTER_SOCIAL_LINKS, FOOTER_TAGLINE } from './footer-social-links.const.js';
 
 /**
  * 🧭 **OWNER: Slice 5 (Footer).**
@@ -17,6 +17,11 @@ import { FOOTER_SOCIAL_LINKS } from './footer-social-links.const.js';
  * layout, the copyright line and the decision to put the social links down here
  * are all invented. The two URLs themselves are v3's real hero links. Flagged
  * per plan-design-links.md, matching the call Slice 3 made for the header.
+ *
+ * ✅ **Now the design's strip (Slice 16, 2026-09-23).** Copyright left, the two
+ * circular marks centred, the role line right — mono, uppercase, 45% paper on
+ * the ink `ShellFooterRegion`. Until this landed the row was `text-ink` on that
+ * ink ground, which rendered it present in the DOM and invisible on screen.
  *
  * ⚠️ **Renders a `<div>`, not a `<footer>`.** `ShellFooterRegion` already
  * supplies the `<footer>` landmark this mounts inside; a second one would nest
@@ -32,12 +37,12 @@ const Footer = (): ReactElement => {
   return (
     <div
       data-testid="footer-remote"
-      className="flex w-full flex-wrap items-center justify-between gap-4"
+      className="flex w-full flex-wrap items-center justify-between gap-3 font-mono text-[0.58rem] tracking-[0.14em] text-paper/45 uppercase"
     >
-      <span className="text-sm text-ink">
+      <span>
         © {new Date().getFullYear()} {SITE_NAME}
       </span>
-      <nav aria-label="Elsewhere" className="flex items-center gap-6">
+      <nav aria-label="Elsewhere" className="flex items-center gap-2.5">
         {FOOTER_SOCIAL_LINKS.map((link) => (
           <FooterSocialLinkItem
             key={link.id}
@@ -47,6 +52,7 @@ const Footer = (): ReactElement => {
           />
         ))}
       </nav>
+      <span>{FOOTER_TAGLINE}</span>
     </div>
   );
 };

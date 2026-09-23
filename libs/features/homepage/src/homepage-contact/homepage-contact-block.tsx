@@ -23,10 +23,7 @@ interface HomepageContactBlockProps {
  */
 const HomepageContactBlock = ({ sectionId, contact }: HomepageContactBlockProps): ReactElement => {
   return (
-    <section
-      id={sectionId}
-      className="scroll-mt-anchor bg-ink px-[18px] pb-[26px] pt-[72px] text-paper frame:px-[26px]"
-    >
+    <section id={sectionId} className="scroll-mt-anchor bg-ink px-page pt-[72px] text-paper">
       <div className="text-center">
         <Eyebrow label={contact.eyebrow} tone="ink" />
         <h2 className="mb-8 mt-[0.8rem] font-display text-[clamp(2.6rem,7vw,5.4rem)] font-bold leading-[0.98] tracking-[-0.035em]">
@@ -49,6 +46,8 @@ const HomepageContactBlock = ({ sectionId, contact }: HomepageContactBlockProps)
           </a>
         ))}
       </div>
+      {/* No bottom padding: the footer strip below supplies the export's 1.5rem
+          between this rule and its row. Padding here stacked on top of it. */}
       <div aria-hidden className="border-t border-white/10" />
     </section>
   );

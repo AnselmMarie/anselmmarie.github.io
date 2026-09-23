@@ -26,7 +26,7 @@ const HomepageSkills = ({ sectionId, intro, groups }: HomepageSkillsProps): Reac
   return (
     <section
       id={sectionId}
-      className="scroll-mt-anchor bg-ink px-[18px] py-10 text-paper frame:px-[26px] frame:py-16"
+      className="scroll-mt-anchor bg-ink px-page py-10 text-paper frame:py-16"
     >
       <div className="mb-11">
         <SectionHeading

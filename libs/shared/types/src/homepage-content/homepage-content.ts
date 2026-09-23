@@ -39,6 +39,9 @@ export interface HomepageLink {
  * puts it mid-sentence (`Building the front-end, | end to end.`) and a
  * component splitting on a delimiter would be guessing.
  *
+ * A `\n` in `lead` is a forced line break — the hero uses one to match the
+ * export's `Building the<br>front-end,`.
+ *
  * ⚠️ **Only a trailing accent.** A sentence emphasised in its middle does not
  * fit — see `HomepageAbout.statement`, which is why that one is plain text.
  */

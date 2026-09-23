@@ -39,3 +39,6 @@ export const FOOTER_SOCIAL_LINKS: readonly FooterSocialLink[] = [
   },
   { id: 'github', label: 'GitHub', href: 'https://github.com/AnselmMarie', icon: 'github' },
 ];
+
+/** The strip's right-hand line, as both exports draw it. */
+export const FOOTER_TAGLINE = 'Senior SWE · Tech Lead';

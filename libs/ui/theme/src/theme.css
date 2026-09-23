@@ -138,14 +138,50 @@
  * the card, body copy in Inter, and the anchor offset D81 describes.
  */
 @layer base {
+  /*
+   * In-page anchors (`#work`, `#contact`, …) glide rather than jump. Opted out
+   * for anyone who has asked the OS for reduced motion.
+   */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /*
+   * ⚠️ **Paper, not the backdrop** (maintainer's call, 2026-09-23). The export
+   * paints `body` #0E1A19; this repo paints it the card's tan, so overscroll and
+   * anything past the last section read as the page. `ShellLayout` no longer
+   * draws the card or its dark inset at all (see `px-page` below);
+   * `--color-backdrop` survives for `MetaChip`.
+   */
   body {
-    background: var(--color-backdrop);
+    background: var(--color-paper);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
   }
 
   [id] {
     scroll-margin-top: var(--spacing-anchor);
+  }
+}
+
+/*
+ * The sections' side padding, full-bleed edition (2026-09-23). Each section's
+ * background runs the whole window width; its content sits in the design's
+ * 1400px column with the export's 18px / 26px gutter inside it. Below 1400px
+ * + gutters this is just the gutter; above it, the gutter grows by half the
+ * spare width on each side. `100%` in a padding is the section's own width.
+ */
+@utility px-page {
+  padding-inline: max(18px, calc((100% - 1400px) / 2 + 18px));
+
+  @variant frame {
+    padding-inline: max(26px, calc((100% - 1400px) / 2 + 26px));
   }
 }
 

@@ -1,6 +1,7 @@
 # Slice 16 — Footer: the strip, and making its absence look deliberate
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slices 10, 11
+**Status:** 🟡 strip built 2026-09-23 (footer up, `/` only); the footer-down and
+`/portfolio/<slug>` checks below are not yet done · **Visible?** ✅ screen · **Depends on:** Slices 10, 11
 **Design:** [both exports](../design-sources.md) — drawn ✅, **byte-identical in each**
 
 The smallest slice of the redesign and the one with the most interesting
@@ -97,6 +98,8 @@ Then, in the composed app:
   accept an annual edit, or compute it and accept that SSR and the client can
   disagree across midnight. Say which you chose and why — do not leave it
   looking accidental.
+  **Chosen (2026-09-23): computed**, as Slice 5 already did — an annual edit is
+  the likelier bug than a midnight SSR mismatch on a static footer line.
 - `libs/features/footer/src/footer/footer.tsx` currently carries a `Slice 8` reference
   in a comment. It still resolves —
   [D80](../decisions-d76-d81.md#d80) keeps Slice 8's number — so leave it alone.

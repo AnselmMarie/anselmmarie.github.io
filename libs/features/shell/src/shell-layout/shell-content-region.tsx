@@ -23,7 +23,7 @@ const ShellContentRegion = ({ children }: ShellContentRegionProps): ReactElement
   return (
     <main data-testid="shell-content-region" className="w-full flex-1">
       {children ?? (
-        <div className="px-[18px] py-10 frame:px-[26px] frame:py-16">
+        <div className="px-page py-10 frame:py-16">
           <ProfileCard
             name="Anselm Marie"
             title="Senior Software Engineer & Tech Lead | Web Architecture & Product Impact"

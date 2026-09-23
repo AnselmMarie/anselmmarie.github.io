@@ -14,8 +14,21 @@ describe('HomepageHero', () => {
 
     const heading = screen.getByRole('heading', { level: 1 });
 
-    expect(heading).toHaveTextContent(HOMEPAGE_CONTENT.hero.headline.lead);
+    expect(heading).toHaveTextContent('Building the front-end,');
     expect(heading).toHaveTextContent(/end.to.end\./u);
+  });
+
+  it('forces the break after "Building the", as the export does', () => {
+    // Without it the balanced wrap at desktop width breaks `front-end` at its
+    // hyphen. The break is content (`\n` in the lead), so it must reach the DOM.
+    renderHero();
+
+    const heading = screen.getByRole('heading', { level: 1 });
+    const breaks = heading.querySelectorAll('br');
+
+    expect(breaks).toHaveLength(1);
+    expect(breaks[0]?.previousSibling?.textContent).toBe(' ');
+    expect(heading.textContent).toMatch(/^Building the front-end, /u);
   });
 
   it('keeps the accent phrase from breaking mid-word', () => {

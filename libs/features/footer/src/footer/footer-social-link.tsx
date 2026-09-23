@@ -30,9 +30,9 @@ const FooterSocialLinkItem = ({ label, href, icon }: FooterSocialLinkItemProps):
       rel="noreferrer"
       aria-label={label}
       title={label}
-      className="text-ink transition-opacity hover:opacity-60"
+      className="grid size-8 place-items-center rounded-pill border border-white/20 text-paper transition-colors hover:border-accent-bright hover:bg-accent-bright hover:text-ink"
     >
-      <SocialIcon name={icon} size={24} />
+      <SocialIcon name={icon} size={17} />
     </a>
   );
 };

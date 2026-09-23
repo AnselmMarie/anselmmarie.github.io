@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react';
+import { Fragment, type ReactElement } from 'react';
 
 import type { HomepageContent } from '@portfolio/shared-types';
 import { PillLink, UiIcon } from '@portfolio/ui-components';
@@ -24,6 +24,11 @@ interface HomepageHeroProps {
  * Collapsing to two is a visible regression at tablet width, which is why the
  * slice asks for screenshots at 375, 900 and 1400.
  *
+ * ⚠️ **A `\n` in `headline.lead` is a forced line break**, rendered as a space
+ * plus `<br>` so the accessible name still reads as one sentence. The export
+ * sets `Building the<br>front-end,` — without it, the balanced wrap at 1400px
+ * broke `front-` / `end,` at the hyphen.
+ *
  * ⚠️ **It carries no section `id`.** The hero is not in `SITE_SECTIONS`; the
  * Header's anchors start at `#work` (D43, D81).
  *
@@ -33,12 +38,22 @@ interface HomepageHeroProps {
  */
 const HomepageHero = ({ specs, hero }: HomepageHeroProps): ReactElement => {
   return (
-    <div className="px-[18px] pb-9 pt-[30px] frame:px-[26px] frame:pb-[52px] frame:pt-11">
+    <div className="px-page pb-9 pt-[30px] frame:pb-[52px] frame:pt-11">
       <HomepageSpecsStrip specs={specs} />
 
       <div className="mt-[34px] grid items-start gap-[22px] wide:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] wide:items-end wide:gap-[34px]">
         <h1 className="m-0 text-balance font-display text-display font-bold text-ink">
-          {hero.headline.lead}
+          {hero.headline.lead.split('\n').map((line, index) => (
+            <Fragment key={line}>
+              {index > 0 ? (
+                <>
+                  {' '}
+                  <br />
+                </>
+              ) : null}
+              {line}
+            </Fragment>
+          ))}
           {/* A non-breaking space keeps `end to end.` from breaking mid-phrase. */}
           <span className="text-accent"> {hero.headline.accent.replace(/ /gu, ' ')}</span>
         </h1>

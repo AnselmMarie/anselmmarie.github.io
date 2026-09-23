@@ -8,9 +8,9 @@ import type { ExperienceEntry, PanelNote } from '@portfolio/shared-types';
  * `homepage.fixture.ts` to stay under the 200-line cap.
  *
  * ⚠️ **This is real published copy, not placeholder text** (D41), and it is the
- * evidence for two figures rendered directly above it: `15+ years shipping`
- * reads off the 2011 row and `13+ · Years in lead & architect roles` off the
- * 2013 Manager row (D87). ⚠️ **Editing a `period` here moves a number in the
+ * evidence for two figures rendered directly above it: `13+ years shipping`
+ * and `13+ · Years in lead & architect roles` both read off the 2013 Manager
+ * row (D87, D103). ⚠️ **Editing a `period` here moves a number in the
  * specs strip and the About card** — they are derivable from this table on
  * purpose, so that they cannot drift the way the export's own pair did.
  *
@@ -25,7 +25,7 @@ export const HOMEPAGE_EXPERIENCE: readonly ExperienceEntry[] = [
     role: 'Founder & Lead Software Engineer',
     period: '2025 – Present',
     place: 'Remote',
-    stack: 'React Native · Expo · Hono · Nx · Next.js · PostgreSQL',
+    stack: 'React · React Native · Expo · Hono · Nx · Next.js · PostgreSQL · Design System · Figma',
     points: [
       'Founded Cosmikata; defined product, architecture, and cross-platform strategy.',
       'Architected an Expo / Next.js / Nx monorepo powering web and native from shared UI, ' +

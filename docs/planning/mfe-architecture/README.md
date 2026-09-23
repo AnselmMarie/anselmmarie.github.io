@@ -101,7 +101,7 @@ Listed in **execution order**. The `#` column is the label, not the position.
 | [13](./slices/13-homepage-hero-work.md) | Specs strip, hero, the Work grid | fe | ✅ screen | **13 as built** (est. ~16) | ✅ built, held with 11–14 |
 | [14](./slices/14-homepage-experience-contact.md) | Experience accordion, Skills, About, Contact | fe | ✅ screen | **10 as built** (est. ~20) | ✅ built, held with 11–14 |
 | [15](./slices/15-portfolio-detail-redesign.md) | The detail page, **plus the two blocks the design omits** | fe | ✅ screen | ~31 | not started |
-| [16](./slices/16-footer-strip.md) | The footer strip, and its degradation | fe | ✅ screen | ~6 | not started |
+| [16](./slices/16-footer-strip.md) | The footer strip, and its degradation | fe | ✅ screen | ~6 | 🟡 strip built, degradation check open |
 | [17](./slices/17-ui-navigation-fixes.md) | The remaining UI and navigation issues | fe | ✅ screen | unknown | ⛔ blocked on [Q22](./open-questions.md#q22) |
 | [9](./slices/09-e2e-composition.md) | Playwright over a local production build, incl. failure isolation | fe | — none | ~16 | not started |
 | [8](./slices/08-independent-deployment.md) | GitHub Actions (`nx affected`) → CDK-described S3/CloudFront/Lambda, rollback, gated on 9 | ops | — none | ~26 | not started |

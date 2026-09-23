@@ -20,6 +20,13 @@ interface HomepageExperienceEntryProps {
  * first interactive disclosure, so it is a deliberate divergence from the
  * design rather than a silent fix.
  *
+ * ⚠️ **The hover state is invented** (maintainer's ask, 2026-09-23) — the
+ * export draws none. On hover or keyboard focus the row takes a half-strength
+ * `surface` tint (a shade off the page, not the Work section's full `surface`), the company name turns `accent`, and a closed row's `+` ring picks up
+ * the same colour; an open row's ring is already filled mint, so it is left
+ * alone. The tint bleeds 16px past the text on each side (`-mx-4` + `px-4`)
+ * so the name does not sit flush against the tint's edge.
+ *
  * ⚠️ **The body is unmounted when closed, not `display:none`.** That is what
  * makes the accordion's spec able to fail: a body always present in the DOM
  * passes a "renders when open" assertion whether or not the toggle works.
@@ -37,10 +44,12 @@ const HomepageExperienceEntry = ({
         aria-expanded={isOpen}
         aria-controls={panelId}
         onClick={onToggle}
-        className="grid w-full grid-cols-[1fr_auto] items-center gap-4 py-[1.35rem] text-left"
+        className="group -mx-4 grid w-[calc(100%+2rem)] cursor-pointer grid-cols-[1fr_auto] items-center gap-4 rounded-panel px-4 py-[1.35rem] text-left transition-colors hover:bg-surface/50 focus-visible:bg-surface/50"
       >
         <span className="grid min-w-0 items-center justify-items-start gap-4 frame:grid-cols-[max-content_minmax(0,1fr)]">
-          <span className="font-display text-company font-bold text-ink">{entry.company}</span>
+          <span className="font-display text-company font-bold text-ink transition-colors group-hover:text-accent group-focus-visible:text-accent">
+            {entry.company}
+          </span>
           <span className="text-[0.92rem] text-muted">{entry.role}</span>
         </span>
         <span className="flex items-center gap-5">
@@ -49,7 +58,9 @@ const HomepageExperienceEntry = ({
           </span>
           <span
             className={`grid size-[30px] shrink-0 place-items-center rounded-pill border ${
-              isOpen ? 'border-accent-bright bg-accent-bright' : 'border-rule'
+              isOpen
+                ? 'border-accent-bright bg-accent-bright'
+                : 'border-rule group-hover:border-accent group-hover:text-accent group-focus-visible:border-accent'
             }`}
           >
             <UiIcon name={isOpen ? 'minus' : 'plus'} size={16} />

@@ -49,7 +49,10 @@ const PortfolioItem = ({ item }: PortfolioItemProps): ReactElement => {
   }
 
   return (
-    <article data-testid="portfolio-item-remote" className="flex flex-col gap-10">
+    <article
+      data-testid="portfolio-item-remote"
+      className="flex flex-col gap-10 px-page py-10 frame:py-16"
+    >
       <PortfolioItemHeader
         title={resolved.title}
         company={resolved.company}

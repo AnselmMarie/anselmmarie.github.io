@@ -34,9 +34,9 @@ describe('HOMEPAGE_EXPERIENCE', () => {
   it("supports both of D87's figures from its own rows", () => {
     /*
      * ⚠️ **This list is the evidence for two numbers rendered above it.**
-     * `15+ years shipping` reads 2011 → 2026 off the oldest row;
-     * `13+ · Years in lead & architect roles` reads 2013 → 2026 off the
-     * Cricket Manager row. D87 closed Q21 by measuring exactly this, and the
+     * `13+ years shipping` (D103) and `13+ · Years in lead & architect roles`
+     * both read 2013 → 2026 off the Cricket Manager row; the oldest row is
+     * still 2011, so neither figure overstates the list. D87 closed Q21 by measuring exactly this, and the
      * property that keeps the two from drifting again is that both are
      * derivable from the table on the page.
      */
@@ -45,6 +45,14 @@ describe('HOMEPAGE_EXPERIENCE', () => {
 
     expect(oldest?.period).toBe('2011 – 2013');
     expect(leadBoundary?.role).toBe('Senior Developer / Manager');
+  });
+
+  it('leads the Cosmikata stack with React and closes it with the design tooling', () => {
+    const cosmikata = HOMEPAGE_EXPERIENCE.find((e) => e.id === 'cosmikata-2025');
+    const stack = cosmikata?.stack.split(' · ') ?? [];
+
+    expect(stack.slice(0, 2)).toEqual(['React', 'React Native']);
+    expect(stack.slice(-2)).toEqual(['Design System', 'Figma']);
   });
 
   it('gives every entry a period, a place, a stack and at least two points', () => {

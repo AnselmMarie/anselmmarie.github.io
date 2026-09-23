@@ -136,6 +136,7 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D100](decisions-d88-d100.md#d100) | The anchor contract's third leg is verified in the browser; all five scroll at 84px | `d88-d100` |
 | [D101](decisions-d101-d102.md#d101) | Slice 9 (E2E) runs before Slice 8 (deployment), against a local production build; supersedes D80's tail | `d101-d102` |
 | [D102](decisions-d101-d102.md#d102) | The remaining UI and navigation issues become Slice 17, before E2E; the list is Q22 | `d101-d102` |
+| [D103](decisions-d103.md#d103) | The specs strip reads `13+ years shipping`; supersedes D87's strip figure | `d103` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.

@@ -48,19 +48,20 @@ export const HOMEPAGE_CONTENT: HomepageContent = {
     },
   ],
   /*
-   * ⚠️ **`15+ years shipping`, not the design's `13+`** (D87). 2011 → 2026,
-   * read off the last row of the Experience list rendered below it.
+   * ⚠️ **`13+ years shipping`** — the design's own figure, restored by D103
+   * after D87 had corrected it to `15+`. It now matches the About card's `13+`
+   * and reads 2013 → 2026, off the Cricket Manager row below.
    */
   specs: [
     'Founder, Cosmikata',
     'Front-end Architect',
     'Tech Lead',
-    '15+ years shipping',
-    'Atlanta · Remote',
+    '13+ years shipping',
+    'Atlanta',
   ],
   hero: {
     name: 'Anselm Marie',
-    headline: { lead: 'Building the front-end,', accent: 'end to end.' },
+    headline: { lead: 'Building the\nfront-end,', accent: 'end to end.' },
     lede:
       'I’m Anselm, founder of Cosmikata and a front-end architect & tech lead. I build ' +
       'cross-platform systems: design systems, micro-frontend platforms, and edge-first ' +
@@ -136,7 +137,7 @@ export const HOMEPAGE_CONTENT: HomepageContent = {
     {
       id: 'platform-quality',
       heading: 'Platform & Quality',
-      skills: ['Cloudflare', 'Zephyr Cloud', 'GitHub Actions', 'Jest / Vitest', 'Storybook'],
+      skills: ['AWS', 'Cloudflare', 'Zephyr Cloud', 'GitHub Actions', 'Jest / Vitest', 'Storybook'],
     },
   ],
   about: HOMEPAGE_ABOUT,

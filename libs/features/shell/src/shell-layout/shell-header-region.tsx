@@ -17,10 +17,9 @@ interface ShellHeaderRegionProps {
  * radius. The maintainer's call, 2026-09-22; recorded in the plan's
  * design-delta table rather than left as an unexplained difference.
  *
- * Because the bar is full-bleed but the card is not, the inner row repeats the
- * page frame's own measurements — `px-frame`, then `max-w-[1400px]`, then the
- * design's 18px nav padding — so the brand mark lines up with the card's
- * content instead of with the viewport edge.
+ * The inner row is held to the same 1400px column as the sections' content
+ * (`px-page`), plus the design's 18px nav padding, so the brand mark lines up
+ * with the page content instead of with the viewport edge on wide screens.
  *
  * ⚠️ **The bar is `fixed`, so it leaves the flow and the page would slide
  * under it — the spacer below is what holds the content down.** Its 56px is
@@ -49,12 +48,10 @@ const ShellHeaderRegion = ({ children }: ShellHeaderRegionProps): ReactElement =
         data-testid="shell-header-region"
         className="fixed inset-x-0 top-0 z-[60] border-b border-rule bg-paper/92 backdrop-blur-[14px]"
       >
-        <div className="px-frame">
-          <div className="mx-auto flex max-w-[1400px] items-center px-[18px] py-4">
-            {children ?? (
-              <span className="font-mono text-eyebrow text-muted uppercase">header region</span>
-            )}
-          </div>
+        <div className="mx-auto flex max-w-[1400px] items-center px-[18px] py-4">
+          {children ?? (
+            <span className="font-mono text-eyebrow text-muted uppercase">header region</span>
+          )}
         </div>
       </header>
       <div aria-hidden className="h-nav shrink-0" />

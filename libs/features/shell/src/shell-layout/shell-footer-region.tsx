@@ -17,10 +17,7 @@ interface ShellFooterRegionProps {
  */
 const ShellFooterRegion = ({ children }: ShellFooterRegionProps): ReactElement => {
   return (
-    <footer
-      data-testid="shell-footer-region"
-      className="w-full bg-ink px-[18px] py-6 text-paper frame:px-[26px]"
-    >
+    <footer data-testid="shell-footer-region" className="w-full bg-ink px-page py-6 text-paper">
       {children ?? (
         <span className="font-mono text-eyebrow text-paper/50 uppercase">footer region</span>
       )}

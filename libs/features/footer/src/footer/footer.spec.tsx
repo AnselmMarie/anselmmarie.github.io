@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { SITE_NAME } from '@portfolio/shared-fixtures';
 
 import Footer from './footer.js';
-import { FOOTER_SOCIAL_LINKS } from './footer-social-links.const.js';
+import { FOOTER_SOCIAL_LINKS, FOOTER_TAGLINE } from './footer-social-links.const.js';
 
 describe('Footer', () => {
   it('identifies itself as the remote, not the shell-owned fallback', () => {
@@ -56,6 +56,12 @@ describe('Footer', () => {
     expect(links.map((link) => link.getAttribute('href'))).toEqual(
       FOOTER_SOCIAL_LINKS.map((link) => link.href)
     );
+  });
+
+  it('closes the strip with the role line, as both exports draw it', () => {
+    render(<Footer />);
+
+    expect(screen.getByTestId('footer-remote')).toHaveTextContent(FOOTER_TAGLINE);
   });
 
   it('labels the outbound nav so its links are reachable by role', () => {

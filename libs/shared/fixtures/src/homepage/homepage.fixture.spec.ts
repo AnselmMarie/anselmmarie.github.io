@@ -55,11 +55,19 @@ describe('HOMEPAGE_CONTENT — the work grid', () => {
   });
 });
 
+describe('HOMEPAGE_CONTENT — specs strip', () => {
+  it('names the location as Atlanta alone, without "Remote"', () => {
+    // Maintainer's call, 2026-09-23 — the export reads `Atlanta · Remote`.
+    expect(HOMEPAGE_CONTENT.specs).toContain('Atlanta');
+    expect(HOMEPAGE_CONTENT.specs).not.toContain('Atlanta · Remote');
+  });
+});
+
 describe('HOMEPAGE_CONTENT — the two corrected figures (D87)', () => {
-  it("reads 15+ years shipping in the strip, not the design's 13+", () => {
-    // 2011 → 2026, off the last row of the experience list rendered below it.
-    expect(HOMEPAGE_CONTENT.specs).toContain('15+ years shipping');
-    expect(HOMEPAGE_CONTENT.specs).not.toContain('13+ years shipping');
+  it("reads 13+ years shipping in the strip, not D87's 15+ (D103)", () => {
+    // 2013 → 2026, the same span as the About card's 13+ lead-roles figure.
+    expect(HOMEPAGE_CONTENT.specs).toContain('13+ years shipping');
+    expect(HOMEPAGE_CONTENT.specs).not.toContain('15+ years shipping');
   });
 
   it("reads 13+ years in lead roles in the About card, not the design's 10+", () => {
@@ -93,7 +101,7 @@ describe('HOMEPAGE_CONTENT — structure', () => {
 
   it('splits the hero headline so the accent break stays content', () => {
     expect(HOMEPAGE_CONTENT.hero.headline).toEqual({
-      lead: 'Building the front-end,',
+      lead: 'Building the\nfront-end,',
       accent: 'end to end.',
     });
   });
@@ -112,6 +120,12 @@ describe('HOMEPAGE_CONTENT — structure', () => {
     for (const group of HOMEPAGE_CONTENT.skillGroups) {
       expect(group, group.id).not.toHaveProperty('cardId');
     }
+  });
+
+  it('lists AWS under Platform & Quality', () => {
+    const platform = HOMEPAGE_CONTENT.skillGroups.find((g) => g.id === 'platform-quality');
+
+    expect(platform?.skills).toContain('AWS');
   });
 
   it('no longer carries projectGroups', () => {

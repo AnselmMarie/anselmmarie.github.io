@@ -113,7 +113,7 @@ change. Do not apply it pre-emptively.
 
 | Where | Reads |
 |---|---|
-| the specs strip above the hero | `15+ years shipping` |
+| the specs strip above the hero | ~~`15+ years shipping`~~ → `13+ years shipping`, **superseded by [D103](./decisions-d103.md#d103)** |
 | the About stats card | `13+` · `Years in lead & architect roles` |
 
 The design had `13+ years shipping` in the strip and `10+ · Years shipping

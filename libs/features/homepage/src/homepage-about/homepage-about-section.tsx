@@ -23,10 +23,7 @@ interface HomepageAboutSectionProps {
  */
 const HomepageAboutSection = ({ sectionId, about }: HomepageAboutSectionProps): ReactElement => {
   return (
-    <section
-      id={sectionId}
-      className="scroll-mt-anchor px-[18px] py-10 frame:px-[26px] frame:py-16"
-    >
+    <section id={sectionId} className="scroll-mt-anchor px-page py-10 frame:py-16">
       <div className="grid items-start gap-8 frame:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] frame:gap-14">
         <div className="min-w-0">
           <Eyebrow label={about.eyebrow} />
