@@ -95,13 +95,16 @@ export const HOMEPAGE_CONTENT: HomepageContent = {
    * marked invented.
    */
   /*
-   * ⚠️ **Six cards hidden — maintainer's call, 2026-09-23.** Pokémon Pet Shop,
-   * Company Development, New App Skin, CSP Generator App, Caterpillar Inc. and
-   * CosMikata (older version) are commented out, not deleted: their items stay
+   * ⚠️ **Five cards hidden — maintainer's call, 2026-09-23.** Pokémon Pet Shop,
+   * Company Development, New App Skin, CSP Generator App and Caterpillar Inc.
+   * are commented out, not deleted (Cosmikata's older version was restored the
+   * same day): their items stay
    * in `PORTFOLIO_ITEMS` and their `/portfolio/$slug` pages still resolve.
    * Uncomment a line to restore its card.
    */
   work: [
+    // ⚠️ INVENTED colour — placeholder item added 2026-09-23, no design card.
+    { slug: 'webpage-v3', background: '#D4E4F0', isDark: false, isLive: false },
     // ⚠️ INVENTED colours — placeholder items added 2026-09-23, no design card.
     { slug: 'micro-frontend-update', background: '#D9D4EE', isDark: false, isLive: false },
     { slug: 'prototype-company-division', background: '#F0DCCB', isDark: false, isLive: false },
@@ -117,8 +120,8 @@ export const HOMEPAGE_CONTENT: HomepageContent = {
     // { slug: 'csp-generator-app', background: '#14211E', isDark: true, isLive: false },
     // { slug: 'cr-caterpillar', background: '#DFDBD1', isDark: false, isLive: false },
     // ⚠️ INVENTED — as above. A cooler slate than `cosmikata`'s mint, reading
-    // as the earlier version of the same product.
-    // { slug: 'older-cosmikata', background: '#D6DFE0', isDark: false, isLive: false },
+    // as the earlier version of the same product. Restored 2026-09-23.
+    { slug: 'older-cosmikata', background: '#D6DFE0', isDark: false, isLive: false },
   ],
   experience: HOMEPAGE_EXPERIENCE,
   footnotes: HOMEPAGE_FOOTNOTES,

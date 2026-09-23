@@ -15,7 +15,7 @@ interface HomepageWorkSectionProps {
 }
 
 /**
- * The `#work` grid — one flat section of eight cards.
+ * The `#work` grid — one flat section of cards, three columns on desktop.
  *
  * ⚠️ **`id` and `scroll-mt-anchor` are D43's three-way contract.** The Header
  * remote and the shell's header fallback both build `href="#<id>"` from
@@ -75,8 +75,8 @@ const HomepageWorkSection = ({
         )}
       </div>
 
-      {/* Two columns from the `frame` breakpoint up: a 2×2 grid for four cards (2026-09-23). */}
-      <div className="grid gap-[14px] frame:grid-cols-2">
+      {/* Three columns from the `frame` breakpoint up (maintainer, 2026-09-23). */}
+      <div className="grid gap-[14px] frame:grid-cols-3">
         {entries.map(({ card, item }) => (
           <HomepageWorkCard
             key={card.slug}

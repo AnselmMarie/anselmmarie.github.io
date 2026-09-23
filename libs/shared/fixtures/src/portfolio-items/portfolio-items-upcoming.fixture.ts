@@ -56,6 +56,15 @@ const placeholder = ({
 
 export const UPCOMING_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
   placeholder({
+    slug: 'webpage-v3',
+    title: 'v3',
+    company: 'Anselm Marie',
+    tech: ['React', 'TanStack Start'],
+    year: '2026',
+    // ⚠️ INVENTED — the maintainer gave no summary line; replace when written.
+    lede: 'A rebuild of this portfolio site as a React and TanStack Start micro-frontend platform.',
+  }),
+  placeholder({
     slug: 'micro-frontend-update',
     title: 'Micro Frontend Architecture Migration',
     company: 'Southern Glazer’s Wine & Spirits',

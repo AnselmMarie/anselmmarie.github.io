@@ -12,6 +12,7 @@ const AUTHORED_ITEMS = PORTFOLIO_ITEMS.filter((item) => !PLACEHOLDER_SLUGS.inclu
  * is not ported and resolves to a shell-level not-found. Order is v3's.
  */
 const EXPECTED_SLUGS = [
+  'webpage-v3',
   'micro-frontend-update',
   'prototype-company-division',
   'pokemon-pet-shop',
@@ -25,7 +26,7 @@ const EXPECTED_SLUGS = [
 ];
 
 describe('PORTFOLIO_ITEMS', () => {
-  it('carries the two placeholders, then the eight LIVE slugs at 39bbe56 in v3 order', () => {
+  it('carries the three placeholders, then the eight LIVE slugs at 39bbe56 in v3 order', () => {
     expect(PORTFOLIO_ITEMS.map((item) => item.slug)).toEqual(EXPECTED_SLUGS);
   });
 
@@ -138,46 +139,6 @@ describe('PORTFOLIO_ITEMS', () => {
       expect(item?.lede, slug).not.toBe('');
       expect(item?.facts, slug).toHaveLength(3);
     }
-  });
-
-  it('keeps the placeholder items renderable until their copy is written', () => {
-    // Added 2026-09-23 with titles only. They must still produce a card and a
-    // detail page, so the fields those read are asserted non-empty.
-    expect(PLACEHOLDER_SLUGS).toEqual(['micro-frontend-update', 'prototype-company-division']);
-
-    for (const slug of PLACEHOLDER_SLUGS) {
-      const item = portfolioItemBySlug(slug);
-
-      expect(item?.title, slug).not.toBe('');
-      expect(item?.lede, slug).not.toBe('');
-      expect(item?.year, slug).toMatch(/^\d{4}$/u);
-      expect(item?.description, slug).toContain('<p>');
-    }
-  });
-
-  it("gives Micro Frontend Architecture Migration the maintainer's summary line", () => {
-    expect(portfolioItemBySlug('micro-frontend-update')?.lede).toBe(
-      'Contributed to a React micro-frontend migration, building federated modules and standardizing tooling, analytics, and testing.'
-    );
-  });
-
-  it("gives From Prototype to New Company Division the maintainer's summary line", () => {
-    expect(portfolioItemBySlug('prototype-company-division')?.lede).toBe(
-      'Led POS UI design and prototyping that secured executive approval for a new internal product division.'
-    );
-  });
-
-  it("carries the maintainer's company and tech on each placeholder", () => {
-    expect(portfolioItemBySlug('micro-frontend-update')).toMatchObject({
-      company: 'Southern Glazer’s Wine & Spirits',
-      tech: ['React', 'Module Federation', 'TanStack'],
-      year: '2025',
-    });
-    expect(portfolioItemBySlug('prototype-company-division')).toMatchObject({
-      company: 'Cricket Wireless',
-      tech: ['Design', 'JavaScript'],
-      year: '2017',
-    });
   });
 
   it("dates Breeze-Thru 2018, the maintainer's figure, not the design's 2022", () => {

@@ -45,9 +45,14 @@ describe('HomepageWorkSection — what reaches the card', () => {
       PORTFOLIO_ITEMS.find((i) => i.slug === first.slug),
       first.slug
     );
-    const card = screen.getByRole('link', { name: new RegExp(item.title, 'u') });
+    // By href, not by name: `Cosmikata` is also a substring of the older
+    // version's title since both cards were restored (2026-09-23).
+    const card = required(
+      screen.getAllByRole('link').find((a) => a.getAttribute('href') === `/portfolio/${item.slug}`),
+      'the cosmikata card link'
+    );
 
-    expect(card).toHaveAttribute('href', `/portfolio/${item.slug}`);
+    expect(within(card).getByRole('heading', { name: item.title })).toBeInTheDocument();
     expect(within(card).getByText(item.lede)).toBeInTheDocument();
     expect(within(card).getByText(item.company)).toBeInTheDocument();
     expect(within(card).getByText(new RegExp(item.year, 'u'))).toBeInTheDocument();

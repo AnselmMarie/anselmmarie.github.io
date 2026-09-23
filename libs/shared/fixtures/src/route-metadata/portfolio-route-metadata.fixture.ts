@@ -16,6 +16,7 @@ import { PORTFOLIO_ITEMS } from '../portfolio-items/portfolio-items.fixture.js';
  */
 const DESCRIPTION_BY_SLUG: Readonly<Record<string, string>> = {
   // ⚠️ Placeholders (2026-09-23) — replace with the real copy with the item.
+  'webpage-v3': 'v3 — details coming soon.',
   'micro-frontend-update': 'Micro Frontend Architecture Migration — details coming soon.',
   'prototype-company-division': 'From Prototype to New Company Division — details coming soon.',
   'pokemon-pet-shop':

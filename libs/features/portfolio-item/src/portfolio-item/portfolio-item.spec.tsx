@@ -116,7 +116,7 @@ describe('PortfolioItem', () => {
     render(<PortfolioItem item={itemOrThrow('older-cosmikata')} />);
 
     expect(screen.getByTestId('portfolio-item-videos')).toBeInTheDocument();
-    expect(screen.getByTitle('CosMikata Video 1')).toBeInTheDocument();
+    expect(screen.getByTitle('Cosmikata Video 1')).toBeInTheDocument();
   });
 
   it('closes with the next block', () => {

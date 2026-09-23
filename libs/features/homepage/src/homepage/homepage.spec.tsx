@@ -58,8 +58,10 @@ describe('Homepage — composition', () => {
 
     expect(hrefs).toHaveLength(HOMEPAGE_CONTENT.work.length);
     expect(hrefs).toEqual([
+      '/portfolio/webpage-v3', // 2026
       '/portfolio/micro-frontend-update', // 2025
       '/portfolio/cosmikata', // 2025
+      '/portfolio/older-cosmikata', // 2019
       '/portfolio/cw-breeze-thru', // 2018
       '/portfolio/prototype-company-division', // 2017
     ]);
