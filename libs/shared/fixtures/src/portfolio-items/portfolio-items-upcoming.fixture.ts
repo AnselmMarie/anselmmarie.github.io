@@ -6,7 +6,8 @@ import type { PortfolioItem } from '@portfolio/shared-types';
  * the maintainer's; every other field is a stand-in to be replaced when the detail
  * is written.
  *
- * - `images`, `facts` and `links` are empty, and `thumbnail` is empty
+ * - `images` and `links` are empty, `facts` carries the three keys with
+ *   empty values, and `thumbnail` is empty
  *   so the detail route emits no `og:image`.
  * - `portfolio-items.fixture.spec.ts` exempts these slugs from the
  *   completeness checks the other items pass. Remove a slug from
@@ -44,7 +45,12 @@ const placeholder = ({
   lede,
   body: [],
   tech,
-  facts: [],
+  // Every detail page draws the same three rows, blank until authored.
+  facts: [
+    { key: 'Timeline', value: '' },
+    { key: 'Role', value: '' },
+    { key: 'Focus', value: '' },
+  ],
   links: [],
 });
 

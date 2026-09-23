@@ -81,7 +81,7 @@ export const CRICKET_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     facts: [
       { key: 'Timeline', value: '9 months' },
       { key: 'Role', value: 'Tech lead, 4 engineers' },
-      { key: 'Outcome', value: 'Reduced friction, higher task completion' },
+      { key: 'Focus', value: 'Reduced friction, higher task completion' },
     ],
     links: [],
   },

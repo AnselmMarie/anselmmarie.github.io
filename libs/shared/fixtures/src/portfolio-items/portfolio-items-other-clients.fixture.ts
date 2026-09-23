@@ -149,7 +149,7 @@ export const OTHER_CLIENT_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     /*
      * ⚠️ **INVENTED — the design covers this item in no export** (D77). `lede`,
      * `body`, `tech`, `facts` and `year` have no design source; `role` follows
-     * v3's `subtitle` (`Design`), and the body and the `Outcome` fact restate
+     * v3's `subtitle` (`Design`), and the body and the `Focus` fact restate
      * v3's own description rather than adding a claim. `year` is inferred from
      * the sibling `rove-logix` engagement this redesign sat inside.
      */
@@ -164,7 +164,7 @@ export const OTHER_CLIENT_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     facts: [
       { key: 'Timeline', value: 'A pass inside the Rove Logix build' },
       { key: 'Role', value: 'Solo — design only' },
-      { key: 'Outcome', value: 'Never implemented in the client app' },
+      { key: 'Focus', value: 'Never implemented in the client app' },
     ],
     links: [],
   },
