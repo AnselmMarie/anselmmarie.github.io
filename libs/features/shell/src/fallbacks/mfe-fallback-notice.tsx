@@ -43,7 +43,7 @@ const MfeFallbackNotice = ({
     <div
       data-testid={`mfe-fallback-${mfe}`}
       role="status"
-      className="mx-auto flex max-w-xl flex-col items-start gap-3 rounded-panel border border-rule bg-surface p-6"
+      className="mx-auto my-10 flex max-w-xl frame:my-16 flex-col items-start gap-3 rounded-panel border border-rule bg-surface p-6"
     >
       <h2 className="font-display text-xl font-bold tracking-tight text-ink">{title}</h2>
       <p className="text-sm leading-relaxed text-muted">{message}</p>
