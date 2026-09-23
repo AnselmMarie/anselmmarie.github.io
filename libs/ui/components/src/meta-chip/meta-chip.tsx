@@ -1,12 +1,14 @@
 import type { ReactElement, ReactNode } from 'react';
 
 import { cn } from '@portfolio/shared-utils';
+import { Badge } from '@portfolio/ui-primitives';
 
 /**
  * How the capsule is filled. `paper` and `ink` are the two solid fills the
- * exports use; `glass` is the translucent blur that sits over imagery.
+ * exports use; `glass` is the translucent blur that sits over imagery;
+ * `inverse` is the light-on-dark wash for a chip on a dark card.
  */
-export type MetaChipTone = 'paper' | 'ink' | 'glass';
+export type MetaChipTone = 'paper' | 'ink' | 'glass' | 'inverse';
 
 interface MetaChipProps {
   /** The capsule's contents — text, or text plus a status dot. */
@@ -22,6 +24,7 @@ const TONE_FILL = {
   paper: 'bg-surface text-ink',
   ink: 'bg-ink/8 text-ink',
   glass: 'bg-backdrop/60 text-paper backdrop-blur-sm',
+  inverse: 'bg-white/14 text-paper',
 } as const;
 
 /**
@@ -44,10 +47,13 @@ const DOT_FILL = {
   paper: 'bg-accent',
   ink: 'bg-accent',
   glass: 'bg-accent-bright',
+  inverse: 'bg-accent-bright',
 } as const;
 
 /**
- * The small mono capsule — "Live", "Featured", the hero's caption pill.
+ * The small mono capsule — "Live", "Featured", the hero's caption pill. Drawn
+ * on shadcn's `Badge`; the classes below override its `h-5` / `text-xs` /
+ * border defaults, which is why `cn` has to know `text-chip` is a size.
  *
  * Seven call sites across the two exports (D76): the hero's two overlay pills,
  * the Work card's stack and Live chips, and the detail page's status marks.
@@ -63,9 +69,9 @@ const MetaChip = ({
   hasDot = false,
 }: MetaChipProps): ReactElement => {
   return (
-    <span
+    <Badge
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-pill px-2.5 font-mono text-chip uppercase',
+        'h-auto gap-1.5 rounded-pill border-0 px-2.5 font-mono text-chip font-normal uppercase',
         TRIMMED_PADDING,
         TONE_FILL[tone],
         className
@@ -73,7 +79,7 @@ const MetaChip = ({
     >
       {hasDot ? <span aria-hidden className={cn('size-1.5 rounded-pill', DOT_FILL[tone])} /> : null}
       <span className={LABEL_TRIM}>{children}</span>
-    </span>
+    </Badge>
   );
 };
 

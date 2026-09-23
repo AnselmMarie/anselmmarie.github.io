@@ -1,4 +1,5 @@
 export { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './accordion.js';
+export { Badge, badgeVariants } from './badge.js';
 export { Button, buttonVariants } from './button.js';
 export { default as Card } from './card.js';
 export {

@@ -8,4 +8,5 @@ export { default as PillLink, type PillLinkVariant } from './pill-link/pill-link
 export { default as ProfileCard } from './profile-card/profile-card.js';
 export { default as SectionHeading } from './section-heading/section-heading.js';
 export { default as SocialIcon } from './social-icon/social-icon.js';
+export { default as TagChip } from './tag-chip/tag-chip.js';
 export { default as UiIcon, type UiIconName } from './ui-icon/ui-icon.js';

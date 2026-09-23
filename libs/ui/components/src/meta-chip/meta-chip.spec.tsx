@@ -24,4 +24,15 @@ describe('MetaChip', () => {
     expect(dot).not.toBeNull();
     expect(dot).toHaveTextContent('');
   });
+
+  it('draws the dot on the inverse tone too', () => {
+    const { container } = render(
+      <MetaChip tone="inverse" hasDot>
+        Live
+      </MetaChip>
+    );
+
+    expect(screen.getByText('Live')).toBeInTheDocument();
+    expect(container.querySelector('[aria-hidden]')).not.toBeNull();
+  });
 });

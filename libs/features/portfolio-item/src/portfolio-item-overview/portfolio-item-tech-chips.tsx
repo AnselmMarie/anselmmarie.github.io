@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 
-import { Eyebrow } from '@portfolio/ui-components';
+import { Eyebrow, TagChip } from '@portfolio/ui-components';
 
 interface PortfolioItemTechChipsProps {
   tech: readonly string[];
@@ -18,12 +18,9 @@ const PortfolioItemTechChips = ({ tech }: PortfolioItemTechChipsProps): ReactEle
       <Eyebrow label="Technologies" hasRule />
       <ul className="m-0 mt-4 flex list-none flex-wrap gap-2 p-0">
         {tech.map((name) => (
-          <li
-            key={name}
-            className="rounded-pill border border-rule bg-paper px-[0.85rem] py-[0.45rem] text-[0.82rem] text-ink"
-          >
+          <TagChip key={name} isListItem>
             {name}
-          </li>
+          </TagChip>
         ))}
       </ul>
     </div>
