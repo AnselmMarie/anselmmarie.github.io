@@ -1,5 +1,9 @@
 export { type AccordionEntry, default as Accordion } from './accordion/accordion.js';
 export { default as Eyebrow, type EyebrowTone } from './eyebrow/eyebrow.js';
+export {
+  default as LoadingSkeleton,
+  type LoadingSkeletonTone,
+} from './loading-skeleton/loading-skeleton.js';
 export { default as MenuSheet, type MenuSheetItem } from './menu-sheet/menu-sheet.js';
 export { default as MetaChip, type MetaChipTone } from './meta-chip/meta-chip.js';
 export { default as NavMenu, type NavMenuItem } from './nav-menu/nav-menu.js';

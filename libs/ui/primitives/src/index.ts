@@ -23,3 +23,4 @@ export {
   SheetTitle,
   SheetTrigger,
 } from './sheet.js';
+export { Skeleton } from './skeleton.js';
