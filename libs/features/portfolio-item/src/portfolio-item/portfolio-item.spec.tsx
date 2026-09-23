@@ -33,16 +33,61 @@ describe('PortfolioItem', () => {
     expect(screen.getByText('Corporate Reports')).toBeInTheDocument();
   });
 
-  it('forwards the company and subtitle to the header, which the shell never passes twice', () => {
-    // spec-through-the-parent: the header reads three props and this is the
-    // only call site that supplies them.
-    render(<PortfolioItem item={itemOrThrow('rove-logix-ui-update')} />);
+  it('forwards company, year and role to the meta row, which the shell never passes twice', () => {
+    // spec-through-the-parent: the header reads these and this is the only
+    // call site that supplies them.
+    render(<PortfolioItem item={itemOrThrow('cw-breeze-thru')} />);
 
-    const header = screen.getByTestId('portfolio-item-header');
+    const row = screen.getByTestId('portfolio-item-meta-row');
 
-    expect(header).toHaveTextContent('Rove Logix');
-    expect(header).toHaveTextContent('New App Skin');
-    expect(header).toHaveTextContent('Design');
+    expect(row).toHaveTextContent('Cricket Wireless');
+    expect(row).toHaveTextContent('2018');
+    expect(row).toHaveTextContent('Senior Engineer, Tech Lead');
+  });
+
+  it('forwards the links to the header', () => {
+    render(<PortfolioItem item={itemOrThrow('csp-generator-app')} />);
+
+    expect(screen.getByRole('link', { name: 'Live tool' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Source' })).toBeInTheDocument();
+  });
+
+  it('paints the hero with the item’s Work-card colour, looked up by slug (D85)', () => {
+    render(<PortfolioItem item={itemOrThrow('cosmikata')} />);
+
+    const hero = screen.getByTestId('portfolio-item-hero');
+
+    expect(hero.style.backgroundColor).toBe('rgb(191, 230, 210)');
+    expect(hero).toHaveTextContent(itemOrThrow('cosmikata').lede);
+  });
+
+  it('forwards the first gallery image to the hero, where the page title now lives', () => {
+    const item = itemOrThrow('cw-breeze-thru');
+
+    render(<PortfolioItem item={item} />);
+
+    const hero = screen.getByTestId('portfolio-item-hero');
+
+    expect(hero.querySelector('img')).toHaveAttribute('src', item.images[0]?.src);
+    expect(hero.querySelector('h1')).toHaveTextContent(item.title);
+  });
+
+  it('leaves the hero on its default fill for an item hidden from the Work grid', () => {
+    render(<PortfolioItem item={itemOrThrow('rove-logix')} />);
+
+    expect(screen.getByTestId('portfolio-item-hero').style.backgroundColor).toBe('');
+  });
+
+  it('forwards tech, facts and body to the overview', () => {
+    const item = itemOrThrow('pokemon-pet-shop');
+
+    render(<PortfolioItem item={item} />);
+
+    const overview = screen.getByTestId('portfolio-item-overview');
+
+    expect(overview).toHaveTextContent('React Query');
+    expect(overview).toHaveTextContent('6 weeks, nights and weekends');
+    expect(overview).toHaveTextContent(item.body[0] ?? '');
   });
 
   it('forwards the description HTML to the sanitizing boundary', () => {
@@ -72,6 +117,12 @@ describe('PortfolioItem', () => {
 
     expect(screen.getByTestId('portfolio-item-videos')).toBeInTheDocument();
     expect(screen.getByTitle('CosMikata Video 1')).toBeInTheDocument();
+  });
+
+  it('closes with the next block', () => {
+    render(<PortfolioItem item={itemOrThrow('cr-caterpillar')} />);
+
+    expect(screen.getByTestId('portfolio-item-next-block')).toBeInTheDocument();
   });
 
   it('renders no video section for an item with none, rather than an empty heading', () => {

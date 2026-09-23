@@ -19,6 +19,12 @@ describe('PortfolioItemVideos', () => {
     expect(screen.getByText(VIDEOS[0]?.description ?? '')).toBeInTheDocument();
   });
 
+  it('heads the block as its own section', () => {
+    render(<PortfolioItemVideos videos={VIDEOS} />);
+
+    expect(screen.getByRole('heading', { name: 'Walk-through videos.' })).toBeInTheDocument();
+  });
+
   it('constrains the one third-party frame on the site', () => {
     render(<PortfolioItemVideos videos={VIDEOS} />);
 

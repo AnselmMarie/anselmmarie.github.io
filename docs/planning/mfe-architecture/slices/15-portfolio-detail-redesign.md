@@ -1,6 +1,6 @@
 # Slice 15 — Portfolio detail: the new page, plus the two blocks the design omits
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slices 10, 11
+**Status:** built, awaiting review (2026-09-23) · **Visible?** ✅ screen · **Depends on:** Slices 10, 11
 **Design:** [`_design/Anselm Marie Project Detail.html`](../../../../_design/Anselm%20Marie%20Project%20Detail.html) — drawn ✅ · ⚠️ **does not cover the rich-text body or the videos** — see [D78](../decisions-d76-d81.md#d78)
 
 Owns `apps/portfolio-item` + `libs/features/portfolio-item`, plus the `head`
