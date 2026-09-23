@@ -26,25 +26,26 @@ describe('NavigationMenu', () => {
     expect(screen.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '#work');
   });
 
-  it('mounts the viewport by default and omits it when `viewport` is false', () => {
-    const { container, rerender } = render(<NavigationMenu />);
-
-    expect(container.querySelector('[data-slot="navigation-menu"]')).toHaveAttribute(
-      'data-viewport',
-      'true'
+  it('mounts no popup until a trigger opens one', () => {
+    // Base UI replaced Radix's `viewport` prop: the positioner is portalled and
+    // renders nothing while every item is closed.
+    render(
+      <NavigationMenu aria-label="Sections">
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuLink href="#work">Work</NavigationMenuLink>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
     );
 
-    rerender(<NavigationMenu viewport={false} />);
-
-    expect(container.querySelector('[data-slot="navigation-menu"]')).toHaveAttribute(
-      'data-viewport',
-      'false'
-    );
+    expect(document.body.querySelector('[data-side]')).toBeNull();
+    expect(document.body.querySelector('[data-slot="navigation-menu-content"]')).toBeNull();
   });
 
   it('draws the trigger chevron as a decorative Tabler icon', () => {
     render(
-      <NavigationMenu viewport={false}>
+      <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger>More</NavigationMenuTrigger>

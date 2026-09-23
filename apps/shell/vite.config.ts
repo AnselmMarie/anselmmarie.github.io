@@ -3,7 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import viteReact from '@vitejs/plugin-react';
 import { nitro } from 'nitro/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, type PluginOption } from 'vite';
 
 /**
  * ⚠️ **Every line of the federation setup below is D55**, the Slice 3 spike
@@ -101,6 +101,41 @@ const mfPlugins = federation({
   applyToEnvironment: (environment: { name: string }) => environment.name === 'client',
 }));
 
+const SERVER_FN_COMPILER = 'tanstack-start-core::server-fn:';
+
+/** Base UI, pre-bundled (`.vite/deps/@base-ui_react_*`) or raw (`@base-ui/react/…`). */
+const BASE_UI_ID = /\/node_modules\/(\.vite\/deps\/@base-ui_|.*\/@base-ui\/)/;
+
+/**
+ * ⚠️ **Keeps Start's server-fn compiler off Base UI.** Its code filter matches
+ * any `.handler(` call, so Base UI's pre-bundled `navigation-menu`
+ * (`instance.handler(event)`, reached through the `@portfolio/ui-components`
+ * barrel) gets compiled. The compiler then tries to load the bundle's React
+ * import, which federation has rewritten to a `loadShare` virtual module it
+ * cannot read, and the request 500s: "could not load module info for
+ * virtual:mf:…loadShare__react…".
+ *
+ * Do NOT widen this to all of `node_modules`: Start's own pre-bundled packages
+ * need the compiler to strip their server-only code, and without it the client
+ * throws on `node:async_hooks` and never renders (observed 2026-09-23).
+ */
+const excludeBaseUiFromServerFnCompiler = (option: PluginOption): PluginOption => {
+  // `tanstackStart()` nests its plugins in sub-arrays; the compiler sits in one.
+  if (Array.isArray(option)) return option.map(excludeBaseUiFromServerFnCompiler);
+  if (!option || typeof option !== 'object' || !('transform' in option)) return option;
+  const { transform } = option;
+  if (!option.name.startsWith(SERVER_FN_COMPILER) || typeof transform !== 'object') return option;
+  const idFilter = transform.filter?.id;
+  if (!idFilter || typeof idFilter !== 'object' || !('exclude' in idFilter)) return option;
+  const exclude = [idFilter.exclude ?? [], BASE_UI_ID].flat();
+  return {
+    ...option,
+    transform: { ...transform, filter: { ...transform.filter, id: { ...idFilter, exclude } } },
+  };
+};
+
+const startPlugins = tanstackStart().map(excludeBaseUiFromServerFnCompiler);
+
 export default defineConfig({
   // Pin the project root to this file's directory rather than letting Vite
   // default it to `process.cwd()`. Nx's `@nx/vite` plugin loads this config
@@ -108,10 +143,13 @@ export default defineConfig({
   // router entry (`src/router.tsx`) relative to the root — so without this it
   // looks in `<workspaceRoot>/src` and graph construction fails.
   root: import.meta.dirname,
-  server: { port: 3000 },
+  // `strictPort` so a second `vite dev` fails instead of silently taking 3001:
+  // both instances share `node_modules/.vite/deps`, each re-optimizes over the
+  // other's pre-bundles, and every lazy route then 504s on an outdated dep hash.
+  server: { port: 3000, strictPort: true },
   plugins: [
     tailwindcss(),
-    tanstackStart(),
+    ...startPlugins,
     // D31 + D37: the shell is built for AWS Lambda from the first commit rather
     // than retrofitted at Slice 8, and D49 makes that Lambda arm64. The preset
     // is overridable so a `node-server` build stays available for local checks.

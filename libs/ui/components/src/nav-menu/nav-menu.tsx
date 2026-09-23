@@ -22,7 +22,7 @@ interface NavMenuProps {
 
 /**
  * The flat, text-only nav on shadcn's `NavigationMenu` — a labelled `<nav>`
- * over a `<ul>`, with arrow-key movement between the links from Radix.
+ * over a `<ul>`, with arrow-key movement between the links from Base UI.
  *
  * ⚠️ **The link classes undo the generated ones on purpose.** The primitive's
  * link is a padded, rounded tile that fills `bg-accent` on hover — and
@@ -31,14 +31,15 @@ interface NavMenuProps {
  * primitive's padding, fill and ring in favour of the design's plain text
  * link (D56 is why the override wins rather than racing on stylesheet order).
  *
- * `viewport={false}`: there are no dropdowns, so no viewport is mounted.
+ * There are no dropdowns, so the primitive's portalled positioner never
+ * mounts anything — Base UI has no `viewport={false}` to say so, and needs none.
  */
 const NAV_LINK =
   'block rounded-none p-0 text-[0.88rem] text-ink hover:bg-transparent hover:text-accent focus:bg-transparent focus:text-accent focus-visible:ring-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent';
 
 const NavMenu = ({ label, items, className }: NavMenuProps): ReactElement => {
   return (
-    <NavigationMenu viewport={false} aria-label={label} className={className}>
+    <NavigationMenu aria-label={label} className={className}>
       <NavigationMenuList className="gap-[26px]">
         {items.map((item) => (
           <NavigationMenuItem key={item.href}>

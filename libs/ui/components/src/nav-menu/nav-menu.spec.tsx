@@ -43,13 +43,14 @@ describe('NavMenu', () => {
     work.focus();
     fireEvent.keyDown(work, { key: 'ArrowRight' });
 
-    // Radix moves focus on the next tick (`setTimeout`), not synchronously.
+    // Focus may move after the event handler returns, so wait for it.
     await waitFor(() => expect(about).toHaveFocus());
   });
 
-  it('renders no dropdown viewport', () => {
-    const { container } = render(<NavMenu label="Sections" items={ITEMS} />);
+  it('mounts no dropdown popup — the nav has no triggers', () => {
+    render(<NavMenu label="Sections" items={ITEMS} />);
 
-    expect(container.querySelector('[data-slot="navigation-menu-viewport"]')).toBeNull();
+    expect(document.body.querySelector('[data-slot="navigation-menu-content"]')).toBeNull();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 });

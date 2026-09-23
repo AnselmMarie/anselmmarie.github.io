@@ -1,8 +1,9 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
+  "style": "base-vega",
   "rsc": false,
   "tsx": true,
+  "iconLibrary": "tabler",
   "tailwind": {
     "config": "",
     "css": "../theme/src/theme.css",
