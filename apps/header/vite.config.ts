@@ -93,6 +93,21 @@ export default defineConfig(({ command }) => ({
       // from the same source, and the theme they agree on is D26's single
       // stylesheet. That is what lets the Header and the Homepage agree on the
       // header-height token (D43) without crossing the federation boundary.
+      //
+      // ⚠️ **`@base-ui/react` is deliberately NOT shared** —
+      // measured 2026-09-23, minified, React external. Federation shares an
+      // import specifier as one untree-shaken chunk, so:
+      //
+      // - sharing the package root loads ALL of it: 162.8 KB gzip, against
+      //   57.8 KB for the header (`dialog` + `button` + `navigation-menu`,
+      //   48.5 KB) and the homepage (`accordion`, 9.3 KB) bundling their own;
+      // - sharing per subpath saves nothing, because no subpath is used by more
+      //   than one remote, and the internals they have in common (at most
+      //   ~6.6 KB gzip) are not specifiers the runtime can see.
+      //
+      // Nor is a singleton needed for correctness: every Base UI tree renders
+      // inside one remote, so no context crosses the boundary. Revisit when two
+      // remotes import the same heavy subpath (e.g. both mount `dialog`).
       shared: {
         react: { singleton: true, strictVersion: false },
         'react-dom': { singleton: true, strictVersion: false },

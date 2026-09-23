@@ -1,41 +1,38 @@
 import type { ReactElement } from 'react';
 
 import { SITE_SECTIONS } from '@portfolio/shared-fixtures';
+import { NavMenu } from '@portfolio/ui-components';
 
-import HeaderNavLink from './header-nav-link.js';
+import { anchorHref } from '../anchor-href/anchor-href.js';
 
 interface HeaderNavProps {
-  /** The current path, forwarded to each link (D43). */
+  /** The current path, so each anchor knows whether it needs `/` (D43). */
   pathname: string;
 }
 
 /**
  * The Header's five section links, right-aligned in the bar's second grid
- * column. They were centred in a middle column until 2026-09-23.
+ * column, on shadcn's `NavigationMenu` via `NavMenu` (2026-09-23) — which
+ * brings the `<ul>` and arrow-key movement between links.
+ *
+ * ⚠️ **Still plain `<a href="#id">`s, not router links** (D43): keeping
+ * `@tanstack/react-router` out of this remote holds the federation shared set
+ * small. `anchorHref` builds each href; `NavMenu` renders it untouched.
  *
  * ⚠️ **Hidden below 760px, not unmounted** — the links move into
- * `header-menu-overlay.tsx` there. `frame` is the design's one breakpoint,
- * defined as a token by Slice 10 (`--breakpoint-frame: 760px`), so the number
- * is not repeated here.
+ * `header-menu-overlay.tsx` there. `frame` is the design's one breakpoint
+ * (`--breakpoint-frame: 760px`, Slice 10).
  *
- * ⚠️ **It reads `SITE_SECTIONS` directly now.** The `header-sections.const.ts`
- * indirection is gone: it re-exported the fixture under a second name, and a
- * contract with three readers is easier to trace when every reader names it the
- * same way (D63, D81).
+ * ⚠️ **It reads `SITE_SECTIONS` directly** — no second name for the contract
+ * (D63, D81).
  */
 const HeaderNav = ({ pathname }: HeaderNavProps): ReactElement => {
-  return (
-    <nav aria-label="Sections" className="hidden items-center justify-end gap-[26px] frame:flex">
-      {SITE_SECTIONS.map((section) => (
-        <HeaderNavLink
-          key={section.id}
-          sectionId={section.id}
-          label={section.label}
-          pathname={pathname}
-        />
-      ))}
-    </nav>
-  );
+  const items = SITE_SECTIONS.map((section) => ({
+    href: anchorHref(section.id, pathname),
+    label: section.label,
+  }));
+
+  return <NavMenu label="Sections" items={items} className="hidden justify-end frame:flex" />;
 };
 
 export default HeaderNav;

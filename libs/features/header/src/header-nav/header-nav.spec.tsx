@@ -26,6 +26,20 @@ describe('HeaderNav', () => {
     expect(screen.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '#work');
   });
 
+  it('prefixes each href with `/` off the homepage, so the anchors reach it', () => {
+    render(<HeaderNav pathname="/portfolio/cosmikata" />);
+
+    expect(screen.getByRole('link', { name: 'Skills' })).toHaveAttribute('href', '/#skills');
+  });
+
+  it('renders the links as a list inside the landmark', () => {
+    render(<HeaderNav pathname="/" />);
+
+    const nav = screen.getByRole('navigation', { name: 'Sections' });
+
+    expect(nav.querySelectorAll('li')).toHaveLength(SITE_SECTIONS.length);
+  });
+
   it('labels the landmark so the links are reachable by role', () => {
     render(<HeaderNav pathname="/" />);
 

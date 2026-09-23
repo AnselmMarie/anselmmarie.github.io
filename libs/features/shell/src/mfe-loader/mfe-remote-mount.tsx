@@ -2,6 +2,7 @@ import {
   type ComponentType,
   lazy,
   type ReactElement,
+  type ReactNode,
   Suspense,
   useCallback,
   useMemo,
@@ -28,6 +29,8 @@ interface MfeRemoteMountProps<TRemoteProps extends object = Record<string, never
   timeoutMs?: number;
   /** Reserves the region's height while the remote is in flight. */
   placeholderClassName?: string;
+  /** What the region draws while the `lazy()` import is pending — a region skeleton. */
+  loadingSkeleton?: ReactNode;
   /**
    * Props handed to the remote component itself (D73).
    *
@@ -82,6 +85,7 @@ const MfeRemoteMount = <TRemoteProps extends object = Record<string, never>>({
   maxRetries = MAX_MFE_RETRIES,
   timeoutMs = REMOTE_LOAD_TIMEOUT_MS,
   placeholderClassName,
+  loadingSkeleton,
   remoteProps,
   fallback,
   isHashTarget = false,
@@ -139,7 +143,9 @@ const MfeRemoteMount = <TRemoteProps extends object = Record<string, never>>({
             className={placeholderClassName}
             timeoutMs={timeoutMs}
             onTimeout={handleTimeout}
-          />
+          >
+            {loadingSkeleton}
+          </MfeLoadingPlaceholder>
         }
       >
         <RemoteComponent {...((remoteProps ?? {}) as TRemoteProps)} />

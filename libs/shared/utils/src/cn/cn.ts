@@ -12,8 +12,18 @@ import { extendTailwindMerge } from 'tailwind-merge';
  */
 const THEME_FONT_SIZES = ['display', 'section', 'lead', 'company', 'eyebrow', 'chip'];
 
+/**
+ * The radius tokens `libs/ui/theme` declares as `--radius-*`.
+ *
+ * ⚠️ **Same blind spot as the font sizes.** Unknown to tailwind-merge,
+ * `rounded-pill` is not grouped with a shadcn primitive's `rounded-md`, so both
+ * stay on the element and stylesheet order picks the corner. Add a name here
+ * whenever `theme.css` gains a `--radius-*`.
+ */
+const THEME_RADII = ['shell', 'shell-sm', 'card', 'panel', 'pill'];
+
 const twMerge = extendTailwindMerge({
-  extend: { theme: { text: THEME_FONT_SIZES } },
+  extend: { theme: { text: THEME_FONT_SIZES, radius: THEME_RADII } },
 });
 
 /**

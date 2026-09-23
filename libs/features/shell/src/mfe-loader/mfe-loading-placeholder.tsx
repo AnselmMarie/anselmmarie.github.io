@@ -1,8 +1,10 @@
-import { type ReactElement, useEffect } from 'react';
+import { type ReactElement, type ReactNode, useEffect } from 'react';
 
 interface MfeLoadingPlaceholderProps {
   /** Reserves the region's height so the page does not jump when it hydrates. */
   className?: string;
+  /** The region's skeleton, shown for as long as the `lazy()` import is pending. */
+  children?: ReactNode;
   /** How long a pending import may hang before it is treated as a failure. */
   timeoutMs: number;
   onTimeout: () => void;
@@ -23,6 +25,7 @@ interface MfeLoadingPlaceholderProps {
  */
 const MfeLoadingPlaceholder = ({
   className,
+  children,
   timeoutMs,
   onTimeout,
 }: MfeLoadingPlaceholderProps): ReactElement => {
@@ -32,7 +35,11 @@ const MfeLoadingPlaceholder = ({
     return () => clearTimeout(timer);
   }, [timeoutMs, onTimeout]);
 
-  return <div aria-hidden data-testid="mfe-loading" className={className} />;
+  return (
+    <div aria-hidden data-testid="mfe-loading" className={className}>
+      {children}
+    </div>
+  );
 };
 
 export default MfeLoadingPlaceholder;

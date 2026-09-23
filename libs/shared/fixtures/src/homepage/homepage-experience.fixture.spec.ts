@@ -65,6 +65,28 @@ describe('HOMEPAGE_EXPERIENCE', () => {
   });
 });
 
+describe('HOMEPAGE_EXPERIENCE points — from the resume (maintainer, 2026-09-23)', () => {
+  const pointsOf = (id: string): readonly string[] =>
+    HOMEPAGE_EXPERIENCE.find((entry) => entry.id === id)?.points ?? [];
+
+  it('keeps a selection, not every resume bullet', () => {
+    expect(HOMEPAGE_EXPERIENCE.map((entry) => entry.points.length)).toEqual([4, 3, 2, 4, 2, 3, 2]);
+  });
+
+  it("carries the resume's wording", () => {
+    expect(pointsOf('cricket-wireless-2020')).toContain(
+      'Architected a headless CMS integration across enterprise applications, accelerating content delivery and release cycles.'
+    );
+    expect(pointsOf('cricket-wireless-2020')).toContain(
+      'Established the department’s sub design system and frontend standards using Atomic Design, reducing production defects by ~35%.'
+    );
+    expect(pointsOf('cricket-wireless-2013')[0]).toMatch(/^Led a 5-person team/u);
+    expect(pointsOf('adp-2019')[0]).toBe(
+      'Contributed to the development and maintenance of enterprise payroll and HR platforms.'
+    );
+  });
+});
+
 describe('HOMEPAGE_FOOTNOTES', () => {
   it('carries the award and the degree as key/title/detail', () => {
     // ⚠️ Not the design's k/t/d — same rename as ItemFact, same reason.

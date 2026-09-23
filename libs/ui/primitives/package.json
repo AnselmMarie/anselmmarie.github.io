@@ -12,7 +12,10 @@
     }
   },
   "dependencies": {
+    "@base-ui/react": "^1.8.0",
     "@portfolio/shared-utils": "workspace:*",
+    "@tabler/icons-react": "^3.47.0",
+    "class-variance-authority": "^0.7.1",
     "react": "^19.3.0"
   },
   "devDependencies": {

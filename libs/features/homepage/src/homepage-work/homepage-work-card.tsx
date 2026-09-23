@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 
-import { UiIcon } from '@portfolio/ui-components';
+import { MetaChip, UiIcon } from '@portfolio/ui-components';
 
 interface HomepageWorkCardProps {
   slug: string;
@@ -33,14 +33,12 @@ interface HomepageWorkCardProps {
  */
 const DARK_TONE = {
   text: 'text-paper',
-  chip: 'bg-white/14',
-  dot: 'bg-accent-bright',
+  chip: 'inverse',
 } as const;
 
 const LIGHT_TONE = {
   text: 'text-ink',
-  chip: 'bg-ink/8',
-  dot: 'bg-accent',
+  chip: 'ink',
 } as const;
 
 /**
@@ -72,12 +70,9 @@ const HomepageWorkCard = ({
       <div className="flex items-center justify-between gap-3 font-mono text-chip tracking-chip uppercase">
         <span className="opacity-65">{stack}</span>
         {isLive ? (
-          <span
-            className={`inline-flex items-center gap-[0.4rem] rounded-pill px-[0.55rem] py-[0.3rem] text-[0.54rem] ${tone.chip}`}
-          >
-            <span aria-hidden className={`size-[6px] rounded-pill ${tone.dot}`} />
+          <MetaChip tone={tone.chip} hasDot className="gap-[0.4rem] px-[0.55rem] text-[0.54rem]">
             Live
-          </span>
+          </MetaChip>
         ) : null}
       </div>
 

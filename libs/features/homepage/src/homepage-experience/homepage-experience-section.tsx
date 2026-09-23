@@ -1,9 +1,10 @@
-import { type ReactElement, useState } from 'react';
+import type { ReactElement } from 'react';
 
 import type { ExperienceEntry, PanelNote, SectionIntro } from '@portfolio/shared-types';
-import { SectionHeading } from '@portfolio/ui-components';
+import { Accordion, SectionHeading } from '@portfolio/ui-components';
 
-import HomepageExperienceEntry from './homepage-experience-entry.js';
+import HomepageExperienceEntryBody from './homepage-experience-entry-body.js';
+import HomepageExperienceEntryHeader from './homepage-experience-entry-header.js';
 import HomepageFootnotes from './homepage-footnotes.js';
 
 interface HomepageExperienceSectionProps {
@@ -13,14 +14,11 @@ interface HomepageExperienceSectionProps {
   footnotes: readonly PanelNote[];
 }
 
-/** No row open. The export spells this `-1`; a nullable id says the same thing. */
-const NONE_OPEN = null;
-
 /**
- * The Experience accordion.
+ * The Experience accordion, on the shared `Accordion` (shadcn / Base UI).
  *
  * ⚠️ **One open at a time, and the first is open on load** — the export's
- * `state = { open: 0 }`, and toggling the open row sets `-1`. A
+ * `state = { open: 0 }`, and toggling the open row closes it. A
  * closed-by-default accordion reads as an empty section, which is why the
  * initial open is part of the behaviour rather than a detail.
  *
@@ -34,8 +32,6 @@ const HomepageExperienceSection = ({
   entries,
   footnotes,
 }: HomepageExperienceSectionProps): ReactElement => {
-  const [openId, setOpenId] = useState<string | null>(entries[0]?.id ?? NONE_OPEN);
-
   return (
     <section
       id={sectionId}
@@ -54,17 +50,15 @@ const HomepageExperienceSection = ({
         )}
       </div>
 
-      <div className="border-t border-rule">
-        {entries.map((entry) => (
-          <HomepageExperienceEntry
-            key={entry.id}
-            entry={entry}
-            panelId={`experience-${entry.id}`}
-            isOpen={openId === entry.id}
-            onToggle={() => setOpenId((current) => (current === entry.id ? NONE_OPEN : entry.id))}
-          />
-        ))}
-      </div>
+      <Accordion
+        className="border-t border-rule"
+        defaultValue={entries[0]?.id}
+        items={entries.map((entry) => ({
+          value: entry.id,
+          header: <HomepageExperienceEntryHeader entry={entry} />,
+          content: <HomepageExperienceEntryBody entry={entry} />,
+        }))}
+      />
 
       <HomepageFootnotes notes={footnotes} />
     </section>

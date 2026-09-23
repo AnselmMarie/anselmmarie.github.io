@@ -1,6 +1,9 @@
 import type { ReactElement } from 'react';
 
-import { SectionHeading } from '@portfolio/ui-components';
+import { PillLink, SectionHeading } from '@portfolio/ui-components';
+
+/** The design's larger pill, shared by both links in this block. */
+const PILL_SIZE = 'h-[3.2rem] px-[1.6rem] text-[0.92rem]';
 
 /*
  * The shell's homepage anchors. Plain hrefs, not router links: this is a
@@ -16,8 +19,7 @@ const WORK_HREF = '/#work';
  * the export belongs to the footer remote, so in isolation this block looks
  * unfinished on purpose — same as the homepage's Contact block.
  *
- * The two pills are hand-drawn rather than `PillLink`s: the design puts them
- * on ink, and `PillLink`'s variants are the paper pair.
+ * The two pills are `PillLink`'s on-ink pair: `accent` and `outline-ink`.
  */
 const PortfolioItemNextBlock = (): ReactElement => {
   return (
@@ -25,18 +27,12 @@ const PortfolioItemNextBlock = (): ReactElement => {
       <div className="mb-12 flex flex-wrap items-center justify-between gap-5">
         <SectionHeading heading="Want the deeper" accentPhrase="walkthrough?" tone="ink" />
         <div className="flex flex-wrap gap-3">
-          <a
-            href={CONTACT_HREF}
-            className="rounded-pill bg-accent-bright px-[1.6rem] py-[0.85rem] text-[0.92rem] font-medium text-ink transition-colors hover:bg-accent-bright/80"
-          >
+          <PillLink href={CONTACT_HREF} variant="accent" className={PILL_SIZE}>
             Get in touch
-          </a>
-          <a
-            href={WORK_HREF}
-            className="rounded-pill border border-white/22 px-[1.6rem] py-[0.85rem] text-[0.92rem] font-medium text-paper transition-colors hover:border-paper"
-          >
+          </PillLink>
+          <PillLink href={WORK_HREF} variant="outline-ink" className={PILL_SIZE}>
             More work
-          </a>
+          </PillLink>
         </div>
       </div>
       {/* No bottom padding: the footer strip supplies the 1.5rem below this rule. */}

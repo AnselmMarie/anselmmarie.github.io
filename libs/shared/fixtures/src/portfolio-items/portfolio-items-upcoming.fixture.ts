@@ -132,15 +132,15 @@ export const UPCOMING_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
       },
     ],
     body: [
-      'Led the frontend team behind an enterprise admin platform, re-architecting a legacy frontend into a React and TypeScript stack and establishing the design system and standards shared across Cricket’s internal and external applications.',
+      'Led the frontend team behind an enterprise admin platform, re-architecting a legacy frontend into a React and TypeScript stack and establishing a department-level sub design system that governed the components and frontend standards used across the department’s applications.',
     ],
     description: `
       <ul>
         <li>Led a 4-engineer team delivering an enterprise admin platform, increasing team throughput by ~20% through mentorship and process refinement.</li>
         <li>Re-architected the legacy frontend into a React and TypeScript stack, improving performance and scalability by ~40%.</li>
-        <li>Established the design system and frontend standards using Atomic Design, reducing production defects by ~35%.</li>
+        <li>Established the department’s sub design system and frontend standards using Atomic Design, reducing production defects by ~35%.</li>
         <li>Architected a headless CMS integration across enterprise applications, accelerating content delivery and release cycles.</li>
-        <li>Owned UX prototyping and the design system in Figma and Adobe XD for multiple internal and external platforms.</li>
+        <li>Owned UX prototyping and the department’s sub design system in Figma and Adobe XD across the department’s platforms.</li>
         <li>Directed delivery planning and technical debt strategy across a multi-year platform roadmap.</li>
         <li>Worked with React, Node.js, Webpack, Vite, Jest, React Testing Library, Storybook, Nx, Tailwind, Azure and a headless CMS.</li>
       </ul>

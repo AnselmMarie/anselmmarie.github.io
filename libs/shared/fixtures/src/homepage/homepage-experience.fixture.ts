@@ -15,6 +15,9 @@ import type { ExperienceEntry, PanelNote } from '@portfolio/shared-types';
  * purpose, so that they cannot drift the way the export's own pair did.
  *
  * ⚠️ **Frozen for the whole 12/13/14/15/16 wave.**
+ *
+ * `points` are a selection from the maintainer's resume (2026-09-23), not all
+ * of it. The 2013 Cricket row draws on the resume's two Cricket roles in that span.
  */
 export const HOMEPAGE_EXPERIENCE: readonly ExperienceEntry[] = [
   {
@@ -28,12 +31,9 @@ export const HOMEPAGE_EXPERIENCE: readonly ExperienceEntry[] = [
     stack: 'React · React Native · Expo · Hono · Nx · Next.js · PostgreSQL · Design System · Figma',
     points: [
       'Founded Cosmikata; defined product, architecture, and cross-platform strategy.',
-      'Architected an Expo / Next.js / Nx monorepo powering web and native from shared UI, ' +
-        'services, and business logic.',
-      'Designed an edge-first backend on Hono, PostgreSQL, and Drizzle with shared ' +
-        'validation, auth, and background jobs.',
-      'Built a cross-platform design system from Figma tokens: reusable components, themes, ' +
-        'and UI patterns.',
+      'Architected an Expo / Next.js / Nx monorepo powering web and future native apps with shared UI, services, validation, and business logic.',
+      'Designed an edge-first backend using Hono, PostgreSQL, and Drizzle with shared validation, authentication, APIs, and background jobs.',
+      'Built a cross-platform design system from Figma tokens, standardizing reusable components, themes, and UI patterns.',
     ],
   },
   {
@@ -44,12 +44,9 @@ export const HOMEPAGE_EXPERIENCE: readonly ExperienceEntry[] = [
     place: 'Remote',
     stack: 'React · Nx · Rspack · Module Federation · TanStack',
     points: [
-      'Drove the Nx monorepo migration, refactoring modules to a module-federated ' +
-        'architecture.',
-      'Built and extended a checkout flow within a micro-frontend system, integrating shared ' +
-        'state and federated modules.',
-      'Standardized frontend tooling and analytics across federated modules via ' +
-        'proofs-of-concept.',
+      'Contributed to the Nx monorepo migration, refactoring application modules to support a module-federated architecture.',
+      'Built and extended the checkout flow within a micro-frontend system, integrating shared state and federated modules.',
+      'Implemented standardized analytics tracking across federated modules to ensure consistent event data.',
     ],
   },
   {
@@ -60,10 +57,8 @@ export const HOMEPAGE_EXPERIENCE: readonly ExperienceEntry[] = [
     place: 'Atlanta, GA',
     stack: 'React · Next.js · Contentful · CSS Modules',
     points: [
-      'Delivered guest-facing features across Buffalo Wild Wings, Sonic, and Arby’s, serving ' +
-        'millions of users.',
-      'Contributed to a Contentful architecture supporting multi-brand content management ' +
-        'and delivery.',
+      'Delivered guest-facing features across Buffalo Wild Wings, Sonic, and Arby’s digital platforms, serving millions of users.',
+      'Contributed to a Contentful-based content architecture supporting multi-brand content management and delivery workflows.',
     ],
   },
   {
@@ -74,12 +69,10 @@ export const HOMEPAGE_EXPERIENCE: readonly ExperienceEntry[] = [
     place: 'Atlanta, GA',
     stack: 'React · Angular · Node.js · Nx · Storybook · Figma',
     points: [
-      'Led a 4-engineer team on an enterprise admin platform; raised throughput ~20% via ' +
-        'mentorship and process.',
-      'Re-architected a legacy frontend into a React/TypeScript stack, improving performance ' +
-        '& scalability ~40%.',
-      'Established a design system and frontend standards via Atomic Design, cutting ' +
-        'production defects ~35%.',
+      'Led a 4-engineer team delivering an enterprise admin platform; increased team throughput ~20% via mentorship and process refinement.',
+      'Re-architected a legacy frontend into a React/TypeScript stack, improving performance and scalability by ~40%.',
+      'Established the department’s sub design system and frontend standards using Atomic Design, reducing production defects by ~35%.',
+      'Architected a headless CMS integration across enterprise applications, accelerating content delivery and release cycles.',
     ],
   },
   {
@@ -90,8 +83,8 @@ export const HOMEPAGE_EXPERIENCE: readonly ExperienceEntry[] = [
     place: 'Alpharetta, GA',
     stack: 'React · React Native · Redux · Angular · TypeScript',
     points: [
-      'Delivered cross-platform features across enterprise payroll and HR platforms.',
-      'Ensured consistent experiences across web and mobile with React and React Native.',
+      'Contributed to the development and maintenance of enterprise payroll and HR platforms.',
+      'Delivered cross-platform features using React and React Native, ensuring consistent experiences across web and mobile applications.',
     ],
   },
   {
@@ -102,12 +95,9 @@ export const HOMEPAGE_EXPERIENCE: readonly ExperienceEntry[] = [
     place: 'Atlanta, GA',
     stack: 'ES6+ · Webpack · Babel · jQuery · REST APIs',
     points: [
-      'Led brand-experience teams; earned the AT&T Service Excellence Award for the ' +
-        'Breeze-Thru program.',
-      'Designed and prototyped a mission-critical POS UI, securing executive approval for a ' +
-        'new product division.',
-      'Supported the Cricket website through the AIO transition: 1M+ monthly visitors, +30% ' +
-        'mobile responsiveness.',
+      'Led a 5-person team delivering brand experience initiatives; earned the AT&T Service Excellence Award for the Breeze-Thru program.',
+      'Designed and prototyped a mission-critical POS system UI, securing executive approval for a new internal product division.',
+      'Executed front-end updates during the AIO to Cricket Wireless transition, resulting in a 30% improvement in mobile responsiveness.',
     ],
   },
   {
@@ -118,9 +108,8 @@ export const HOMEPAGE_EXPERIENCE: readonly ExperienceEntry[] = [
     place: 'Buckhead, GA',
     stack: 'PhoneGap (Cordova) · jQuery · HTML5 · CSS3',
     points: [
-      'Advanced into a lead role overseeing web applications from inception to completion.',
-      'Built digital annual reports for Fortune 500 clients including Clorox, General ' +
-        'Motors, and Caterpillar.',
+      'Contributed to the full development lifecycle of multiple web applications, advancing into a lead role to oversee projects from inception to completion.',
+      'Developed and managed high-profile digital annual reports for Fortune 500 clients, including Clorox, General Motors, and Caterpillar.',
     ],
   },
 ];

@@ -153,6 +153,12 @@ describe('UPCOMING_PORTFOLIO_ITEMS — the placeholders', () => {
       'Re-architecting the frontend and standardizing it on a design system',
     ]);
     expect(item?.body).toHaveLength(1);
+    // A department-level sub design system, not a company-wide one (maintainer, 2026-09-23).
+    expect(item?.body[0]).toContain('department-level sub design system');
+    expect(item?.body[0]).not.toContain('internal and external applications');
+    expect(item?.description).toContain('Established the department’s sub design system');
+    expect(item?.description).toContain('department’s sub design system in Figma and Adobe XD');
+    expect(item?.description).not.toContain('internal and external');
     expect(item?.description.match(/<li>/gu)).toHaveLength(7);
     expect(item?.description).toContain('throughput by ~20%');
     expect(item?.description).toContain('performance and scalability by ~40%');

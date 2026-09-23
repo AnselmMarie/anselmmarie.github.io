@@ -1,7 +1,7 @@
 import { ClientOnly } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 
-import { FooterFallback, MfeRemoteMount } from '@portfolio/feature-shell';
+import { FooterFallback, FooterSkeleton, MfeRemoteMount } from '@portfolio/feature-shell';
 
 import { remoteVersion } from './remote-version.js';
 
@@ -25,6 +25,7 @@ const FooterRemote = (): ReactElement => {
         version={remoteVersion('footer')}
         route="/"
         placeholderClassName={PLACEHOLDER_CLASS}
+        loadingSkeleton={<FooterSkeleton />}
         fallback={() => <FooterFallback />}
         onLoadRemote={loadFooter}
       />
