@@ -24,6 +24,22 @@ const TONE_FILL = {
   glass: 'bg-backdrop/60 text-paper backdrop-blur-sm',
 } as const;
 
+/**
+ * ⚠️ **The label is all caps, so the font's descender space is dead weight.**
+ * A mono cap sits on the baseline with nothing below it, but the line box
+ * still reserves the descent — so equal padding drew ~6px above the caps and
+ * ~9px below. `text-box` trims the label's line box to cap height → baseline,
+ * and the padding alone sets the gap.
+ *
+ * ⚠️ **The trim goes on the inner label span, not the chip.** The chip is
+ * `inline-flex`, and `text-box-trim` only acts on a block container's lines —
+ * set on the flex container it is silently ignored. Where `text-box` is
+ * unsupported (Firefox) the chip keeps `py-1` and the old slight imbalance,
+ * rather than growing by the extra padding.
+ */
+const TRIMMED_PADDING = 'py-1 supports-[text-box:trim-both_cap_alphabetic]:py-[0.47rem]';
+const LABEL_TRIM = '[text-box:trim-both_cap_alphabetic]';
+
 const DOT_FILL = {
   paper: 'bg-accent',
   ink: 'bg-accent',
@@ -49,13 +65,14 @@ const MetaChip = ({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-pill px-2.5 py-1 font-mono text-chip uppercase',
+        'inline-flex items-center gap-1.5 rounded-pill px-2.5 font-mono text-chip uppercase',
+        TRIMMED_PADDING,
         TONE_FILL[tone],
         className
       )}
     >
       {hasDot ? <span aria-hidden className={cn('size-1.5 rounded-pill', DOT_FILL[tone])} /> : null}
-      {children}
+      <span className={LABEL_TRIM}>{children}</span>
     </span>
   );
 };
