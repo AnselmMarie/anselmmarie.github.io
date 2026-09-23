@@ -5,21 +5,34 @@ import { SITE_SECTIONS } from '../site-sections/site-sections.fixture.js';
 import { HOMEPAGE_CONTENT } from './homepage.fixture.js';
 
 describe('HOMEPAGE_CONTENT — the work grid', () => {
-  it("carries eight cards, not the design's six, in the design's order (D77)", () => {
-    // The design's project list is a layout specification for a card grid,
-    // never a content list. The ported slugs win in every case —
-    // `cw-breeze-thru`, not `breeze-thru` — because the slug is the
-    // /portfolio/$slug segment and renaming it breaks every published URL.
+  it('shows four cards, with six hidden (maintainer, 2026-09-23)', () => {
+    // The ported slugs win in every case — `cw-breeze-thru`, not
+    // `breeze-thru` — because the slug is the /portfolio/$slug segment and
+    // renaming it breaks every published URL.
     expect(HOMEPAGE_CONTENT.work.map((card) => card.slug)).toEqual([
-      'pokemon-pet-shop',
+      'micro-frontend-update',
+      'prototype-company-division',
       'cosmikata',
       'cw-breeze-thru',
+    ]);
+  });
+
+  it('hides the six cards without dropping their items from the catalogue', () => {
+    const hidden = [
+      'pokemon-pet-shop',
       'rove-logix',
       'rove-logix-ui-update',
       'csp-generator-app',
       'cr-caterpillar',
       'older-cosmikata',
-    ]);
+    ];
+    const shown = new Set(HOMEPAGE_CONTENT.work.map((card) => card.slug));
+    const catalogue = new Set(PORTFOLIO_ITEMS.map((item) => item.slug));
+
+    for (const slug of hidden) {
+      expect(shown.has(slug), slug).toBe(false);
+      expect(catalogue.has(slug), slug).toBe(true);
+    }
   });
 
   it('points every card at an item that exists', () => {
@@ -32,20 +45,10 @@ describe('HOMEPAGE_CONTENT — the work grid', () => {
     }
   });
 
-  it('features every item — the grid and the catalogue are the same eight', () => {
-    expect([...HOMEPAGE_CONTENT.work].map((c) => c.slug).sort()).toEqual(
-      [...PORTFOLIO_ITEMS].map((i) => i.slug).sort()
-    );
-  });
-
-  it('draws one dark card and two live chips, as the design assigns them', () => {
-    expect(HOMEPAGE_CONTENT.work.filter((c) => c.isDark).map((c) => c.slug)).toEqual([
-      'csp-generator-app',
-    ]);
-    expect(HOMEPAGE_CONTENT.work.filter((c) => c.isLive).map((c) => c.slug)).toEqual([
-      'pokemon-pet-shop',
-      'cosmikata',
-    ]);
+  it('draws no dark card and no Live pill among the visible cards', () => {
+    // The Live pill was removed from every card (maintainer, 2026-09-23).
+    expect(HOMEPAGE_CONTENT.work.filter((c) => c.isDark)).toEqual([]);
+    expect(HOMEPAGE_CONTENT.work.filter((c) => c.isLive)).toEqual([]);
   });
 
   it('gives every card a hex background', () => {

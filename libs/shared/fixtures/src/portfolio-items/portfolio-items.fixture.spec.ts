@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
 import { PORTFOLIO_ITEMS, portfolioItemBySlug } from './portfolio-items.fixture.js';
+import { PLACEHOLDER_SLUGS } from './portfolio-items-upcoming.fixture.js';
+
+/** The items with real copy. Placeholders are checked separately below. */
+const AUTHORED_ITEMS = PORTFOLIO_ITEMS.filter((item) => !PLACEHOLDER_SLUGS.includes(item.slug));
 
 /**
  * ⚠️ **Eight, not the nine D53 names.** `cosmikata-design-system` is commented
@@ -8,6 +12,8 @@ import { PORTFOLIO_ITEMS, portfolioItemBySlug } from './portfolio-items.fixture.
  * is not ported and resolves to a shell-level not-found. Order is v3's.
  */
 const EXPECTED_SLUGS = [
+  'micro-frontend-update',
+  'prototype-company-division',
   'pokemon-pet-shop',
   'cosmikata',
   'older-cosmikata',
@@ -19,7 +25,7 @@ const EXPECTED_SLUGS = [
 ];
 
 describe('PORTFOLIO_ITEMS', () => {
-  it('carries the eight LIVE slugs at 39bbe56, in v3 reading order', () => {
+  it('carries the two placeholders, then the eight LIVE slugs at 39bbe56 in v3 order', () => {
     expect(PORTFOLIO_ITEMS.map((item) => item.slug)).toEqual(EXPECTED_SLUGS);
   });
 
@@ -27,7 +33,7 @@ describe('PORTFOLIO_ITEMS', () => {
     // D53 and the slice file both say nine; the data says eight. The ninth
     // slug has a v3 route page but no data behind it, which is a dead page
     // there and a clean not-found here (D66).
-    expect(PORTFOLIO_ITEMS).toHaveLength(8);
+    expect(AUTHORED_ITEMS).toHaveLength(8);
     expect(portfolioItemBySlug('cosmikata-design-system')).toBeUndefined();
   });
 
@@ -49,7 +55,7 @@ describe('PORTFOLIO_ITEMS', () => {
   });
 
   it('gives every item an images array and every item a description', () => {
-    for (const item of PORTFOLIO_ITEMS) {
+    for (const item of AUTHORED_ITEMS) {
       expect(Array.isArray(item.images)).toBe(true);
       expect(item.images.length).toBeGreaterThan(0);
       expect(item.description).toContain('<p>');
@@ -74,12 +80,14 @@ describe('PORTFOLIO_ITEMS', () => {
     // unauthored on one item is the failure this catches — the package is
     // frozen for the whole 12/13/14/15/16 wave, so a gap found later cannot
     // be filled without a coordinator pass.
-    for (const item of PORTFOLIO_ITEMS) {
+    for (const item of AUTHORED_ITEMS) {
       expect(item.year, item.slug).toMatch(/^\d{4}( – \d{4})?$/u);
       expect(item.role, item.slug).not.toBe('');
       expect(item.lede, item.slug).not.toBe('');
       expect(item.body.length, item.slug).toBeGreaterThanOrEqual(2);
-      expect(item.tech.length, item.slug).toBeGreaterThanOrEqual(4);
+      // Breeze-Thru carries two, by the maintainer's choice (2026-09-23).
+      const minTech = item.slug === 'cw-breeze-thru' ? 2 : 4;
+      expect(item.tech.length, item.slug).toBeGreaterThanOrEqual(minTech);
       expect(item.facts, item.slug).toHaveLength(3);
     }
   });
@@ -130,5 +138,63 @@ describe('PORTFOLIO_ITEMS', () => {
       expect(item?.lede, slug).not.toBe('');
       expect(item?.facts, slug).toHaveLength(3);
     }
+  });
+
+  it('keeps the placeholder items renderable until their copy is written', () => {
+    // Added 2026-09-23 with titles only. They must still produce a card and a
+    // detail page, so the fields those read are asserted non-empty.
+    expect(PLACEHOLDER_SLUGS).toEqual(['micro-frontend-update', 'prototype-company-division']);
+
+    for (const slug of PLACEHOLDER_SLUGS) {
+      const item = portfolioItemBySlug(slug);
+
+      expect(item?.title, slug).not.toBe('');
+      expect(item?.lede, slug).not.toBe('');
+      expect(item?.year, slug).toMatch(/^\d{4}$/u);
+      expect(item?.description, slug).toContain('<p>');
+    }
+  });
+
+  it("gives Micro Frontend Architecture Migration the maintainer's summary line", () => {
+    expect(portfolioItemBySlug('micro-frontend-update')?.lede).toBe(
+      'Contributed to a React micro-frontend migration, building federated modules and standardizing tooling, analytics, and testing.'
+    );
+  });
+
+  it("gives From Prototype to New Company Division the maintainer's summary line", () => {
+    expect(portfolioItemBySlug('prototype-company-division')?.lede).toBe(
+      'Led POS UI design and prototyping that secured executive approval for a new internal product division.'
+    );
+  });
+
+  it("carries the maintainer's company and tech on each placeholder", () => {
+    expect(portfolioItemBySlug('micro-frontend-update')).toMatchObject({
+      company: 'Southern Glazer’s Wine & Spirits',
+      tech: ['React', 'Module Federation', 'TanStack'],
+      year: '2025',
+    });
+    expect(portfolioItemBySlug('prototype-company-division')).toMatchObject({
+      company: 'Cricket Wireless',
+      tech: ['Design', 'JavaScript'],
+      year: '2017',
+    });
+  });
+
+  it("dates Breeze-Thru 2018, the maintainer's figure, not the design's 2022", () => {
+    expect(portfolioItemBySlug('cw-breeze-thru')?.year).toBe('2018');
+  });
+
+  it("gives Breeze-Thru the maintainer's two skills", () => {
+    expect(portfolioItemBySlug('cw-breeze-thru')?.tech).toEqual(['Design', 'JavaScript']);
+  });
+
+  it("gives Breeze-Thru the maintainer's summary line", () => {
+    expect(portfolioItemBySlug('cw-breeze-thru')?.lede).toBe(
+      'Led the design and development of a mobile-first activation experience from concept to production launch.'
+    );
+  });
+
+  it("dates Cosmikata 2025, the maintainer's figure, not the design's 2024", () => {
+    expect(portfolioItemBySlug('cosmikata')?.year).toBe('2025');
   });
 });

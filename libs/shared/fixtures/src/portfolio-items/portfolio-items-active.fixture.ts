@@ -132,8 +132,10 @@ export const ACTIVE_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
      * `github.com/AnselmMarie` — a profile, not this project — and a `Live site`
      * pill that is a bare `#`. A pill labelled `Source` that lands on a profile
      * is worse than no pill, so both are dropped rather than shipped.
+     *
+     * `year` is 2025, the maintainer's figure (2026-09-23); the design had 2024.
      */
-    year: '2024',
+    year: '2025',
     role: 'Founder & Lead Engineer',
     lede: 'A studio identity, a shared component library, and a cross-platform product architecture.',
     body: [

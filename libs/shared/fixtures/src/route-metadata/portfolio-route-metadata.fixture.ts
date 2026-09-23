@@ -15,6 +15,9 @@ import { PORTFOLIO_ITEMS } from '../portfolio-items/portfolio-items.fixture.js';
  * composed from the slug — the image folders do not match the slugs.
  */
 const DESCRIPTION_BY_SLUG: Readonly<Record<string, string>> = {
+  // ⚠️ Placeholders (2026-09-23) — replace with the real copy with the item.
+  'micro-frontend-update': 'Micro Frontend Architecture Migration — details coming soon.',
+  'prototype-company-division': 'From Prototype to New Company Division — details coming soon.',
   'pokemon-pet-shop':
     'A web, native and API codebase built to share as much as possible without giving up ' +
     'what each platform does well. React, Expo, Nativewind and design tokens.',

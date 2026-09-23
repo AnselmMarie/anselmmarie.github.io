@@ -62,21 +62,22 @@ export const CRICKET_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     ],
     videos: [],
     /*
-     * ⚠️ **`year` contradicts this site's own Experience list, and the
-     * maintainer chose the design's figure** (2026-09-22). The export dates
-     * Breeze-Thru 2022; the AT&T award v3 credits to it sits under the Cricket
-     * 2013–2019 row in `homepage-experience.fixture.ts`. Recorded so the next
-     * reader does not re-raise it.
+     * ⚠️ **2018, the maintainer's figure (2026-09-23).** It replaces the
+     * design's 2022, which the maintainer had kept on 2026-09-22 even though
+     * it contradicted the Cricket 2013–2019 row in `homepage-experience.fixture.ts`.
+     * 2018 falls inside that row, so the contradiction is gone.
      */
-    year: '2022',
+    year: '2018',
     role: 'Senior Engineer, Tech Lead',
-    lede: 'A mobile-first self-service flow that cut support calls out of routine account tasks.',
+    // The maintainer's wording (2026-09-23), replacing the design's.
+    lede: 'Led the design and development of a mobile-first activation experience from concept to production launch.',
     body: [
       'Customers were phoning support for tasks they could do themselves. Breeze-Thru reframed activation and account management as a short, guided mobile flow with clear state at every step.',
       'Leading the front-end team, the work covered flow design, architecture, and hands-on delivery from concept to production launch, alongside the network, back-end, and business teams.',
       'The program earned an AT&T Service Excellence Award and became the reference pattern for later self-service surfaces.',
     ],
-    tech: ['Angular', 'TypeScript', 'RxJS', 'Mobile Web', 'REST API', 'Accessibility'],
+    // The maintainer's list (2026-09-23), replacing the design's six entries.
+    tech: ['Design', 'JavaScript'],
     facts: [
       { key: 'Timeline', value: '9 months' },
       { key: 'Role', value: 'Tech lead, 4 engineers' },

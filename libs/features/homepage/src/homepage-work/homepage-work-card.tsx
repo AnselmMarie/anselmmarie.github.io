@@ -88,7 +88,7 @@ const HomepageWorkCard = ({
         <p className="m-0 mb-[0.9rem] max-w-[38ch] text-[0.85rem] leading-[1.55] opacity-72">
           {lede}
         </p>
-        <div className="flex items-center justify-between font-mono text-chip tracking-chip uppercase opacity-60">
+        <div className="flex items-center justify-between gap-3 font-mono text-chip tracking-chip uppercase opacity-60">
           <span>{client}</span>
           <span className="inline-flex items-center gap-1.5">
             {year}

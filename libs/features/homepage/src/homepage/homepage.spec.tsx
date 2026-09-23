@@ -51,12 +51,18 @@ describe('Homepage — composition', () => {
     ]);
   });
 
-  it('draws one Work card per fixture entry, in fixture order', () => {
+  it('draws the Work cards newest year first (maintainer, 2026-09-23)', () => {
     const { container } = render(<Homepage />);
     const work = container.querySelector(`#${SECTION_IDS.work}`) as HTMLElement;
     const hrefs = [...work.querySelectorAll('a')].map((a) => a.getAttribute('href'));
 
-    expect(hrefs).toEqual(HOMEPAGE_CONTENT.work.map((card) => `/portfolio/${card.slug}`));
+    expect(hrefs).toHaveLength(HOMEPAGE_CONTENT.work.length);
+    expect(hrefs).toEqual([
+      '/portfolio/micro-frontend-update', // 2025
+      '/portfolio/cosmikata', // 2025
+      '/portfolio/cw-breeze-thru', // 2018
+      '/portfolio/prototype-company-division', // 2017
+    ]);
   });
 
   it('stops at the Contact block and draws no footer strip (D79)', () => {

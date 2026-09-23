@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { HOMEPAGE_CONTENT } from '@portfolio/shared-fixtures';
 
 import HomepageHero from './homepage-hero.js';
+import HomepageHeroMedia from './homepage-hero-media.js';
 
 const renderHero = () =>
   render(<HomepageHero specs={HOMEPAGE_CONTENT.specs} hero={HOMEPAGE_CONTENT.hero} />);
@@ -61,12 +62,25 @@ describe('HomepageHero', () => {
     expect(screen.queryByRole('link', { name: /GitHub/u })).not.toBeInTheDocument();
   });
 
+  it('hides the featured panel (maintainer, 2026-09-23)', () => {
+    renderHero();
+
+    expect(screen.queryByText('Featured')).not.toBeInTheDocument();
+    expect(screen.queryByText(HOMEPAGE_CONTENT.hero.featuredCaption)).not.toBeInTheDocument();
+  });
+
   it('fills the featured panel typographically, with no image (D85)', () => {
     // ⚠️ Both exports draw a 16/7 photograph behind an Unsplash placeholder.
     // No asset in this repo reaches 16/7 — the widest is 1.80 — and four of
     // the eight items are mobile-screenshot-only. The box survives; the
     // photograph does not, and nothing here reports an image as outstanding.
-    const { container } = renderHero();
+    // Rendered directly: the hero no longer mounts it (hidden 2026-09-23).
+    const { container } = render(
+      <HomepageHeroMedia
+        caption={HOMEPAGE_CONTENT.hero.featuredCaption}
+        capabilities={HOMEPAGE_CONTENT.hero.capabilities}
+      />
+    );
 
     expect(container.querySelector('img')).toBeNull();
     for (const capability of HOMEPAGE_CONTENT.hero.capabilities) {

@@ -24,13 +24,24 @@ interface HomepageWorkSectionProps {
  * `--spacing-anchor`, not the 56px nav spacer — a heading needs clearance
  * below the bar, not merely to clear it (D81).
  *
- * ⚠️ **Eight cards, not the design's six** (D77), and the order is the
- * fixture's. This component does not sort.
+ * ⚠️ **Sorted newest first by year** — maintainer's call, 2026-09-23. The
+ * sort is stable, so cards sharing a year keep the fixture's relative order.
  *
  * ⚠️ **A card whose slug matches no item renders nothing.** That is a content
  * error rather than a crash, and `homepage.fixture.spec.ts` asserts the two
  * lists agree so it cannot reach here.
  */
+/**
+ * The year a card sorts by: the last four-digit year in the item's `year`, so
+ * a range such as `2019 – 2021` sorts as 2021. A year that cannot be read
+ * sorts last rather than throwing.
+ */
+export const sortYear = (year: string): number => {
+  const last = year.match(/\d{4}/gu)?.at(-1);
+
+  return last === undefined ? Number.NEGATIVE_INFINITY : Number(last);
+};
+
 const HomepageWorkSection = ({
   sectionId,
   intro,
@@ -38,6 +49,13 @@ const HomepageWorkSection = ({
   items,
 }: HomepageWorkSectionProps): ReactElement => {
   const itemBySlug = new Map(items.map((item) => [item.slug, item]));
+  const entries = cards
+    .flatMap((card) => {
+      const item = itemBySlug.get(card.slug);
+
+      return item === undefined ? [] : [{ card, item }];
+    })
+    .sort((a, b) => sortYear(b.item.year) - sortYear(a.item.year));
 
   return (
     <section
@@ -57,29 +75,22 @@ const HomepageWorkSection = ({
         )}
       </div>
 
-      <div className="grid gap-[14px] frame:grid-cols-3">
-        {cards.map((card) => {
-          const item = itemBySlug.get(card.slug);
-
-          if (item === undefined) {
-            return null;
-          }
-
-          return (
-            <HomepageWorkCard
-              key={card.slug}
-              slug={card.slug}
-              title={item.title}
-              lede={item.lede}
-              client={item.company}
-              year={item.year}
-              stack={item.tech.slice(0, 3).join(' · ')}
-              background={card.background}
-              isDark={card.isDark}
-              isLive={card.isLive}
-            />
-          );
-        })}
+      {/* Two columns from the `frame` breakpoint up: a 2×2 grid for four cards (2026-09-23). */}
+      <div className="grid gap-[14px] frame:grid-cols-2">
+        {entries.map(({ card, item }) => (
+          <HomepageWorkCard
+            key={card.slug}
+            slug={card.slug}
+            title={item.title}
+            lede={item.lede}
+            client={item.company}
+            year={item.year}
+            stack={item.tech.slice(0, 3).join(' · ')}
+            background={card.background}
+            isDark={card.isDark}
+            isLive={card.isLive}
+          />
+        ))}
       </div>
     </section>
   );
