@@ -17,6 +17,34 @@ interface PortfolioItemGalleryProps {
  */
 const LANDSCAPE_TILE = 'aspect-[4/3] frame:col-span-2 frame:aspect-[16/9]';
 const PORTRAIT_TILE = 'aspect-[4/3] frame:col-span-1 frame:aspect-[3/4]';
+/*
+ * ⚠️ **A third shape, beyond the design's two (maintainer, 2026-09-23).** A
+ * modern phone screenshot is ~9:19; under the 3/4 portrait tile it lost about
+ * half its height. It is shown whole instead — see `isShownAtOwnSize`.
+ */
+const TALL_TILE = 'frame:col-span-1';
+
+/** At least twice as tall as wide: a full phone screen or a long capture. */
+const TALL_MAX_RATIO = 0.5;
+
+/** A landscape image narrower than this would be stretched by the full-width tile. */
+const OWN_SIZE_MAX_LANDSCAPE_WIDTH = 1000;
+
+/** An own-size tile sizes to its image, which sits centred on the tint. */
+const OWN_SIZE_TILE = 'flex items-center justify-center p-6 frame:p-10';
+const OWN_SIZE_SPAN: Readonly<Record<TileShape, string>> = {
+  landscape: 'frame:col-span-2',
+  portrait: 'frame:col-span-1',
+  tall: 'frame:col-span-1',
+};
+
+export type TileShape = 'landscape' | 'portrait' | 'tall';
+
+const TILE_CLASS: Readonly<Record<TileShape, string>> = {
+  landscape: LANDSCAPE_TILE,
+  portrait: PORTRAIT_TILE,
+  tall: TALL_TILE,
+};
 
 /**
  * Landscape when the image is at least as wide as it is tall. The authored
@@ -25,6 +53,36 @@ const PORTRAIT_TILE = 'aspect-[4/3] frame:col-span-1 frame:aspect-[3/4]';
  */
 export const isLandscape = (image: PortfolioItemImage): boolean =>
   Number(image.width) >= Number(image.height);
+
+/** The tile a given image gets, derived from its ratio alone (D86). */
+export const tileShapeOf = (image: PortfolioItemImage): TileShape => {
+  if (isLandscape(image)) {
+    return 'landscape';
+  }
+
+  return Number(image.width) / Number(image.height) <= TALL_MAX_RATIO ? 'tall' : 'portrait';
+};
+
+/**
+ * ⚠️ **Small screenshots are never stretched (maintainer, 2026-09-23).** A
+ * phone shot is ~340px wide and a tablet shot ~815px; filling a ~480px or
+ * ~970px tile upscaled both until they pixelated. These render at their own
+ * pixel size, uncropped, instead of filling the tile.
+ */
+export const isShownAtOwnSize = (image: PortfolioItemImage): boolean => {
+  const shape = tileShapeOf(image);
+
+  return (
+    shape === 'tall' ||
+    (shape === 'landscape' && Number(image.width) < OWN_SIZE_MAX_LANDSCAPE_WIDTH)
+  );
+};
+
+const tileClassOf = (image: PortfolioItemImage): string => {
+  const shape = tileShapeOf(image);
+
+  return isShownAtOwnSize(image) ? `${OWN_SIZE_TILE} ${OWN_SIZE_SPAN[shape]}` : TILE_CLASS[shape];
+};
 
 /**
  * The `| Gallery` section: "Screens & artifacts." over a two-column grid.
@@ -60,8 +118,9 @@ const PortfolioItemGallery = ({ images }: PortfolioItemGalleryProps): ReactEleme
         {images.map((image) => (
           <div
             key={image.src}
-            data-shape={isLandscape(image) ? 'landscape' : 'portrait'}
-            className={`overflow-hidden rounded-card border border-rule bg-surface-sunk ${isLandscape(image) ? LANDSCAPE_TILE : PORTRAIT_TILE}`}
+            data-shape={tileShapeOf(image)}
+            data-own-size={isShownAtOwnSize(image)}
+            className={`overflow-hidden rounded-card border border-rule bg-surface-sunk ${tileClassOf(image)}`}
           >
             <img
               src={image.src}
@@ -69,7 +128,11 @@ const PortfolioItemGallery = ({ images }: PortfolioItemGalleryProps): ReactEleme
               width={image.width}
               height={image.height}
               loading="lazy"
-              className="block size-full object-cover object-top"
+              className={
+                isShownAtOwnSize(image)
+                  ? 'block h-auto max-w-full'
+                  : 'block size-full object-cover object-top'
+              }
             />
           </div>
         ))}
