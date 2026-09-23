@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 
 import type { HomepageContact } from '@portfolio/shared-types';
-import { Eyebrow, SocialIcon } from '@portfolio/ui-components';
+import { Eyebrow, PillLink, SocialIcon } from '@portfolio/ui-components';
 
 interface HomepageContactBlockProps {
   sectionId: string;
@@ -34,16 +34,17 @@ const HomepageContactBlock = ({ sectionId, contact }: HomepageContactBlockProps)
       </div>
       <div className="mb-[72px] flex flex-wrap justify-center gap-3">
         {contact.links.map((link) => (
-          <a
+          <PillLink
             key={link.href}
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-[9px] rounded-pill bg-accent-bright px-7 py-[0.9rem] text-[0.92rem] font-medium text-ink transition-colors hover:bg-accent-bright/80"
+            variant="accent"
+            className="h-[3.3rem] gap-[9px] px-7 text-[0.92rem]"
           >
             <SocialIcon name={link.icon} size={19} />
             {link.label}
-          </a>
+          </PillLink>
         ))}
       </div>
       {/* No bottom padding: the footer strip below supplies the export's 1.5rem
