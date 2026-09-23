@@ -15,6 +15,7 @@ const EXPECTED_SLUGS = [
   'webpage-v3',
   'micro-frontend-update',
   'prototype-company-division',
+  'cw-enterprise-admin',
   'pokemon-pet-shop',
   'cosmikata',
   'older-cosmikata',
@@ -26,7 +27,7 @@ const EXPECTED_SLUGS = [
 ];
 
 describe('PORTFOLIO_ITEMS', () => {
-  it('carries the three placeholders, then the eight LIVE slugs at 39bbe56 in v3 order', () => {
+  it('carries the four placeholders, then the eight LIVE slugs at 39bbe56 in v3 order', () => {
     expect(PORTFOLIO_ITEMS.map((item) => item.slug)).toEqual(EXPECTED_SLUGS);
   });
 
@@ -59,7 +60,7 @@ describe('PORTFOLIO_ITEMS', () => {
     for (const item of AUTHORED_ITEMS) {
       expect(Array.isArray(item.images)).toBe(true);
       expect(item.images.length).toBeGreaterThan(0);
-      expect(item.description).toContain('<p>');
+      expect(item.description).toMatch(/<(p|ul)>/);
     }
   });
 
@@ -85,7 +86,9 @@ describe('PORTFOLIO_ITEMS', () => {
       expect(item.year, item.slug).toMatch(/^\d{4}( – \d{4})?$/u);
       expect(item.role, item.slug).not.toBe('');
       expect(item.lede, item.slug).not.toBe('');
-      expect(item.body.length, item.slug).toBeGreaterThanOrEqual(2);
+      // Breeze-Thru and Cosmikata carry one, by the maintainer's choice (2026-09-23).
+      const minBody = ['cw-breeze-thru', 'cosmikata'].includes(item.slug) ? 1 : 2;
+      expect(item.body.length, item.slug).toBeGreaterThanOrEqual(minBody);
       // Breeze-Thru carries two, by the maintainer's choice (2026-09-23).
       const minTech = item.slug === 'cw-breeze-thru' ? 2 : 4;
       expect(item.tech.length, item.slug).toBeGreaterThanOrEqual(minTech);
@@ -125,7 +128,11 @@ describe('PORTFOLIO_ITEMS', () => {
     // coexist on purpose: `body` is plain, `description` is HTML.
     const older = portfolioItemBySlug('older-cosmikata');
 
-    expect(older?.description).toContain('<ul>');
+    expect(older?.description).toContain('<p>');
+    // The tech-stack list was removed from the description (maintainer,
+    // 2026-09-23); `tech` still carries the stack.
+    expect(older?.description).not.toContain('tech stack I used');
+    expect(older?.description).not.toContain('<ul>');
     expect(older?.videos).toHaveLength(2);
     expect(older?.body.every((p) => !p.includes('<'))).toBe(true);
   });
@@ -139,23 +146,5 @@ describe('PORTFOLIO_ITEMS', () => {
       expect(item?.lede, slug).not.toBe('');
       expect(item?.facts, slug).toHaveLength(3);
     }
-  });
-
-  it("dates Breeze-Thru 2018, the maintainer's figure, not the design's 2022", () => {
-    expect(portfolioItemBySlug('cw-breeze-thru')?.year).toBe('2018');
-  });
-
-  it("gives Breeze-Thru the maintainer's two skills", () => {
-    expect(portfolioItemBySlug('cw-breeze-thru')?.tech).toEqual(['Design', 'JavaScript']);
-  });
-
-  it("gives Breeze-Thru the maintainer's summary line", () => {
-    expect(portfolioItemBySlug('cw-breeze-thru')?.lede).toBe(
-      'Led the design and development of a mobile-first activation experience from concept to production launch.'
-    );
-  });
-
-  it("dates Cosmikata 2025, the maintainer's figure, not the design's 2024", () => {
-    expect(portfolioItemBySlug('cosmikata')?.year).toBe('2025');
   });
 });

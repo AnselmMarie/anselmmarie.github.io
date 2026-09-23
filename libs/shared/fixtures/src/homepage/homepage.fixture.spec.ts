@@ -5,7 +5,7 @@ import { SITE_SECTIONS } from '../site-sections/site-sections.fixture.js';
 import { HOMEPAGE_CONTENT } from './homepage.fixture.js';
 
 describe('HOMEPAGE_CONTENT — the work grid', () => {
-  it('shows six cards, with five hidden (maintainer, 2026-09-23)', () => {
+  it('shows six cards, with six hidden (maintainer, 2026-09-23)', () => {
     // The ported slugs win in every case — `cw-breeze-thru`, not
     // `breeze-thru` — because the slug is the /portfolio/$slug segment and
     // renaming it breaks every published URL.
@@ -15,17 +15,18 @@ describe('HOMEPAGE_CONTENT — the work grid', () => {
       'prototype-company-division',
       'cosmikata',
       'cw-breeze-thru',
-      'older-cosmikata',
+      'cw-enterprise-admin',
     ]);
   });
 
-  it('hides the five cards without dropping their items from the catalogue', () => {
+  it('hides the six cards without dropping their items from the catalogue', () => {
     const hidden = [
       'pokemon-pet-shop',
       'rove-logix',
       'rove-logix-ui-update',
       'csp-generator-app',
       'cr-caterpillar',
+      'older-cosmikata',
     ];
     const shown = new Set(HOMEPAGE_CONTENT.work.map((card) => card.slug));
     const catalogue = new Set(PORTFOLIO_ITEMS.map((item) => item.slug));

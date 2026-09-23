@@ -15,10 +15,16 @@ import { PORTFOLIO_ITEMS } from '../portfolio-items/portfolio-items.fixture.js';
  * composed from the slug — the image folders do not match the slugs.
  */
 const DESCRIPTION_BY_SLUG: Readonly<Record<string, string>> = {
-  // ⚠️ Placeholders (2026-09-23) — replace with the real copy with the item.
-  'webpage-v3': 'v3 — details coming soon.',
-  'micro-frontend-update': 'Micro Frontend Architecture Migration — details coming soon.',
+  'webpage-v3':
+    'This portfolio rebuilt as micro-frontends — a TanStack Start shell composing Module ' +
+    'Federation remotes in an Nx monorepo, deployed to AWS through GitHub Actions.',
+  // ⚠️ Placeholder (2026-09-23) — replace with the real copy with the item.
+  'micro-frontend-update':
+    'Modernizing checkout through micro-frontends, shared architecture, and testing.',
   'prototype-company-division': 'From Prototype to New Company Division — details coming soon.',
+  'cw-enterprise-admin':
+    'Cricket Wireless enterprise admin platform — tech lead for a four-engineer team, a React ' +
+    'and TypeScript re-architecture, and a shared design system.',
   'pokemon-pet-shop':
     'A web, native and API codebase built to share as much as possible without giving up ' +
     'what each platform does well. React, Expo, Nativewind and design tokens.',

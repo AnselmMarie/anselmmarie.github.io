@@ -92,38 +92,69 @@ export const ACTIVE_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     company: 'Freelancing/Concepts',
     title: 'Cosmikata',
     subtitle: 'Design / Development',
-    thumbnail: '/images/portfolio/cosmikata/cosmikata-thumbnail.jpg',
-    description:
-      '<p>A few years after its original development, I’ve decided to return to the Cosmikata ' +
-      'project and reimagine it from the ground up. This overhaul applies the skills and ' +
-      'architectural insights I’ve gained over time to build a flexible, shared codebase ' +
-      'spanning web, mobile, and backend applications.</p>' +
-      '<p>Cosmikata is a hobby project driven by my passion for learning, experimentation, and ' +
-      'contributing to a space I genuinely care about. The goal is to deliver a redesigned ' +
-      'experience and publish the new version to both the Apple App Store and Google Play ' +
-      'Store.</p>' +
-      '<p>The tech stack includes:</p>' +
-      '<ul><li>React</li><li>React Native/React Native Web</li><li>Expo</li><li>Node.js</li>' +
-      '<li>PostgreSQL</li><li>Drizzle</li><li>Nx Monorepo</li><li>CI/CD: Github Actions</li>' +
-      '<li>Figma</li><li>Design Tokens</li></ul>',
+    thumbnail: '/images/portfolio/cosmikata/marketing-landing.png',
+    description: `
+      <ul>
+        <li>Rebuilt Cosmikata from the ground up, applying architectural and engineering experience gained since its original development.</li>
+        <li>Designed the Nx monorepo around shared packages for UI, business logic, services, and validation to minimize duplication across platforms.</li>
+        <li>Integrated Next.js and Expo for web and native applications while isolating platform-specific implementation where needed.</li>
+        <li>Built a token-driven design system connecting Figma design tokens to reusable components, styles, and CSS variables.</li>
+        <li>Established Storybook as a shared environment for developing, testing, and documenting UI components across web and native surfaces.</li>
+        <li>Designed an edge-first backend using Hono, PostgreSQL, and Drizzle with shared validation schemas to maintain consistent API contracts between clients and backend services.</li>
+        <li>Incorporated AI-assisted development using Claude Design, Claude Code, Gemini, and ChatGPT across research, architecture, implementation, testing, and iteration.</li>
+        <li>Developed structured AI rules, reusable skills, and documented engineering practices to make AI-assisted development repeatable and controlled.</li>
+        <li>Maintained ownership of architectural decisions, implementation quality, and technical direction throughout the development process.</li>
+        <li>Used Cosmikata as a personal product and engineering laboratory for cross-platform architecture, design systems, backend infrastructure, and AI-assisted development workflows.</li>
+      </ul>
+    `,
     images: [
       {
-        src: '/images/portfolio/cosmikata/homepage.png',
-        alt: 'Cosmikata Login',
-        width: '662',
-        height: '1436',
+        src: '/images/portfolio/cosmikata/marketing-landing.png',
+        alt: 'Cosmikata marketing landing page',
+        width: '1691',
+        height: '1055',
       },
       {
-        src: '/images/portfolio/cosmikata/cosplay-list.png',
-        alt: 'Cosmikata Filter Modal',
-        width: '662',
-        height: '1436',
+        src: '/images/portfolio/cosmikata/cosplay-detail.png',
+        alt: 'Cosmikata cosplay detail with progress, budget and tasks',
+        width: '1691',
+        height: '1055',
+      },
+      {
+        src: '/images/portfolio/cosmikata/hub-mobile.png',
+        alt: 'Cosmikata hub on mobile with event dates and deadlines',
+        width: '340',
+        height: '716',
+      },
+      {
+        src: '/images/portfolio/cosmikata/measurements-mobile.png',
+        alt: 'Cosmikata measurements on mobile',
+        width: '320',
+        height: '716',
+      },
+      {
+        src: '/images/portfolio/cosmikata/events.png',
+        alt: 'Cosmikata events list on a tablet-width layout',
+        width: '815',
+        height: '716',
       },
       {
         src: '/images/portfolio/cosmikata/settings.png',
-        alt: 'Cosmikata Edit Cosplay',
-        width: '662',
-        height: '1436',
+        alt: 'Cosmikata settings',
+        width: '1691',
+        height: '1055',
+      },
+      {
+        src: '/images/portfolio/cosmikata/storybook-primitive-tokens.png',
+        alt: 'Cosmikata primitive color tokens in Storybook',
+        width: '1691',
+        height: '1055',
+      },
+      {
+        src: '/images/portfolio/cosmikata/splash.png',
+        alt: 'Cosmikata splash screen',
+        width: '1691',
+        height: '1055',
       },
     ],
     videos: [],
@@ -137,11 +168,10 @@ export const ACTIVE_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
      */
     year: '2025',
     role: 'Founder & Lead Engineer',
-    lede: 'A studio identity, a shared component library, and a cross-platform product architecture.',
+    lede: 'A cross-platform product architecture, shared design system, and edge-first backend.',
+    // One paragraph by the maintainer's choice (2026-09-23).
     body: [
-      'Cosmikata started as a brand exercise and grew into the platform I use to ship cross-platform products: one Nx monorepo feeding web and native from shared UI, services, and business logic.',
-      'The design system is generated from Figma tokens, so themes, spacing, and typography stay identical across Next.js and Expo. Components are documented in Storybook and consumed by every surface.',
-      'On the backend, an edge-first Hono API with PostgreSQL and Drizzle shares validation schemas with the clients, which removes a whole class of drift between server and app.',
+      'Reimagined Cosmikata as a cross-platform product platform built around a shared Nx monorepo, enabling web, mobile, and backend applications to share UI, services, validation, and business logic while keeping platform-specific concerns isolated.',
     ],
     tech: [
       'Next.js',
@@ -152,9 +182,13 @@ export const ACTIVE_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
       'PostgreSQL',
       'Drizzle ORM',
       'Design System',
+      'Figma',
+      'GitHub Actions',
+      'Cloudflare',
+      'AI',
     ],
     facts: [
-      { key: 'Timeline', value: 'Ongoing since 2024' },
+      { key: 'Timeline', value: 'Ongoing since 2025' },
       { key: 'Role', value: 'Founder, architecture, design' },
       { key: 'Focus', value: 'Monorepo, tokens, edge backend' },
     ],

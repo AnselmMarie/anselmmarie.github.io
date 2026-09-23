@@ -23,14 +23,13 @@ describe('PORTFOLIO_ITEMS facts', () => {
     }
   });
 
-  it('leaves the placeholder items blank rather than inventing values', () => {
-    for (const slug of ['micro-frontend-update', 'prototype-company-division']) {
-      const item = PORTFOLIO_ITEMS.find((candidate) => candidate.slug === slug);
-
-      expect(
-        item?.facts.map((fact) => fact.value),
-        slug
-      ).toEqual(['', '', '']);
+  it('fills every value now that the placeholders have theirs', () => {
+    // `webpage-v3`, the last placeholder with blank facts, got its values from
+    // the maintainer on 2026-09-23.
+    for (const item of PORTFOLIO_ITEMS) {
+      for (const fact of item.facts) {
+        expect(fact.value, `${item.slug} ${fact.key}`).not.toBe('');
+      }
     }
   });
 });

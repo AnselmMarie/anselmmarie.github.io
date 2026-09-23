@@ -24,8 +24,8 @@ describe('use-content-stub', () => {
     // the nine D53 names: `cosmikata-design-system` is commented out at
     // `39bbe56` and stays a not-found.
     expect(usePortfolioItems()).toBe(PORTFOLIO_ITEMS);
-    // Eleven since 2026-09-23: three placeholder items were added ahead of the eight.
-    expect(usePortfolioItems()).toHaveLength(11);
+    // Twelve since 2026-09-23: four placeholder items were added ahead of the eight.
+    expect(usePortfolioItems()).toHaveLength(12);
   });
 
   it('resolves a real slug through the seam', () => {

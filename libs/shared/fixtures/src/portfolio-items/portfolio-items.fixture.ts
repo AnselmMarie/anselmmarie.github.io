@@ -32,7 +32,7 @@ import { UPCOMING_PORTFOLIO_ITEMS } from './portfolio-items-upcoming.fixture.js'
  * broken when they typed a bad URL.
  */
 export const PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
-  ...UPCOMING_PORTFOLIO_ITEMS, // webpage-v3, micro-frontend-update, prototype-company-division — placeholders
+  ...UPCOMING_PORTFOLIO_ITEMS, // webpage-v3, micro-frontend-update, prototype-company-division, cw-enterprise-admin — placeholders
   ...ACTIVE_PORTFOLIO_ITEMS, // pokemon-pet-shop, cosmikata
   ...OTHER_PORTFOLIO_ITEMS, // older-cosmikata, csp-generator-app
   ...CRICKET_PORTFOLIO_ITEMS, // cw-breeze-thru

@@ -61,7 +61,7 @@ describe('Homepage — composition', () => {
       '/portfolio/webpage-v3', // 2026
       '/portfolio/micro-frontend-update', // 2025
       '/portfolio/cosmikata', // 2025
-      '/portfolio/older-cosmikata', // 2019
+      '/portfolio/cw-enterprise-admin', // 2020 – 2023
       '/portfolio/cw-breeze-thru', // 2018
       '/portfolio/prototype-company-division', // 2017
     ]);

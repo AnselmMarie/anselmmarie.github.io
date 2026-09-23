@@ -28,9 +28,7 @@ export const OTHER_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
       'streamline the planning of future cosplays, the app combines features inspired by ' +
       'Trello and Cosplanner. As a solo project, I am overseeing every aspect, from ' +
       'conceptualization to production. Without a set launch date, I am taking the ' +
-      'opportunity to thoroughly test various technologies. The tech stack I used is:</p>' +
-      '<ul><li>React Native</li><li>Expo</li><li>GraphQL</li><li>PostgreSQL</li>' +
-      '<li>Sketch</li></ul>',
+      'opportunity to thoroughly test various technologies.</p>',
     images: [
       {
         src: '/images/portfolio/freelancing-concepts/cosajiou-login.jpg',
@@ -99,7 +97,7 @@ export const OTHER_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
      */
     year: '2019',
     role: 'Design & Engineering',
-    lede: 'The first Cosmikata — a planning app for cosplayers and cosmakers.',
+    lede: 'The first Cosmikata, a planning app for cosplayers and cosmakers.',
     body: [
       'Built out of a personal need to plan future cosplays, the app combined the board-and-card organisation of Trello with the build-tracking of Cosplanner, aimed at people managing several costumes at once.',
       'A solo project from concept to production: design, data model, and the React Native client. With no fixed launch date, it doubled as a testbed for a GraphQL and PostgreSQL stack behind an Expo app.',
@@ -108,7 +106,7 @@ export const OTHER_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     facts: [
       { key: 'Timeline', value: 'Ongoing side project' },
       { key: 'Role', value: 'Solo — concept, design, build' },
-      { key: 'Focus', value: 'Cosplay planning, offline-first data' },
+      { key: 'Focus', value: 'Cosplay planning' },
     ],
     links: [],
   },
