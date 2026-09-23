@@ -30,6 +30,11 @@ describe('cn', () => {
     expect(cn('text-chip', 'text-eyebrow')).toBe('text-eyebrow');
   });
 
+  it('treats a theme radius token as a radius, so it overrides a primitive default', () => {
+    expect(cn('rounded-md px-2', 'rounded-pill')).toBe('px-2 rounded-pill');
+    expect(cn('rounded-card', 'rounded-shell-sm')).toBe('rounded-shell-sm');
+  });
+
   it('drops falsy values', () => {
     expect(cn('a', false, null, undefined, 'b')).toBe('a b');
   });
