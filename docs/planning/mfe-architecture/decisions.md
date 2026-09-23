@@ -28,6 +28,7 @@ decision is separated from the ones that explain it. This file is now the index 
 - [**D73–D74** — What building Slice 7 forced](decisions-d73-d74.md)
 - [**D75** — The brand marks are Tabler, drawn by one shared component](decisions-d75.md)
 - [**D76–D81** — The 2026-09-22 redesign](decisions-d76-d81.md)
+- [**D101–D102** — The plan's tail re-ordered: 17 → 9 → 8](decisions-d101-d102.md)
 
 ## Every decision
 
@@ -133,6 +134,8 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D98](decisions-d88-d100.md#d98) | The hero's featured panel renders the export's own unused `index` array; no new copy | `d88-d100` |
 | [D99](decisions-d88-d100.md#d99) | `white-space: nowrap` on the two clamped headings is not reproduced; it overflows by construction | `d88-d100` |
 | [D100](decisions-d88-d100.md#d100) | The anchor contract's third leg is verified in the browser; all five scroll at 84px | `d88-d100` |
+| [D101](decisions-d101-d102.md#d101) | Slice 9 (E2E) runs before Slice 8 (deployment), against a local production build; supersedes D80's tail | `d101-d102` |
+| [D102](decisions-d101-d102.md#d102) | The remaining UI and navigation issues become Slice 17, before E2E; the list is Q22 | `d101-d102` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.

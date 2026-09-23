@@ -19,7 +19,7 @@ between demonstrating the architecture and shaving complexity.
 | **On `master`** | The composed site works end to end: four live remotes, eight portfolio items with their real images, `/portfolio/<slug>` resolving, an unknown slug answering not-found, and a stopped remote showing its fallback while the others keep rendering |
 | **Built, awaiting review** | Slice 10 — the design foundation: the new palette, the type scale, the card frame, and five shared components |
 | **Built, awaiting review** | Slices 11–14 — the content model, the header, and the whole homepage. Held together as one change ([D92](./decisions-d88-d100.md#d92)), since Slice 11's removals only compile once 13–14 land. ✅ **The composed site renders with zero fallbacks**, and the anchor contract is verified end to end: all five nav links scroll, four landing at exactly 84px ([D100](./decisions-d88-d100.md#d100)) |
-| **Not started** | Slices 15–16 (detail page, footer strip), then 8 and 9 |
+| **Not started** | Slices 15–16 (detail page, footer strip), then 17 (UI/navigation fixes, ⛔ blocked on [Q22](./open-questions.md#q22)), then 9 (E2E), then 8 (deployment) — [D101–D102](./decisions-d101-d102.md) |
 
 ⚠️ **The design changed on 2026-09-22.** Two new exports replace the look of every surface
 — see [design-sources.md](./design-sources.md) and
@@ -57,10 +57,11 @@ but there is no database and no Contentful in this plan. Data comes from fixture
 **Order:** shell (1) → ui libs (2) → federation/header (3) → error boundaries (4) →
 footer (5) → homepage (6) → portfolio item (7) → **design foundation (10) → content model
 (11) → header (12) → homepage A (13) → homepage B (14) → detail (15) → footer strip (16)** →
-deployment (8) → E2E (9)
+**UI/navigation fixes (17)** → E2E (9) → deployment (8)
+([D101–D102](./decisions-d101-d102.md), 2026-09-23)
 
-**Placeholder data:** `libs/shared/fixtures/src/*.fixture.ts`, consumed only through
-`use-content-stub.ts`. ⚠️ **"Placeholder" is the label
+**Placeholder data:** `libs/shared/fixtures/src/**/*.fixture.ts`, consumed only through
+`use-content-stub/use-content-stub.ts`. ⚠️ **"Placeholder" is the label
 [plan-flow-order.md](../../../.claude/rules/plan-flow-order.md) prescribes for the slot, not
 a claim about the copy** — per [D41](./decisions-d33-d41.md#d41) these fixtures hold the
 site's real content. The Contentful plan moves them; this one does not delete them.
@@ -77,7 +78,7 @@ silent:**
   have, and the form/list split presumes a data-entry shape no surface here takes.
 - **No slice deletes the placeholder data.** Per [D41](./decisions-d33-d41.md#d41) the
   fixtures hold real published copy, so there is nothing to delete.
-- **The slice index is ordered by execution, not by number** — 8 and 9 sit last while
+- **The slice index is ordered by execution, not by number** — 9 then 8 sit last while
   keeping their labels ([D80](./decisions-d76-d81.md#d80)). Renumbering would rewrite 97
   references across 40 files, most of them in source.
 
@@ -99,13 +100,14 @@ Listed in **execution order**. The `#` column is the label, not the position.
 | [12](./slices/12-header-redesign.md) | Floating nav, mobile overlay, **the `SITE_SECTIONS` contract** | fe | ✅ screen | **26 as built** (est. ~20) | ✅ built, held with 11, 13–14 |
 | [13](./slices/13-homepage-hero-work.md) | Specs strip, hero, the Work grid | fe | ✅ screen | **13 as built** (est. ~16) | ✅ built, held with 11–14 |
 | [14](./slices/14-homepage-experience-contact.md) | Experience accordion, Skills, About, Contact | fe | ✅ screen | **10 as built** (est. ~20) | ✅ built, held with 11–14 |
-| [15](./slices/15-portfolio-detail-redesign.md) | The detail page, **plus the two blocks the design omits** | fe | ✅ screen | ~26 | not started |
+| [15](./slices/15-portfolio-detail-redesign.md) | The detail page, **plus the two blocks the design omits** | fe | ✅ screen | ~31 | not started |
 | [16](./slices/16-footer-strip.md) | The footer strip, and its degradation | fe | ✅ screen | ~6 | not started |
-| [8](./slices/08-independent-deployment.md) | GitHub Actions (`nx affected`) → CDK-described S3/CloudFront/Lambda, rollback | ops | — none | ~26 | not started |
-| [9](./slices/09-e2e-composition.md) | Playwright over the composed app, incl. failure isolation | fe | — none | ~16 | not started |
+| [17](./slices/17-ui-navigation-fixes.md) | The remaining UI and navigation issues | fe | ✅ screen | unknown | ⛔ blocked on [Q22](./open-questions.md#q22) |
+| [9](./slices/09-e2e-composition.md) | Playwright over a local production build, incl. failure isolation | fe | — none | ~16 | not started |
+| [8](./slices/08-independent-deployment.md) | GitHub Actions (`nx affected`) → CDK-described S3/CloudFront/Lambda, rollback, gated on 9 | ops | — none | ~26 | not started |
 
 Slice 11 is the redesign's one invisible slice and it sits between two visible ones. Slices
-8 and 9 are the other two and they sit together at the end, so **no run of three can form**.
+9 and 8 are the other two and they sit together at the end, after the visible Slice 17, so **no run of three can form**.
 ⚠️ **Slice 9 was marked `✅ screen` until 2026-09-20** — it adds no route and no component,
 and [plan-visible-first.md](../../../.claude/rules/plan-visible-first.md) is explicit that a
 passing test suite is not a visible surface. Every slice is under the 250-file cap.
@@ -118,15 +120,14 @@ passing test suite is not a visible surface. Every slice is under the 250-file c
 - [model.md](./model.md) — the finalized architecture: stack, workspace shape, data flow,
   what reaches the browser versus what stays server-side, the Module Federation strategy,
   and the shadcn/Tailwind sharing strategy.
-- [decisions.md](./decisions.md) — the **index** to D1–D87, split into range files when the
+- [decisions.md](./decisions.md) — the **index** to D1–D102, split into range files when the
   log passed its 500-line cap. The source of truth; each slice restates only the ones that
   bind it. Start at [D33](./decisions-d33-d41.md#d33): the project's purpose is the
   tiebreaker the rest were decided against. Most recently
-  [D88–D92](./decisions-d88-d100.md) — what building Slice 11 found wrong in the plan.
-- [open-questions.md](./open-questions.md) — ✅ **none are open.** The four raised on
-  2026-09-22 by reading the new exports all closed the same day. ⚠️ **An empty list is a
-  statement, not an omission** — a slice that finds a new blocked field raises it there
-  rather than deciding alone.
+  [D101–D102](./decisions-d101-d102.md): the tail re-ordered to 17 → 9 → 8.
+- [open-questions.md](./open-questions.md) — ⏳ **one is open:
+  [Q22](./open-questions.md#q22)**, the UI/navigation issue list that is Slice 17's whole
+  scope. A slice that finds a new blocked field raises it there rather than deciding alone.
 - [questions-closed.md](./questions-closed.md) — all twenty-one answered, in full, each
   with its closure note, across three files: Q1–Q8 here, Q9–Q17 and Q20 in
   [the second](./questions-closed-q9-q16.md), Q18/Q19/Q21 in

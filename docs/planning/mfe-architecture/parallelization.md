@@ -7,11 +7,12 @@ decides whether any of this actually runs in parallel.
 ## Dependency graph
 
 ```text
-1 → 2 → 3 → 4 → {5, 6, 7} → 10 → 11 → {12, 13→14, 15, 16} → 8 → 9
+1 → 2 → 3 → 4 → {5, 6, 7} → 10 → 11 → {12, 13→14, 15, 16} → 17 → 9 → 8
 ```
 
-⚠️ **Slices 8 and 9 run last despite their numbers**
-([D80](./decisions-d76-d81.md#d80)): the redesign lands before deployment and E2E, and the
+⚠️ **Slices 9 and 8 run last, in that order, despite their numbers**
+([D80](./decisions-d76-d81.md#d80), with the tail re-ordered by
+[D101](./decisions-d101-d102.md#d101)): the redesign lands before deployment and E2E, and the
 two keep their labels because renumbering would rewrite 97 references across 40 files,
 including `apps/*/vite.config.ts`, `infra/`, `ci.yml` and `tools/eslint/`.
 
@@ -26,8 +27,9 @@ including `apps/*/vite.config.ts`, `infra/`, `ci.yml` and `tools/eslint/`.
 | 10 → 11 | The content model is authored against the design's field set, and Slice 10 is where the design is first read end to end. Ordering them the other way means authoring fields nobody has checked against a token set. |
 | 11 → {12,13,15,16} | Every wave slice reads the new types and fixtures. ⚠️ This is the edge the 2026-09-21 wave got wrong by treating `shared-types` / `shared-fixtures` as disjoint; see the correction above. |
 | 13 → 14 | **Same Nx project** (`libs/features/homepage`). Not a content dependency — a file-set one. One agent runs them in sequence. |
-| {12,…,16} → 8 | Deploying markup that is about to be replaced. |
-| 8 → 9 | E2E asserts the composed, deployed app including failure isolation. |
+| {15,16} → 17 | ⚠️ **Proposed** ([D102](./decisions-d101-d102.md#d102)): the fix list is only complete once the whole redesign is up, and fixing a surface 15 or 16 is about to rebuild means fixing it twice. |
+| 17 → 9 | The suite asserts navigation and computed styles. Written before the fixes, it pins down the broken behaviour ([D102](./decisions-d101-d102.md#d102)). |
+| 9 → 8 | Deploys are gated on the E2E job from the first one, and Slice 8's rollback check reuses the suite ([D101](./decisions-d101-d102.md#d101)). ⚠️ **Replaces `8 → 9`**, which claimed E2E needs a deployment. Slice 9's own notes say it runs against a local production build. |
 
 ## Shared-file table
 
@@ -44,7 +46,7 @@ nobody and are omitted.
 | 6 | `libs/shared/config` registry, shell route tree, **`libs/shared/types` + `libs/shared/fixtures` (co-owned with 7)**, root manifests |
 | 7 | `libs/shared/config` registry, shell route tree, **`libs/shared/types` + `libs/shared/fixtures` (co-owned with 6)**, root manifests |
 | 8 | `.github/workflows/`, the AWS infrastructure definitions, root `package.json` scripts, `libs/shared/config` (env-read remote URLs), `docs/` (the runbook) |
-| 9 | `playwright.config.ts`, root `package.json` scripts, `.github/workflows/` (the E2E job added to Slice 8's workflow) |
+| 9 | `playwright.config.ts`, root `package.json` scripts, `.github/workflows/ci.yml` (adds the E2E job; Slice 8's deploy jobs later depend on it) |
 | 10 | `libs/ui/theme/src/theme.css` (**rewritten**), `libs/ui/components` barrel + 5 new components, `libs/features/shell` layout + 3 regions + **all 5 fallbacks**, `apps/shell/src/styles.css`, root manifests **iff [Q20](./questions-closed-q9-q16.md#q20) resolves to self-hosting** |
 | 11 | `libs/shared/types/src/{portfolio-item,homepage-content}.ts` + barrel, all three `portfolio-items-*.fixture.ts`, `homepage.fixture.ts` |
 | 12 | ⚠️ **`libs/shared/fixtures/src/site-sections/site-sections.fixture.ts` + spec** and `libs/shared/types/src/site-section/site-section.ts` — the [D81](./decisions-d76-d81.md#d81) contract; plus `libs/features/shell/src/shell-layout/shell-header-region.tsx` and `fallbacks/header-fallback.tsx` |
@@ -52,6 +54,7 @@ nobody and are omitted.
 | 14 | `libs/features/homepage/**` only — **the same files as 13** |
 | 15 | `libs/features/portfolio-item/**`, plus **the `head` function only** of `apps/shell/src/routes/portfolio.$slug.tsx` |
 | 16 | `libs/features/footer/**` only |
+| 17 | **Unknown until [Q22](./open-questions.md#q22) is answered.** Each issue's owner project goes in the slice's table; any in `libs/ui/*` or the shell are the coordinator's |
 
 Specs count as files a slice touches. A slice editing a registry almost always edits that
 registry's spec too, and that spec is shared.
@@ -227,7 +230,7 @@ for, and they would still both rewrite `homepage.tsx`.
 
 ### If it fans out
 
-Four agents — header, homepage (13 then 14), portfolio-item, footer — at ~20, ~36, ~26 and
+Four agents — header, homepage (13 then 14), portfolio-item, footer — at ~20, ~36, ~31 and
 ~6 files. Well inside the 250-file cap, per agent and in total. Same conditions as the first
 wave: a worktree each ([branch-creation-approval.md](../../../.claude/rules/branch-creation-approval.md),
 then [worktree-safety.md](../../../.claude/rules/worktree-safety.md) and
@@ -265,8 +268,9 @@ oversight.
 | 12 | ~20 | Two of them outside its own projects — the section fixture and the shell's header region. |
 | 13 | ~16 | |
 | 14 | ~20 | The largest of the wave: four sections with no existing counterpart. |
-| 15 | ~26 | Twelve regions, plus the two invented blocks ([D78](./decisions-d76-d81.md#d78)). |
+| 15 | ~31 | Thirteen components in seven section folders, including the two invented blocks ([D78](./decisions-d76-d81.md#d78)). Raised from ~26 on 2026-09-23 for the overview section and two folder moves. |
 | 16 | ~6 | The same size Slice 5 turned out to be. |
+| 17 | unknown | Pending [Q22](./open-questions.md#q22). Split by owner project if it passes ~40. |
 
 Every slice is under the cap, so no slice needs splitting on size alone.
 

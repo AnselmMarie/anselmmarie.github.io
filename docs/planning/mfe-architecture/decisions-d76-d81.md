@@ -156,6 +156,10 @@ assert the block above it still renders.
 1 → 2 → 3 → 4 → {5,6,7} → 10 → 11 → {12,13→14,15,16} → 8 → 9
 ```
 
+⚠️ **The tail of this order is superseded by [D101](./decisions-d101-d102.md#d101)** (2026-09-23):
+it is now `… → 17 → 9 → 8`. The rest of D80, including the redesign running first and the
+kept numbers, stands.
+
 **Why the redesign goes first.** [Slice 9](./slices/09-e2e-composition.md)'s
 specs assert computed styles on shared-design-system components
 ([D38](./decisions-d33-d41.md#d38)) — every one of those assertions is written

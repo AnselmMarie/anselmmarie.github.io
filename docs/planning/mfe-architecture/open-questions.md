@@ -10,20 +10,35 @@ When one is answered: write the answer as a numbered decision in
 table below, and update the binding block of every slice that named it. All
 four, in the same change.
 
-**None are open.** All four raised on 2026-09-22 by reading the two design exports
-([D76](./decisions-d76-d81.md#d76)) closed the same day — ⚠️ **before the redesign wave
-starts**, rather than by the agent sent to build against them, which is what the
-README's warning after the 5–7 wave asks for.
+**One is open: [Q22](#q22).** The four raised on 2026-09-22 by reading the two design
+exports ([D76](./decisions-d76-d81.md#d76)) all closed that same day.
 
 | Q | Blocked | Status |
 |---|---|---|
+| [Q22](#q22) | Slice 17 — its whole scope | ⏳ **open**, raised 2026-09-23 |
 | [Q18](./questions-closed-q18-q21.md#q18) | Slices 11, 13, 15 — the hero images | ✅ closed → [D85](./decisions-d85-d87.md#d85) |
 | [Q19](./questions-closed-q18-q21.md#q19) | Slice 15 — the gallery contents | ✅ closed → [D86](./decisions-d85-d87.md#d86) |
 | [Q20](./questions-closed-q9-q16.md#q20) | *(was Slice 10 — font delivery)* | ✅ closed → [D82](./decisions-d82-d83.md#d82) |
 | [Q21](./questions-closed-q18-q21.md#q21) | Slices 11, 13, 14 — one figure | ✅ closed → [D87](./decisions-d85-d87.md#d87) |
 
-⚠️ **An empty open list is a statement, not an omission.** Slices 11–16 have no blocked
-field left; a slice that finds a new one raises it here rather than deciding it alone.
+⚠️ **Slices 11–16 still have no blocked field.** A slice that finds one raises it here
+rather than deciding it alone.
+
+<a id="q22"></a>
+### Q22 — which UI and navigation issues does Slice 17 fix?
+
+**Raised 2026-09-23 by the maintainer**, after Slices 10–14 landed: *"there are still a
+good amount of UI/navigation issues that need to be dealt with."* That is the whole of
+Slice 17's scope ([D102](./decisions-d101-d102.md#d102)), and the list hasn't been written
+down yet.
+
+**Blocks:** Slice 17 entirely. Slice 9 indirectly, since it runs after 17.
+
+**What an answer needs, per issue:** the surface (route + viewport), what happens, what
+should happen, and whether the design shows the right answer or it's a new decision.
+
+**What not to do:** audit the site and treat the findings as the list. An audit can
+*propose* additions for the maintainer to accept. The list itself is the maintainer's.
 
 ---
 

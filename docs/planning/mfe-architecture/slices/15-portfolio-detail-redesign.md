@@ -120,20 +120,51 @@ outlined "More work" → `/#work` — then stop at the rule.
 
 ## Files this slice creates and modifies
 
-- `libs/features/portfolio-item/src/` — `portfolio-item.tsx` (restructured),
-  `portfolio-item-meta-row.tsx`, `portfolio-item-header.tsx` (rewritten),
-  `portfolio-item-links.tsx`, `portfolio-item-hero.tsx`,
-  `portfolio-item-tech-chips.tsx`, `portfolio-item-facts.tsx`,
-  `portfolio-item-summary.tsx`, `portfolio-item-description.tsx` (kept, re-skinned),
-  `portfolio-item-gallery.tsx` (rewritten), `portfolio-item-videos.tsx` (re-skinned),
-  `portfolio-item-next-block.tsx`
-- `sanitize-item-html.ts` — **unchanged**
+Grouped by page region, one folder per region, per the lib section-folder rule
+(`.claude/rules/lib-section-folders.md`). Each file sits with its spec. A file
+used by only one region lives in that region's folder, and folders are one
+level deep.
+
+Under `libs/features/portfolio-item/src/`:
+
+| Folder | Files | |
+|---|---|---|
+| `portfolio-item/` | `portfolio-item.tsx` | restructured: composes the regions below |
+| | `portfolio-item-unavailable.tsx` | **moved in** from its own folder, contents unchanged. The page is its only importer |
+| `portfolio-item-header/` | `portfolio-item-header.tsx` | rewritten: title + meta row + links |
+| | `portfolio-item-meta-row.tsx` | new |
+| | `portfolio-item-links.tsx` | new |
+| `portfolio-item-hero/` | `portfolio-item-hero.tsx` | new, typographic ([D85](../decisions-d85-d87.md#d85)) |
+| `portfolio-item-overview/` | `portfolio-item-overview.tsx` | ⚠️ **new, and not in the earlier list**: the two-column section on `--color-surface` that holds the next four |
+| | `portfolio-item-tech-chips.tsx` | new (left column) |
+| | `portfolio-item-facts.tsx` | new (left column) |
+| | `portfolio-item-summary.tsx` | new (right column: lede + body) |
+| | `portfolio-item-description.tsx` | **moved in** and re-skinned. Renders below the summary, in the right column ([D78](../decisions-d76-d81.md#d78)) |
+| | `sanitize-item-html.ts` | **moved in, contents unchanged** ([D69](../decisions-d69.md#d69)). The description is its only importer |
+| `portfolio-item-videos/` | `portfolio-item-videos.tsx` | re-skinned ([D78](../decisions-d76-d81.md#d78)) |
+| `portfolio-item-gallery/` | `portfolio-item-gallery.tsx` | rewritten: tiles derived per [D86](../decisions-d85-d87.md#d86) |
+| `portfolio-item-next-block/` | `portfolio-item-next-block.tsx` | new ([D79](../decisions-d76-d81.md#d79)) |
+
+`index.ts` is unchanged: it exports `PortfolioItem` only.
+
+Two placement calls, recorded so they read as decisions:
+
+- **The description lives in `portfolio-item-overview/`**, because "below the
+  summary column" puts it inside that section's right column, not after the
+  section. If the build finds it reads better full-width under the section, it
+  moves to its own `portfolio-item-description/` folder and the page renders it.
+- **The sanitizer moves with the description.** It stays a separate file with
+  its own spec. Only its folder changes.
+
+Outside the lib:
+
 - `apps/shell/src/routes/portfolio.$slug.tsx` — ⚠️ **the `head` function only**,
   the same narrow exception Slice 7 held. The component body, the imports and
   the not-found branch stay as they are.
-- Specs for each
 
-Estimated **~26 files**.
+Estimated **~31 files**: 8 new components and their specs (16), 5 rewritten or
+re-skinned components and their specs (10), 2 moved units with their specs (4),
+and the route (1). The earlier ~26 left out the overview and the two moves.
 
 ## Gates
 
@@ -152,8 +183,8 @@ exactly.
 
 - **The sanitizer is not optional and not negotiable.** If the restructure makes
   it awkward, the restructure is wrong.
-- **`file-size.md`** — twelve components is not over-decomposition here; the
-  page has twelve distinct regions.
+- **`file-size.md`** — thirteen components is not over-decomposition here: the
+  page has seven regions, and three of those regions are built from parts.
 - Keep the invented-block flags **as you build**, not reconstructed at the end.
   The design-links rule asks for a control-by-control list and it is much
   cheaper written live.
