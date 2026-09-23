@@ -25,7 +25,7 @@ answer is **option 2 — keep the HTML, sanitize it on the way in.**
 ## What this settles, concretely
 
 1. **The type.** `PortfolioItem.description` is a `string` holding HTML. Slice 7 adds the
-   field to `libs/shared/types/src/portfolio-item.ts` — the module it owns — and its doc
+   field to `libs/shared/types/src/portfolio-item/portfolio-item.ts` — the module it owns — and its doc
    comment says the string is HTML and is sanitized at the render boundary, so nobody
    downstream reads it as plain text.
 2. **The library is `dompurify`**, and ⚠️ **the coordinator installs it, not Slice 7.**

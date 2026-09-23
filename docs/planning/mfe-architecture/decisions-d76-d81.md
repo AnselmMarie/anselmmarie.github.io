@@ -166,9 +166,9 @@ three verifications would be run against markup that is about to change.
 **Why they keep their numbers 8 and 9 rather than becoming 15 and 16.** A
 renumber would rewrite **97 references across 40 files**, and those references
 are not confined to the plan: they appear in `apps/*/vite.config.ts`,
-`infra/src/portfolio-stack.ts`, `libs/shared/config/src/site.ts`,
+`infra/src/portfolio-stack.ts`, `libs/shared/config/src/site/site.ts`,
 `.github/workflows/ci.yml`, `tools/eslint/module-boundaries.mjs` and
-`libs/features/footer/src/footer.tsx`. That is a large mechanical diff through
+`libs/features/footer/src/footer/footer.tsx`. That is a large mechanical diff through
 code belonging to slices still awaiting review, in exchange for nothing but
 numeric tidiness.
 

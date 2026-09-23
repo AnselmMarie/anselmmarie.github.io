@@ -69,9 +69,9 @@ re-skin.
 
 ## Files this slice creates and modifies
 
-- `libs/features/footer/src/footer.tsx` — rewritten to the strip
-- `libs/features/footer/src/footer-social-link.tsx` — re-skinned to the circle
-- `libs/features/footer/src/footer-social-links.const.ts` — unchanged in data
+- `libs/features/footer/src/footer/footer.tsx` — rewritten to the strip
+- `libs/features/footer/src/footer/footer-social-link.tsx` — re-skinned to the circle
+- `libs/features/footer/src/footer/footer-social-links.const.ts` — unchanged in data
 - Specs for each
 
 Estimated **~6 files** — the same size Slice 5 turned out to be.
@@ -97,6 +97,6 @@ Then, in the composed app:
   accept an annual edit, or compute it and accept that SSR and the client can
   disagree across midnight. Say which you chose and why — do not leave it
   looking accidental.
-- `libs/features/footer/src/footer.tsx` currently carries a `Slice 8` reference
+- `libs/features/footer/src/footer/footer.tsx` currently carries a `Slice 8` reference
   in a comment. It still resolves —
   [D80](../decisions-d76-d81.md#d80) keeps Slice 8's number — so leave it alone.

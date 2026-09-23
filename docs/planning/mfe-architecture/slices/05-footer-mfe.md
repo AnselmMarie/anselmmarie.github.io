@@ -81,7 +81,7 @@ for the first time with two remotes in play.
   `remoteEntry.js`; the shell loads it and renders it today. ⚠️ **This slice most likely
   changes nothing in `apps/footer`** — see [`apps/footer/README.md`](../../../../apps/footer/README.md).
 - ⚠️ **What it renders is a placeholder, and replacing it is this slice's job**:
-  `libs/features/footer/src/footer.tsx` exports `Footer` with a stand-in body. Its spec
+  `libs/features/footer/src/footer/footer.tsx` exports `Footer` with a stand-in body. Its spec
   asserts the string `"Slice 5 fills this"`, which **fails the moment the real component
   lands** — that assertion exists so the placeholder cannot ship unnoticed, and deleting it
   is part of this slice.

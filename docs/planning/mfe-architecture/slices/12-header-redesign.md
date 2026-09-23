@@ -46,8 +46,8 @@ re-pointed piecemeal.
   separated by 10%-white rules. Opening it animates the two 20×1.5px bars into
   an X.
 - **`SITE_SECTIONS` re-pointed** to the design's five, in
-  `libs/shared/fixtures/src/site-sections.fixture.ts`, with
-  `libs/shared/types/src/site-section.ts` unchanged in shape.
+  `libs/shared/fixtures/src/site-sections/site-sections.fixture.ts`, with
+  `libs/shared/types/src/site-section/site-section.ts` unchanged in shape.
 
 ### ⚠️ The two exports disagree about the bar, and that is not a defect
 
@@ -72,8 +72,8 @@ every detail page and nothing fails.
   `header-nav-link.tsx`, new `header-menu-overlay.tsx`,
   `header-menu-toggle.tsx`, `header-brand.tsx`, `header-back-link.tsx`
 - `libs/features/header/src/header-sections.const.ts` — retired or re-pointed
-- `libs/shared/fixtures/src/site-sections.fixture.ts` + spec — **the contract**
-- `libs/features/shell/src/shell-header-region.tsx` — ⚠️ **does NOT pass the
+- `libs/shared/fixtures/src/site-sections/site-sections.fixture.ts` + spec — **the contract**
+- `libs/features/shell/src/shell-layout/shell-header-region.tsx` — ⚠️ **does NOT pass the
   variant; it takes `children`** and receives an already-built element. The
   forwarding is in `apps/shell/src/remotes/header-remote.tsx` and the two route
   call sites ([D95](../decisions-d88-d100.md#d95)). This file gains only a note
@@ -82,7 +82,7 @@ every detail page and nothing fails.
   the variant's real path, and **not in this slice's original list**
 - `apps/shell/{vitest.config.ts,src/test-setup.ts,src/test-stubs/*}` — net-new
   test infrastructure; there were no specs anywhere under `apps/` before
-- `libs/ui/components/src/ui-icon.tsx` + spec — the sixth shared component
+- `libs/ui/components/src/ui-icon/ui-icon.tsx` + spec — the sixth shared component
   ([D93](../decisions-d88-d100.md#d93))
 - `libs/features/shell/src/fallbacks/header-fallback.tsx` — the five new anchors
 - Specs for all of the above

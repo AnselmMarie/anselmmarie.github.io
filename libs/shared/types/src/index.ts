@@ -7,14 +7,14 @@ export type {
   HomepageSkillGroup,
   HomepageWorkCard,
   SectionIntro,
-} from './homepage-content.js';
+} from './homepage-content/homepage-content.js';
 export type {
   AboutStat,
   ExperienceEntry,
   HomepageAbout,
   HomepageContact,
   PanelNote,
-} from './homepage-panels.js';
+} from './homepage-panels/homepage-panels.js';
 export type {
   ItemFact,
   ItemLink,
@@ -22,8 +22,8 @@ export type {
   PortfolioItem,
   PortfolioItemImage,
   PortfolioItemVideo,
-} from './portfolio-item.js';
-export type { RemoteEntry, RemoteName, RemoteRegistry } from './remote.js';
-export type { RouteMetadata } from './route-metadata.js';
-export type { SiteSection } from './site-section.js';
-export type { SocialIconName } from './social-icon-name.js';
+} from './portfolio-item/portfolio-item.js';
+export type { RemoteEntry, RemoteName, RemoteRegistry } from './remote/remote.js';
+export type { RouteMetadata } from './route-metadata/route-metadata.js';
+export type { SiteSection } from './site-section/site-section.js';
+export type { SocialIconName } from './social-icon-name/social-icon-name.js';

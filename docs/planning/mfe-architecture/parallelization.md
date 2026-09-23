@@ -47,7 +47,7 @@ nobody and are omitted.
 | 9 | `playwright.config.ts`, root `package.json` scripts, `.github/workflows/` (the E2E job added to Slice 8's workflow) |
 | 10 | `libs/ui/theme/src/theme.css` (**rewritten**), `libs/ui/components` barrel + 5 new components, `libs/features/shell` layout + 3 regions + **all 5 fallbacks**, `apps/shell/src/styles.css`, root manifests **iff [Q20](./questions-closed-q9-q16.md#q20) resolves to self-hosting** |
 | 11 | `libs/shared/types/src/{portfolio-item,homepage-content}.ts` + barrel, all three `portfolio-items-*.fixture.ts`, `homepage.fixture.ts` |
-| 12 | ⚠️ **`libs/shared/fixtures/src/site-sections.fixture.ts` + spec** and `libs/shared/types/src/site-section.ts` — the [D81](./decisions-d76-d81.md#d81) contract; plus `libs/features/shell/src/shell-header-region.tsx` and `fallbacks/header-fallback.tsx` |
+| 12 | ⚠️ **`libs/shared/fixtures/src/site-sections/site-sections.fixture.ts` + spec** and `libs/shared/types/src/site-section/site-section.ts` — the [D81](./decisions-d76-d81.md#d81) contract; plus `libs/features/shell/src/shell-layout/shell-header-region.tsx` and `fallbacks/header-fallback.tsx` |
 | 13 | `libs/features/homepage/**` only |
 | 14 | `libs/features/homepage/**` only — **the same files as 13** |
 | 15 | `libs/features/portfolio-item/**`, plus **the `head` function only** of `apps/shell/src/routes/portfolio.$slug.tsx` |
@@ -118,15 +118,15 @@ that opens the wrong file is told so by the file rather than by this table.
 
 | File | Owner | State at the end of Slice 4 |
 |---|---|---|
-| `libs/shared/types/src/homepage-content.ts` | **Slice 6** | `HomepageContent` with `sections` only |
-| `libs/shared/types/src/portfolio-item.ts` | **Slice 7** | `PortfolioItem` with `slug` + `title` only |
-| `libs/shared/types/src/site-section.ts` | coordinator | done — `SiteSection` ([D63](./decisions-d63-d67.md#d63)) |
+| `libs/shared/types/src/homepage-content/homepage-content.ts` | **Slice 6** | `HomepageContent` with `sections` only |
+| `libs/shared/types/src/portfolio-item/portfolio-item.ts` | **Slice 7** | `PortfolioItem` with `slug` + `title` only |
+| `libs/shared/types/src/site-section/site-section.ts` | coordinator | done — `SiteSection` ([D63](./decisions-d63-d67.md#d63)) |
 | `libs/shared/types/src/index.ts` | **coordinator only** | all five exports in place |
-| `libs/shared/fixtures/src/homepage.fixture.ts` | **Slice 6** | seeded with `sections`; the copy is Slice 6's |
-| `libs/shared/fixtures/src/portfolio-items.fixture.ts` | **Slice 7** | empty array + `portfolioItemBySlug` |
-| `libs/shared/fixtures/src/site-sections.fixture.ts` | coordinator | done — `SITE_SECTIONS` |
-| `libs/shared/fixtures/src/route-metadata.fixture.ts` | **Slice 7** | ⚠️ Slice 7 adds the per-slug rows (D48). **Slice 6's homepage title and description are already here** as `HOME_METADATA` — if Slice 6 wants that copy changed it **reports it**, it does not edit this file |
-| `libs/shared/fixtures/src/use-content-stub.ts` | **coordinator only** | all three signatures stubbed — **no agent edits this** |
+| `libs/shared/fixtures/src/homepage/homepage.fixture.ts` | **Slice 6** | seeded with `sections`; the copy is Slice 6's |
+| `libs/shared/fixtures/src/portfolio-items/portfolio-items.fixture.ts` | **Slice 7** | empty array + `portfolioItemBySlug` |
+| `libs/shared/fixtures/src/site-sections/site-sections.fixture.ts` | coordinator | done — `SITE_SECTIONS` |
+| `libs/shared/fixtures/src/route-metadata/route-metadata.fixture.ts` | **Slice 7** | ⚠️ Slice 7 adds the per-slug rows (D48). **Slice 6's homepage title and description are already here** as `HOME_METADATA` — if Slice 6 wants that copy changed it **reports it**, it does not edit this file |
+| `libs/shared/fixtures/src/use-content-stub/use-content-stub.ts` | **coordinator only** | all three signatures stubbed — **no agent edits this** |
 | `libs/shared/fixtures/src/index.ts` | **coordinator only** | all five exports in place |
 | `libs/features/footer/**` · `apps/footer/**` | **Slice 5** | ✅ **runnable** — full app skeleton on 4175 + placeholder `Footer` ([D68](./decisions-d63-d67.md#d68)) |
 | `libs/features/homepage/**` · `apps/homepage/**` | **Slice 6** | ✅ **runnable** — full app skeleton on 4176 + placeholder `Homepage` carrying the real D43 section ids |

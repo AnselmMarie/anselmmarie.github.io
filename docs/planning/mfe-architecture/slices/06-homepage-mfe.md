@@ -141,7 +141,7 @@ moves it rather than replacing it.
   `remoteEntry.js`; the shell loads it and renders it today. ⚠️ **This slice most likely
   changes nothing in `apps/homepage`** — see [`apps/homepage/README.md`](../../../../apps/homepage/README.md).
 - ⚠️ **What it renders is a placeholder, and replacing it is this slice's job**:
-  `libs/features/homepage/src/homepage.tsx` exports `Homepage` with a stand-in body. Its spec
+  `libs/features/homepage/src/homepage/homepage.tsx` exports `Homepage` with a stand-in body. Its spec
   asserts the string `"Slice 6 fills this"`, which **fails the moment the real component
   lands** — that assertion exists so the placeholder cannot ship unnoticed, and deleting it
   is part of this slice.

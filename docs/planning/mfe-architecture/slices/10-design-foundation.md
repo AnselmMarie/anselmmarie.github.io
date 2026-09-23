@@ -195,9 +195,9 @@ makes skew real.
 
 - `libs/ui/theme/src/theme.css` — the whole `@theme` block, rewritten
 - `libs/ui/components/src/` — five new components + five specs + the barrel
-- `libs/features/shell/src/shell-layout.tsx` and the three region components
+- `libs/features/shell/src/shell-layout/shell-layout.tsx` and the three region components
 - `libs/features/shell/src/fallbacks/*.tsx` (5) + their specs
-- `libs/features/shell/src/portfolio-not-found.tsx` + spec
+- `libs/features/shell/src/portfolio-not-found/portfolio-not-found.tsx` + spec
 - `apps/shell/src/styles.css` — the font `@import` or `@font-face` block (Q20)
 - `libs/ui/components/package.json` — nothing new; Tabler is already there
 - Root manifests **only if Q20 resolves to self-hosting** a font package

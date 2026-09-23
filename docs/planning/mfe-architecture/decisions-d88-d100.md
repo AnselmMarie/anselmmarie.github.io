@@ -189,7 +189,7 @@ point at sections a detail page does not have. So the Header takes a `variant`,
 passed by the host route.
 
 ⚠️ **Slice 12's file list said to assert this in
-`libs/features/shell/src/shell-header-region.tsx`. That component takes
+`libs/features/shell/src/shell-layout/shell-header-region.tsx`. That component takes
 `children`** — it receives an already-built element and cannot pass a prop into
 one. The forwarding actually lives in `apps/shell/src/remotes/header-remote.tsx`
 and the two route call sites, so that is where the spec had to go.

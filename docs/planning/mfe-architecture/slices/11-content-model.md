@@ -133,9 +133,9 @@ Named now so the wave that follows cannot collide, exactly as
 
 ## Files this slice creates and modifies
 
-- `libs/shared/types/src/portfolio-item.ts`, `homepage-content.ts`, the barrel
+- `libs/shared/types/src/portfolio-item/portfolio-item.ts`, `homepage-content.ts`, the barrel
 - `libs/shared/fixtures/src/portfolio-items-{active,other,other-clients}.fixture.ts`
-- `libs/shared/fixtures/src/homepage.fixture.ts`
+- `libs/shared/fixtures/src/homepage/homepage.fixture.ts`
 - Specs for each
 
 Estimated ~14 files; **21 as built** — 10 source modules, 3 specs, 1 consumer
@@ -165,7 +165,7 @@ See [D92](../decisions-d88-d100.md#d92) for how that is closed.
 
 - **This slice writes no JSX.** If you find yourself editing a `.tsx`, you have
   crossed into Slice 13, 14 or 15. ⚠️ **It held**: the one file touched outside
-  the two packages is `libs/features/homepage/src/portfolio-item.test-helpers.ts`,
+  the two packages is `libs/features/homepage/src/test-helpers/portfolio-item.test-helpers.ts`,
   a `.ts` factory whose own banner says it exists so that *"the next field added
   to `PortfolioItem` lands here once instead of in every spec literal."*
 - **`file-size.md` caps every fixture at 200 lines.** Eight items with body

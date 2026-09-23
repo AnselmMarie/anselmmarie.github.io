@@ -74,7 +74,7 @@ here" heading beside the grid.
 
 1. ⚠️ **It is 35 gallery images, not 43.** The other eight are the `thumbnail`
    field, which feeds the Work cards and `og:image`
-   ([portfolio-route-metadata.fixture.ts](../../../libs/shared/fixtures/src/portfolio-route-metadata.fixture.ts)),
+   ([portfolio-route-metadata.fixture.ts](../../../libs/shared/fixtures/src/route-metadata/portfolio-route-metadata.fixture.ts)),
    not the gallery.
 2. ⚠️ **The question's warning about option 1 is backwards.** It cautions that
    derivation yields "six full-width tiles, which is not the rhythm the design
