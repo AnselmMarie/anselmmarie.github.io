@@ -27,6 +27,8 @@ decision is separated from the ones that explain it. This file is now the index 
 - [**D71–D72** — What building Slice 6 forced](decisions-d71-d72.md)
 - [**D73–D74** — What building Slice 7 forced](decisions-d73-d74.md)
 - [**D75** — The brand marks are Tabler, drawn by one shared component](decisions-d75.md)
+- [**D76–D81** — The 2026-09-22 redesign](decisions-d76-d81.md)
+- [**D101–D102** — The plan's tail re-ordered: 17 → 9 → 8](decisions-d101-d102.md)
 
 ## Every decision
 
@@ -107,6 +109,34 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D73](decisions-d73-d74.md#d73) | The shell never passes the resolved item to the remote; `/portfolio/$slug` renders the wrong item | `d73-d74` |
 | [D74](decisions-d73-d74.md#d74) | No portfolio image is ported; the port was assigned to a slice that was forbidden to do it | `d73-d74` |
 | [D75](decisions-d75.md#d75) | The brand marks are Tabler, via one `SocialIcon`; the name union lives in `shared-types` | `d75` |
+| [D76](decisions-d76-d81.md#d76) | The two `_design/` exports supersede the live v3 site as the design source, site-wide | `d76-d81` |
+| [D77](decisions-d76-d81.md#d77) | Eight ported items survive; the design's six-project list is a layout spec, not content | `d76-d81` |
+| [D78](decisions-d76-d81.md#d78) | The HTML `description` and the videos are kept, as blocks the design does not draw | `d76-d81` |
+| [D79](decisions-d76-d81.md#d79) | The footer remote keeps the strip only; the dark blocks above it belong to their pages | `d76-d81` |
+| [D80](decisions-d76-d81.md#d80) | The redesign runs before deployment and E2E; Slices 8 and 9 keep their numbers | `d76-d81` |
+| [D81](decisions-d76-d81.md#d81) | `SITE_SECTIONS` becomes the design's five anchors; `--spacing-header` splits in two | `d76-d81` |
+| [D82](decisions-d82-d83.md#d82) | The three typefaces come from the Google Fonts CDN, via a `<link>` — a CSS `@import` is silently dropped; Q20 closes | `d82-d83` |
+| [D83](decisions-d82-d83.md#d83) | `libs/ui/components` gains a `shared-utils` dependency for `cn`; the slice's file list said it needed none | `d82-d83` |
+| [D84](decisions-d82-d83.md#d84) | The nav bar is flush to the top and full-bleed; the design floats it at the frame inset | `d82-d83` |
+| [D85](decisions-d85-d87.md#d85) | The hero is typographic, not photographic — no asset in the repo reaches 16/7; Q18 closes | `d85-d87` |
+| [D86](decisions-d85-d87.md#d86) | Gallery `span`/`ratio` derive from the authored dimensions and bucket to the design's two; Q19 closes | `d85-d87` |
+| [D87](decisions-d85-d87.md#d87) | `15+ years shipping` and `13+ years in lead roles` — the design's two figures were both wrong; Q21 closes | `d85-d87` |
+| [D88](decisions-d88-d100.md#d88) | The design's four skill groups replace v3's three; the UI/UX list is dropped with `cardId` | `d88-d100` |
+| [D89](decisions-d88-d100.md#d89) | `PortfolioItem.year` is added — the design reads it twice and Slice 11's field table omitted it | `d88-d100` |
+| [D90](decisions-d88-d100.md#d90) | Breeze-Thru is 2022 and Caterpillar News 2020, as the design has them, against v3's own record | `d88-d100` |
+| [D91](decisions-d88-d100.md#d91) | The fixtures and homepage types split into five and two modules; Slice 11's file table could not hold the cap | `d88-d100` |
+| [D92](decisions-d88-d100.md#d92) | Slice 11 is not additive and does not land alone; the run to a compiling homepage is 12 → 13 → 14 | `d88-d100` |
+| [D93](decisions-d88-d100.md#d93) | `UiIcon` is the sixth shared component, added by the coordinator because four slices need it | `d88-d100` |
+| [D94](decisions-d88-d100.md#d94) | The menu control is a `<button>`; its 44px tap target is pulled out of the row so the bar stays 56px | `d88-d100` |
+| [D95](decisions-d88-d100.md#d95) | The header variant is named in four places and checked in none; its spec is at the shell, not the region | `d88-d100` |
+| [D96](decisions-d88-d100.md#d96) | `SECTION_IDS` holds all five anchor strings and `SITE_SECTIONS` is built from it | `d88-d100` |
+| [D97](decisions-d88-d100.md#d97) | `--breakpoint-wide` added — the theme claimed the design had one breakpoint; it has two | `d88-d100` |
+| [D98](decisions-d88-d100.md#d98) | The hero's featured panel renders the export's own unused `index` array; no new copy | `d88-d100` |
+| [D99](decisions-d88-d100.md#d99) | `white-space: nowrap` on the two clamped headings is not reproduced; it overflows by construction | `d88-d100` |
+| [D100](decisions-d88-d100.md#d100) | The anchor contract's third leg is verified in the browser; all five scroll at 84px | `d88-d100` |
+| [D101](decisions-d101-d102.md#d101) | Slice 9 (E2E) runs before Slice 8 (deployment), against a local production build; supersedes D80's tail | `d101-d102` |
+| [D102](decisions-d101-d102.md#d102) | The remaining UI and navigation issues become Slice 17, before E2E; the list is Q22 | `d101-d102` |
+| [D103](decisions-d103.md#d103) | The specs strip reads `13+ years shipping`; supersedes D87's strip figure | `d103` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.

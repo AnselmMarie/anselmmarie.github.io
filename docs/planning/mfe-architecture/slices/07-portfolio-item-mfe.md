@@ -74,7 +74,7 @@ think about navigation.
   and is sanitized on render with `dompurify`.** What that obliges here:
 
   - `PortfolioItem.description` is a `string` holding **HTML**, added to
-    `libs/shared/types/src/portfolio-item.ts` — this slice's module — with a doc comment
+    `libs/shared/types/src/portfolio-item/portfolio-item.ts` — this slice's module — with a doc comment
     saying so, so nobody downstream reads it as plain text.
   - ⚠️ **`dompurify` is installed by the coordinator before this slice starts**, on
     `@portfolio/feature-portfolio-item`. Adding a dependency mutates `pnpm-lock.yaml`,
@@ -139,7 +139,7 @@ agents are not both writing one file.
   `remoteEntry.js`; the shell loads it and renders it today. ⚠️ **This slice most likely
   changes nothing in `apps/portfolio-item`** — see [`apps/portfolio-item/README.md`](../../../../apps/portfolio-item/README.md).
 - ⚠️ **What it renders is a placeholder, and replacing it is this slice's job**:
-  `libs/features/portfolio-item/src/portfolio-item.tsx` exports `PortfolioItem` with a stand-in body. Its spec
+  `libs/features/portfolio-item/src/portfolio-item/portfolio-item.tsx` exports `PortfolioItem` with a stand-in body. Its spec
   asserts the string `"Slice 7 fills this"`, which **fails the moment the real component
   lands** — that assertion exists so the placeholder cannot ship unnoticed, and deleting it
   is part of this slice.

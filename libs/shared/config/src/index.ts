@@ -1,4 +1,4 @@
-export { readEnv } from './read-env.js';
+export { readEnv } from './read-env/read-env.js';
 export {
   DEFAULT_FOOTER_ORIGIN,
   DEFAULT_HEADER_ORIGIN,
@@ -10,5 +10,5 @@ export {
   PORTFOLIO_ITEM_ORIGIN,
   REMOTE_REGISTRY,
   remoteEntryFor,
-} from './remote-registry.js';
-export { DEFAULT_SITE_ORIGIN, SITE_ORIGIN } from './site.js';
+} from './remote-registry/remote-registry.js';
+export { DEFAULT_SITE_ORIGIN, SITE_ORIGIN } from './site/site.js';

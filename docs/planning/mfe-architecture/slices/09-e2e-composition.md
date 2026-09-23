@@ -1,13 +1,21 @@
 # Slice 9 — Playwright over the composed application
 
-**Status:** not started · **Visible?** — none · **Depends on:** Slice 8
+**Status:** not started · **Visible?** — none · **Depends on:** Slices 15, 16, 17 · **Runs before:** Slice 8 ([D101](../decisions-d101-d102.md#d101))
 **Design:** not applicable — asserts behavior, not appearance
 
-The last slice, and the only one that can verify the claim the whole architecture rests on:
-that one MFE failing does not take down the others.
+The second-to-last slice ([D101](../decisions-d101-d102.md#d101)), and the only one that can
+verify the claim the whole architecture rests on: that one MFE failing does not take down
+the others. It runs before deployment, so [Slice 8](./08-independent-deployment.md)'s first
+deploy is already gated on it.
 
 ## Decisions that bind this slice
 
+- **[D101](../decisions-d101-d102.md#d101)** — ⚠️ **this slice runs before Slice 8**,
+  against a local production build of the shell and all four remotes, not a deployment.
+  Its E2E job goes into the existing `.github/workflows/ci.yml`. CloudFront caching
+  ([R12](../risks.md#r12)) is out of reach here and stays in Slice 8.
+- **[D102](../decisions-d101-d102.md#d102)** — [Slice 17](./17-ui-navigation-fixes.md)'s
+  fixes land first, so the suite asserts the fixed navigation, not the current one.
 - **[D20](../decisions-d17-d32.md#d20)** — Playwright arrives here, once there is a composition to
   test. Vitest has covered every slice since Slice 1; this covers the thing Vitest
   structurally cannot.
@@ -29,8 +37,9 @@ that one MFE failing does not take down the others.
 ## Open questions blocking this slice
 
 **None.** [Q6](../questions-closed.md#q6) closed on 2026-09-20 as
-[D41](../decisions-d33-d41.md#d41): the fixtures carry real portfolio copy, so **the MVP is
-publishable off this slice** and nothing here waits on Contentful.
+[D41](../decisions-d33-d41.md#d41): the fixtures carry real portfolio copy, so nothing here
+waits on Contentful. Since [D101](../decisions-d101-d102.md#d101), the MVP is published by
+Slice 8, after this suite is green.
 
 ⚠️ Which raises this slice's stakes rather than lowering them. Its green run is the last
 gate before a public site, so a spec that asserts presence without asserting the page was
@@ -56,10 +65,14 @@ Playwright specs over the real composed app, covering:
 
 ## Files this slice creates and modifies
 
-- `playwright.config.ts`, and a web-server setup that boots the shell and all four remotes
+- `playwright.config.ts`, and a web-server setup that **builds** the shell and all four
+  remotes and serves the production output. There is no deployment to point at yet
+  ([D101](../decisions-d101-d102.md#d101)). Keep the base URL configurable, so Slice 8 can
+  run the same suite against the deployed site.
 - `e2e/` — the specs above, one file per concern
 - Root `package.json` scripts
-- `.github/workflows/` — the E2E job added to the CI workflow from Slice 8
+- `.github/workflows/ci.yml` — an E2E job added to the existing gates workflow. Slice 8
+  later makes its deploy jobs depend on this job
 
 ## Gates
 
@@ -88,10 +101,5 @@ control.
 
 ## After this slice
 
-The MVP is complete: a TanStack Start shell on Lambda composing four independently
-deployed remotes, with failure isolation proven rather than asserted.
-
-**Next:** the Contentful plan. Write it as its own directory under `docs/planning/`, with
-its own slices, and do not start it from this plan. Per
-[no-cross-plan-drift.md](../../../../.claude/rules/no-cross-plan-drift.md), a finished plan
-is a full stop, not a springboard.
+[Slice 8](./08-independent-deployment.md) deploys the site, with this suite as its gate.
+That slice, not this one, closes the MVP ([D101](../decisions-d101-d102.md#d101)).

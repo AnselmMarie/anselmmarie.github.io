@@ -378,3 +378,51 @@ item page. The homepage listing renders thumbnail and title and never touches
 [D67](./decisions-d63-d67.md#d67) per-file split it could not have been: `description` lands
 on `PortfolioItem`, which is Slice 7's module. The over-statement cost nothing because the
 question closed before the wave started, but it would have held a slice for no reason.
+
+---
+
+<a id="q20"></a>
+## Q20 — how are Carlito, JetBrains Mono and Inter served?
+
+**Raised 2026-09-22. Blocks:** the font half of
+[Slice 10](./slices/10-design-foundation.md) only — the palette, the spacing and
+the page frame are buildable while this is open.
+
+The exports inline every `@font-face` as a base64 woff2, which is a property of
+being a single-file bundle and not a delivery decision. The repo has **no font
+setup at all** today.
+
+1. **Google Fonts CDN** — a `<link>` in the shell's document head. Simplest,
+   and a third-party request on every page load.
+2. **Self-hosted woff2** in the shell's `public/` — one origin, no third party,
+   and the subsetting becomes ours to get right.
+
+⚠️ **This is not purely cosmetic and that is why it is a question.** It reaches
+[Slice 8](./slices/08-independent-deployment.md) twice: a CDN needs a CSP
+`font-src` entry and adds a DNS round trip to the cold start
+[R11](./risks.md#r11) already flags, while self-hosting adds bytes to the
+CloudFront origin and a cache-busting concern for immutable deploys.
+
+Note the irony worth naming: [D33](./decisions-d33-d41.md#d33) says the
+architecture is the portfolio piece, and the site's own
+[CSP Generator](./slices/15-portfolio-detail-redesign.md) project is about
+getting exactly this kind of header right.
+
+### ✅ Closed 2026-09-22 → [D82](./decisions-d82-d83.md#d82)
+
+**The maintainer chose option 1, the Google Fonts CDN.**
+
+⚠️ **The build then found a third consideration neither option listed.** The
+question framed the CDN as *"a `<link>` in the shell's document head"*, and
+Slice 10 implemented it as a CSS `@import` in the shared theme instead —
+reasoning that all five stylesheets already import that file, so one
+declaration would cover the shell and the four standalone remote surfaces.
+
+**Vite silently dropped it.** No `@import` in the served CSS, no `@font-face`,
+zero requests to either font origin, every gate green, and a page that rendered
+in system faces. The question's own wording had the right answer in it; the
+implementation talked itself out of it for a real reason (one declaration
+instead of five) and got a failure mode with no signal.
+
+The CSP and cold-start consequences the question raised are unchanged and are
+recorded against Slice 8 in D82.

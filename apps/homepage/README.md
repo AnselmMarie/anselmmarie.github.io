@@ -9,7 +9,7 @@ publishes `remoteEntry.js` there for the shell to load.
 
 ⚠️ **What it renders is a placeholder.**
 [Slice 6](../../docs/planning/mfe-architecture/slices/06-homepage-mfe.md) replaces the body of
-`libs/features/homepage/src/homepage.tsx` with the real homepage. Everything *around*
+`libs/features/homepage/src/homepage/homepage.tsx` with the real homepage. Everything *around*
 that component is finished and should not need rewriting: the federation config, the
 `exposes` map, the registry row, the shell's mount and its error boundary all work today.
 
@@ -35,7 +35,7 @@ written properly, which is the state you see here.
 
 ## What Slice 6 changes
 
-- `libs/features/homepage/src/homepage.tsx` — the real component, in place of the placeholder.
+- `libs/features/homepage/src/homepage/homepage.tsx` — the real component, in place of the placeholder.
 - Its spec, including deleting the `"Slice 6 fills this"` assertion, which is there
   precisely so the placeholder cannot ship unnoticed.
 - Nothing in this directory, most likely.

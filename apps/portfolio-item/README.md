@@ -9,7 +9,7 @@ publishes `remoteEntry.js` there for the shell to load.
 
 ⚠️ **What it renders is a placeholder.**
 [Slice 7](../../docs/planning/mfe-architecture/slices/07-portfolio-item-mfe.md) replaces the body of
-`libs/features/portfolio-item/src/portfolio-item.tsx` with the real portfolioitem. Everything *around*
+`libs/features/portfolio-item/src/portfolio-item/portfolio-item.tsx` with the real portfolioitem. Everything *around*
 that component is finished and should not need rewriting: the federation config, the
 `exposes` map, the registry row, the shell's mount and its error boundary all work today.
 
@@ -35,7 +35,7 @@ written properly, which is the state you see here.
 
 ## What Slice 7 changes
 
-- `libs/features/portfolio-item/src/portfolio-item.tsx` — the real component, in place of the placeholder.
+- `libs/features/portfolio-item/src/portfolio-item/portfolio-item.tsx` — the real component, in place of the placeholder.
 - Its spec, including deleting the `"Slice 7 fills this"` assertion, which is there
   precisely so the placeholder cannot ship unnoticed.
 - Nothing in this directory, most likely.

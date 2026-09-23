@@ -243,6 +243,9 @@ importers:
       '@portfolio/shared-types':
         specifier: workspace:*
         version: link:../../shared/types
+      '@portfolio/shared-utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
       '@portfolio/ui-components':
         specifier: workspace:*
         version: link:../../ui/components
@@ -342,6 +345,9 @@ importers:
       '@portfolio/shared-types':
         specifier: workspace:*
         version: link:../../shared/types
+      '@portfolio/shared-utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
       '@portfolio/ui-primitives':
         specifier: workspace:*
         version: link:../primitives

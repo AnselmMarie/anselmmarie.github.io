@@ -37,7 +37,7 @@ const PortfolioItemFallback = ({
       <a
         data-testid="mfe-fallback-portfolio-item-back"
         href="/#active-projects"
-        className="text-sm font-medium text-ink underline"
+        className="text-sm font-medium text-accent underline underline-offset-4"
       >
         Back to the portfolio
       </a>

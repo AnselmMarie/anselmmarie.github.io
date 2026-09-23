@@ -56,7 +56,7 @@ slice's file.
 
 **1. No thumbnail on the tile, deliberately.** v3's homepage tile is image + title. The
 image string belongs on `PortfolioItem` as `thumbnail` — which is
-`libs/shared/types/src/portfolio-item.ts`, **Slice 7's closed module**, carrying only `slug`
+`libs/shared/types/src/portfolio-item/portfolio-item.ts`, **Slice 7's closed module**, carrying only `slug`
 and `title` while the wave ran. The Slice 6 agent shipped the card **title-only** rather
 than declaring an optional `thumbnail` prop no parent could supply — which would have been
 an unwired prop, exactly the failure

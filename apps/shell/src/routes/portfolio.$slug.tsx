@@ -67,7 +67,7 @@ function PortfolioItemRoute(): ReactElement {
   const item = portfolioItemBySlug(slug);
 
   return (
-    <ShellLayout header={<HeaderRemote />} footer={<FooterRemote />}>
+    <ShellLayout header={<HeaderRemote variant="detail" />} footer={<FooterRemote />}>
       {item ? <PortfolioItemRemote slug={slug} item={item} /> : <PortfolioNotFound slug={slug} />}
     </ShellLayout>
   );

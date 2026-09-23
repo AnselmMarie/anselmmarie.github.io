@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@portfolio/shared-types": "workspace:*",
+    "@portfolio/shared-utils": "workspace:*",
     "@portfolio/ui-primitives": "workspace:*",
     "@tabler/icons-react": "^3.47.0",
     "react": "^19.3.0"

@@ -1,14 +1,21 @@
 # Slice 8 — Independent deployment: GitHub Actions, `nx affected`, AWS
 
-**Status:** not started · **Visible?** — none · **Depends on:** Slices 5, 6, 7
+**Status:** not started · **Visible?** — none · **Depends on:** Slice 9 ([D101](../decisions-d101-d102.md#d101)) · the plan's **last** slice
 **Design:** not applicable — no UI surface
 
-The **first of the plan's two invisible slices** — [Slice 9](./09-e2e-composition.md) is the
-other — and they sit together at the end, where a run of three cannot form. (This file
+The **second of the plan's two invisible slices**, and since
+[D101](../decisions-d101-d102.md#d101) the **last slice**. [Slice 9](./09-e2e-composition.md)
+is the other, and it runs first. They sit together at the end, where a run of three cannot form. (This file
 claimed to be the only one until 2026-09-21; Slice 9 was mis-marked `✅ screen` and adds no
 surface.) It exists to make [D12](../decisions-d01-d16.md#d12) true rather than aspirational.
 
 ## Decisions that bind this slice
+
+- **[D101](../decisions-d101-d102.md#d101)** — ⚠️ **this slice runs after the E2E suite
+  exists.** Its deploy jobs go into the existing `.github/workflows/ci.yml` and depend on
+  Slice 9's E2E job, so no deploy ships unchecked. Verification 3 below (rollback seen by a
+  cold browser) runs the Slice 9 suite against the deployed URL. The CloudFront check
+  ([R12](../risks.md#r12)) is this slice's, because a local build has no CDN.
 
 - **[D31](../decisions-d17-d32.md#d31)** — the host is AWS: remotes to S3 behind CloudFront, the
   shell's SSR server to Lambda. Supersedes [D5](../decisions-d01-d16.md#d5) (Cloudflare Workers).
@@ -63,8 +70,8 @@ surface.) It exists to make [D12](../decisions-d01-d16.md#d12) true rather than 
 
 ## What this slice delivers
 
-- `.github/workflows/deploy.yml` — computes `nx affected` against the base ref and deploys
-  only the apps that actually changed: remotes sync to S3, the shell publishes a new Lambda
+- Deploy jobs in `.github/workflows/ci.yml`, after the E2E job: they compute `nx affected`
+  against the base ref and deploy only the apps that actually changed: remotes sync to S3, the shell publishes a new Lambda
   version.
 - **Immutably versioned remote deployments.** Each remote deploy lands under its own key
   prefix so a previous build stays addressable, which is what the architecture doc's
@@ -78,7 +85,9 @@ surface.) It exists to make [D12](../decisions-d01-d16.md#d12) true rather than 
 
 ## Files this slice creates and modifies
 
-- `.github/workflows/deploy.yml`, plus a CI workflow running the gates on pull requests
+- The deploy jobs, added to the existing `.github/workflows/ci.yml` after Slice 9's E2E
+  job. ⚠️ **Not a second workflow:** `ci.yml` already runs the gates, and
+  [D23](../decisions-d17-d32.md#d23) allows one workflow
 - The infrastructure definitions in **CDK** ([D37](../decisions-d33-d41.md#d37)) — S3 buckets, the
   CloudFront distribution and its cache behaviors, the Lambda function and its invocation
   path, IAM roles. The CDK project exists from Slice 1; this slice fills it in.
@@ -129,3 +138,14 @@ And three verifications the workflow itself has to pass, which are the point of 
   guess.
 - Deploy the shell last in any run that includes it, so a remote it references is already
   live when it goes out.
+
+## After this slice
+
+The MVP is complete: a TanStack Start shell on Lambda composing four independently
+deployed remotes, with failure isolation proven by [Slice 9](./09-e2e-composition.md)
+before the first deploy ([D101](../decisions-d101-d102.md#d101)).
+
+**Next:** the Contentful plan. Write it as its own directory under `docs/planning/`, with
+its own slices, and do not start it from this plan. Per
+[no-cross-plan-drift.md](../../../../.claude/rules/no-cross-plan-drift.md), a finished plan
+is a full stop, not a springboard.
