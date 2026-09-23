@@ -71,7 +71,7 @@ const HomepageExperienceEntry = ({
       {isOpen ? (
         <div
           id={panelId}
-          className="grid gap-5 pb-[1.6rem] frame:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
+          className="grid gap-5 pt-5 pb-[1.6rem] frame:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
         >
           <div className="flex flex-col gap-2 font-mono text-[0.72rem] tracking-[0.12em] uppercase text-muted">
             {/* The period sits in the closed row above 760px, so it is repeated
