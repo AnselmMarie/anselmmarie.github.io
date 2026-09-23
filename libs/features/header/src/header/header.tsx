@@ -1,7 +1,9 @@
 import { type ReactElement, useState } from 'react';
 
-import { HOME_PATH } from '../anchor-href/anchor-href.js';
-import HeaderMenuOverlay from '../header-menu/header-menu-overlay.js';
+import { SITE_SECTIONS } from '@portfolio/shared-fixtures';
+import { MenuSheet } from '@portfolio/ui-components';
+
+import { anchorHref, HOME_PATH } from '../anchor-href/anchor-href.js';
 import HeaderMenuToggle from '../header-menu/header-menu-toggle.js';
 import HeaderNav from '../header-nav/header-nav.js';
 import HeaderBackLink from './header-back-link.js';
@@ -77,21 +79,21 @@ const Header = ({ variant = 'home', pathname }: HeaderProps): ReactElement => {
     >
       <HeaderBrand onNavigate={() => setIsMenuOpen(false)} />
       <HeaderNav pathname={currentPath} />
-      {/* Hidden at `frame` so the nav takes the right-hand column. */}
+      {/* Hidden at `frame` so the nav takes the right-hand column. The sheet
+          itself portals to the body; only its trigger renders here. */}
       <div className="flex justify-end frame:hidden">
-        <HeaderMenuToggle
-          panelId={MENU_PANEL_ID}
+        <MenuSheet
+          id={MENU_PANEL_ID}
+          title="Menu"
+          items={SITE_SECTIONS.map((section) => ({
+            href: anchorHref(section.id, currentPath),
+            label: section.label,
+          }))}
+          trigger={<HeaderMenuToggle isOpen={isMenuOpen} />}
           isOpen={isMenuOpen}
-          onToggle={() => setIsMenuOpen((open) => !open)}
+          onOpenChange={setIsMenuOpen}
         />
       </div>
-      {isMenuOpen ? (
-        <HeaderMenuOverlay
-          id={MENU_PANEL_ID}
-          pathname={currentPath}
-          onDismiss={() => setIsMenuOpen(false)}
-        />
-      ) : null}
     </div>
   );
 };

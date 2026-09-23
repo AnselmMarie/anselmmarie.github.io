@@ -1,5 +1,6 @@
 export { type AccordionEntry, default as Accordion } from './accordion/accordion.js';
 export { default as Eyebrow, type EyebrowTone } from './eyebrow/eyebrow.js';
+export { default as MenuSheet, type MenuSheetItem } from './menu-sheet/menu-sheet.js';
 export { default as MetaChip, type MetaChipTone } from './meta-chip/meta-chip.js';
 export { default as NavMenu, type NavMenuItem } from './nav-menu/nav-menu.js';
 export { default as PanelCard } from './panel-card/panel-card.js';

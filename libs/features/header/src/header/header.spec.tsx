@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import { SITE_SECTIONS } from '@portfolio/shared-fixtures';
@@ -45,13 +45,15 @@ describe('Header — the home variant', () => {
   });
 });
 
-describe('Header — the mobile overlay', () => {
+describe('Header — the mobile menu sheet', () => {
+  const menu = () => screen.queryByRole('dialog', { name: 'Menu' });
+
   it('is not in the document until the toggle is pressed', () => {
     // Unmounted rather than `display:none` (the export's choice), so five
     // links do not sit in every page's tab order at every width.
     render(<Header pathname="/" />);
 
-    expect(screen.queryByTestId('header-menu-overlay')).not.toBeInTheDocument();
+    expect(menu()).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Open menu' })).toHaveAttribute(
       'aria-expanded',
       'false'
@@ -63,35 +65,59 @@ describe('Header — the mobile overlay', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
 
-    expect(screen.getByTestId('header-menu-overlay')).toBeInTheDocument();
+    expect(menu()).toHaveAttribute('id', 'header-menu');
     expect(screen.getByRole('button', { name: 'Close menu' })).toHaveAttribute(
       'aria-expanded',
       'true'
     );
+    expect(screen.getByRole('button', { name: 'Close menu' })).toHaveAttribute(
+      'aria-controls',
+      'header-menu'
+    );
   });
 
-  it("forwards the pathname into the overlay's anchors", () => {
-    // spec-through-the-parent.md again: the overlay builds its own hrefs from
-    // a pathname Header hands it, and the anchors are a different set of
-    // elements from the desktop nav's.
+  it('closes again from the same toggle, which stays reachable while open', () => {
+    // ⚠️ The sheet is non-modal so this button is not hidden from assistive
+    // tech while the sheet is open, and it is the sheet's registered trigger
+    // so this press is not also read as an outside press (close, re-open).
+    render(<Header pathname="/" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
+
+    fireEvent.click(screen.getByRole('button', { name: 'Close menu' }));
+
+    expect(menu()).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Open menu' })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
+  });
+
+  it("forwards the pathname into the sheet's anchors", () => {
+    // spec-through-the-parent.md again: Header builds the sheet's hrefs from
+    // its pathname, and the anchors are a different set of elements from the
+    // desktop nav's.
     render(<Header pathname="/portfolio/cosmikata" />);
     fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
 
-    const overlay = screen.getByTestId('header-menu-overlay');
-    const contact = [...overlay.querySelectorAll('a')].find((a) => a.textContent === 'Contact');
+    const sheet = menu() as HTMLElement;
 
-    expect(contact).toHaveAttribute('href', '/#contact');
+    expect(within(sheet).getByRole('link', { name: 'Contact' })).toHaveAttribute(
+      'href',
+      '/#contact'
+    );
   });
 
   it('closes when a link inside it is chosen', () => {
     render(<Header pathname="/" />);
     fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
 
-    const overlay = screen.getByTestId('header-menu-overlay');
+    fireEvent.click(within(menu() as HTMLElement).getAllByRole('link')[0] as HTMLElement);
 
-    fireEvent.click([...overlay.querySelectorAll('a')][0] as HTMLElement);
-
-    expect(screen.queryByTestId('header-menu-overlay')).not.toBeInTheDocument();
+    expect(menu()).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Open menu' })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
   });
 });
 

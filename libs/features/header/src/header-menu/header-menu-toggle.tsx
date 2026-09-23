@@ -1,12 +1,14 @@
-import type { ReactElement } from 'react';
+import type { ComponentProps, ReactElement } from 'react';
 
 import { cn } from '@portfolio/shared-utils';
 
-interface HeaderMenuToggleProps {
-  /** The overlay this controls, so `aria-controls` can point at it. */
-  panelId: string;
+/**
+ * ⚠️ **Rendered as `MenuSheet`'s trigger**, so Base UI supplies `onClick`,
+ * `aria-expanded`, `aria-controls` and the ref through the rest props — which
+ * is why they must reach the `<button>`. `isOpen` only draws the bars.
+ */
+interface HeaderMenuToggleProps extends Omit<ComponentProps<'button'>, 'className' | 'children'> {
   isOpen: boolean;
-  onToggle: () => void;
 }
 
 const BAR_BASE =
@@ -29,15 +31,13 @@ const BAR_BASE =
  * spacer stays correct. Shrinking the button instead would have been the
  * silent, worse fix.
  */
-const HeaderMenuToggle = ({ panelId, isOpen, onToggle }: HeaderMenuToggleProps): ReactElement => {
+const HeaderMenuToggle = ({ isOpen, ...buttonProps }: HeaderMenuToggleProps): ReactElement => {
   return (
     <button
       type="button"
-      aria-expanded={isOpen}
-      aria-controls={panelId}
       aria-label={isOpen ? 'Close menu' : 'Open menu'}
-      onClick={onToggle}
-      className="relative -my-2.5 flex h-11 w-11 items-center justify-center text-ink frame:hidden"
+      {...buttonProps}
+      className="relative -my-2.5 flex h-11 w-11 cursor-pointer items-center justify-center text-ink frame:hidden"
     >
       <span
         aria-hidden
