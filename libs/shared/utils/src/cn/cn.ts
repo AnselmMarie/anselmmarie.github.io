@@ -1,5 +1,20 @@
 import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { extendTailwindMerge } from 'tailwind-merge';
+
+/**
+ * The font-size tokens `libs/ui/theme` declares as `--text-*`.
+ *
+ * ⚠️ **tailwind-merge cannot read the theme, so it has to be told.** An
+ * unknown `text-<name>` is classified as a text **color**, which puts
+ * `text-chip` in the same group as `text-ink` — and the later one deletes the
+ * size. That is how every MetaChip rendered at 16px instead of 0.58rem, with
+ * nothing erroring. Add a name here whenever `theme.css` gains a `--text-*`.
+ */
+const THEME_FONT_SIZES = ['display', 'section', 'lead', 'company', 'eyebrow', 'chip'];
+
+const twMerge = extendTailwindMerge({
+  extend: { theme: { text: THEME_FONT_SIZES } },
+});
 
 /**
  * Merges class names, resolving Tailwind conflicts so the **last** utility in a

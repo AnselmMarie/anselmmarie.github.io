@@ -17,6 +17,19 @@ describe('cn', () => {
     expect(cn('bg-page text-ink', 'bg-white')).toBe('text-ink bg-white');
   });
 
+  it.each(['display', 'section', 'lead', 'company', 'eyebrow', 'chip'])(
+    'keeps the theme font size text-%s alongside a text color',
+    (size) => {
+      expect(cn(`font-mono text-${size} uppercase`, 'text-ink')).toBe(
+        `font-mono text-${size} uppercase text-ink`
+      );
+    }
+  );
+
+  it('still resolves two theme font sizes against each other', () => {
+    expect(cn('text-chip', 'text-eyebrow')).toBe('text-eyebrow');
+  });
+
   it('drops falsy values', () => {
     expect(cn('a', false, null, undefined, 'b')).toBe('a b');
   });
