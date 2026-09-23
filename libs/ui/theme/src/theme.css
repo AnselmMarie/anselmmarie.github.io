@@ -131,6 +131,28 @@
   --spacing-frame: 14px;
   --breakpoint-frame: 760px;
   --breakpoint-wide: 1080px;
+
+  /*
+   * The accordion's open/close, for the generated primitive's
+   * `data-open:animate-accordion-down` / `data-closed:animate-accordion-up`.
+   * ⚠️ Not `tw-animate-css`, which is where shadcn expects these from: its
+   * keyframes read the Radix/Bits/Reka height vars and never Base UI's
+   * `--accordion-panel-height`, so they would animate to `auto` — i.e. not at
+   * all. Base UI waits for the closing animation before unmounting the panel;
+   * `forwards` holds it at 0 for the frames in between, or it flashes open.
+   */
+  --animate-accordion-down: accordion-down 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-accordion-up: accordion-up 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--accordion-panel-height); }
+  }
+
+  @keyframes accordion-up {
+    from { height: var(--accordion-panel-height); }
+    to { height: 0; }
+  }
 }
 
 /*
