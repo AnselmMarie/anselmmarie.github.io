@@ -1,6 +1,6 @@
 # Slice 13 — Homepage A: the specs strip, the hero, and the Work grid
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slices 10, 11
+**Status:** ✅ built, **held with Slices 11, 12** ([D92](../decisions-d88-d100.md#d92)) · **Visible?** ✅ screen · **Depends on:** Slices 10, 11
 **Design:** [`_design/Anselm Marie Portfolio.html`](../../../../_design/Anselm%20Marie%20Portfolio.html) — drawn ✅
 
 The first half of the homepage remote. Split from

@@ -1,6 +1,6 @@
 # Slice 14 — Homepage B: Experience, Skills, About, Contact
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slice 13
+**Status:** ✅ built, **held with Slices 11, 12** ([D92](../decisions-d88-d100.md#d92)) · **Visible?** ✅ screen · **Depends on:** Slice 13
 **Design:** [`_design/Anselm Marie Portfolio.html`](../../../../_design/Anselm%20Marie%20Portfolio.html) — drawn ✅
 
 The second half of the homepage remote, and the larger one: four sections that

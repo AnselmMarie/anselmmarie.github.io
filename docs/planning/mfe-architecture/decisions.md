@@ -120,6 +120,19 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D85](decisions-d85-d87.md#d85) | The hero is typographic, not photographic — no asset in the repo reaches 16/7; Q18 closes | `d85-d87` |
 | [D86](decisions-d85-d87.md#d86) | Gallery `span`/`ratio` derive from the authored dimensions and bucket to the design's two; Q19 closes | `d85-d87` |
 | [D87](decisions-d85-d87.md#d87) | `15+ years shipping` and `13+ years in lead roles` — the design's two figures were both wrong; Q21 closes | `d85-d87` |
+| [D88](decisions-d88-d100.md#d88) | The design's four skill groups replace v3's three; the UI/UX list is dropped with `cardId` | `d88-d100` |
+| [D89](decisions-d88-d100.md#d89) | `PortfolioItem.year` is added — the design reads it twice and Slice 11's field table omitted it | `d88-d100` |
+| [D90](decisions-d88-d100.md#d90) | Breeze-Thru is 2022 and Caterpillar News 2020, as the design has them, against v3's own record | `d88-d100` |
+| [D91](decisions-d88-d100.md#d91) | The fixtures and homepage types split into five and two modules; Slice 11's file table could not hold the cap | `d88-d100` |
+| [D92](decisions-d88-d100.md#d92) | Slice 11 is not additive and does not land alone; the run to a compiling homepage is 12 → 13 → 14 | `d88-d100` |
+| [D93](decisions-d88-d100.md#d93) | `UiIcon` is the sixth shared component, added by the coordinator because four slices need it | `d88-d100` |
+| [D94](decisions-d88-d100.md#d94) | The menu control is a `<button>`; its 44px tap target is pulled out of the row so the bar stays 56px | `d88-d100` |
+| [D95](decisions-d88-d100.md#d95) | The header variant is named in four places and checked in none; its spec is at the shell, not the region | `d88-d100` |
+| [D96](decisions-d88-d100.md#d96) | `SECTION_IDS` holds all five anchor strings and `SITE_SECTIONS` is built from it | `d88-d100` |
+| [D97](decisions-d88-d100.md#d97) | `--breakpoint-wide` added — the theme claimed the design had one breakpoint; it has two | `d88-d100` |
+| [D98](decisions-d88-d100.md#d98) | The hero's featured panel renders the export's own unused `index` array; no new copy | `d88-d100` |
+| [D99](decisions-d88-d100.md#d99) | `white-space: nowrap` on the two clamped headings is not reproduced; it overflows by construction | `d88-d100` |
+| [D100](decisions-d88-d100.md#d100) | The anchor contract's third leg is verified in the browser; all five scroll at 84px | `d88-d100` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.

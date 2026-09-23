@@ -18,7 +18,8 @@ between demonstrating the architecture and shaving complexity.
 | **Merged** | Slices 1–2 (`7b3bf60`, PR #42) · Slices 3–4 (`bfb75b9`, PR #43) · Slices 5–7 (`d4387c3`, PR #44) |
 | **On `master`** | The composed site works end to end: four live remotes, eight portfolio items with their real images, `/portfolio/<slug>` resolving, an unknown slug answering not-found, and a stopped remote showing its fallback while the others keep rendering |
 | **Built, awaiting review** | Slice 10 — the design foundation: the new palette, the type scale, the card frame, and five shared components |
-| **Not started** | Slices 11–16 (the rest of the redesign), then 8 and 9 |
+| **Built, awaiting review** | Slices 11–14 — the content model, the header, and the whole homepage. Held together as one change ([D92](./decisions-d88-d100.md#d92)), since Slice 11's removals only compile once 13–14 land. ✅ **The composed site renders with zero fallbacks**, and the anchor contract is verified end to end: all five nav links scroll, four landing at exactly 84px ([D100](./decisions-d88-d100.md#d100)) |
+| **Not started** | Slices 15–16 (detail page, footer strip), then 8 and 9 |
 
 ⚠️ **The design changed on 2026-09-22.** Two new exports replace the look of every surface
 — see [design-sources.md](./design-sources.md) and
@@ -29,6 +30,14 @@ deployment and E2E ([D80](./decisions-d76-d81.md#d80)).
 discoveries about the code** — a wrong item count, a design row claiming a footer v3 never
 had, and a file list assigned to a slice forbidden to touch it. Each was found by the agent
 sent to build against it. That is the pattern to carry into the redesign wave.
+
+⚠️ **Slices 11–14 repeated it: eight of their thirteen decisions are plan corrections**
+([D88–D100](./decisions-d88-d100.md)) — an omitted `year` field, a skills section the field
+list never mentioned, a file split the 200-line cap would not hold, a slice that called
+itself additive while removing three fields, a variant spec pointed at a component that
+takes `children`, and a theme that claimed the design had one breakpoint when it has two.
+⚠️ **Most were found by running the gates the slices themselves prescribed**, not by reading
+the plan.
 
 ## First visible checkpoint
 
@@ -86,10 +95,10 @@ Listed in **execution order**. The `#` column is the label, not the position.
 | [6](./slices/06-homepage-mfe.md) | `apps/homepage` + `libs/features/homepage`, on fixtures | fe | ✅ screen | **14 as built** (est. ~32) | ✅ merged (`d4387c3`) |
 | [7](./slices/07-portfolio-item-mfe.md) | `apps/portfolio-item` + feature lib + `/portfolio/$slug` | fe | ✅ screen | **27 as built** (est. ~34) | ✅ merged (`d4387c3`) |
 | [10](./slices/10-design-foundation.md) | Palette, type, the page frame, five shared components. **Solo** | fe | ✅ screen | **32 as built** (est. ~34) | ✅ built, awaiting review |
-| [11](./slices/11-content-model.md) | Types + fixtures for the new field set. **Solo** | fe | — none | ~14 | not started |
-| [12](./slices/12-header-redesign.md) | Floating nav, mobile overlay, **the `SITE_SECTIONS` contract** | fe | ✅ screen | ~20 | not started |
-| [13](./slices/13-homepage-hero-work.md) | Specs strip, hero, the Work grid | fe | ✅ screen | ~16 | not started |
-| [14](./slices/14-homepage-experience-contact.md) | Experience accordion, Skills, About, Contact | fe | ✅ screen | ~20 | not started |
+| [11](./slices/11-content-model.md) | Types + fixtures for the new field set. **Solo** | fe | — none | **21 as built** (est. ~14) | ✅ built, held with 12–14 |
+| [12](./slices/12-header-redesign.md) | Floating nav, mobile overlay, **the `SITE_SECTIONS` contract** | fe | ✅ screen | **26 as built** (est. ~20) | ✅ built, held with 11, 13–14 |
+| [13](./slices/13-homepage-hero-work.md) | Specs strip, hero, the Work grid | fe | ✅ screen | **13 as built** (est. ~16) | ✅ built, held with 11–14 |
+| [14](./slices/14-homepage-experience-contact.md) | Experience accordion, Skills, About, Contact | fe | ✅ screen | **10 as built** (est. ~20) | ✅ built, held with 11–14 |
 | [15](./slices/15-portfolio-detail-redesign.md) | The detail page, **plus the two blocks the design omits** | fe | ✅ screen | ~26 | not started |
 | [16](./slices/16-footer-strip.md) | The footer strip, and its degradation | fe | ✅ screen | ~6 | not started |
 | [8](./slices/08-independent-deployment.md) | GitHub Actions (`nx affected`) → CDK-described S3/CloudFront/Lambda, rollback | ops | — none | ~26 | not started |
@@ -113,7 +122,7 @@ passing test suite is not a visible surface. Every slice is under the 250-file c
   log passed its 500-line cap. The source of truth; each slice restates only the ones that
   bind it. Start at [D33](./decisions-d33-d41.md#d33): the project's purpose is the
   tiebreaker the rest were decided against. Most recently
-  [D85–D87](./decisions-d85-d87.md) — the three design questions, closed before the wave.
+  [D88–D92](./decisions-d88-d100.md) — what building Slice 11 found wrong in the plan.
 - [open-questions.md](./open-questions.md) — ✅ **none are open.** The four raised on
   2026-09-22 by reading the new exports all closed the same day. ⚠️ **An empty list is a
   statement, not an omission** — a slice that finds a new blocked field raises it there

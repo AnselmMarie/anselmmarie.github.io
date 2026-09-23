@@ -1,6 +1,7 @@
 # Slice 11 — The content model: types, fixtures, and the per-file split
 
-**Status:** not started · **Visible?** — none · **Depends on:** Slice 10
+**Status:** ✅ built, **held — does not land alone** ([D92](../decisions-d88-d100.md#d92))
+**Visible?** — none · **Depends on:** Slice 10 · **Held with:** Slices 12, 13, 14
 **Design:** [both exports](../design-sources.md) — read for the *field set*, not the copy
 
 The plan's **one invisible slice before the wave**, and the only one
@@ -120,10 +121,12 @@ Named now so the wave that follows cannot collide, exactly as
 |---|---|
 | `types/src/portfolio-item.ts` | **this slice**, then Slice 15 reads only |
 | `types/src/homepage-content.ts` | **this slice**, then Slices 13/14 read only |
+| `types/src/homepage-panels.ts` (new — [D91](../decisions-d88-d100.md#d91)) | **this slice**, then Slice 14 reads only |
 | `types/src/site-section.ts` | **Slice 12** ([D81](../decisions-d76-d81.md#d81)) |
 | `types/src/index.ts` | **coordinator only** |
-| `fixtures/src/portfolio-items-*.fixture.ts` (3) | **this slice** |
+| `fixtures/src/portfolio-items-*.fixture.ts` (**5**, was 3 — [D91](../decisions-d88-d100.md#d91)) | **this slice** |
 | `fixtures/src/homepage.fixture.ts` | **this slice** |
+| `fixtures/src/homepage-{experience,about}.fixture.ts` (new — [D91](../decisions-d88-d100.md#d91)) | **this slice** |
 | `fixtures/src/site-sections.fixture.ts` | **Slice 12** |
 | `fixtures/src/use-content-stub.ts` | **coordinator only** — no slice edits it |
 | `fixtures/src/index.ts` | **coordinator only** |
@@ -135,7 +138,10 @@ Named now so the wave that follows cannot collide, exactly as
 - `libs/shared/fixtures/src/homepage.fixture.ts`
 - Specs for each
 
-Estimated **~14 files**.
+Estimated ~14 files; **21 as built** — 10 source modules, 3 specs, 1 consumer
+test helper, and the plan docs. The overrun is [D91](../decisions-d88-d100.md#d91):
+the redesign's seven fields per item pushed four modules past the 200-line cap,
+so each split rather than the cap being raised.
 
 ## Gates
 
@@ -144,15 +150,24 @@ pnpm nx run-many -t typecheck lint test --projects=shared-types,shared-fixtures
 pnpm nx run-many -t typecheck --projects=feature-homepage,feature-portfolio-item
 ```
 
-⚠️ **Run the consumers' typecheck too**, not just this package's. Every field
-added here is additive, so the consumers *should* still compile — and if one
-does not, that is the finding, surfaced now rather than inside a wave agent's
-worktree.
+⚠️ **Run the consumers' typecheck too**, not just this package's.
+
+⚠️ **This slice is NOT additive, and the sentence that used to stand here saying
+it was is the error — not the removals.** It drops `projectGroups`, `cardId` and
+`hero.links` and retypes `hero.headline` to `AccentedLine`, all of which this
+file's own prose describes. The consumers' typecheck was run and found it:
+`feature-homepage` has **20 type errors in 7 files** and 7 failing tests, every
+one of them a `.tsx`/`.spec.tsx` in Slices 13 and 14's set. Everything else in
+the workspace stays green, because the `PortfolioItem` half really is additive.
+See [D92](../decisions-d88-d100.md#d92) for how that is closed.
 
 ## Notes for whoever builds this
 
 - **This slice writes no JSX.** If you find yourself editing a `.tsx`, you have
-  crossed into Slice 13, 14 or 15.
+  crossed into Slice 13, 14 or 15. ⚠️ **It held**: the one file touched outside
+  the two packages is `libs/features/homepage/src/portfolio-item.test-helpers.ts`,
+  a `.ts` factory whose own banner says it exists so that *"the next field added
+  to `PortfolioItem` lands here once instead of in every spec literal."*
 - **`file-size.md` caps every fixture at 200 lines.** Eight items with body
   copy will not fit one module; the three existing `portfolio-items-*` files
   already split the set and the split stays.

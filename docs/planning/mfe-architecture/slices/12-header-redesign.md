@@ -1,6 +1,7 @@
 # Slice 12 — Header: the floating nav and the mobile overlay
 
-**Status:** not started · **Visible?** ✅ screen · **Depends on:** Slices 10, 11
+**Status:** ✅ built, **held with Slices 11, 13, 14** ([D92](../decisions-d88-d100.md#d92))
+**Visible?** ✅ screen · **Depends on:** Slices 10, 11
 **Design:** [`_design/Anselm Marie Portfolio.html`](../../../../_design/Anselm%20Marie%20Portfolio.html) — drawn ✅ · the detail export draws a **different, simpler** bar (see below)
 
 First slice of the redesign wave. It owns `apps/header` + `libs/features/header`
@@ -72,7 +73,17 @@ every detail page and nothing fails.
   `header-menu-toggle.tsx`, `header-brand.tsx`, `header-back-link.tsx`
 - `libs/features/header/src/header-sections.const.ts` — retired or re-pointed
 - `libs/shared/fixtures/src/site-sections.fixture.ts` + spec — **the contract**
-- `libs/features/shell/src/shell-header-region.tsx` — passes the variant
+- `libs/features/shell/src/shell-header-region.tsx` — ⚠️ **does NOT pass the
+  variant; it takes `children`** and receives an already-built element. The
+  forwarding is in `apps/shell/src/remotes/header-remote.tsx` and the two route
+  call sites ([D95](../decisions-d88-d100.md#d95)). This file gains only a note
+  that its `fixed` is what the overlay positions against.
+- `apps/shell/src/remotes/header-remote.tsx` + `remotes.d.ts` + both routes —
+  the variant's real path, and **not in this slice's original list**
+- `apps/shell/{vitest.config.ts,src/test-setup.ts,src/test-stubs/*}` — net-new
+  test infrastructure; there were no specs anywhere under `apps/` before
+- `libs/ui/components/src/ui-icon.tsx` + spec — the sixth shared component
+  ([D93](../decisions-d88-d100.md#d93))
 - `libs/features/shell/src/fallbacks/header-fallback.tsx` — the five new anchors
 - Specs for all of the above
 
@@ -94,6 +105,15 @@ Plus, because the contract fails silently:
 Homepage remote up. Then stop the Header remote and click all five in the
 **fallback**. A spec cannot catch an id that agrees with itself in two places
 and disagrees in the third.
+
+⚠️ **Only the fallback half was run, and the reason is D92.** With the Header
+remote stopped, all five fallback anchors resolve to `/#work`, `/#experience`,
+`/#skills`, `/#about`, `/#contact` — verified in the browser. **The scroll half
+could not be run**: the Homepage remote throws on `projectGroups` until Slices
+13 and 14 land, so there are no section elements to scroll to and the third leg
+of the contract is still unverified. ⚠️ **It is not verified by the specs
+either** — no spec in this workspace can see a rendered `id` attribute. Run it
+the moment Slice 14 is green.
 
 ## Notes for whoever builds this
 
