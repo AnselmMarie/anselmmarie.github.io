@@ -10,7 +10,8 @@ interface HeaderNavProps {
 }
 
 /**
- * The Header's five section links, centred in the bar's middle grid cell.
+ * The Header's five section links, right-aligned in the bar's second grid
+ * column. They were centred in a middle column until 2026-09-23.
  *
  * ⚠️ **Hidden below 760px, not unmounted** — the links move into
  * `header-menu-overlay.tsx` there. `frame` is the design's one breakpoint,
@@ -24,7 +25,7 @@ interface HeaderNavProps {
  */
 const HeaderNav = ({ pathname }: HeaderNavProps): ReactElement => {
   return (
-    <nav aria-label="Sections" className="hidden items-center justify-center gap-[26px] frame:flex">
+    <nav aria-label="Sections" className="hidden items-center justify-end gap-[26px] frame:flex">
       {SITE_SECTIONS.map((section) => (
         <HeaderNavLink
           key={section.id}

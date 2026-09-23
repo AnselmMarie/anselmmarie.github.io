@@ -73,11 +73,12 @@ const Header = ({ variant = 'home', pathname }: HeaderProps): ReactElement => {
     <div
       data-testid="header-remote"
       data-variant="home"
-      className="grid w-full grid-cols-[1fr_auto] items-center gap-4 frame:grid-cols-[1fr_auto_1fr]"
+      className="grid w-full grid-cols-[1fr_auto] items-center gap-4"
     >
       <HeaderBrand onNavigate={() => setIsMenuOpen(false)} />
       <HeaderNav pathname={currentPath} />
-      <div className="flex justify-end">
+      {/* Hidden at `frame` so the nav takes the right-hand column. */}
+      <div className="flex justify-end frame:hidden">
         <HeaderMenuToggle
           panelId={MENU_PANEL_ID}
           isOpen={isMenuOpen}
