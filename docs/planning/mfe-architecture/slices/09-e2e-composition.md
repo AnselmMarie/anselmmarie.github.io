@@ -16,6 +16,10 @@ deploy is already gated on it.
   ([R12](../risks.md#r12)) is out of reach here and stays in Slice 8.
 - **[D102](../decisions-d101-d102.md#d102)** — [Slice 17](./17-ui-navigation-fixes.md)'s
   fixes land first, so the suite asserts the fixed navigation, not the current one.
+- **[D104](../decisions-d104.md#d104)** — ⚠️ Slices 16 and 17 are done, but neither left a
+  record to check against. Slice 17 has no issue list, and **Slice 16's footer-down check
+  never ran**. The failure-isolation specs here must assert the footer fallback's look on
+  both `/` and `/portfolio/<slug>`, not just that it's there.
 - **[D20](../decisions-d17-d32.md#d20)** — Playwright arrives here, once there is a composition to
   test. Vitest has covered every slice since Slice 1; this covers the thing Vitest
   structurally cannot.

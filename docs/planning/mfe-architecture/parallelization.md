@@ -54,7 +54,7 @@ nobody and are omitted.
 | 14 | `libs/features/homepage/**` only — **the same files as 13** |
 | 15 | `libs/features/portfolio-item/**`, plus **the `head` function only** of `apps/shell/src/routes/portfolio.$slug.tsx` |
 | 16 | `libs/features/footer/**` only |
-| 17 | **Unknown until [Q22](./open-questions.md#q22) is answered.** Each issue's owner project goes in the slice's table; any in `libs/ui/*` or the shell are the coordinator's |
+| 17 | ✅ Done ([D104](./decisions-d104.md#d104)). No file list was recorded; [Q22](./questions-closed-q18-q21.md#q22) closed without an issue list |
 
 Specs count as files a slice touches. A slice editing a registry almost always edits that
 registry's spec too, and that spec is shared.
@@ -270,7 +270,7 @@ oversight.
 | 14 | ~20 | The largest of the wave: four sections with no existing counterpart. |
 | 15 | ~31 | Thirteen components in seven section folders, including the two invented blocks ([D78](./decisions-d76-d81.md#d78)). Raised from ~26 on 2026-09-23 for the overview section and two folder moves. |
 | 16 | ~6 | The same size Slice 5 turned out to be. |
-| 17 | unknown | Pending [Q22](./open-questions.md#q22). Split by owner project if it passes ~40. |
+| 17 | unknown | Done ([D104](./decisions-d104.md#d104)); never counted. |
 
 Every slice is under the cap, so no slice needs splitting on size alone.
 

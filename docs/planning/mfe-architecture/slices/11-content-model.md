@@ -1,6 +1,6 @@
 # Slice 11 — The content model: types, fixtures, and the per-file split
 
-**Status:** ✅ built, **held — does not land alone** ([D92](../decisions-d88-d100.md#d92))
+**Status:** ✅ merged with Slices 12–14 (`ab5c139`, PR #45; [D92](../decisions-d88-d100.md#d92))
 **Visible?** — none · **Depends on:** Slice 10 · **Held with:** Slices 12, 13, 14
 **Design:** [both exports](../design-sources.md) — read for the *field set*, not the copy
 

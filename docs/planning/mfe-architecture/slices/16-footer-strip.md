@@ -1,13 +1,17 @@
 # Slice 16 — Footer: the strip, and making its absence look deliberate
 
-**Status:** 🟡 strip built 2026-09-23 (footer up, `/` only); the footer-down and
-`/portfolio/<slug>` checks below are not yet done · **Visible?** ✅ screen · **Depends on:** Slices 10, 11
+**Status:** ✅ done, maintainer's call 2026-09-23 ([D104](../decisions-d104.md#d104)). The strip
+merged in `ab5c139` (PR #45). ⚠️ The footer-down and `/portfolio/<slug>` checks below were
+never recorded as run; the footer-down one moves to Slice 9 · **Visible?** ✅ screen · **Depends on:** Slices 10, 11
 **Design:** [both exports](../design-sources.md) — drawn ✅, **byte-identical in each**
 
 The smallest slice of the redesign and the one with the most interesting
 failure mode. It owns `apps/footer` + `libs/features/footer`.
 
 ## Decisions that bind this slice
+
+- **[D104](../decisions-d104.md#d104)** — done on the maintainer's word; the footer-down
+  check is now Slice 9's.
 
 - **[D79](../decisions-d76-d81.md#d79)** — ⚠️ **the footer remote renders the
   strip only.** The dark block above it belongs to the homepage remote

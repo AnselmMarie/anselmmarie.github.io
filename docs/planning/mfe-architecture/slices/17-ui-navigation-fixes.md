@@ -1,6 +1,6 @@
 # Slice 17 — The remaining UI and navigation issues
 
-**Status:** ⛔ blocked on [Q22](../open-questions.md#q22) · **Visible?** ✅ screen ·
+**Status:** ✅ done, maintainer's call 2026-09-23 ([D104](../decisions-d104.md#d104)) · **Visible?** ✅ screen ·
 **Depends on:** Slices 15, 16 (placement proposed, see [D102](../decisions-d101-d102.md#d102))
 **Design:** [both exports](../design-sources.md) — drawn ✅ for the surfaces they cover.
 Per issue, the table below records whether the design shows the answer.
@@ -9,6 +9,9 @@ A clean-up slice for the redesigned site, running after the last redesign slice 
 the E2E suite that would otherwise lock the current behaviour in.
 
 ## Decisions that bind this slice
+
+- **[D104](../decisions-d104.md#d104)** — this slice is done on the maintainer's word; the
+  issue table was never filled.
 
 - **[D102](../decisions-d101-d102.md#d102)** — this slice exists, and its scope is the
   maintainer's issue list, not an audit.
@@ -28,12 +31,13 @@ the E2E suite that would otherwise lock the current behaviour in.
 
 ## Open questions blocking this slice
 
-- **[Q22](../open-questions.md#q22)** — the issue list. Blocks the whole slice.
-  → [open-questions.md](../open-questions.md#q22)
+None. [Q22](../questions-closed-q18-q21.md#q22) closed → [D104](../decisions-d104.md#d104):
+answered by the work, and the list was never written down.
 
 ## The issues
 
-⚠️ **Empty until Q22 is answered.** One row per issue, filled from the maintainer's list:
+⚠️ **Left empty on purpose.** The fixes shipped without a written list, and
+[D104](../decisions-d104.md#d104) doesn't rebuild one after the fact. The template stays as it was:
 
 | # | Surface (route · viewport) | What happens | What should happen | Design shows it? | Owner project |
 |---|---|---|---|---|---|

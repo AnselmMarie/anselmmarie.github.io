@@ -64,6 +64,6 @@ twice. And "after the whole redesign is up" is the first point the issue list ca
 complete.
 
 ⚠️ **The issue list is not recorded yet.** It is
-[Q22](./open-questions.md#q22), and it blocks Slice 17. The slice's scope comes from that
+[Q22](./questions-closed-q18-q21.md#q22), and it blocks Slice 17. The slice's scope comes from that
 list. Nobody should reconstruct it by auditing the site and guessing which findings the
 maintainer meant.

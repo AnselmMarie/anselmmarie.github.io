@@ -141,3 +141,27 @@ export's two figures as a career number and a lead-scope number whose labels got
 
 Both numbers are now derivable from the experience table printed directly beneath them,
 which is the property that stops them drifting again.
+
+---
+
+<a id="q22"></a>
+### Q22 — which UI and navigation issues does Slice 17 fix?
+
+**Raised 2026-09-23 by the maintainer**, after Slices 10–14 landed: *"there are still a
+good amount of UI/navigation issues that need to be dealt with."* That is the whole of
+Slice 17's scope ([D102](./decisions-d101-d102.md#d102)), and the list hasn't been written
+down yet.
+
+**Blocks:** Slice 17 entirely. Slice 9 indirectly, since it runs after 17.
+
+**What an answer needs, per issue:** the surface (route + viewport), what happens, what
+should happen, and whether the design shows the right answer or it's a new decision.
+
+**What not to do:** audit the site and treat the findings as the list. An audit can
+*propose* additions for the maintainer to accept. The list itself is the maintainer's.
+
+### ✅ Closed 2026-09-23 → [D104](./decisions-d104.md#d104)
+
+**Answered by the work, not by a list.** The maintainer declared Slice 17 done without the
+list being written down. PR #47 is the likeliest carrier, but that isn't confirmed. The
+list is not reconstructed here, for the reason the question itself gives.
