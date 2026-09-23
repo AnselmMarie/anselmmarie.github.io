@@ -12,8 +12,8 @@ interface HeaderBrandProps {
 /**
  * The wordmark at the left of the bar, in both variants of the header.
  *
- * ⚠️ **An `<a href="/">`, not a router link.** Same reason as
- * `header-nav-link.tsx`: keeping `@tanstack/react-router` out of this remote is
+ * ⚠️ **An `<a href="/">`, not a router link.** Same reason as the section
+ * links in `header-nav.tsx`: keeping `@tanstack/react-router` out of this remote is
  * what holds the federation shared set at `react` / `react-dom` /
  * `@portfolio/ui-components` (D43). A full document load on a wordmark click is
  * the price, and it is the right one.

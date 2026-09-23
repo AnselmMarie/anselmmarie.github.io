@@ -19,8 +19,8 @@ describe('Header — the home variant', () => {
 
   /**
    * spec-through-the-parent.md — `pathname` is a prop Header forwards to
-   * HeaderNav, which forwards it again to each HeaderNavLink. Asserting it on
-   * HeaderNavLink alone would pass with either forwarding line deleted,
+   * HeaderNav, which turns it into each NavMenu item's href. Asserting it on
+   * HeaderNav alone would pass with Header's forwarding line deleted,
    * because the spec would be playing the part of the parent.
    */
   it('forwards its pathname down two levels to the links', () => {

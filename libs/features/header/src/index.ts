@@ -7,4 +7,3 @@ export { default as HeaderBrand } from './header/header-brand.js';
 export { default as HeaderMenuOverlay } from './header-menu/header-menu-overlay.js';
 export { default as HeaderMenuToggle } from './header-menu/header-menu-toggle.js';
 export { default as HeaderNav } from './header-nav/header-nav.js';
-export { default as HeaderNavLink } from './header-nav/header-nav-link.js';
