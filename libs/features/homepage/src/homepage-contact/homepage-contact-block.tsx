@@ -25,7 +25,7 @@ const HomepageContactBlock = ({ sectionId, contact }: HomepageContactBlockProps)
   return (
     <section id={sectionId} className="scroll-mt-anchor bg-ink px-page pt-[72px] text-paper">
       <div className="text-center">
-        <Eyebrow label={contact.eyebrow} tone="ink" />
+        <Eyebrow label={contact.eyebrow} tone="ink" hasRule />
         <h2 className="mb-8 mt-[0.8rem] font-display text-[clamp(2.6rem,7vw,5.4rem)] font-bold leading-[0.98] tracking-[-0.035em]">
           {contact.heading.lead}
           <br />

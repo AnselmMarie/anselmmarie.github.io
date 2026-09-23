@@ -150,6 +150,17 @@ describe('Homepage — About and Contact', () => {
     expect(within(about).queryByText('10+')).not.toBeInTheDocument();
   });
 
+  it.each([
+    ['About', SECTION_IDS.about],
+    ['Contact', SECTION_IDS.contact],
+  ])('leads %s with the ruled eyebrow the other sections use', (label, id) => {
+    const { container } = render(<Homepage />);
+    const section = container.querySelector(`#${id}`) as HTMLElement;
+    const eyebrow = within(section).getByText(label);
+
+    expect(eyebrow.querySelector('[aria-hidden]')).toHaveTextContent('|');
+  });
+
   it('gives Contact its single outbound pill', () => {
     const { container } = render(<Homepage />);
     const contact = container.querySelector(`#${SECTION_IDS.contact}`) as HTMLElement;
