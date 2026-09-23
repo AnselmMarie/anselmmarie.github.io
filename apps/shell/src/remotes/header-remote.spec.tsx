@@ -27,6 +27,7 @@ const mountCalls: Record<string, unknown>[] = [];
 
 vi.mock('@portfolio/feature-shell', () => ({
   HeaderFallback: (): ReactElement => <p>fallback</p>,
+  HeaderSkeleton: (): ReactElement => <p>skeleton</p>,
   MfeRemoteMount: (props: Record<string, unknown>): ReactElement => {
     mountCalls.push(props);
     return <p data-testid="mount">mounted</p>;
@@ -59,5 +60,14 @@ describe('HeaderRemote', () => {
     render(<HeaderRemote variant="detail" />);
 
     expect(mountCalls[0]?.route).toBe('/portfolio/$slug');
+  });
+
+  it('hands the header skeleton to the mount, so the lazy import has a shape to draw', () => {
+    mountCalls.length = 0;
+    render(<HeaderRemote variant="home" />);
+
+    render(mountCalls[0]?.loadingSkeleton as ReactElement);
+
+    expect(screen.getByText('skeleton')).toBeInTheDocument();
   });
 });

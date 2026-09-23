@@ -1,7 +1,7 @@
 import { ClientOnly } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 
-import { HomepageFallback, MfeRemoteMount } from '@portfolio/feature-shell';
+import { ContentSkeleton, HomepageFallback, MfeRemoteMount } from '@portfolio/feature-shell';
 
 import { remoteVersion } from './remote-version.js';
 
@@ -26,6 +26,7 @@ const HomepageRemote = (): ReactElement => {
         version={remoteVersion('homepage')}
         route="/"
         placeholderClassName="min-h-96 w-full"
+        loadingSkeleton={<ContentSkeleton />}
         fallback={HomepageFallback}
         isHashTarget
         onLoadRemote={loadHomepage}

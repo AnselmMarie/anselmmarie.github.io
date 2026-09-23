@@ -1,7 +1,7 @@
 import { ClientOnly } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 
-import { MfeRemoteMount, PortfolioItemFallback } from '@portfolio/feature-shell';
+import { ContentSkeleton, MfeRemoteMount, PortfolioItemFallback } from '@portfolio/feature-shell';
 import type { PortfolioItem } from '@portfolio/shared-types';
 
 import { remoteVersion } from './remote-version.js';
@@ -40,6 +40,7 @@ const PortfolioItemRemote = ({ slug, item }: PortfolioItemRemoteProps): ReactEle
         version={remoteVersion('portfolio-item')}
         route={`/portfolio/${slug}`}
         placeholderClassName="min-h-96 w-full"
+        loadingSkeleton={<ContentSkeleton />}
         remoteProps={{ item }}
         fallback={PortfolioItemFallback}
         onLoadRemote={loadPortfolioItem}

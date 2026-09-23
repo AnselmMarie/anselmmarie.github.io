@@ -1,7 +1,7 @@
 import { ClientOnly } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 
-import { HeaderFallback, MfeRemoteMount } from '@portfolio/feature-shell';
+import { HeaderFallback, HeaderSkeleton, MfeRemoteMount } from '@portfolio/feature-shell';
 
 import { remoteVersion } from './remote-version.js';
 
@@ -55,6 +55,7 @@ const HeaderRemote = ({ variant }: HeaderRemoteProps): ReactElement => {
         version={remoteVersion('header')}
         route={variant === 'detail' ? '/portfolio/$slug' : '/'}
         placeholderClassName={PLACEHOLDER_CLASS}
+        loadingSkeleton={<HeaderSkeleton />}
         remoteProps={{ variant }}
         fallback={() => <HeaderFallback />}
         onLoadRemote={loadHeader}
