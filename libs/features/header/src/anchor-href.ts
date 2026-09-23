@@ -1,3 +1,5 @@
+import { WORK_SECTION_ID } from '@portfolio/shared-fixtures';
+
 /**
  * Builds the `href` for an in-page section link (D43).
  *
@@ -15,3 +17,11 @@ export const HOME_PATH = '/';
 
 export const anchorHref = (sectionId: string, pathname: string): string =>
   pathname === HOME_PATH ? `#${sectionId}` : `${HOME_PATH}#${sectionId}`;
+
+/**
+ * Where the detail page's `← All work` link goes: the homepage's Work grid.
+ *
+ * Absolute on purpose — it is only ever rendered on a `/portfolio/$slug` page,
+ * so a bare `#work` would look for a section that is not there.
+ */
+export const WORK_HREF = `${HOME_PATH}#${WORK_SECTION_ID}`;

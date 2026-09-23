@@ -28,5 +28,30 @@ export const makePortfolioItem = (
   description: '<p>Test description.</p>',
   images: [],
   videos: [],
+  // Slice 11's six additions, landing here once rather than in every spec
+  // literal — which is what this factory was written for.
+  year: '2024',
+  role: 'Test Role',
+  lede: 'Test lede.',
+  body: ['Test body paragraph.'],
+  tech: ['TypeScript'],
+  facts: [{ key: 'Timeline', value: 'Test timeline' }],
+  links: [],
   ...overrides,
 });
+
+/**
+ * Narrows a fixture lookup that the spec knows must succeed.
+ *
+ * Specs reach for `!` here — the fixture really does contain the slug being
+ * asked for — but `@typescript-eslint/no-non-null-assertion` warns on every
+ * one, and a silent `undefined` in a spec produces a confusing failure two
+ * assertions later rather than at the lookup. This throws where the mistake is.
+ */
+export const required = <T>(value: T | undefined, what: string): T => {
+  if (value === undefined) {
+    throw new Error(`Fixture lookup failed: ${what}`);
+  }
+
+  return value;
+};

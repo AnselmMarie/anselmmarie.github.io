@@ -9,10 +9,16 @@ describe('SITE_SECTIONS', () => {
     // section elements, and the shell's header fallback links to them when the
     // Header is down. None of the three can check the others at build time, so
     // this assertion is where the agreement is written down.
+    //
+    // ⚠️ Re-pointed to the design's five in Slice 12 (D81). It cannot see a
+    // rendered `id` attribute, so it proves the list and not the agreement —
+    // the browser check in Slice 12's gates is the other half.
     expect(SITE_SECTIONS.map((section) => section.id)).toEqual([
+      'work',
+      'experience',
       'skills',
-      'active-projects',
-      'other-projects',
+      'about',
+      'contact',
     ]);
   });
 

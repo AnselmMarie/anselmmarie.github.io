@@ -8,6 +8,12 @@ import type { PortfolioItem } from '@portfolio/shared-types';
  *
  * ⚠️ **`corporate-reports` holds `cr-caterpillar`'s images.** The folder names
  * do not match the slugs; the `src` strings below are authoritative.
+ *
+ * ⚠️ **`cr-caterpillar` moved out in Slice 11** to
+ * `portfolio-items-corporate-reports.fixture.ts`; this module was 211 lines
+ * against the 200-line cap once the redesign's six fields per item went in.
+ *
+ * ⚠️ **Frozen for the whole 12/13/14/15/16 wave.**
  */
 export const OTHER_CLIENT_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
   {
@@ -66,6 +72,21 @@ export const OTHER_CLIENT_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
       },
     ],
     videos: [],
+    year: '2021',
+    role: 'Senior Engineer',
+    lede: 'A complete product re-skin plus a migration to a modern component model.',
+    body: [
+      'A SaaS platform for firms in land surveying, engineering, and geospatial services. The product had grown organically: inconsistent spacing, duplicated widgets, and styling that could not be changed safely.',
+      'A component layer went in incrementally, screen by screen, so each release shipped both the new visual language and a smaller surface of legacy CSS — without pausing feature work.',
+      'By the end, shared primitives covered the majority of the UI, and new screens could be assembled in hours rather than days.',
+    ],
+    tech: ['React', 'TypeScript', 'Component Architecture', 'Storybook', 'REST API'],
+    facts: [
+      { key: 'Timeline', value: '5 months' },
+      { key: 'Role', value: 'Design, then front-end architecture' },
+      { key: 'Focus', value: 'Incremental migration' },
+    ],
+    links: [],
   },
   {
     slug: 'rove-logix-ui-update',
@@ -125,26 +146,26 @@ export const OTHER_CLIENT_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
       },
     ],
     videos: [],
-  },
-  {
-    slug: 'cr-caterpillar',
-    company: 'Corporate Reports',
-    title: 'Caterpillar Inc. News App',
-    subtitle: 'Design / Development',
-    thumbnail: '/images/portfolio/corporate-reports/cat-thumbnail.jpg',
-    description:
-      '<p>I was responsible for crafting the user interface and contributing to minor ' +
-      'development tasks for both the iPhone and Android versions of this app. The ' +
-      'application featured real-time CAT stock prices, the latest news updates from CAT, ' +
-      'video content, downloadable PDFs, and additional interactive elements.</p>',
-    images: [
-      {
-        src: '/images/portfolio/corporate-reports/cat01.jpg',
-        alt: 'Caterpillar Inc. App Design',
-        width: '1000',
-        height: '800',
-      },
+    /*
+     * ⚠️ **INVENTED — the design covers this item in no export** (D77). `lede`,
+     * `body`, `tech`, `facts` and `year` have no design source; `role` follows
+     * v3's `subtitle` (`Design`), and the body and the `Outcome` fact restate
+     * v3's own description rather than adding a claim. `year` is inferred from
+     * the sibling `rove-logix` engagement this redesign sat inside.
+     */
+    year: '2021',
+    role: 'Design',
+    lede: 'A cleaner visual identity for Rove Logix that the client never shipped.',
+    body: [
+      'Partway into the Rove Logix build, the interface was redesigned for a cleaner and more modern look — a close pass on colour contrast and a more restrained palette.',
+      'The change reads most clearly on the Company Development page, where the email design was brought into the same visual identity. Despite the improvements, the new skin was never implemented in the client app.',
     ],
-    videos: [],
+    tech: ['Visual Design', 'Colour & Contrast', 'Design System', 'Email Design'],
+    facts: [
+      { key: 'Timeline', value: 'A pass inside the Rove Logix build' },
+      { key: 'Role', value: 'Solo — design only' },
+      { key: 'Outcome', value: 'Never implemented in the client app' },
+    ],
+    links: [],
   },
 ];

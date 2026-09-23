@@ -8,6 +8,12 @@ import type { PortfolioItem } from '@portfolio/shared-types';
  *
  * ⚠️ **`older-cosmikata` is the only item with videos**, and they are YouTube
  * embed URLs — the one third-party iframe on the site.
+ *
+ * ⚠️ **`cw-breeze-thru` moved out in Slice 11** to
+ * `portfolio-items-cricket.fixture.ts`; this module was 242 lines against the
+ * 200-line cap once the redesign's six fields per item went in.
+ *
+ * ⚠️ **Frozen for the whole 12/13/14/15/16 wave.**
  */
 export const OTHER_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
   {
@@ -83,6 +89,28 @@ export const OTHER_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
           '2:30 I said "iOS 5" but I meant iPhone 5.',
       },
     ],
+    /*
+     * ⚠️ **INVENTED — the design covers this item in no export** (D77). `lede`,
+     * `body`, `facts` and `year` have no source at all; `role` follows v3's own
+     * `subtitle` and `tech` is v3's own stack list, so those two are ported.
+     * ⚠️ **`year` is a guess** — v3 dates nothing, and `2019` is read off the
+     * stack (Sketch, early Expo, GraphQL) plus the current Cosmikata item's
+     * "a few years after its original development". Confirm it before release.
+     */
+    year: '2019',
+    role: 'Design & Engineering',
+    lede: 'The first CosMikata — a planning app for cosplayers and cosmakers.',
+    body: [
+      'Built out of a personal need to plan future cosplays, the app combined the board-and-card organisation of Trello with the build-tracking of Cosplanner, aimed at people managing several costumes at once.',
+      'A solo project from concept to production: design, data model, and the React Native client. With no fixed launch date, it doubled as a testbed for a GraphQL and PostgreSQL stack behind an Expo app.',
+    ],
+    tech: ['React Native', 'Expo', 'GraphQL', 'PostgreSQL', 'Sketch'],
+    facts: [
+      { key: 'Timeline', value: 'Ongoing side project' },
+      { key: 'Role', value: 'Solo — concept, design, build' },
+      { key: 'Focus', value: 'Cosplay planning, offline-first data' },
+    ],
+    links: [],
   },
   {
     slug: 'csp-generator-app',
@@ -117,53 +145,31 @@ export const OTHER_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
       },
     ],
     videos: [],
-  },
-  {
-    slug: 'cw-breeze-thru',
-    company: 'Cricket Wireless',
-    title: 'Breeze-Thru',
-    subtitle: 'Design / Development',
-    thumbnail: '/images/portfolio/cricket-wireless/breezeThru-thumbnail.jpg',
-    description:
-      '<p>Breeze-Thru is an innovative application that facilitates the seamless activation of ' +
-      'service for new customers on any mobile device.</p>' +
-      '<p>In my capacity as the leader of the front-end team, I played a pivotal role in ' +
-      'shaping the entire development lifecycle of this application, from its initial ' +
-      'conception to its successful production launch. My responsibilities encompassed ' +
-      'coding, design implementation, and team management. Throughout the process, we ' +
-      'maintained a strong emphasis on optimizing user experience (UX) and ensuring ' +
-      'accessibility for all users.</p>' +
-      '<p>Effective communication and collaboration with the network, back-end, and business ' +
-      "teams were key factors in the project's success. Our coordinated efforts culminated in " +
-      'the successful launch of the application, garnering positive feedback. In recognition ' +
-      'of the project\'s excellence, I was honored with "The AT&T Service Excellence Award" ' +
-      'shortly thereafter.</p>',
-    images: [
+    year: '2023',
+    role: 'Creator',
+    lede: 'A developer tool for writing Content Security Policy headers without guesswork.',
+    body: [
+      'CSP headers are easy to get wrong and painful to debug. The tool turns each directive into an explained, checkable control and emits a copy-paste header as you go.',
+      'Import an existing policy, augment it directive by directive, and generate the finished header — the flow is built around amending a real policy rather than starting from a blank one.',
+      'Built as a single-page app with no backend, so it can be self-hosted or run locally in a security-sensitive environment.',
+    ],
+    tech: ['React', 'TypeScript', 'Redux', 'Web Security', 'Vite', 'GitHub Actions'],
+    facts: [
+      { key: 'Timeline', value: '3 weeks' },
+      { key: 'Role', value: 'Solo' },
+      { key: 'Focus', value: 'Developer experience' },
+    ],
+    links: [
       {
-        src: '/images/portfolio/cricket-wireless/breezeThru01.jpg',
-        alt: 'Breeze-Thru homepage',
-        width: '414',
-        height: '736',
+        label: 'Live tool',
+        href: 'https://anselmmarie.github.io/csp-generator',
+        icon: 'external',
       },
       {
-        src: '/images/portfolio/cricket-wireless/breezeThru02.jpg',
-        alt: 'Breeze-Thru customer check',
-        width: '414',
-        height: '736',
-      },
-      {
-        src: '/images/portfolio/cricket-wireless/breezeThru03.jpg',
-        alt: 'Breeze-Thru navigation',
-        width: '414',
-        height: '736',
-      },
-      {
-        src: '/images/portfolio/cricket-wireless/breezeThru04.jpg',
-        alt: 'Breeze-Thru add IMEI and ICCID data',
-        width: '414',
-        height: '736',
+        label: 'Source',
+        href: 'https://github.com/AnselmMarie/csp-generator/tree/development',
+        icon: 'github',
       },
     ],
-    videos: [],
   },
 ];

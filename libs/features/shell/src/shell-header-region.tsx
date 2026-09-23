@@ -31,6 +31,16 @@ interface ShellHeaderRegionProps {
  * ⚠️ **This region draws the bar; it does not draw the nav.**
  * [Slice 12](docs/planning/mfe-architecture/slices/12-header-redesign.md) owns
  * the links, the mobile overlay and the `SITE_SECTIONS` contract.
+ *
+ * ⚠️ **`fixed` on this element is what the Header's mobile overlay positions
+ * against, so it is load-bearing twice over.** The overlay is `absolute
+ * inset-x-0 top-full`, and `top-full` resolves against the nearest positioned
+ * ancestor — a fixed element is positioned, so no `relative` is needed here and
+ * adding one would be a second, conflicting position utility on the same class
+ * list. The remote renders two divs deep inside the padded row below, so
+ * without this the overlay would resolve against the viewport and stop short of
+ * both edges. Changing the bar to `sticky` or `static` does not break a build
+ * or a spec — it moves a panel.
  */
 const ShellHeaderRegion = ({ children }: ShellHeaderRegionProps): ReactElement => {
   return (

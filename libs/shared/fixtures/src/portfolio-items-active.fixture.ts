@@ -60,6 +60,32 @@ export const ACTIVE_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
       },
     ],
     videos: [],
+    year: '2024',
+    role: 'Design & Engineering',
+    lede: 'A full e-commerce experience built on the public Pokémon API.',
+    body: [
+      'The goal was to take an open, read-only dataset and build a believable commerce product on top of it: browsing, filtering, product detail, cart, and checkout, all with a bespoke visual system rather than an off-the-shelf template.',
+      'The data layer normalizes the API responses into a typed catalog model, caches aggressively, and keeps the cart in sync across tabs. Everything is component-driven so new product surfaces slot in without touching fetch logic.',
+      'The visual language is intentionally warm and editorial rather than the usual marketplace grid, which made the project a useful sandbox for type scale, motion, and component API decisions.',
+    ],
+    tech: ['React', 'TypeScript', 'REST API', 'React Query', 'Vite', 'CSS Modules', 'Vitest'],
+    facts: [
+      { key: 'Timeline', value: '6 weeks, nights and weekends' },
+      { key: 'Role', value: 'Solo designer and engineer' },
+      { key: 'Focus', value: 'Data modeling, cart state, visual system' },
+    ],
+    links: [
+      {
+        label: 'Source',
+        href: 'https://github.com/AnselmMarie/pokemon-pet-shop/tree/mfe',
+        icon: 'github',
+      },
+      {
+        label: 'Architecture notes',
+        href: 'https://github.com/AnselmMarie/pokemon-pet-shop/blob/mfe/README_ARCHITECTURE.md',
+        icon: 'external',
+      },
+    ],
   },
   {
     slug: 'cosmikata',
@@ -101,5 +127,35 @@ export const ACTIVE_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
       },
     ],
     videos: [],
+    /*
+     * ⚠️ **No links.** The design gives this item a `Source` pill pointing at
+     * `github.com/AnselmMarie` — a profile, not this project — and a `Live site`
+     * pill that is a bare `#`. A pill labelled `Source` that lands on a profile
+     * is worse than no pill, so both are dropped rather than shipped.
+     */
+    year: '2024',
+    role: 'Founder & Lead Engineer',
+    lede: 'A studio identity, a shared component library, and a cross-platform product architecture.',
+    body: [
+      'Cosmikata started as a brand exercise and grew into the platform I use to ship cross-platform products: one Nx monorepo feeding web and native from shared UI, services, and business logic.',
+      'The design system is generated from Figma tokens, so themes, spacing, and typography stay identical across Next.js and Expo. Components are documented in Storybook and consumed by every surface.',
+      'On the backend, an edge-first Hono API with PostgreSQL and Drizzle shares validation schemas with the clients, which removes a whole class of drift between server and app.',
+    ],
+    tech: [
+      'Next.js',
+      'React Native',
+      'Expo',
+      'Nx',
+      'Hono',
+      'PostgreSQL',
+      'Drizzle ORM',
+      'Design System',
+    ],
+    facts: [
+      { key: 'Timeline', value: 'Ongoing since 2024' },
+      { key: 'Role', value: 'Founder, architecture, design' },
+      { key: 'Focus', value: 'Monorepo, tokens, edge backend' },
+    ],
+    links: [],
   },
 ];

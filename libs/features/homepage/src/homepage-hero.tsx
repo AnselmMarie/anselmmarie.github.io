@@ -1,63 +1,62 @@
 import type { ReactElement } from 'react';
 
 import type { HomepageContent } from '@portfolio/shared-types';
-import { SocialIcon } from '@portfolio/ui-components';
+import { PillLink, UiIcon } from '@portfolio/ui-components';
 
-/**
- * Derived from `HomepageContent` rather than imported by name: the nested
- * shapes are declared in `homepage-content.ts` but `libs/shared/types/src/index.ts`
- * is coordinator-owned and exports only the top-level type.
- */
+import HomepageHeroMedia from './homepage-hero-media.js';
+import HomepageSpecsStrip from './homepage-specs-strip.js';
+
+/** Derived — the types barrel exports the root type, not every nested shape. */
 type HeroContent = HomepageContent['hero'];
 
 interface HomepageHeroProps {
+  specs: readonly string[];
   hero: HeroContent;
 }
 
 /**
- * The hero panel — v3's `hero-section.view.tsx` at `39bbe56`, appearance only
- * (D6: no v3 code is ported, and its Radix `Container` / `@radix-ui/react-icons`
- * dependencies are not pulled in).
+ * The hero — the specs strip, the headline, the lede, two pills, and the
+ * featured panel.
  *
- * ⚠️ **It carries no section `id`.** `SITE_SECTIONS` has three entries and the
- * hero is not one of them — the Header's anchors start at `#skills` (D43).
+ * ⚠️ **Three breakpoints, not two.** The export distinguishes `<760`,
+ * `760–1080` and `≥1080`, and the middle band has its own lede layout
+ * (`1fr auto`, end-aligned) rather than simply inheriting the mobile stack.
+ * Collapsing to two is a visible regression at tablet width, which is why the
+ * slice asks for screenshots at 375, 900 and 1400.
  *
- * ✅ **The two links render as brand marks.** v3 draws them as Radix SVG logos;
- * the maintainer chose **Tabler** (D75), drawn by `SocialIcon` in
- * `@portfolio/ui-components` — the footer renders the same component, which is
- * D29's extraction threshold met rather than guessed at. Slice 6 shipped text
- * labels only because a wave agent may not add a dependency.
+ * ⚠️ **It carries no section `id`.** The hero is not in `SITE_SECTIONS`; the
+ * Header's anchors start at `#work` (D43, D81).
+ *
+ * ⚠️ **`hero.links` is gone.** The design replaced the two social marks with
+ * the CTAs below; the same destinations still render in the footer strip, from
+ * `@portfolio/feature-footer`'s own const.
  */
-const HomepageHero = ({ hero }: HomepageHeroProps): ReactElement => {
+const HomepageHero = ({ specs, hero }: HomepageHeroProps): ReactElement => {
   return (
-    <div className="bg-slate-200 px-5">
-      <div className="mx-auto flex min-h-[70vh] max-w-7xl flex-col justify-center py-24">
-        <div className="relative rounded-2xl bg-slate-200/65 text-slate-800 shadow-2xl">
-          <div className="flex min-h-40 items-end p-7">
-            <div>
-              <div className="text-5xl font-light">{hero.name}</div>
-              <div className="text-2xl font-bold">{hero.headline}</div>
-            </div>
-            <div className="absolute inset-1 rounded-2xl border-2 border-solid border-gray-300" />
+    <div className="px-[18px] pb-9 pt-[30px] frame:px-[26px] frame:pb-[52px] frame:pt-11">
+      <HomepageSpecsStrip specs={specs} />
+
+      <div className="mt-[34px] grid items-start gap-[22px] wide:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] wide:items-end wide:gap-[34px]">
+        <h1 className="m-0 text-balance font-display text-display font-bold text-ink">
+          {hero.headline.lead}
+          {/* A non-breaking space keeps `end to end.` from breaking mid-phrase. */}
+          <span className="text-accent"> {hero.headline.accent.replace(/ /gu, ' ')}</span>
+        </h1>
+
+        <div className="grid min-w-0 items-stretch gap-x-[34px] gap-y-[22px] frame:grid-cols-[minmax(0,1fr)_auto] frame:items-end wide:grid-cols-none wide:items-stretch">
+          <p className="m-0 max-w-[42ch] text-base leading-[1.65] text-muted">{hero.lede}</p>
+          <div className="flex flex-wrap gap-3">
+            {hero.ctas.map((cta, index) => (
+              <PillLink key={cta.href} href={cta.href} variant={index === 0 ? 'solid' : 'outline'}>
+                {cta.label}
+                {index === 0 ? <UiIcon name="arrow-right" size={17} /> : null}
+              </PillLink>
+            ))}
           </div>
         </div>
-
-        <div className="my-10 flex justify-center gap-5">
-          {hero.links.map((link) => (
-            <a
-              key={link.href}
-              className="text-slate-800 transition-opacity hover:opacity-60"
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={link.label}
-              title={link.label}
-            >
-              <SocialIcon name={link.icon} />
-            </a>
-          ))}
-        </div>
       </div>
+
+      <HomepageHeroMedia caption={hero.featuredCaption} capabilities={hero.capabilities} />
     </div>
   );
 };

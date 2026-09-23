@@ -1,40 +1,72 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
+import { HOMEPAGE_CONTENT } from '@portfolio/shared-fixtures';
+
 import HomepageHero from './homepage-hero.js';
 
-const HERO = {
-  name: 'Anselm Marie',
-  headline: 'Senior Software Engineer',
-  links: [{ label: 'GitHub', href: 'https://github.com/AnselmMarie', icon: 'github' as const }],
-};
+const renderHero = () =>
+  render(<HomepageHero specs={HOMEPAGE_CONTENT.specs} hero={HOMEPAGE_CONTENT.hero} />);
 
 describe('HomepageHero', () => {
-  it('renders the name and the headline it is given', () => {
-    render(<HomepageHero hero={HERO} />);
+  it('splits the headline so the accent phrase is its own element', () => {
+    renderHero();
 
-    expect(screen.getByText('Anselm Marie')).toBeInTheDocument();
-    expect(screen.getByText('Senior Software Engineer')).toBeInTheDocument();
+    const heading = screen.getByRole('heading', { level: 1 });
+
+    expect(heading).toHaveTextContent(HOMEPAGE_CONTENT.hero.headline.lead);
+    expect(heading).toHaveTextContent(/end.to.end\./u);
   });
 
-  it('opens each link in a new tab without leaking the referrer', () => {
-    render(<HomepageHero hero={HERO} />);
+  it('keeps the accent phrase from breaking mid-word', () => {
+    // The design sets `end&nbsp;to&nbsp;end.` — a plain space lets the phrase
+    // wrap across two lines at the exact widths the clamp is tuned for.
+    renderHero();
 
-    const link = screen.getByRole('link', { name: 'GitHub' });
-    expect(link).toHaveAttribute('href', 'https://github.com/AnselmMarie');
-    expect(link).toHaveAttribute('target', '_blank');
-    expect(link).toHaveAttribute('rel', 'noreferrer');
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain(' ');
   });
 
-  it('renders no links when the content carries none', () => {
-    render(<HomepageHero hero={{ ...HERO, links: [] }} />);
+  it('renders both CTAs, pointing at in-page anchors', () => {
+    renderHero();
 
-    expect(screen.queryByRole('link')).toBeNull();
+    const [viewWork, getInTouch] = HOMEPAGE_CONTENT.hero.ctas;
+
+    expect(
+      screen.getByRole('link', { name: new RegExp(viewWork?.label ?? '', 'u') })
+    ).toHaveAttribute('href', viewWork?.href);
+    expect(
+      screen.getByRole('link', { name: new RegExp(getInTouch?.label ?? '', 'u') })
+    ).toHaveAttribute('href', getInTouch?.href);
   });
 
-  it('is not a section anchor — the Header links start at #skills', () => {
-    const { container } = render(<HomepageHero hero={HERO} />);
+  it('draws no social marks — the design replaced them with the CTAs', () => {
+    // The same two destinations still render, in the footer strip, from
+    // feature-footer's own const. Nothing is lost; it moved.
+    renderHero();
 
-    expect(container.querySelector('[id]')).toBeNull();
+    expect(screen.queryByRole('link', { name: /LinkedIn/u })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /GitHub/u })).not.toBeInTheDocument();
+  });
+
+  it('fills the featured panel typographically, with no image (D85)', () => {
+    // ⚠️ Both exports draw a 16/7 photograph behind an Unsplash placeholder.
+    // No asset in this repo reaches 16/7 — the widest is 1.80 — and four of
+    // the eight items are mobile-screenshot-only. The box survives; the
+    // photograph does not, and nothing here reports an image as outstanding.
+    const { container } = renderHero();
+
+    expect(container.querySelector('img')).toBeNull();
+    for (const capability of HOMEPAGE_CONTENT.hero.capabilities) {
+      expect(screen.getByText(capability.label)).toBeInTheDocument();
+    }
+    expect(screen.getByText(HOMEPAGE_CONTENT.hero.featuredCaption)).toBeInTheDocument();
+  });
+
+  it('renders every spec in the strip', () => {
+    renderHero();
+
+    for (const spec of HOMEPAGE_CONTENT.specs) {
+      expect(screen.getByText(spec)).toBeInTheDocument();
+    }
   });
 });

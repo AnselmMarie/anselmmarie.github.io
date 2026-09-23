@@ -16,7 +16,16 @@
 declare module 'header/Header' {
   import type { ComponentType } from 'react';
 
-  const Header: ComponentType<{ pathname?: string }>;
+  /**
+   * ⚠️ **`variant` is spelled out here as a literal union rather than imported
+   * from `@portfolio/feature-header`**, because the shell may not depend on a
+   * remote's package (D16). That makes this the *fourth* place the two bar
+   * shapes are named — the Header's own `HeaderVariant`, `HeaderRemoteProps`,
+   * the two route call sites, and this declaration — and none of the four
+   * checks the others at build time. Widening one and not the rest fails the
+   * same silent way the `SITE_SECTIONS` ids do.
+   */
+  const Header: ComponentType<{ variant?: 'home' | 'detail'; pathname?: string }>;
   export default Header;
 }
 

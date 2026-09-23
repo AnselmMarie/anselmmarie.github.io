@@ -2,7 +2,6 @@ import type { ReactElement } from 'react';
 
 import type { HomepageContent } from '@portfolio/shared-types';
 
-/** Derived — the types barrel is coordinator-owned and exports only the root. */
 type SkillGroup = HomepageContent['skillGroups'][number];
 
 interface HomepageSkillGroupProps {
@@ -10,29 +9,25 @@ interface HomepageSkillGroupProps {
 }
 
 /**
- * One column of the skills section — v3's `skill-list-section.view.tsx` at
- * `39bbe56`.
+ * One column of the dark Skills section.
  *
- * ⚠️ **An empty `heading` renders no heading element at all.** v3 renders the
- * word "Developer" a second time with `invisible` so the two developer columns'
- * rows line up; an invisible duplicate heading is read aloud by a screen reader
- * as a real one, so the spacer is a `<div aria-hidden>` instead.
+ * ⚠️ **`cardId` is gone.** It existed so two v3 columns could share one
+ * bordered card; the design draws four columns in an `auto-fit` grid and no
+ * cards at all, so the field had nothing left to join (D88).
  */
 const HomepageSkillGroup = ({ group }: HomepageSkillGroupProps): ReactElement => {
   return (
-    <div className="flex-1">
-      {group.heading === '' ? (
-        <div aria-hidden className="mt-0 h-7" />
-      ) : (
-        <h4 className="mt-0 flex items-center text-sky-700">{group.heading}</h4>
-      )}
-      <ul className="mt-0 mb-0">
+    <div className="border-t border-white/14 pt-[1.1rem]">
+      <p className="mb-4 mt-0 font-mono text-chip tracking-chip uppercase text-paper/50">
+        {group.heading}
+      </p>
+      <div className="flex flex-col gap-[0.6rem]">
         {group.skills.map((skill) => (
-          <li key={skill} className="mb-1">
+          <span key={skill} className="text-[0.95rem]">
             {skill}
-          </li>
+          </span>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

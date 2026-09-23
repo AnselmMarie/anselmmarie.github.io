@@ -1,11 +1,14 @@
 import type { ReactElement } from 'react';
 
-import { useHomepageContent, usePortfolioItems } from '@portfolio/shared-fixtures';
-import type { HomepageContent, PortfolioItem } from '@portfolio/shared-types';
+import { SECTION_IDS, useHomepageContent, usePortfolioItems } from '@portfolio/shared-fixtures';
+import type { HomepageContent, PortfolioItem, SectionIntro } from '@portfolio/shared-types';
 
+import HomepageAboutSection from './homepage-about-section.js';
+import HomepageContactBlock from './homepage-contact-block.js';
+import HomepageExperienceSection from './homepage-experience-section.js';
 import HomepageHero from './homepage-hero.js';
-import HomepageProjectSection from './homepage-project-section.js';
 import HomepageSkills from './homepage-skills.js';
+import HomepageWorkSection from './homepage-work-section.js';
 
 interface HomepageProps {
   /**
@@ -13,17 +16,26 @@ interface HomepageProps {
    * default reads the one fixture seam so the remote also runs standalone.
    */
   content?: HomepageContent;
-  /** The listing's items, same seam, same reason. */
+  /** The Work grid's items, same seam, same reason. */
   items?: readonly PortfolioItem[];
 }
 
+/** A section the content does not describe renders nothing rather than throwing. */
+const findIntro = (intros: readonly SectionIntro[], sectionId: string): SectionIntro | undefined =>
+  intros.find((intro) => intro.sectionId === sectionId);
+
 /**
- * The homepage remote, ported from the live v3 site section for section (D34,
- * D53 — commit `39bbe56`). Appearance only; no v3 code is ported (D6).
+ * The homepage remote, rebuilt against the 2026-09-22 design export (D76).
  *
- * ⚠️ **The section `id`s are a contract (D43).** They come from
- * `SITE_SECTIONS`, which the Header remote and the shell's header fallback both
- * read. The hero is not one of them — the anchors start at `#skills`.
+ * ⚠️ **Every section `id` comes from `SITE_SECTIONS`, never a literal.** Four
+ * of the Header's five anchors land on this page, and the contract spans three
+ * independently deployed units — this remote writes the ids, the Header remote
+ * links to them, and the shell's header fallback links to them when the Header
+ * is down. A rename that only two follow **scrolls nowhere and throws nothing**
+ * (D43, D81).
+ *
+ * ⚠️ **It stops at the Contact block's bottom rule.** The footer strip below is
+ * the footer remote's and arrives over the federation boundary (D79).
  */
 const Homepage = ({ content, items }: HomepageProps): ReactElement => {
   // ⚠️ **Called unconditionally, never inside the `??`.** These read fixtures
@@ -35,23 +47,48 @@ const Homepage = ({ content, items }: HomepageProps): ReactElement => {
   const resolved = content ?? fixtureContent;
   const resolvedItems = items ?? fixtureItems;
 
-  const skillsSection = resolved.sections.find((section) => section.id === 'skills');
+  const sectionIds = new Set(resolved.sections.map((section) => section.id));
+  const workIntro = findIntro(resolved.sectionIntros, SECTION_IDS.work);
+  const experienceIntro = findIntro(resolved.sectionIntros, SECTION_IDS.experience);
+  const skillsIntro = findIntro(resolved.sectionIntros, SECTION_IDS.skills);
 
   return (
     <div data-testid="homepage-remote" className="flex flex-col">
-      <HomepageHero hero={resolved.hero} />
+      <HomepageHero specs={resolved.specs} hero={resolved.hero} />
 
-      {skillsSection === undefined ? null : (
+      {workIntro === undefined || !sectionIds.has(SECTION_IDS.work) ? null : (
+        <HomepageWorkSection
+          sectionId={SECTION_IDS.work}
+          intro={workIntro}
+          cards={resolved.work}
+          items={resolvedItems}
+        />
+      )}
+
+      {experienceIntro === undefined || !sectionIds.has(SECTION_IDS.experience) ? null : (
+        <HomepageExperienceSection
+          sectionId={SECTION_IDS.experience}
+          intro={experienceIntro}
+          entries={resolved.experience}
+          footnotes={resolved.footnotes}
+        />
+      )}
+
+      {skillsIntro === undefined || !sectionIds.has(SECTION_IDS.skills) ? null : (
         <HomepageSkills
-          sectionId={skillsSection.id}
-          label={skillsSection.label}
+          sectionId={SECTION_IDS.skills}
+          intro={skillsIntro}
           groups={resolved.skillGroups}
         />
       )}
 
-      {resolved.projectGroups.map((group) => (
-        <HomepageProjectSection key={group.sectionId} group={group} items={resolvedItems} />
-      ))}
+      {sectionIds.has(SECTION_IDS.about) ? (
+        <HomepageAboutSection sectionId={SECTION_IDS.about} about={resolved.about} />
+      ) : null}
+
+      {sectionIds.has(SECTION_IDS.contact) ? (
+        <HomepageContactBlock sectionId={SECTION_IDS.contact} contact={resolved.contact} />
+      ) : null}
     </div>
   );
 };

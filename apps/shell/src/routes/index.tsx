@@ -33,7 +33,7 @@ export const Route = createFileRoute('/')({
 
 function HomeRoute(): ReactElement {
   return (
-    <ShellLayout header={<HeaderRemote />} footer={<FooterRemote />}>
+    <ShellLayout header={<HeaderRemote variant="home" />} footer={<FooterRemote />}>
       <HomepageRemote />
     </ShellLayout>
   );

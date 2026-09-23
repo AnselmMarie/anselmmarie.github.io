@@ -19,7 +19,7 @@ const HeaderNavLink = ({ sectionId, label, pathname }: HeaderNavLinkProps): Reac
   return (
     <a
       href={anchorHref(sectionId, pathname)}
-      className="text-sm font-medium text-ink transition-opacity hover:opacity-60"
+      className="text-[0.88rem] text-ink transition-colors hover:text-accent"
     >
       {label}
     </a>
