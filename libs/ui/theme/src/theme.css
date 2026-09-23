@@ -118,9 +118,19 @@
    */
   --spacing-header: 4rem;
 
-  /* The frame's inset and its one breakpoint. */
+  /*
+   * The frame's inset and the export's two breakpoints.
+   *
+   * ⚠️ **There are two, not one.** Slice 10 defined `frame` alone and this
+   * block said "its one breakpoint"; the homepage export distinguishes three
+   * bands — `<760`, `760–1080` and `>=1080` — and gives the middle one its own
+   * hero lede layout (`1fr auto`, end-aligned) rather than the mobile stack.
+   * Collapsing to two bands is a visible regression at tablet width, so Slice
+   * 13 added `wide`. Both numbers are the export's own.
+   */
   --spacing-frame: 14px;
   --breakpoint-frame: 760px;
+  --breakpoint-wide: 1080px;
 }
 
 /*
