@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
 import { PORTFOLIO_ITEMS, portfolioItemBySlug } from './portfolio-items.fixture.js';
+import { PLACEHOLDER_SLUGS } from './portfolio-items-upcoming.fixture.js';
+
+/** The items with real copy. Placeholders are checked separately below. */
+const AUTHORED_ITEMS = PORTFOLIO_ITEMS.filter((item) => !PLACEHOLDER_SLUGS.includes(item.slug));
 
 /**
  * ⚠️ **Eight, not the nine D53 names.** `cosmikata-design-system` is commented
@@ -8,6 +12,10 @@ import { PORTFOLIO_ITEMS, portfolioItemBySlug } from './portfolio-items.fixture.
  * is not ported and resolves to a shell-level not-found. Order is v3's.
  */
 const EXPECTED_SLUGS = [
+  'webpage-v3',
+  'micro-frontend-update',
+  'prototype-company-division',
+  'cw-enterprise-admin',
   'pokemon-pet-shop',
   'cosmikata',
   'older-cosmikata',
@@ -19,7 +27,7 @@ const EXPECTED_SLUGS = [
 ];
 
 describe('PORTFOLIO_ITEMS', () => {
-  it('carries the eight LIVE slugs at 39bbe56, in v3 reading order', () => {
+  it('carries the four placeholders, then the eight LIVE slugs at 39bbe56 in v3 order', () => {
     expect(PORTFOLIO_ITEMS.map((item) => item.slug)).toEqual(EXPECTED_SLUGS);
   });
 
@@ -27,7 +35,7 @@ describe('PORTFOLIO_ITEMS', () => {
     // D53 and the slice file both say nine; the data says eight. The ninth
     // slug has a v3 route page but no data behind it, which is a dead page
     // there and a clean not-found here (D66).
-    expect(PORTFOLIO_ITEMS).toHaveLength(8);
+    expect(AUTHORED_ITEMS).toHaveLength(8);
     expect(portfolioItemBySlug('cosmikata-design-system')).toBeUndefined();
   });
 
@@ -49,10 +57,10 @@ describe('PORTFOLIO_ITEMS', () => {
   });
 
   it('gives every item an images array and every item a description', () => {
-    for (const item of PORTFOLIO_ITEMS) {
+    for (const item of AUTHORED_ITEMS) {
       expect(Array.isArray(item.images)).toBe(true);
       expect(item.images.length).toBeGreaterThan(0);
-      expect(item.description).toContain('<p>');
+      expect(item.description).toMatch(/<(p|ul)>/);
     }
   });
 
@@ -74,12 +82,16 @@ describe('PORTFOLIO_ITEMS', () => {
     // unauthored on one item is the failure this catches — the package is
     // frozen for the whole 12/13/14/15/16 wave, so a gap found later cannot
     // be filled without a coordinator pass.
-    for (const item of PORTFOLIO_ITEMS) {
+    for (const item of AUTHORED_ITEMS) {
       expect(item.year, item.slug).toMatch(/^\d{4}( – \d{4})?$/u);
       expect(item.role, item.slug).not.toBe('');
       expect(item.lede, item.slug).not.toBe('');
-      expect(item.body.length, item.slug).toBeGreaterThanOrEqual(2);
-      expect(item.tech.length, item.slug).toBeGreaterThanOrEqual(4);
+      // Breeze-Thru and Cosmikata carry one, by the maintainer's choice (2026-09-23).
+      const minBody = ['cw-breeze-thru', 'cosmikata'].includes(item.slug) ? 1 : 2;
+      expect(item.body.length, item.slug).toBeGreaterThanOrEqual(minBody);
+      // Breeze-Thru carries two, by the maintainer's choice (2026-09-23).
+      const minTech = item.slug === 'cw-breeze-thru' ? 2 : 4;
+      expect(item.tech.length, item.slug).toBeGreaterThanOrEqual(minTech);
       expect(item.facts, item.slug).toHaveLength(3);
     }
   });
@@ -116,7 +128,11 @@ describe('PORTFOLIO_ITEMS', () => {
     // coexist on purpose: `body` is plain, `description` is HTML.
     const older = portfolioItemBySlug('older-cosmikata');
 
-    expect(older?.description).toContain('<ul>');
+    expect(older?.description).toContain('<p>');
+    // The tech-stack list was removed from the description (maintainer,
+    // 2026-09-23); `tech` still carries the stack.
+    expect(older?.description).not.toContain('tech stack I used');
+    expect(older?.description).not.toContain('<ul>');
     expect(older?.videos).toHaveLength(2);
     expect(older?.body.every((p) => !p.includes('<'))).toBe(true);
   });

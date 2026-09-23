@@ -5,6 +5,7 @@ import { CORPORATE_REPORTS_PORTFOLIO_ITEMS } from './portfolio-items-corporate-r
 import { CRICKET_PORTFOLIO_ITEMS } from './portfolio-items-cricket.fixture.js';
 import { OTHER_PORTFOLIO_ITEMS } from './portfolio-items-other.fixture.js';
 import { OTHER_CLIENT_PORTFOLIO_ITEMS } from './portfolio-items-other-clients.fixture.js';
+import { UPCOMING_PORTFOLIO_ITEMS } from './portfolio-items-upcoming.fixture.js';
 
 /**
  * 🧭 **OWNER: Slice 7 (Portfolio Item).** Created by the coordinator in Slice 4
@@ -31,6 +32,7 @@ import { OTHER_CLIENT_PORTFOLIO_ITEMS } from './portfolio-items-other-clients.fi
  * broken when they typed a bad URL.
  */
 export const PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
+  ...UPCOMING_PORTFOLIO_ITEMS, // webpage-v3, micro-frontend-update, prototype-company-division, cw-enterprise-admin — placeholders
   ...ACTIVE_PORTFOLIO_ITEMS, // pokemon-pet-shop, cosmikata
   ...OTHER_PORTFOLIO_ITEMS, // older-cosmikata, csp-generator-app
   ...CRICKET_PORTFOLIO_ITEMS, // cw-breeze-thru

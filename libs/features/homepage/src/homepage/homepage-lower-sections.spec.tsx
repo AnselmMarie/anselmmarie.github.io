@@ -17,32 +17,27 @@ const introFor = (id: string) =>
   );
 
 describe('HomepageWorkSection — the dark card', () => {
-  it("flips the one dark card's foreground without touching the others", () => {
+  it("flips the dark card's foreground without touching the others", () => {
     // The tone derivation is a lookup rather than a nested ternary
-    // (no-nested-ternary.md), and it is the only branch in the card.
-    render(
+    // (no-nested-ternary.md), and it is the only branch in the card. No
+    // visible card is dark since 2026-09-23, so the spec supplies its own.
+    const { container } = render(
       <HomepageWorkSection
         sectionId={SECTION_IDS.work}
         intro={introFor(SECTION_IDS.work)}
-        cards={HOMEPAGE_CONTENT.work}
+        cards={[
+          { slug: 'csp-generator-app', background: '#14211E', isDark: true, isLive: false },
+          { slug: 'cosmikata', background: '#BFE6D2', isDark: false, isLive: true },
+        ]}
         items={PORTFOLIO_ITEMS}
       />
     );
 
-    const dark = HOMEPAGE_CONTENT.work.filter((card) => card.isDark);
-    const titleOf = (slug: string) =>
-      required(
-        PORTFOLIO_ITEMS.find((item) => item.slug === slug),
-        slug
-      ).title;
+    const cardOf = (slug: string) =>
+      required(container.querySelector(`a[href="/portfolio/${slug}"]`) ?? undefined, slug);
 
-    expect(dark.map((card) => card.slug)).toEqual(['csp-generator-app']);
-    expect(
-      screen.getByRole('link', { name: new RegExp(titleOf('csp-generator-app'), 'u') })
-    ).toHaveClass('text-paper');
-    expect(
-      screen.getByRole('link', { name: new RegExp(titleOf('pokemon-pet-shop'), 'u') })
-    ).toHaveClass('text-ink');
+    expect(cardOf('csp-generator-app')).toHaveClass('text-paper');
+    expect(cardOf('cosmikata')).toHaveClass('text-ink');
   });
 
   it('omits the aside when the intro leaves it empty', () => {

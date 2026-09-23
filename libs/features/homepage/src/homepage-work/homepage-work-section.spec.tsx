@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 import { HOMEPAGE_CONTENT, PORTFOLIO_ITEMS, SECTION_IDS } from '@portfolio/shared-fixtures';
 
-import { required } from '../test-helpers/portfolio-item.test-helpers.js';
-import HomepageWorkSection from './homepage-work-section.js';
+import { makePortfolioItem, required } from '../test-helpers/portfolio-item.test-helpers.js';
+import HomepageWorkSection, { sortYear } from './homepage-work-section.js';
 
 const intro = required(
   HOMEPAGE_CONTENT.sectionIntros.find((i) => i.sectionId === SECTION_IDS.work),
@@ -35,14 +35,24 @@ describe('HomepageWorkSection — what reaches the card', () => {
   it('forwards every card prop from the item and the card presentation', () => {
     renderSection();
 
-    const first = required(HOMEPAGE_CONTENT.work[0], 'the first work card');
+    // Not `work[0]`: the first cards are placeholders with empty company and
+    // stack fields, which would leave half of these assertions matching ''.
+    const first = required(
+      HOMEPAGE_CONTENT.work.find((card) => card.slug === 'cosmikata'),
+      'the cosmikata work card'
+    );
     const item = required(
       PORTFOLIO_ITEMS.find((i) => i.slug === first.slug),
       first.slug
     );
-    const card = screen.getByRole('link', { name: new RegExp(item.title, 'u') });
+    // By href, not by name: `Cosmikata` is also a substring of the older
+    // version's title since both cards were restored (2026-09-23).
+    const card = required(
+      screen.getAllByRole('link').find((a) => a.getAttribute('href') === `/portfolio/${item.slug}`),
+      'the cosmikata card link'
+    );
 
-    expect(card).toHaveAttribute('href', `/portfolio/${item.slug}`);
+    expect(within(card).getByRole('heading', { name: item.title })).toBeInTheDocument();
     expect(within(card).getByText(item.lede)).toBeInTheDocument();
     expect(within(card).getByText(item.company)).toBeInTheDocument();
     expect(within(card).getByText(new RegExp(item.year, 'u'))).toBeInTheDocument();
@@ -51,22 +61,67 @@ describe('HomepageWorkSection — what reaches the card', () => {
   });
 
   it('draws the Live chip only on the cards marked live', () => {
-    renderSection();
+    // No real card is live since 2026-09-23, so the spec supplies its own.
+    render(
+      <HomepageWorkSection
+        sectionId={SECTION_IDS.work}
+        intro={intro}
+        cards={[
+          { slug: 'cosmikata', background: '#BFE6D2', isDark: false, isLive: true },
+          { slug: 'cw-breeze-thru', background: '#E4D3BC', isDark: false, isLive: false },
+        ]}
+        items={PORTFOLIO_ITEMS}
+      />
+    );
 
-    const live = HOMEPAGE_CONTENT.work.filter((card) => card.isLive).map((card) => card.slug);
     const drawn = screen
       .getAllByText('Live')
       .map((el) => el.closest('a')?.getAttribute('href')?.replace('/portfolio/', ''));
 
-    expect(drawn).toEqual(live);
+    expect(drawn).toEqual(['cosmikata']);
   });
 
-  it('renders one card per fixture entry, in fixture order', () => {
+  it('draws no Live pill on the homepage cards', () => {
+    renderSection();
+
+    expect(screen.queryByText('Live')).not.toBeInTheDocument();
+  });
+
+  it('renders one card per fixture entry', () => {
     renderSection();
 
     const hrefs = screen.getAllByRole('link').map((a) => a.getAttribute('href'));
 
-    expect(hrefs).toEqual(HOMEPAGE_CONTENT.work.map((card) => `/portfolio/${card.slug}`));
+    expect([...hrefs].sort()).toEqual(
+      HOMEPAGE_CONTENT.work.map((card) => `/portfolio/${card.slug}`).sort()
+    );
+  });
+
+  it('orders the cards newest year first, keeping fixture order within a year', () => {
+    const card = (slug: string) => ({ slug, background: '#FFFFFF', isDark: false, isLive: false });
+
+    render(
+      <HomepageWorkSection
+        sectionId={SECTION_IDS.work}
+        intro={intro}
+        cards={[card('old'), card('tie-a'), card('range'), card('tie-b')]}
+        items={[
+          makePortfolioItem('old', 'Old', { year: '2017' }),
+          makePortfolioItem('tie-a', 'Tie A', { year: '2025' }),
+          makePortfolioItem('range', 'Range', { year: '2019 – 2021' }),
+          makePortfolioItem('tie-b', 'Tie B', { year: '2025' }),
+        ]}
+      />
+    );
+
+    const hrefs = screen.getAllByRole('link').map((a) => a.getAttribute('href'));
+
+    expect(hrefs).toEqual([
+      '/portfolio/tie-a',
+      '/portfolio/tie-b',
+      '/portfolio/range',
+      '/portfolio/old',
+    ]);
   });
 
   it('skips a card whose slug matches no item rather than throwing', () => {
@@ -90,5 +145,19 @@ describe('HomepageWorkSection — what reaches the card', () => {
 
     expect(section).toHaveAttribute('id', SECTION_IDS.work);
     expect(section).toHaveClass('scroll-mt-anchor');
+  });
+});
+
+describe('sortYear', () => {
+  it('reads a single year', () => {
+    expect(sortYear('2018')).toBe(2018);
+  });
+
+  it('reads the end of a range, so an ongoing project sorts by its latest year', () => {
+    expect(sortYear('2019 – 2021')).toBe(2021);
+  });
+
+  it('sorts an unreadable year last rather than throwing', () => {
+    expect(sortYear('')).toBe(Number.NEGATIVE_INFINITY);
   });
 });

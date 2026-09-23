@@ -3,7 +3,8 @@ import { Fragment, type ReactElement } from 'react';
 import type { HomepageContent } from '@portfolio/shared-types';
 import { PillLink, UiIcon } from '@portfolio/ui-components';
 
-import HomepageHeroMedia from './homepage-hero-media.js';
+// Hidden 2026-09-23 — see the render site below.
+// import HomepageHeroMedia from './homepage-hero-media.js';
 import HomepageSpecsStrip from './homepage-specs-strip.js';
 
 /** Derived — the types barrel exports the root type, not every nested shape. */
@@ -15,8 +16,13 @@ interface HomepageHeroProps {
 }
 
 /**
- * The hero — the specs strip, the headline, the lede, two pills, and the
- * featured panel.
+ * The hero — the specs strip, the headline, the lede and two pills.
+ *
+ * ⚠️ **The featured panel is hidden** — maintainer's call, 2026-09-23. Its
+ * render line and import are commented out, not deleted; `hero.featuredCaption`
+ * and `hero.capabilities` stay in the content. Uncomment both to restore it.
+ * The headline block's top margin and the hero's bottom padding were raised
+ * from `frame` up in the same change, to give the text room without the panel.
  *
  * ⚠️ **Three breakpoints, not two.** The export distinguishes `<760`,
  * `760–1080` and `≥1080`, and the middle band has its own lede layout
@@ -38,10 +44,10 @@ interface HomepageHeroProps {
  */
 const HomepageHero = ({ specs, hero }: HomepageHeroProps): ReactElement => {
   return (
-    <div className="px-page pb-9 pt-[30px] frame:pb-[52px] frame:pt-11">
+    <div className="px-page pb-9 pt-[30px] frame:pb-[72px] frame:pt-11 wide:pb-24">
       <HomepageSpecsStrip specs={specs} />
 
-      <div className="mt-[34px] grid items-start gap-[22px] wide:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] wide:items-end wide:gap-[34px]">
+      <div className="mt-[34px] frame:mt-14 wide:mt-[72px] grid items-start gap-[22px] wide:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] wide:items-end wide:gap-[34px]">
         <h1 className="m-0 text-balance font-display text-display font-bold text-ink">
           {hero.headline.lead.split('\n').map((line, index) => (
             <Fragment key={line}>
@@ -71,7 +77,7 @@ const HomepageHero = ({ specs, hero }: HomepageHeroProps): ReactElement => {
         </div>
       </div>
 
-      <HomepageHeroMedia caption={hero.featuredCaption} capabilities={hero.capabilities} />
+      {/* <HomepageHeroMedia caption={hero.featuredCaption} capabilities={hero.capabilities} /> */}
     </div>
   );
 };

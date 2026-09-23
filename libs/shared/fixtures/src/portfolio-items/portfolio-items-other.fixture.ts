@@ -19,7 +19,7 @@ export const OTHER_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
   {
     slug: 'older-cosmikata',
     company: 'Freelancing/Concepts',
-    title: 'CosMikata (older version)',
+    title: 'Cosmikata (older version)',
     subtitle: 'Design / Development',
     thumbnail: '/images/portfolio/freelancing-concepts/cosajiou-thumbnail.jpg',
     description:
@@ -28,49 +28,47 @@ export const OTHER_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
       'streamline the planning of future cosplays, the app combines features inspired by ' +
       'Trello and Cosplanner. As a solo project, I am overseeing every aspect, from ' +
       'conceptualization to production. Without a set launch date, I am taking the ' +
-      'opportunity to thoroughly test various technologies. The tech stack I used is:</p>' +
-      '<ul><li>React Native</li><li>Expo</li><li>GraphQL</li><li>PostgreSQL</li>' +
-      '<li>Sketch</li></ul>',
+      'opportunity to thoroughly test various technologies.</p>',
     images: [
       {
         src: '/images/portfolio/freelancing-concepts/cosajiou-login.jpg',
-        alt: 'CosMikata Login',
+        alt: 'Cosmikata Login',
         width: '414',
         height: '736',
       },
       {
         src: '/images/portfolio/freelancing-concepts/cosajiou-whats-next.jpg',
-        alt: "CosMikata What's Next Screen",
+        alt: "Cosmikata What's Next Screen",
         width: '414',
         height: '736',
       },
       {
         src: '/images/portfolio/freelancing-concepts/cosajiou-projects.jpg',
-        alt: 'CosMikata Cosplay Screen',
+        alt: 'Cosmikata Cosplay Screen',
         width: '414',
         height: '736',
       },
       {
         src: '/images/portfolio/freelancing-concepts/cosajiou-details.jpg',
-        alt: 'CosMikata Cosplay Details Screen',
+        alt: 'Cosmikata Cosplay Details Screen',
         width: '414',
         height: '736',
       },
       {
         src: '/images/portfolio/freelancing-concepts/cosajiou-project-completed.jpg',
-        alt: 'CosMikata Modal Cosplay Completed',
+        alt: 'Cosmikata Modal Cosplay Completed',
         width: '414',
         height: '736',
       },
       {
         src: '/images/portfolio/freelancing-concepts/cosajiou-form.jpg',
-        alt: 'CosMikata Form Design',
+        alt: 'Cosmikata Form Design',
         width: '414',
         height: '736',
       },
       {
         src: '/images/portfolio/freelancing-concepts/cosajiou-modal.jpg',
-        alt: 'CosMikata Modal Design',
+        alt: 'Cosmikata Modal Design',
         width: '414',
         height: '736',
       },
@@ -78,12 +76,12 @@ export const OTHER_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     videos: [
       {
         src: 'https://www.youtube.com/embed/GdRP5EWrH9A',
-        title: 'CosMikata Video 1',
+        title: 'Cosmikata Video 1',
         description: 'First video talks about the application in detail.',
       },
       {
         src: 'https://www.youtube.com/embed/axvSVI4IeOU',
-        title: 'CosMikata Video 2',
+        title: 'Cosmikata Video 2',
         description:
           'This video continues to talk about other parts of the application. Note: Around ' +
           '2:30 I said "iOS 5" but I meant iPhone 5.',
@@ -99,7 +97,7 @@ export const OTHER_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
      */
     year: '2019',
     role: 'Design & Engineering',
-    lede: 'The first CosMikata — a planning app for cosplayers and cosmakers.',
+    lede: 'The first Cosmikata, a planning app for cosplayers and cosmakers.',
     body: [
       'Built out of a personal need to plan future cosplays, the app combined the board-and-card organisation of Trello with the build-tracking of Cosplanner, aimed at people managing several costumes at once.',
       'A solo project from concept to production: design, data model, and the React Native client. With no fixed launch date, it doubled as a testbed for a GraphQL and PostgreSQL stack behind an Expo app.',
@@ -108,7 +106,7 @@ export const OTHER_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     facts: [
       { key: 'Timeline', value: 'Ongoing side project' },
       { key: 'Role', value: 'Solo — concept, design, build' },
-      { key: 'Focus', value: 'Cosplay planning, offline-first data' },
+      { key: 'Focus', value: 'Cosplay planning' },
     ],
     links: [],
   },

@@ -20,20 +20,18 @@ export const CRICKET_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     title: 'Breeze-Thru',
     subtitle: 'Design / Development',
     thumbnail: '/images/portfolio/cricket-wireless/breezeThru-thumbnail.jpg',
-    description:
-      '<p>Breeze-Thru is an innovative application that facilitates the seamless activation of ' +
-      'service for new customers on any mobile device.</p>' +
-      '<p>In my capacity as the leader of the front-end team, I played a pivotal role in ' +
-      'shaping the entire development lifecycle of this application, from its initial ' +
-      'conception to its successful production launch. My responsibilities encompassed ' +
-      'coding, design implementation, and team management. Throughout the process, we ' +
-      'maintained a strong emphasis on optimizing user experience (UX) and ensuring ' +
-      'accessibility for all users.</p>' +
-      '<p>Effective communication and collaboration with the network, back-end, and business ' +
-      "teams were key factors in the project's success. Our coordinated efforts culminated in " +
-      'the successful launch of the application, garnering positive feedback. In recognition ' +
-      'of the project\'s excellence, I was honored with "The AT&T Service Excellence Award" ' +
-      'shortly thereafter.</p>',
+    description: `
+      <ul>
+        <li>Defined the frontend architecture, UI patterns, and component approach from concept through production.</li>
+        <li>Guided a four-person frontend team through implementation, code reviews, and delivery while remaining hands-on with development.</li>
+        <li>Translated business and technical requirements into accessible, intuitive, and reusable user workflows.</li>
+        <li>Established frontend implementation standards and reusable UI patterns that supported subsequent self-service experiences.</li>
+        <li>Coordinated API and technical dependencies across network, backend, and business teams to align requirements and delivery.</li>
+        <li>Helped simplify service activation and account management for new customers across mobile devices.</li>
+        <li>Contributed to a user experience focused on clearer workflows, states, and accessibility.</li>
+        <li>Application earned an AT&T Service Excellence Award and became a reference pattern for later self-service experiences.</li>
+      </ul>
+    `,
     images: [
       {
         src: '/images/portfolio/cricket-wireless/breezeThru01.jpg',
@@ -62,25 +60,28 @@ export const CRICKET_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     ],
     videos: [],
     /*
-     * ⚠️ **`year` contradicts this site's own Experience list, and the
-     * maintainer chose the design's figure** (2026-09-22). The export dates
-     * Breeze-Thru 2022; the AT&T award v3 credits to it sits under the Cricket
-     * 2013–2019 row in `homepage-experience.fixture.ts`. Recorded so the next
-     * reader does not re-raise it.
+     * ⚠️ **2018, the maintainer's figure (2026-09-23).** It replaces the
+     * design's 2022, which the maintainer had kept on 2026-09-22 even though
+     * it contradicted the Cricket 2013–2019 row in `homepage-experience.fixture.ts`.
+     * 2018 falls inside that row, so the contradiction is gone.
      */
-    year: '2022',
+    year: '2018',
     role: 'Senior Engineer, Tech Lead',
-    lede: 'A mobile-first self-service flow that cut support calls out of routine account tasks.',
+    // The maintainer's wording (2026-09-23), replacing the design's.
+    lede: 'Led frontend design and delivery for a self-service activation experience.',
+    // One paragraph by the maintainer's choice (2026-09-23); every other item carries 2–3.
     body: [
-      'Customers were phoning support for tasks they could do themselves. Breeze-Thru reframed activation and account management as a short, guided mobile flow with clear state at every step.',
-      'Leading the front-end team, the work covered flow design, architecture, and hands-on delivery from concept to production launch, alongside the network, back-end, and business teams.',
-      'The program earned an AT&T Service Excellence Award and became the reference pattern for later self-service surfaces.',
+      'Led frontend design and delivery for Breeze-Thru, a mobile-first self-service activation and account management experience designed to reduce customer reliance on support and Cricket Wireless stores for tasks customers could complete themselves.',
     ],
-    tech: ['Angular', 'TypeScript', 'RxJS', 'Mobile Web', 'REST API', 'Accessibility'],
+    // The maintainer's list (2026-09-23), replacing the design's six entries.
+    tech: ['Design', 'JavaScript'],
     facts: [
       { key: 'Timeline', value: '9 months' },
       { key: 'Role', value: 'Tech lead, 4 engineers' },
-      { key: 'Outcome', value: 'Reduced friction, higher task completion' },
+      {
+        key: 'Focus',
+        value: 'Led design and frontend to simplify workflows and improve task completion',
+      },
     ],
     links: [],
   },

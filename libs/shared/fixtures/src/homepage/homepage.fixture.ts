@@ -94,20 +94,37 @@ export const HOMEPAGE_CONTENT: HomepageContent = {
    * to. `background` values are the export's own hex literals except where
    * marked invented.
    */
+  /*
+   * ⚠️ **Five cards hidden — maintainer's call, 2026-09-23.** Pokémon Pet Shop,
+   * Company Development, New App Skin, CSP Generator App and Caterpillar Inc.
+   * are commented out, not deleted, and Cosmikata's older version joined them
+   * later that day (it had been restored in between): their items stay
+   * in `PORTFOLIO_ITEMS` and their `/portfolio/$slug` pages still resolve.
+   * Uncomment a line to restore its card.
+   */
   work: [
-    { slug: 'pokemon-pet-shop', background: '#CFD8F2', isDark: false, isLive: true },
-    { slug: 'cosmikata', background: '#BFE6D2', isDark: false, isLive: true },
+    // ⚠️ INVENTED colour — placeholder item added 2026-09-23, no design card.
+    { slug: 'webpage-v3', background: '#D4E4F0', isDark: false, isLive: false },
+    // ⚠️ INVENTED colours — placeholder items added 2026-09-23, no design card.
+    { slug: 'micro-frontend-update', background: '#D9D4EE', isDark: false, isLive: false },
+    { slug: 'prototype-company-division', background: '#F0DCCB', isDark: false, isLive: false },
+    // { slug: 'pokemon-pet-shop', background: '#CFD8F2', isDark: false, isLive: true },
+    // `isLive` off — maintainer's call, 2026-09-23: no card shows the Live pill.
+    { slug: 'cosmikata', background: '#BFE6D2', isDark: false, isLive: false },
     { slug: 'cw-breeze-thru', background: '#E4D3BC', isDark: false, isLive: false },
-    { slug: 'rove-logix', background: '#DCE3C8', isDark: false, isLive: false },
+    // { slug: 'rove-logix', background: '#DCE3C8', isDark: false, isLive: false },
     // ⚠️ INVENTED — the design has no card for this item. A muted mauve, picked
     // to sit in the export's family while reading as separate work from
     // `rove-logix`'s sage directly above it.
-    { slug: 'rove-logix-ui-update', background: '#E8DCE6', isDark: false, isLive: false },
-    { slug: 'csp-generator-app', background: '#14211E', isDark: true, isLive: false },
-    { slug: 'cr-caterpillar', background: '#DFDBD1', isDark: false, isLive: false },
+    // { slug: 'rove-logix-ui-update', background: '#E8DCE6', isDark: false, isLive: false },
+    // { slug: 'csp-generator-app', background: '#14211E', isDark: true, isLive: false },
+    // { slug: 'cr-caterpillar', background: '#DFDBD1', isDark: false, isLive: false },
     // ⚠️ INVENTED — as above. A cooler slate than `cosmikata`'s mint, reading
-    // as the earlier version of the same product.
-    { slug: 'older-cosmikata', background: '#D6DFE0', isDark: false, isLive: false },
+    // as the earlier version of the same product. Hidden again 2026-09-23.
+    // { slug: 'older-cosmikata', background: '#D6DFE0', isDark: false, isLive: false },
+    // ⚠️ INVENTED colour — placeholder item added 2026-09-23, no design card.
+    // A dusty rose, kept apart from Breeze-Thru's tan beside it.
+    { slug: 'cw-enterprise-admin', background: '#EAD6D6', isDark: false, isLive: false },
   ],
   experience: HOMEPAGE_EXPERIENCE,
   footnotes: HOMEPAGE_FOOTNOTES,

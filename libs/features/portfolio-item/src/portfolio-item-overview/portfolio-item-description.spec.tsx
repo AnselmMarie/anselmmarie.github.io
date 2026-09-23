@@ -12,6 +12,12 @@ describe('PortfolioItemDescription', () => {
     );
   });
 
+  it('sits under its own Details eyebrow, since the design draws no slot for it (D78)', () => {
+    render(<PortfolioItemDescription html="<p>Body</p>" />);
+
+    expect(screen.getByText('Details')).toBeInTheDocument();
+  });
+
   it('sanitizes what it is given rather than trusting the caller', () => {
     // D69 — the component outlives the fixture. When `description` becomes
     // editor-supplied, this component must already be the boundary.
