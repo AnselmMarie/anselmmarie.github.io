@@ -45,7 +45,7 @@ nobody and are omitted.
 | 7 | `libs/shared/config` registry, shell route tree, **`libs/shared/types` + `libs/shared/fixtures` (co-owned with 6)**, root manifests |
 | 8 | `.github/workflows/`, the AWS infrastructure definitions, root `package.json` scripts, `libs/shared/config` (env-read remote URLs), `docs/` (the runbook) |
 | 9 | `playwright.config.ts`, root `package.json` scripts, `.github/workflows/` (the E2E job added to Slice 8's workflow) |
-| 10 | `libs/ui/theme/src/theme.css` (**rewritten**), `libs/ui/components` barrel + 5 new components, `libs/features/shell` layout + 3 regions + **all 5 fallbacks**, `apps/shell/src/styles.css`, root manifests **iff [Q20](./open-questions.md#q20) resolves to self-hosting** |
+| 10 | `libs/ui/theme/src/theme.css` (**rewritten**), `libs/ui/components` barrel + 5 new components, `libs/features/shell` layout + 3 regions + **all 5 fallbacks**, `apps/shell/src/styles.css`, root manifests **iff [Q20](./questions-closed-q9-q16.md#q20) resolves to self-hosting** |
 | 11 | `libs/shared/types/src/{portfolio-item,homepage-content}.ts` + barrel, all three `portfolio-items-*.fixture.ts`, `homepage.fixture.ts` |
 | 12 | ⚠️ **`libs/shared/fixtures/src/site-sections.fixture.ts` + spec** and `libs/shared/types/src/site-section.ts` — the [D81](./decisions-d76-d81.md#d81) contract; plus `libs/features/shell/src/shell-header-region.tsx` and `fallbacks/header-fallback.tsx` |
 | 13 | `libs/features/homepage/**` only |

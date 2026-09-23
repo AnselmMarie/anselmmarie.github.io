@@ -10,111 +10,34 @@ When one is answered: write the answer as a numbered decision in
 table below, and update the binding block of every slice that named it. All
 four, in the same change.
 
-**Three are open.** All four were raised on 2026-09-22 by reading the two design exports
-([D76](./decisions-d76-d81.md#d76)). ⚠️ **None of them blocks a whole slice** —
-each blocks one field or one region, so the slice that owns it builds everything
-else and reports the blocked part as pending rather than filling it in.
+**None are open.** All four raised on 2026-09-22 by reading the two design exports
+([D76](./decisions-d76-d81.md#d76)) closed the same day — ⚠️ **before the redesign wave
+starts**, rather than by the agent sent to build against them, which is what the
+README's warning after the 5–7 wave asks for.
 
-| Q | Blocks | Status |
+| Q | Blocked | Status |
 |---|---|---|
-| [Q18](#q18) | Slices 11, 13, 15 — the hero images only | 🔴 open |
-| [Q19](#q19) | Slice 15 — the gallery contents only | 🔴 open |
-| [Q21](#q21) | Slices 11, 13, 14 — one figure | 🔴 open |
+| [Q18](./questions-closed-q18-q21.md#q18) | Slices 11, 13, 15 — the hero images | ✅ closed → [D85](./decisions-d85-d87.md#d85) |
+| [Q19](./questions-closed-q18-q21.md#q19) | Slice 15 — the gallery contents | ✅ closed → [D86](./decisions-d85-d87.md#d86) |
 | [Q20](./questions-closed-q9-q16.md#q20) | *(was Slice 10 — font delivery)* | ✅ closed → [D82](./decisions-d82-d83.md#d82) |
+| [Q21](./questions-closed-q18-q21.md#q21) | Slices 11, 13, 14 — one figure | ✅ closed → [D87](./decisions-d85-d87.md#d87) |
 
----
-
-<a id="q18"></a>
-## Q18 — what are the real hero images?
-
-**Raised 2026-09-22. Blocks:** the homepage's featured image
-([Slice 13](./slices/13-homepage-hero-work.md)) and each item's `hero` field
-([Slice 11](./slices/11-content-model.md), rendered by
-[Slice 15](./slices/15-portfolio-detail-redesign.md)).
-
-Both exports point their hero `<img>` at an **Unsplash URL** behind a
-`((window.__resources||{}).heroX) ||` fallback — i.e. the design says
-explicitly that these are placeholders awaiting real assets.
-
-The repo has **43 real portfolio images** under
-`apps/shell/public/images/portfolio/`, across six folders. None of them is a
-16/7 hero; they are screenshots at their authored intrinsic dimensions.
-
-The options, none of which a builder should pick alone:
-
-1. Commission or capture a hero per item (8 needed, plus 1 for the homepage).
-2. Crop an existing screenshot to 16/7 and accept the composition.
-3. Drop the hero region and let the page start at the tech/summary block —
-   a real design change, not a fallback.
-
-⚠️ **Do not hotlink Unsplash.** It is a third-party runtime dependency on a
-page whose whole point is that it degrades well, and it is not licensed for it.
-
----
-
-<a id="q19"></a>
-## Q19 — what fills the detail gallery?
-
-**Raised 2026-09-22. Blocks:** the gallery region of
-[Slice 15](./slices/15-portfolio-detail-redesign.md) only.
-
-The export draws the grid — two columns, per-tile `span` and `ratio`
-(`span 2` at `16/9`, `span 1` at `3/4`), collapsing to one column at `4/3` on
-mobile — but fills every tile with a **striped placeholder and a label**
-("Catalog grid — desktop", "Cart drawer"). The labels are notes to the
-designer; the literal "Drop images here" heading beside the grid certainly is.
-
-So the design specifies the container and not the contents, while the fixtures
-hold 43 real images with authored `width`/`height` strings.
-
-The question is how the two meet:
-
-1. Derive `span` and `ratio` from each image's authored dimensions — landscape
-   takes `span 2`, portrait `span 1` — and drop the labels.
-2. Author a `span`/`ratio`/label per image, matching the design's rhythm, and
-   accept that as 43 hand-written entries.
-3. Keep the design's tile count per item and pick which images make the cut.
-
-⚠️ **Option 1 is the cheapest and most likely right**, and it is still a
-decision: it means an item with six landscape screenshots renders six full-width
-tiles, which is not the rhythm the design draws.
-
----
-
-
-<a id="q21"></a>
-## Q21 — is it 13+ years or 10+?
-
-**Raised 2026-09-22. Blocks:** one entry in the specs strip
-([Slice 13](./slices/13-homepage-hero-work.md)) and one stat card
-([Slice 14](./slices/14-homepage-experience-contact.md)), authored in
-[Slice 11](./slices/11-content-model.md).
-
-⚠️ **The design contradicts itself, in one file.**
-
-| Where | Says |
-|---|---|
-| the specs strip above the hero | `13+ years shipping` |
-| the About stats card | `10+` · `Years shipping production front-ends` |
-
-The experience list in the same file runs from **2011** to now, which reads as
-14 years and supports neither figure exactly. The two may also be measuring
-different things — total career versus front-end specifically — in which case
-both are right and the labels need to say so.
-
-A builder cannot pick: one of these is on the page twice, in different words,
-and getting it wrong is the kind of detail a reader notices on a portfolio site.
+⚠️ **An empty open list is a statement, not an omission.** Slices 11–16 have no blocked
+field left; a slice that finds a new one raises it here rather than deciding it alone.
 
 ---
 
 ## Closed
 
-All seventeen earlier questions — Q1 through Q17 — are closed, full text and
-closure notes intact, in [questions-closed.md](./questions-closed.md) and its second half
-[questions-closed-q9-q16.md](./questions-closed-q9-q16.md). ⚠️ That file was
-split at 548 lines, over the 500-line cap in
-[plan-split-into-files.md](../../../.claude/rules/plan-split-into-files.md);
-nothing was dropped in the cut.
+All twenty-one questions are closed, full text and closure notes intact, across three
+files: [questions-closed.md](./questions-closed.md) (Q1–Q8),
+[questions-closed-q9-q16.md](./questions-closed-q9-q16.md) (Q9–Q17, plus Q20), and
+[questions-closed-q18-q21.md](./questions-closed-q18-q21.md) (Q18, Q19, Q21). ⚠️ **Both
+splits were forced by the 500-line cap** in
+[plan-split-into-files.md](../../../.claude/rules/plan-split-into-files.md) — the first at
+548 lines on 2026-09-20, the second on 2026-09-22 when these three would have taken the
+second file to ~558. Nothing was dropped or reworded in either cut, and ⚠️ **neither
+filename records its range** — links already written to them keep resolving, which is why.
 
 | Q | Blocks | Status |
 |---|---|---|
@@ -135,3 +58,7 @@ nothing was dropped in the cut.
 | [Q15](./questions-closed-q9-q16.md#q15) | Slice 1 | ✅ → [D46](./decisions-d42-d47.md#d46) |
 | [Q16](./questions-closed-q9-q16.md#q16) | Slice 1 | ✅ → [D45](./decisions-d42-d47.md#d45) |
 | [Q17](./questions-closed-q9-q16.md#q17) | Slice 7 (⚠️ raised as "6, 7") | ✅ → [D69](./decisions-d69.md#d69) |
+| [Q18](./questions-closed-q18-q21.md#q18) | Slices 11, 13, 15 | ✅ → [D85](./decisions-d85-d87.md#d85) |
+| [Q19](./questions-closed-q18-q21.md#q19) | Slice 15 | ✅ → [D86](./decisions-d85-d87.md#d86) |
+| [Q20](./questions-closed-q9-q16.md#q20) | Slice 10 | ✅ → [D82](./decisions-d82-d83.md#d82) |
+| [Q21](./questions-closed-q18-q21.md#q21) | Slices 11, 13, 14 | ✅ → [D87](./decisions-d85-d87.md#d87) |

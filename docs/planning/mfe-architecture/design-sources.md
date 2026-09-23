@@ -48,8 +48,10 @@ The plan does **not** resolve this on its own, because it is the maintainer's re
    script**, and the detail page the same. That is the whole specification — the section
    order, the measures, the colour values, the breakpoints, the copy. The 12 MB that gets
    dropped is Carlito/JetBrains Mono/Inter as base64 woff2 and the **Unsplash placeholder
-   photos**, neither of which is design-of-record content ([Q18](./open-questions.md#q18)
-   exists because those images are explicitly not final).
+   photos**, neither of which is design-of-record content — the photos were explicitly not
+   final, which is why [Q18](./questions-closed-q18-q21.md#q18) existed and why
+   [D85](./decisions-d85-d87.md#d85) replaced them with a typographic hero rather than
+   sourcing substitutes.
 
 ⚠️ **Until this is settled, treat the two links above as unopenable by anyone but the
 maintainer**, and say so in any report that claims a surface was built against its design.
@@ -96,13 +98,19 @@ Found while reading them on 2026-09-22, before any slice was written:
 
 - **The years figure disagrees with itself.** The specs strip says
   `13+ years shipping`; the About stat card says `10+`. Same file. Raised as
-  [Q21](./open-questions.md#q21).
+  [Q21](./questions-closed-q18-q21.md#q21), ✅ closed
+  [D87](./decisions-d85-d87.md#d87) — ⚠️ **both figures were wrong.** The site reads
+  `15+ years shipping` and `13+ · Years in lead & architect roles`, each derivable from
+  the experience list printed beneath them.
 - **The hero images are explicit placeholders** — Unsplash hotlinks behind a
   `window.__resources` fallback, in both files. Raised as
-  [Q18](./open-questions.md#q18).
+  [Q18](./questions-closed-q18-q21.md#q18), ✅ closed
+  [D85](./decisions-d85-d87.md#d85) — the hero region survives but is filled
+  typographically. ⚠️ **No asset in the repo reaches 16/7**; the widest is 1.80.
 
 Neither is a defect in the plan; both are gaps in the design that a builder
-would otherwise fill silently.
+would otherwise fill silently. ⚠️ **Both were closed by measuring the repo against the
+export, before the wave** — not by the agent sent to build against them.
 
 ## The content source: unchanged
 

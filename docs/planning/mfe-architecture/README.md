@@ -109,17 +109,20 @@ passing test suite is not a visible surface. Every slice is under the 250-file c
 - [model.md](./model.md) — the finalized architecture: stack, workspace shape, data flow,
   what reaches the browser versus what stays server-side, the Module Federation strategy,
   and the shadcn/Tailwind sharing strategy.
-- [decisions.md](./decisions.md) — the **index** to D1–D81, split into range files when the
+- [decisions.md](./decisions.md) — the **index** to D1–D87, split into range files when the
   log passed its 500-line cap. The source of truth; each slice restates only the ones that
   bind it. Start at [D33](./decisions-d33-d41.md#d33): the project's purpose is the
   tiebreaker the rest were decided against. Most recently
-  [D76–D81](./decisions-d76-d81.md) — the redesign.
-- [open-questions.md](./open-questions.md) — ⚠️ **four are open**
-  ([Q18–Q21](./open-questions.md)), all raised on 2026-09-22 by reading the new exports.
-  None blocks a whole slice; each blocks one field or one region.
-- [questions-closed.md](./questions-closed.md) — the seventeen answered, in full, each with
-  its closure note. Split at Q9 into
-  [its own file](./questions-closed-q9-q16.md) when it passed the 500-line cap.
+  [D85–D87](./decisions-d85-d87.md) — the three design questions, closed before the wave.
+- [open-questions.md](./open-questions.md) — ✅ **none are open.** The four raised on
+  2026-09-22 by reading the new exports all closed the same day. ⚠️ **An empty list is a
+  statement, not an omission** — a slice that finds a new blocked field raises it there
+  rather than deciding alone.
+- [questions-closed.md](./questions-closed.md) — all twenty-one answered, in full, each
+  with its closure note, across three files: Q1–Q8 here, Q9–Q17 and Q20 in
+  [the second](./questions-closed-q9-q16.md), Q18/Q19/Q21 in
+  [the third](./questions-closed-q18-q21.md). Both splits were forced by the 500-line cap;
+  ⚠️ neither filename records its range, so that existing links keep resolving.
 - [parallelization.md](./parallelization.md) — dependency graph, shared-file table, **both
   waves**, and per-slice file counts.
 - [risks.md](./risks.md) — production considerations and failure modes.

@@ -31,14 +31,16 @@ agent, 13 before 14.**
 
 ## Open questions blocking this slice
 
-- **[Q18](../open-questions.md#q18)** — ⚠️ **the hero's featured image does not
-  exist.** The export points at an Unsplash URL with a `window.__resources`
-  fallback, i.e. it is explicitly a placeholder. **Blocks the hero image only.**
-  Build the rest, render the `--color-surface-sunk` block at the right aspect
-  ratio with its two chips, and report the image as pending. Do **not** ship an
-  Unsplash hotlink.
-- **[Q21](../open-questions.md#q21)** — the `13+` / `10+` years contradiction.
-  Blocks one entry in the specs strip.
+**None — both closed 2026-09-22, before this slice starts.** They are now
+decisions that bind it:
+
+- **[D85](../decisions-d85-d87.md#d85)** (closes Q18) — ⚠️ **the featured image
+  is not pending, it is gone.** The region keeps its box and fills it
+  typographically from the homepage hero's own copy. Nothing renders an `<img>`
+  here and nothing reports an image as outstanding.
+- **[D87](../decisions-d85-d87.md#d87)** (closes Q21) — the specs strip's fourth
+  entry reads **`15+ years shipping`**, authored in Slice 11. ⚠️ Not the
+  design's `13+`, which now belongs to the About stat under a different label.
 
 ## What this slice delivers
 

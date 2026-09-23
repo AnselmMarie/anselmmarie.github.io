@@ -38,14 +38,21 @@ design does not draw.
 
 ## Open questions blocking this slice
 
-- **[Q18](../open-questions.md#q18)** — ⚠️ **no per-item hero image exists.**
-  The export hotlinks Unsplash with a `window.__resources` fallback. **Blocks
-  the hero only.** Build everything else; render the sunk-surface block at
-  `16/7` with its caption chip and report the image as pending.
-- **[Q19](../open-questions.md#q19)** — how the 43 real ported images map onto
-  the design's two-column `span`/`ratio` gallery. The export draws **striped
-  placeholders with labels**, so the design specifies the grid but not what goes
-  in it.
+**None — both closed 2026-09-22, before this slice starts.** They are now
+decisions that bind it, and both change what this slice builds:
+
+- **[D85](../decisions-d85-d87.md#d85)** (closes Q18) — ⚠️ **the hero is
+  typographic.** Keep the `16/7` desktop / `4/3` mobile box and fill it with the
+  item's Work-card treatment (`background`, `isDark`) carrying `title`, `role`
+  and `lede`. `item.hero` does not exist — Slice 11 does not author it — so any
+  code reading it is a mistake, not a pending asset.
+- **[D86](../decisions-d85-d87.md#d86)** (closes Q19) — **derive** each tile:
+  landscape → `span 2` at `16/9`, portrait → `span 1` at `3/4`, `object-fit:
+  cover`, labels dropped. Read the ratio from the fixtures' authored
+  `width`/`height`, which are display dimensions but preserve the ratio exactly.
+  ⚠️ **It is 35 gallery images, not the 43 this slice's prose said** — the other
+  eight are `thumbnail`. ⚠️ `cr-caterpillar` has one image, so its gallery is a
+  single `span 2` tile; that is correct output.
 
 ## What this slice delivers
 
@@ -66,7 +73,9 @@ bar.** It is named here only so nobody builds a second one.
 ### Hero
 
 `16/7` (`4/3` on mobile), `22px` radius, a mono caption chip bottom-left.
-Blocked on [Q18](../open-questions.md#q18).
+⚠️ **Typographic, not photographic** ([D85](../decisions-d85-d87.md#d85)): the box keeps
+its ratio and radius, and its fill is the item's Work-card treatment carrying `title`,
+`role` and `lede`. There is no `<img>` and no `item.hero`.
 
 ### Technologies, facts, and the summary
 
@@ -95,8 +104,11 @@ plainly that nothing in the design authorises it.
 
 ### Gallery
 
-Two columns above 760px, one below, `22px` radius, per-image `span` and `ratio`.
-Blocked on [Q19](../open-questions.md#q19) for what fills it.
+Two columns above 760px, one below, `22px` radius, per-image `span` and `ratio`
+**derived here, not authored** ([D86](../decisions-d85-d87.md#d86)): landscape →
+`span 2` at `16/9`, portrait → `span 1` at `3/4`, `object-fit: cover`. The ratio comes
+from the fixtures' authored `width`/`height`, which are display dimensions but preserve
+the ratio exactly.
 
 ⚠️ **The export's "Drop images here" label is an instruction to the designer,
 not copy.** It does not ship.

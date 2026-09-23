@@ -42,14 +42,20 @@ read by all five slices that follow. Nothing runs beside this.
 
 ## Open questions blocking this slice
 
-- **[Q21](../open-questions.md#q21)** — ⚠️ **the design contradicts itself on
-  the years figure.** Its specs strip says `13+ years shipping`; its About stats
-  card says `10+ · Years shipping production front-ends`. Both are in the same
-  file. One of them is wrong and this slice cannot pick. **Blocks the specs
-  strip and the About stats only** — author every other field, and report these
-  two as pending.
-- **[Q18](../open-questions.md#q18)** — the hero images. Blocks the `hero` field
-  on `PortfolioItem`; the rest of the item is authorable without it.
+**None — all three closed 2026-09-22, before this slice starts.** Each became a
+decision that binds it, so read them as requirements rather than as answers:
+
+- **[D87](../decisions-d85-d87.md#d87)** (closes Q21) — ⚠️ **both of the
+  design's figures were wrong.** Author `specs` with `15+ years shipping` and
+  `about.stats` with `13+ · Years in lead & architect roles`. Neither `13+ years
+  shipping` nor `10+` appears anywhere.
+- **[D85](../decisions-d85-d87.md#d85)** (closes Q18) — ⚠️ **`hero` and
+  `heroCaption` are NOT added to `PortfolioItem`.** The hero became typographic,
+  so there is no image field to author. The table below is corrected for it.
+- **[D86](../decisions-d85-d87.md#d86)** (closes Q19) — the gallery derives
+  `span`/`ratio` from the authored `width`/`height` this slice already carries.
+  ⚠️ **No `span`, `ratio` or tile label is authored here**; Slice 15 derives
+  them. Keep the authored dimensions accurate — they are now load-bearing.
 
 ## What this slice delivers
 
@@ -65,8 +71,12 @@ Additive. Every existing field keeps its name, its type and its meaning.
 | `tech` | `readonly string[]` | ⚠️ derivable from v3's `subtitle`, but **not derived** — authored per item |
 | `facts` | `readonly ItemFact[]` | authored — `{ key, value }`, 3 per item |
 | `links` | `readonly ItemLink[]` | authored — `{ label, href, icon }` |
-| `hero` | `string` | ⚠️ **blocked on [Q18](../open-questions.md#q18)** |
-| `heroCaption` | `string` | authored |
+
+⚠️ **`hero` and `heroCaption` are NOT on this list**, though earlier drafts of
+this slice had them. [D85](../decisions-d85-d87.md#d85) made the hero
+typographic, so there is no image path and no caption to author. The detail
+page's hero region reads the Work-card presentation
+(`background`, `isDark`) that `HomepageContent` already carries.
 
 ⚠️ **`facts` uses `{ key, value }`, not the design's `{ k, v }`.** The export
 abbreviates because it is hand-written template data. Nothing else in this

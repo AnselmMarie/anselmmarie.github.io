@@ -117,6 +117,9 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D82](decisions-d82-d83.md#d82) | The three typefaces come from the Google Fonts CDN, via a `<link>` — a CSS `@import` is silently dropped; Q20 closes | `d82-d83` |
 | [D83](decisions-d82-d83.md#d83) | `libs/ui/components` gains a `shared-utils` dependency for `cn`; the slice's file list said it needed none | `d82-d83` |
 | [D84](decisions-d82-d83.md#d84) | The nav bar is flush to the top and full-bleed; the design floats it at the frame inset | `d82-d83` |
+| [D85](decisions-d85-d87.md#d85) | The hero is typographic, not photographic — no asset in the repo reaches 16/7; Q18 closes | `d85-d87` |
+| [D86](decisions-d85-d87.md#d86) | Gallery `span`/`ratio` derive from the authored dimensions and bucket to the design's two; Q19 closes | `d85-d87` |
+| [D87](decisions-d85-d87.md#d87) | `15+ years shipping` and `13+ years in lead roles` — the design's two figures were both wrong; Q21 closes | `d85-d87` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.

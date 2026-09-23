@@ -26,7 +26,13 @@ have **no counterpart at all** in the built site. Same Nx project as
 
 ## Open questions blocking this slice
 
-- **[Q21](../open-questions.md#q21)** — the `10+` stat card. Blocks one value.
+**None — Q21 closed 2026-09-22, before this slice starts.**
+
+- **[D87](../decisions-d85-d87.md#d87)** — the first About stat reads **`13+` ·
+  `Years in lead & architect roles`**, authored in Slice 11. ⚠️ **Both halves
+  changed**: the design's `10+` anchored on no date in the experience list, and
+  its label duplicated the specs strip's claim in different words. The second
+  stat (`6 · Industries, telecom to logistics`) is unchanged.
 
 ## What this slice delivers
 
