@@ -53,6 +53,9 @@
     },
     {
       "path": "./apps/footer"
+    },
+    {
+      "path": "./e2e"
     }
   ]
 }
