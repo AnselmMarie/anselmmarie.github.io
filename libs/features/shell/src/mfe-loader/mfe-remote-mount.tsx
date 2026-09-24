@@ -16,6 +16,7 @@ import MfeErrorBoundary from '../mfe-error-boundary/mfe-error-boundary.js';
 import { MAX_MFE_RETRIES, type MfeFallbackProps } from '../mfe-error-boundary/mfe-failure.js';
 import MfeHashReapply from './mfe-hash-reapply.js';
 import MfeLoadingPlaceholder from './mfe-loading-placeholder.js';
+import { reloadRemote } from './reload-remote.js';
 
 /** How long a pending import may hang before it is treated as a failure (R7). */
 export const REMOTE_LOAD_TIMEOUT_MS = 10_000;
@@ -45,6 +46,14 @@ interface MfeRemoteMountProps<TRemoteProps extends object = Record<string, never
    * sits in the data tier.
    */
   remoteProps?: TRemoteProps;
+  /**
+   * The remote's exposed module, without `./` (`Homepage`), so a retry can load
+   * it through the federation host instead of `onLoadRemote` (Q23). A failed
+   * `onLoadRemote` can never succeed again on the same page; see
+   * `reload-remote.ts`. Without it, a retry re-runs `onLoadRemote` and only
+   * recovers from a render failure, never a load failure.
+   */
+  exposedModule?: string;
   /** Shell-owned, never federated (D16). Returns an element, so no `on` prefix. */
   fallback: (props: MfeFallbackProps) => ReactElement;
   /** Whether this region is the one a `location.hash` can point into (D43). */
@@ -87,6 +96,7 @@ const MfeRemoteMount = <TRemoteProps extends object = Record<string, never>>({
   placeholderClassName,
   loadingSkeleton,
   remoteProps,
+  exposedModule,
   fallback,
   isHashTarget = false,
   onLoadRemote,
@@ -97,10 +107,19 @@ const MfeRemoteMount = <TRemoteProps extends object = Record<string, never>>({
   const attemptsRemaining = Math.max(0, maxRetries - attempt);
 
   const RemoteComponent = useMemo(
-    () => lazy(onLoadRemote),
+    () =>
+      lazy(() => {
+        // A retry reloads through the host (Q23). The first attempt, and any
+        // render without a federation host, use the import as before.
+        const reloaded =
+          attempt > 0 && exposedModule
+            ? reloadRemote<{ default: ComponentType<TRemoteProps> }>(mfe, exposedModule, attempt)
+            : null;
+        return reloaded ?? onLoadRemote();
+      }),
     // `attempt` is the point of the memo: a new attempt must build a new lazy
     // component, or the cached rejection is served again.
-    [attempt, onLoadRemote]
+    [attempt, exposedModule, mfe, onLoadRemote]
   );
 
   const handleRetry = useCallback(() => {

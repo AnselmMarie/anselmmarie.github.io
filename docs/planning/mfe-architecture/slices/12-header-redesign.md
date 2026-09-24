@@ -1,6 +1,6 @@
 # Slice 12 — Header: the floating nav and the mobile overlay
 
-**Status:** ✅ built, **held with Slices 11, 13, 14** ([D92](../decisions-d88-d100.md#d92))
+**Status:** ✅ merged with Slices 11, 13, 14 (`ab5c139`, PR #45; [D92](../decisions-d88-d100.md#d92))
 **Visible?** ✅ screen · **Depends on:** Slices 10, 11
 **Design:** [`_design/Anselm Marie Portfolio.html`](../../../../_design/Anselm%20Marie%20Portfolio.html) — drawn ✅ · the detail export draws a **different, simpler** bar (see below)
 

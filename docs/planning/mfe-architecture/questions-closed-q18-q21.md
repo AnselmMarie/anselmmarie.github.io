@@ -141,3 +141,64 @@ export's two figures as a career number and a lead-scope number whose labels got
 
 Both numbers are now derivable from the experience table printed directly beneath them,
 which is the property that stops them drifting again.
+
+---
+
+<a id="q22"></a>
+### Q22 — which UI and navigation issues does Slice 17 fix?
+
+**Raised 2026-09-23 by the maintainer**, after Slices 10–14 landed: *"there are still a
+good amount of UI/navigation issues that need to be dealt with."* That is the whole of
+Slice 17's scope ([D102](./decisions-d101-d102.md#d102)), and the list hasn't been written
+down yet.
+
+**Blocks:** Slice 17 entirely. Slice 9 indirectly, since it runs after 17.
+
+**What an answer needs, per issue:** the surface (route + viewport), what happens, what
+should happen, and whether the design shows the right answer or it's a new decision.
+
+**What not to do:** audit the site and treat the findings as the list. An audit can
+*propose* additions for the maintainer to accept. The list itself is the maintainer's.
+
+### ✅ Closed 2026-09-23 → [D104](./decisions-d104.md#d104)
+
+**Answered by the work, not by a list.** The maintainer declared Slice 17 done without the
+list being written down. PR #47 is the likeliest carrier, but that isn't confirmed. The
+list is not reconstructed here, for the reason the question itself gives.
+
+---
+
+<a id="q23"></a>
+### Q23 — "Try again" cannot recover a remote whose load failed. Fix it in Slice 9?
+
+**Raised 2026-09-23 by Slice 9's suite.** With a remote's `remoteEntry.js` blocked, then
+unblocked, clicking **Try again** leaves the fallback in place, for both the homepage and
+the portfolio item. The page asks for `remoteEntry.js` **once**, across the first load
+and every retry.
+
+**Cause** (in `@module-federation/runtime-core` 2.9.0, `utils/load.js`): the runtime
+stores each entry load as a promise in `globalLoading[uniqueKey]`, and a *rejected*
+promise stays there. `MfeRemoteMount`'s retry builds a new `lazy()`, which is the right
+fix for `React.lazy`'s cache, but its `import()` goes back to the runtime and gets the
+same cached rejection. It's the trap the mount's own comments describe, one layer
+further down. No unit spec can see it, because unit specs stub the federated import.
+
+**Likely fix:** on retry, re-register that remote with
+`registerRemotes([remote], { force: true })`. That is the only path that calls
+`removeRemote`, and `removeRemote` is what deletes the cached entry. This changes
+`libs/features/shell` and adds `@module-federation/runtime` as a dependency of
+`feature-shell`.
+
+**Blocks:** Slice 9's two `"Try again" recovers the remote` specs, which fail today and
+turn the new CI job red. Slice 8, whose deploys are gated on that job.
+
+**The choices:** (a) fix it in Slice 9, with a unit spec and this E2E spec as its
+negative control; (b) fix it in its own change first, then land Slice 9 green; (c) land
+Slice 9 with the two specs marked `test.fixme`, naming this question, and fix it later.
+
+### ✅ Closed 2026-09-23 → [D106](./decisions-d106.md#d106)
+
+**Fixed inside Slice 9 (choice a).** The likely fix above was not enough. Forcing the
+re-register cleared the runtime's cache, but two more caches still held the failure: the
+plugin's compiled import, and the browser's module map. D106 records all three and the fix
+that gets past them.

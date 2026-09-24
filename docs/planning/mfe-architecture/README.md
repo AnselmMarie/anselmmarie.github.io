@@ -15,12 +15,13 @@ between demonstrating the architecture and shaving complexity.
 
 | | |
 |---|---|
-| **Merged** | Slices 1–2 (`7b3bf60`, PR #42) · Slices 3–4 (`bfb75b9`, PR #43) · Slices 5–7 (`d4387c3`, PR #44) |
+| **Merged** | Slices 1–2 (`7b3bf60`, PR #42) · Slices 3–4 (`bfb75b9`, PR #43) · Slices 5–7 (`d4387c3`, PR #44) · Slices 10–14 + 16 (`ab5c139`, PR #45) · Slice 15 (`6073c9f`, PR #46) |
+| **Merged, outside the slices** | `8aba011`, PR #47 — Experience bullets from the resume, header nav on shadcn `NavigationMenu`, primitives moved from Radix to Base UI, Experience on shadcn `Accordion`, loading skeletons for the remotes |
 | **On `master`** | The composed site works end to end: four live remotes, eight portfolio items with their real images, `/portfolio/<slug>` resolving, an unknown slug answering not-found, and a stopped remote showing its fallback while the others keep rendering |
-| **Built, awaiting review** | Slice 10 — the design foundation: the new palette, the type scale, the card frame, and five shared components |
-| **Built, awaiting review** | Slices 11–14 — the content model, the header, and the whole homepage. Held together as one change ([D92](./decisions-d88-d100.md#d92)), since Slice 11's removals only compile once 13–14 land. ✅ **The composed site renders with zero fallbacks**, and the anchor contract is verified end to end: all five nav links scroll, four landing at exactly 84px ([D100](./decisions-d88-d100.md#d100)) |
-| **Built, awaiting review** | Slice 15 — the detail page, rebuilt against the 2026-09-22 export (2026-09-23) |
-| **Not started** | Slice 16 (footer strip), then 17 (UI/navigation fixes, ⛔ blocked on [Q22](./open-questions.md#q22)), then 9 (E2E), then 8 (deployment) — [D101–D102](./decisions-d101-d102.md) |
+| **Redesign on `master`** | Slices 10–15: the new palette, type scale and card frame; the header; the whole homepage; and the detail page, all against the 2026-09-22 exports. Slices 11–14 landed as one change ([D92](./decisions-d88-d100.md#d92)). The anchor contract was verified end to end before merge: all five nav links scroll, four landing at exactly 84px ([D100](./decisions-d88-d100.md#d100)) |
+| **Done, maintainer's call** | Slices 16 and 17, 2026-09-23 ([D104](./decisions-d104.md#d104)). ⚠️ Slice 16's footer-down check never ran and moves to Slice 9; Slice 17's issue list was never written down |
+| **Built, awaiting review** | Slice 9 (E2E): 24 of 24 green, including the fix for the retry that could not recover ([D106](./decisions-d106.md#d106)) |
+| **Not started** | Slice 8 (deployment), gated on Slice 9 — [D101–D102](./decisions-d101-d102.md) |
 
 ⚠️ **The design changed on 2026-09-22.** Two new exports replace the look of every surface
 — see [design-sources.md](./design-sources.md) and
@@ -96,15 +97,15 @@ Listed in **execution order**. The `#` column is the label, not the position.
 | [5](./slices/05-footer-mfe.md) | `apps/footer` + `libs/features/footer` | fe | ✅ screen | **6 as built** (est. ~22) | ✅ merged (`d4387c3`) |
 | [6](./slices/06-homepage-mfe.md) | `apps/homepage` + `libs/features/homepage`, on fixtures | fe | ✅ screen | **14 as built** (est. ~32) | ✅ merged (`d4387c3`) |
 | [7](./slices/07-portfolio-item-mfe.md) | `apps/portfolio-item` + feature lib + `/portfolio/$slug` | fe | ✅ screen | **27 as built** (est. ~34) | ✅ merged (`d4387c3`) |
-| [10](./slices/10-design-foundation.md) | Palette, type, the page frame, five shared components. **Solo** | fe | ✅ screen | **32 as built** (est. ~34) | ✅ built, awaiting review |
-| [11](./slices/11-content-model.md) | Types + fixtures for the new field set. **Solo** | fe | — none | **21 as built** (est. ~14) | ✅ built, held with 12–14 |
-| [12](./slices/12-header-redesign.md) | Floating nav, mobile overlay, **the `SITE_SECTIONS` contract** | fe | ✅ screen | **26 as built** (est. ~20) | ✅ built, held with 11, 13–14 |
-| [13](./slices/13-homepage-hero-work.md) | Specs strip, hero, the Work grid | fe | ✅ screen | **13 as built** (est. ~16) | ✅ built, held with 11–14 |
-| [14](./slices/14-homepage-experience-contact.md) | Experience accordion, Skills, About, Contact | fe | ✅ screen | **10 as built** (est. ~20) | ✅ built, held with 11–14 |
-| [15](./slices/15-portfolio-detail-redesign.md) | The detail page, **plus the two blocks the design omits** | fe | ✅ screen | ~31 | built, awaiting review |
-| [16](./slices/16-footer-strip.md) | The footer strip, and its degradation | fe | ✅ screen | ~6 | 🟡 strip built, degradation check open |
-| [17](./slices/17-ui-navigation-fixes.md) | The remaining UI and navigation issues | fe | ✅ screen | unknown | ⛔ blocked on [Q22](./open-questions.md#q22) |
-| [9](./slices/09-e2e-composition.md) | Playwright over a local production build, incl. failure isolation | fe | — none | ~16 | not started |
+| [10](./slices/10-design-foundation.md) | Palette, type, the page frame, five shared components. **Solo** | fe | ✅ screen | **32 as built** (est. ~34) | ✅ merged (`ab5c139`) |
+| [11](./slices/11-content-model.md) | Types + fixtures for the new field set. **Solo** | fe | — none | **21 as built** (est. ~14) | ✅ merged (`ab5c139`) |
+| [12](./slices/12-header-redesign.md) | Floating nav, mobile overlay, **the `SITE_SECTIONS` contract** | fe | ✅ screen | **26 as built** (est. ~20) | ✅ merged (`ab5c139`) |
+| [13](./slices/13-homepage-hero-work.md) | Specs strip, hero, the Work grid | fe | ✅ screen | **13 as built** (est. ~16) | ✅ merged (`ab5c139`) |
+| [14](./slices/14-homepage-experience-contact.md) | Experience accordion, Skills, About, Contact | fe | ✅ screen | **10 as built** (est. ~20) | ✅ merged (`ab5c139`) |
+| [15](./slices/15-portfolio-detail-redesign.md) | The detail page, **plus the two blocks the design omits** | fe | ✅ screen | ~31 | ✅ merged (`6073c9f`) |
+| [16](./slices/16-footer-strip.md) | The footer strip, and its degradation | fe | ✅ screen | ~6 | ✅ done ([D104](./decisions-d104.md#d104)); footer-down check → 9 |
+| [17](./slices/17-ui-navigation-fixes.md) | The remaining UI and navigation issues | fe | ✅ screen | unknown | ✅ done ([D104](./decisions-d104.md#d104)) |
+| [9](./slices/09-e2e-composition.md) | Playwright over a local production build, incl. failure isolation | fe | — none | **28 as built** (est. ~16) | ✅ built, awaiting review |
 | [8](./slices/08-independent-deployment.md) | GitHub Actions (`nx affected`) → CDK-described S3/CloudFront/Lambda, rollback, gated on 9 | ops | — none | ~26 | not started |
 
 Slice 11 is the redesign's one invisible slice and it sits between two visible ones. Slices
@@ -121,17 +122,16 @@ passing test suite is not a visible surface. Every slice is under the 250-file c
 - [model.md](./model.md) — the finalized architecture: stack, workspace shape, data flow,
   what reaches the browser versus what stays server-side, the Module Federation strategy,
   and the shadcn/Tailwind sharing strategy.
-- [decisions.md](./decisions.md) — the **index** to D1–D102, split into range files when the
+- [decisions.md](./decisions.md) — the **index** to D1–D106, split into range files when the
   log passed its 500-line cap. The source of truth; each slice restates only the ones that
   bind it. Start at [D33](./decisions-d33-d41.md#d33): the project's purpose is the
   tiebreaker the rest were decided against. Most recently
-  [D101–D102](./decisions-d101-d102.md): the tail re-ordered to 17 → 9 → 8.
-- [open-questions.md](./open-questions.md) — ⏳ **one is open:
-  [Q22](./open-questions.md#q22)**, the UI/navigation issue list that is Slice 17's whole
-  scope. A slice that finds a new blocked field raises it there rather than deciding alone.
-- [questions-closed.md](./questions-closed.md) — all twenty-one answered, in full, each
+  [D105–D106](./decisions-d105.md#d105): what building the E2E suite found, and the retry fix.
+- [open-questions.md](./open-questions.md) — **none are open.** A slice that finds a new
+  blocked field raises it there rather than deciding alone.
+- [questions-closed.md](./questions-closed.md) — all twenty-three answered, in full, each
   with its closure note, across three files: Q1–Q8 here, Q9–Q17 and Q20 in
-  [the second](./questions-closed-q9-q16.md), Q18/Q19/Q21 in
+  [the second](./questions-closed-q9-q16.md), Q18/Q19/Q21–Q23 in
   [the third](./questions-closed-q18-q21.md). Both splits were forced by the 500-line cap;
   ⚠️ neither filename records its range, so that existing links keep resolving.
 - [parallelization.md](./parallelization.md) — dependency graph, shared-file table, **both

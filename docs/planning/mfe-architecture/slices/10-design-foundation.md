@@ -1,6 +1,6 @@
 # Slice 10 — Design foundation: tokens, type, the page frame
 
-**Status:** built, awaiting review (2026-09-22) · **Visible?** ✅ screen · **Depends on:** Slices 5, 6, 7
+**Status:** ✅ merged (`ab5c139`, PR #45) · **Visible?** ✅ screen · **Depends on:** Slices 5, 6, 7
 **Design:** [`_design/Anselm Marie Portfolio.html`](../../../../_design/Anselm%20Marie%20Portfolio.html) — drawn ✅ (both exports specify the frame identically)
 
 The first slice of the redesign, and the one every other slice reads. It

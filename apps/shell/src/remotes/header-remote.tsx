@@ -57,6 +57,7 @@ const HeaderRemote = ({ variant }: HeaderRemoteProps): ReactElement => {
         placeholderClassName={PLACEHOLDER_CLASS}
         loadingSkeleton={<HeaderSkeleton />}
         remoteProps={{ variant }}
+        exposedModule="Header"
         fallback={() => <HeaderFallback />}
         onLoadRemote={loadHeader}
       />

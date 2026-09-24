@@ -12,6 +12,7 @@
     }
   },
   "dependencies": {
+    "@module-federation/runtime": "2.9.0",
     "@portfolio/shared-fixtures": "workspace:*",
     "@portfolio/shared-types": "workspace:*",
     "@portfolio/ui-components": "workspace:*",

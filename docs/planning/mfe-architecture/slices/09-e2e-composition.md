@@ -1,6 +1,6 @@
 # Slice 9 — Playwright over the composed application
 
-**Status:** not started · **Visible?** — none · **Depends on:** Slices 15, 16, 17 · **Runs before:** Slice 8 ([D101](../decisions-d101-d102.md#d101))
+**Status:** ✅ built, awaiting review (2026-09-23); 24 of 24 green · **Visible?** — none · **Depends on:** Slices 15, 16, 17 · **Runs before:** Slice 8 ([D101](../decisions-d101-d102.md#d101))
 **Design:** not applicable — asserts behavior, not appearance
 
 The second-to-last slice ([D101](../decisions-d101-d102.md#d101)), and the only one that can
@@ -10,12 +10,24 @@ deploy is already gated on it.
 
 ## Decisions that bind this slice
 
+- **[D106](../decisions-d106.md#d106)** — ⚠️ "Try again" recovers a failed load by
+  reloading through the federation host at a new entry URL. The retry specs are the only
+  check on the runtime internals this depends on.
+
+- **[D105](../decisions-d105.md#d105)** — ⚠️ the stack runs on **3100 / 4274–4277**, never
+  the dev ports. R3 lives in the **shell's** stylesheet, and each remote's style check
+  targets a utility only its own lib uses.
+
 - **[D101](../decisions-d101-d102.md#d101)** — ⚠️ **this slice runs before Slice 8**,
   against a local production build of the shell and all four remotes, not a deployment.
   Its E2E job goes into the existing `.github/workflows/ci.yml`. CloudFront caching
   ([R12](../risks.md#r12)) is out of reach here and stays in Slice 8.
 - **[D102](../decisions-d101-d102.md#d102)** — [Slice 17](./17-ui-navigation-fixes.md)'s
   fixes land first, so the suite asserts the fixed navigation, not the current one.
+- **[D104](../decisions-d104.md#d104)** — ⚠️ Slices 16 and 17 are done, but neither left a
+  record to check against. Slice 17 has no issue list, and **Slice 16's footer-down check
+  never ran**. The failure-isolation specs here must assert the footer fallback's look on
+  both `/` and `/portfolio/<slug>`, not just that it's there.
 - **[D20](../decisions-d17-d32.md#d20)** — Playwright arrives here, once there is a composition to
   test. Vitest has covered every slice since Slice 1; this covers the thing Vitest
   structurally cannot.
@@ -36,7 +48,8 @@ deploy is already gated on it.
 
 ## Open questions blocking this slice
 
-**None.** [Q6](../questions-closed.md#q6) closed on 2026-09-20 as
+**None.** [Q23](../questions-closed-q18-q21.md#q23) (the retry that could not recover)
+closed as [D106](../decisions-d106.md#d106) and was fixed in this slice. [Q6](../questions-closed.md#q6) closed on 2026-09-20 as
 [D41](../decisions-d33-d41.md#d41): the fixtures carry real portfolio copy, so nothing here
 waits on Contentful. Since [D101](../decisions-d101-d102.md#d101), the MVP is published by
 Slice 8, after this suite is green.
@@ -71,6 +84,34 @@ Playwright specs over the real composed app, covering:
   run the same suite against the deployed site.
 - `e2e/` — the specs above, one file per concern
 - Root `package.json` scripts
+
+**As built (2026-09-23), 28 files.** The suite, 19: `playwright.config.ts`;
+`tools/scripts/e2e-stack.mjs` (the ports, and `pnpm e2e:build`); `e2e/project.json` +
+`tsconfig.json` (an Nx project, `type:e2e` / `scope:e2e`, so the specs are typechecked
+and linted); `e2e/support/` (`remotes`, `fail-remote`, `computed-style`,
+`expect-composition`); six specs: `composition`, `design-system-styles`,
+`failure-isolation`, `footer-fallback` (D104's footer-down check), `bounded-retry` and
+`failure-kinds`; the `scope:e2e` constraint in `tools/eslint/module-boundaries.mjs`; the
+`e2e` job in `ci.yml`; `@playwright/test` 1.63 in the root `package.json` and the
+lockfile; `tsconfig.json`'s new reference, from `nx sync`. **The Q23 fix, 9
+([D106](../decisions-d106.md#d106)):** `reload-remote.ts` + spec, a new
+`mfe-remote-mount-retry.spec.tsx`, the `exposedModule` prop in `mfe-remote-mount.tsx`,
+the four `apps/shell/src/remotes/*-remote.tsx` wrappers passing it plus
+`remotes-exposed-module.spec.tsx`, and `@module-federation/runtime` 2.9.0 in
+`feature-shell`'s `package.json`.
+
+**Negative controls, all run 2026-09-23** against a rebuilt shell, each revert
+confirmed with `git diff` and restored the same way:
+
+| Revert | Red |
+|---|---|
+| `MfeErrorBoundary` unwrapped in `MfeRemoteMount` | all 4 isolation + all 4 failure-kind specs |
+| `classifyMfeFailure` always returns `load` | both render-failure specs, on the copy |
+| `MAX_MFE_RETRIES` 2 → 3 | both exhaustion specs |
+| footer fallback back to `text-muted` on ink | both footer-look specs (contrast 2.58 < 4.5) |
+| all four feature `@source` lines deleted | all four remote style checks (see D105 §3) |
+| retry never takes the reload path (`attempt > 99`) | both `"Try again" recovers` specs |
+| homepage wrapper drops `exposedModule` | `remotes-exposed-module.spec.tsx` (unit) |
 - `.github/workflows/ci.yml` — an E2E job added to the existing gates workflow. Slice 8
   later makes its deploy jobs depend on this job
 

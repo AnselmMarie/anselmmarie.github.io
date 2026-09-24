@@ -27,6 +27,7 @@ const HomepageRemote = (): ReactElement => {
         route="/"
         placeholderClassName="min-h-96 w-full"
         loadingSkeleton={<ContentSkeleton />}
+        exposedModule="Homepage"
         fallback={HomepageFallback}
         isHashTarget
         onLoadRemote={loadHomepage}
