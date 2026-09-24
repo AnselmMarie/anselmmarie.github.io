@@ -1,4 +1,4 @@
-# Gates-only CI. Slice 8 (docs/planning/mfe-architecture/slices/08-independent-deployment.md)
+# Gates and the E2E suite (Slice 9). Slice 8 (docs/planning/mfe-architecture/slices/08-independent-deployment.md)
 # owns deployment and extends THIS workflow with its deploy jobs, the project-tag
 # check and the React-major check (D39) — it should not add a second workflow,
 # per D23's one-workflow rule.
@@ -90,3 +90,44 @@ jobs:
       # Biome owns formatting (D44). `--write` is never used in CI.
       - name: Formatting
         run: pnpm biome check
+
+  # Slice 9 (D101): Playwright over a local production build of the shell and
+  # all four remotes. Slice 8's deploy jobs `needs:` this job, so nothing ships
+  # that this suite has not seen composed, styled, and surviving each remote's
+  # failure. It runs beside `gates` rather than after it: the two share no
+  # output, and a red E2E run is worth seeing even when a lint fails.
+  e2e:
+    name: e2e (Playwright, production build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # The browser version is pinned by the lockfile's @playwright/test, so
+      # this installs exactly the Chromium the suite was written against.
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      # ⚠️ The stack's own ports are baked in at build time — see
+      # tools/scripts/e2e-stack.mjs. `pnpm build` would bake the dev origins.
+      - name: Build the E2E stack
+        run: pnpm e2e:build
+
+      - name: Playwright
+        run: pnpm e2e
+
+      - name: Upload the report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
