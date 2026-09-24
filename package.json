@@ -19,6 +19,8 @@
     "format": "biome check --write",
     "format:check": "biome check",
     "check:file-size": "node tools/scripts/check-file-size.mjs",
+    "e2e:build": "node tools/scripts/e2e-stack.mjs",
+    "e2e": "playwright test",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -41,6 +43,7 @@
     "@nx/eslint-plugin": "^21.0.0",
     "@nx/js": "21.6.11",
     "@nx/vite": "21.6.11",
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",

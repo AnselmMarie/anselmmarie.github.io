@@ -29,11 +29,14 @@
  *   type:ui-theme        libs/ui/theme             the theme stylesheet (D51)
  *   type:shared          libs/shared/*             types, config, fixtures, utils
  *   type:infra           infra                     the CDK project
+ *   type:e2e             e2e                       the Playwright suite (Slice 9)
  *
  *   scope:shell | scope:header | scope:footer | scope:homepage |
  *   scope:portfolio-item      one per deployable pair (app + its feature lib)
  *   scope:shared              everything both halves may import
  *   scope:infra               the CDK project
+ *   scope:e2e                 the Playwright suite — drives the built site
+ *                             over HTTP, so it imports no workspace code
  */
 export const depConstraints = [
   // --- Scope: a deployable may only reach its own half, plus shared ---------
@@ -77,6 +80,12 @@ export const depConstraints = [
   {
     sourceTag: 'scope:infra',
     onlyDependOnLibsWithTags: ['scope:infra'],
+  },
+  // Slice 9. The suite asserts what shipped, so it reads nothing from the
+  // source it is testing — not even `MAX_MFE_RETRIES`, which it restates.
+  {
+    sourceTag: 'scope:e2e',
+    onlyDependOnLibsWithTags: [],
   },
 
   // --- Type: the layering within a scope -----------------------------------
