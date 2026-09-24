@@ -11,6 +11,9 @@ surface.) It exists to make [D12](../decisions-d01-d16.md#d12) true rather than 
 
 ## Decisions that bind this slice
 
+- **[D106](../decisions-d106.md#d106)** — a retry loads `remoteEntry.js?mf-retry=<n>`.
+  The CloudFront cache policy decides whether that reaches the origin; see verification 4.
+
 - **[D101](../decisions-d101-d102.md#d101)** — ⚠️ **this slice runs after the E2E suite
   exists.** Its deploy jobs go into the existing `.github/workflows/ci.yml` and depend on
   Slice 9's E2E job, so no deploy ships unchecked. Verification 3 below (rollback seen by a
@@ -113,7 +116,7 @@ surface.) It exists to make [D12](../decisions-d01-d16.md#d12) true rather than 
 pnpm nx run-many -t typecheck lint test
 ```
 
-And three verifications the workflow itself has to pass, which are the point of the slice:
+And four verifications the workflow itself has to pass, which are the point of the slice:
 
 1. **Change one feature lib** (`libs/features/footer`), confirm `nx affected` lists
    **only** `footer`, and confirm only that app deploys.
@@ -126,6 +129,14 @@ And three verifications the workflow itself has to pass, which are the point of 
    `remoteEntry.js`. Per [R12](../risks.md#r12) this is the AWS-shaped failure mode: the
    registry repoints, the deploy reports success, and CloudFront keeps serving the old
    bundle. Verify from a cold cache, not from the AWS console.
+4. **Retry through CloudFront after an origin error** ([D106](../decisions-d106.md#d106)).
+   "Try again" reloads a failed remote from `remoteEntry.js?mf-retry=<n>`, a URL the
+   browser hasn't seen. But CloudFront caches error responses (10 seconds by default), and
+   whether the query string is part of the cache key depends on the cache policy. If it
+   isn't, a retry inside that window gets the cached error and uses up one of the two
+   attempts. Make an origin return an error, retry, and record what happens. Then either
+   set the error-caching TTL for `remoteEntry.js` to 0, or include `mf-retry` in its cache
+   key, and say which. The local Slice 9 suite can't check this: it has no CDN.
 
 ## Notes for whoever builds this
 

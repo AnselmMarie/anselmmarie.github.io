@@ -20,7 +20,8 @@ between demonstrating the architecture and shaving complexity.
 | **On `master`** | The composed site works end to end: four live remotes, eight portfolio items with their real images, `/portfolio/<slug>` resolving, an unknown slug answering not-found, and a stopped remote showing its fallback while the others keep rendering |
 | **Redesign on `master`** | Slices 10–15: the new palette, type scale and card frame; the header; the whole homepage; and the detail page, all against the 2026-09-22 exports. Slices 11–14 landed as one change ([D92](./decisions-d88-d100.md#d92)). The anchor contract was verified end to end before merge: all five nav links scroll, four landing at exactly 84px ([D100](./decisions-d88-d100.md#d100)) |
 | **Done, maintainer's call** | Slices 16 and 17, 2026-09-23 ([D104](./decisions-d104.md#d104)). ⚠️ Slice 16's footer-down check never ran and moves to Slice 9; Slice 17's issue list was never written down |
-| **Not started** | Slice 9 (E2E), then 8 (deployment) — [D101–D102](./decisions-d101-d102.md) |
+| **Built, awaiting review** | Slice 9 (E2E): 24 of 24 green, including the fix for the retry that could not recover ([D106](./decisions-d106.md#d106)) |
+| **Not started** | Slice 8 (deployment), gated on Slice 9 — [D101–D102](./decisions-d101-d102.md) |
 
 ⚠️ **The design changed on 2026-09-22.** Two new exports replace the look of every surface
 — see [design-sources.md](./design-sources.md) and
@@ -104,7 +105,7 @@ Listed in **execution order**. The `#` column is the label, not the position.
 | [15](./slices/15-portfolio-detail-redesign.md) | The detail page, **plus the two blocks the design omits** | fe | ✅ screen | ~31 | ✅ merged (`6073c9f`) |
 | [16](./slices/16-footer-strip.md) | The footer strip, and its degradation | fe | ✅ screen | ~6 | ✅ done ([D104](./decisions-d104.md#d104)); footer-down check → 9 |
 | [17](./slices/17-ui-navigation-fixes.md) | The remaining UI and navigation issues | fe | ✅ screen | unknown | ✅ done ([D104](./decisions-d104.md#d104)) |
-| [9](./slices/09-e2e-composition.md) | Playwright over a local production build, incl. failure isolation | fe | — none | ~16 | not started |
+| [9](./slices/09-e2e-composition.md) | Playwright over a local production build, incl. failure isolation | fe | — none | **28 as built** (est. ~16) | ✅ built, awaiting review |
 | [8](./slices/08-independent-deployment.md) | GitHub Actions (`nx affected`) → CDK-described S3/CloudFront/Lambda, rollback, gated on 9 | ops | — none | ~26 | not started |
 
 Slice 11 is the redesign's one invisible slice and it sits between two visible ones. Slices
@@ -121,16 +122,16 @@ passing test suite is not a visible surface. Every slice is under the 250-file c
 - [model.md](./model.md) — the finalized architecture: stack, workspace shape, data flow,
   what reaches the browser versus what stays server-side, the Module Federation strategy,
   and the shadcn/Tailwind sharing strategy.
-- [decisions.md](./decisions.md) — the **index** to D1–D104, split into range files when the
+- [decisions.md](./decisions.md) — the **index** to D1–D106, split into range files when the
   log passed its 500-line cap. The source of truth; each slice restates only the ones that
   bind it. Start at [D33](./decisions-d33-d41.md#d33): the project's purpose is the
   tiebreaker the rest were decided against. Most recently
-  [D104](./decisions-d104.md#d104): Slices 16 and 17 marked done.
+  [D105–D106](./decisions-d105.md#d105): what building the E2E suite found, and the retry fix.
 - [open-questions.md](./open-questions.md) — **none are open.** A slice that finds a new
   blocked field raises it there rather than deciding alone.
-- [questions-closed.md](./questions-closed.md) — all twenty-two answered, in full, each
+- [questions-closed.md](./questions-closed.md) — all twenty-three answered, in full, each
   with its closure note, across three files: Q1–Q8 here, Q9–Q17 and Q20 in
-  [the second](./questions-closed-q9-q16.md), Q18/Q19/Q21/Q22 in
+  [the second](./questions-closed-q9-q16.md), Q18/Q19/Q21–Q23 in
   [the third](./questions-closed-q18-q21.md). Both splits were forced by the 500-line cap;
   ⚠️ neither filename records its range, so that existing links keep resolving.
 - [parallelization.md](./parallelization.md) — dependency graph, shared-file table, **both
