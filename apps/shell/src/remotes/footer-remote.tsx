@@ -26,6 +26,7 @@ const FooterRemote = (): ReactElement => {
         route="/"
         placeholderClassName={PLACEHOLDER_CLASS}
         loadingSkeleton={<FooterSkeleton />}
+        exposedModule="Footer"
         fallback={() => <FooterFallback />}
         onLoadRemote={loadFooter}
       />

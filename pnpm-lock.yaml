@@ -300,6 +300,9 @@ importers:
 
   libs/features/shell:
     dependencies:
+      '@module-federation/runtime':
+        specifier: 2.9.0
+        version: 2.9.0
       '@portfolio/shared-fixtures':
         specifier: workspace:*
         version: link:../../shared/fixtures

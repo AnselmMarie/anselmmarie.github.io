@@ -42,6 +42,7 @@ const PortfolioItemRemote = ({ slug, item }: PortfolioItemRemoteProps): ReactEle
         placeholderClassName="min-h-96 w-full"
         loadingSkeleton={<ContentSkeleton />}
         remoteProps={{ item }}
+        exposedModule="PortfolioItem"
         fallback={PortfolioItemFallback}
         onLoadRemote={loadPortfolioItem}
       />
