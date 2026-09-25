@@ -23,6 +23,9 @@
     "e2e": "playwright test",
     "check:project-tags": "node tools/scripts/check-project-tags.mjs",
     "check:react-major": "node tools/scripts/check-react-major.mjs",
+    "aws:deploy": "pnpm --filter @portfolio/infra exec tsx src/deploy/cli.ts deploy",
+    "aws:rollback": "pnpm --filter @portfolio/infra exec tsx src/deploy/cli.ts rollback",
+    "aws:versions": "pnpm --filter @portfolio/infra exec tsx src/deploy/cli.ts versions",
     "prepare": "husky"
   },
   "lint-staged": {
