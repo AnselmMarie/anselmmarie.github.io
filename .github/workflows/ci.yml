@@ -11,13 +11,16 @@
 # generated from the Nx graph (D57), and they drift silently.
 name: CI
 
+# `version-3` runs the same gates and E2E suite as master, but never deploys:
+# the deploy job's `if:` admits only a push to master, and the OIDC trust policy
+# (infra/src/github-deploy-role) would refuse any other ref anyway.
 on:
   pull_request:
-    branches: [master]
+    branches: [master, version-3]
   push:
-    branches: [master]
+    branches: [master, version-3]
 
-# ⚠️ A pull request's superseded run is cancelled; a push to master's never is.
+# ⚠️ A pull request's superseded run is cancelled; a push's never is.
 # Cancelling a run mid-deploy would leave a remote uploaded but unreleased, or
 # the shell's assets uploaded under an old Lambda. Queued master runs wait.
 concurrency:
