@@ -1,7 +1,8 @@
-# Gates and the E2E suite (Slice 9). Slice 8 (docs/planning/mfe-architecture/slices/08-independent-deployment.md)
-# owns deployment and extends THIS workflow with its deploy jobs, the project-tag
-# check and the React-major check (D39) — it should not add a second workflow,
-# per D23's one-workflow rule.
+# Gates, the E2E suite (Slice 9), and the deploy (Slice 8,
+# docs/planning/mfe-architecture/slices/08-independent-deployment.md). One
+# workflow, per D23: the deploy job `needs:` both check jobs, so nothing ships
+# that the gates and the E2E suite have not passed. The runbook is
+# docs/architecture/deploy-and-rollback.md.
 #
 # Why this exists before Slice 8: every gate in this repo runs from the
 # `lint-staged` pre-commit hook, which only covers commits made locally. A push
@@ -16,9 +17,12 @@ on:
   push:
     branches: [master]
 
+# ⚠️ A pull request's superseded run is cancelled; a push to master's never is.
+# Cancelling a run mid-deploy would leave a remote uploaded but unreleased, or
+# the shell's assets uploaded under an old Lambda. Queued master runs wait.
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -91,6 +95,16 @@ jobs:
       - name: Formatting
         run: pnpm biome check
 
+      # @nx/enforce-module-boundaries is silently inert for an untagged project,
+      # so D2/D25/D27/D29 hold only while every project carries both tags.
+      - name: Every project is tagged
+        run: pnpm check:project-tags
+
+      # D39. React is shared with `strictVersion: false`; this is the check that
+      # makes that safe (R2). It reads what each package resolves, not declares.
+      - name: One React major
+        run: pnpm check:react-major
+
   # Slice 9 (D101): Playwright over a local production build of the shell and
   # all four remotes. Slice 8's deploy jobs `needs:` this job, so nothing ships
   # that this suite has not seen composed, styled, and surviving each remote's
@@ -131,3 +145,55 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 14
+
+  # Slice 8 (D107–D109). Deploys only what `nx affected` says changed since the
+  # last green run on master: a remote uploads a new immutable version and its
+  # pointer is rewritten; the shell is rebuilt against the pointers and goes out
+  # through `cdk deploy`, last. Rollback is a manual, explicit operation — see
+  # the runbook — never an automatic switch on failure.
+  deploy:
+    name: deploy (affected apps → AWS)
+    needs: [gates, e2e]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # nx-set-shas lists this workflow's earlier runs to find the last green one.
+      actions: read
+      # GitHub OIDC (D10/D11): no AWS credential is stored in this repository.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # `nx affected` diffs against the base commit.
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Sets NX_BASE to the commit of the last SUCCESSFUL run of this workflow on
+      # master, not `github.event.before`. A run whose deploy failed, or one that
+      # was queued and superseded, never becomes a base, so its changes are
+      # still "affected" on the next run instead of being skipped.
+      - uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: master
+
+      # ⚠️ The role name is fixed in infra/src/site-config/site-config.ts
+      # (GITHUB_DEPLOY_ROLE_NAME). The trust policy admits only this repo's
+      # master, so this step fails on any other ref by design.
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::694951015005:role/portfolio-github-deploy
+          aws-region: us-east-1
+
+      # D12/D23: remotes first, the shell last. An unusable base (a first run)
+      # deploys everything rather than nothing.
+      - name: Deploy affected apps
+        run: pnpm aws:deploy --base "${NX_BASE}" --head "${NX_HEAD}"
