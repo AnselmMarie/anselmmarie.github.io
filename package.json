@@ -21,6 +21,8 @@
     "check:file-size": "node tools/scripts/check-file-size.mjs",
     "e2e:build": "node tools/scripts/e2e-stack.mjs",
     "e2e": "playwright test",
+    "check:project-tags": "node tools/scripts/check-project-tags.mjs",
+    "check:react-major": "node tools/scripts/check-react-major.mjs",
     "prepare": "husky"
   },
   "lint-staged": {
