@@ -140,6 +140,10 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D104](decisions-d104.md#d104) | Slices 16 and 17 are done; Q22 closes without a written issue list; the footer-down check moves to Slice 9 | `d104` |
 | [D105](decisions-d105.md#d105) | The E2E stack runs on its own ports; R3 lives in the shell's CSS; style checks target lib-only utilities | `d105` |
 | [D106](decisions-d106.md#d106) | A retry reloads the remote through the host, at a new entry URL; Q23 closes | `d106` |
+| [D107](decisions-d107-d109.md#d107) | Each remote is reached through a stable, uncached pointer module; the shell is not rebuilt for a remote deploy | `d107-d109` |
+| [D108](decisions-d107-d109.md#d108) | One CloudFront distribution and one bucket; the shell's static files live in S3; errors cached 0s | `d107-d109` |
+| [D109](decisions-d107-d109.md#d109) | `anselmmarie.com` + `www` on Cloudflare DNS, grey cloud; the whole stack in `us-east-1` | `d107-d109` |
+| [D110](decisions-d110.md#d110) | The deploy's base is the last green run on `master`; master runs are never cancelled; the deploy role has a fixed name | `d110` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.

@@ -1,6 +1,6 @@
 # Slice 8 — Independent deployment: GitHub Actions, `nx affected`, AWS
 
-**Status:** not started · **Visible?** — none · **Depends on:** Slice 9 ([D101](../decisions-d101-d102.md#d101)) · the plan's **last** slice
+**Status:** built, awaiting review (2026-09-25); nothing deployed yet · **Visible?** — none · **Depends on:** Slice 9 ([D101](../decisions-d101-d102.md#d101)) · the plan's **last** slice
 **Design:** not applicable — no UI surface
 
 The **second of the plan's two invisible slices**, and since
@@ -10,6 +10,22 @@ claimed to be the only one until 2026-09-21; Slice 9 was mis-marked `✅ screen`
 surface.) It exists to make [D12](../decisions-d01-d16.md#d12) true rather than aspirational.
 
 ## Decisions that bind this slice
+
+- **[D107](../decisions-d107-d109.md#d107)** — a remote is reached through a stable,
+  uncached pointer at `_remotes/<remote>/remoteEntry.js` that re-exports an immutable
+  `_remotes/<remote>/<version>/` build. Deploy and rollback both rewrite the pointer. ⚠️
+  **This supersedes this file's "remote URLs supplied as Lambda environment values"**:
+  the shell's `remotes` map is baked in at build time, so it is built once against the
+  pointers instead, and `libs/shared/config` is unchanged.
+- **[D108](../decisions-d107-d109.md#d108)** — one distribution, one bucket; the shell's
+  static files live in S3 because Nitro's Lambda preset serves none; error responses are
+  cached for 0 seconds.
+- **[D109](../decisions-d107-d109.md#d109)** — `anselmmarie.com` plus a `www` redirect, DNS
+  at Cloudflare in grey-cloud mode, the whole stack in `us-east-1`, account
+  `694951015005`. This is D35's "choosing the domain".
+- **[D110](../decisions-d110.md#d110)** — the deploy's base is the last green run on
+  `master`; master runs are never cancelled; the deploy role's name is fixed so `ci.yml`
+  can state its ARN.
 
 - **[D106](../decisions-d106.md#d106)** — a retry loads `remoteEntry.js?mf-retry=<n>`.
   The CloudFront cache policy decides whether that reaches the origin; see verification 4.
@@ -79,8 +95,9 @@ surface.) It exists to make [D12](../decisions-d01-d16.md#d12) true rather than 
 - **Immutably versioned remote deployments.** Each remote deploy lands under its own key
   prefix so a previous build stays addressable, which is what the architecture doc's
   rollback requirement depends on.
-- Remote URLs supplied as Lambda environment values and read by `libs/shared/config` at
-  runtime, so the shell is deployed once and repointed per environment rather than rebuilt.
+- ~~Remote URLs supplied as Lambda environment values and read by `libs/shared/config` at
+  runtime.~~ Superseded by [D107](../decisions-d107-d109.md#d107): the shell is built once
+  against each remote's stable pointer, and the pointer is what gets repointed.
 - AWS credentials for the workflow via **GitHub OIDC** with a scoped IAM role, rather than
   a long-lived access key stored as a secret.
 - A documented rollback: an **explicit deployment operation** pointing the registry at a
@@ -106,9 +123,14 @@ surface.) It exists to make [D12](../decisions-d01-d16.md#d12) true rather than 
   [D27](../decisions-d17-d32.md#d27) and [D29](../decisions-d17-d32.md#d29) are enforced only for the
   projects somebody remembered to tag, which is the worst of both worlds: a gate that
   reports green over a growing hole.
-- Root `package.json` deploy scripts
-- `libs/shared/config` — reading remote URLs from the environment rather than a constant
-- `docs/` — a short deploy-and-rollback runbook
+- Root `package.json` deploy scripts: `aws:deploy`, `aws:rollback`, `aws:versions` (not
+  `deploy`, which is a built-in pnpm command), plus `check:project-tags` and
+  `check:react-major`
+- ~~`libs/shared/config` — reading remote URLs from the environment~~ unchanged, per
+  [D107](../decisions-d107-d109.md#d107)
+- `nx.json` — `defaultBase: master` ([D110](../decisions-d110.md#d110))
+- [docs/architecture/deploy-and-rollback.md](../../../architecture/deploy-and-rollback.md)
+  — the runbook, including first-time setup
 
 ## Gates
 
@@ -137,6 +159,18 @@ And four verifications the workflow itself has to pass, which are the point of t
    attempts. Make an origin return an error, retry, and record what happens. Then either
    set the error-caching TTL for `remoteEntry.js` to 0, or include `mf-retry` in its cache
    key, and say which. The local Slice 9 suite can't check this: it has no CDN.
+
+### Where the four verifications stand (2026-09-25)
+
+| # | Status |
+|---|---|
+| 1 | ✅ **graph half:** `nx show projects --affected --files=libs/features/footer/…` → `feature-footer`, `footer`, which `planDeploy` turns into the footer remote alone. ⚠️ The deploy half ("only that app deploys") needs the live stack |
+| 2 | ✅ **graph half:** a `libs/ui/theme` change → all four remotes and `shell`. Same ⚠️ |
+| 3 | ⏳ needs the live stack. The runbook's cold-cache check is the procedure |
+| 4 | ⏳ needs the live stack. D108 answers it by config (errors cached 0s, pointer uncached); the live check still has to run |
+
+Nothing has touched AWS. First-time setup (bootstrap, first `cdk deploy`, the Cloudflare
+records) is in the runbook and waits for the maintainer's go-ahead.
 
 ## Notes for whoever builds this
 

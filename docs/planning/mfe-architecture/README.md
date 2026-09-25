@@ -15,13 +15,12 @@ between demonstrating the architecture and shaving complexity.
 
 | | |
 |---|---|
-| **Merged** | Slices 1–2 (`7b3bf60`, PR #42) · Slices 3–4 (`bfb75b9`, PR #43) · Slices 5–7 (`d4387c3`, PR #44) · Slices 10–14 + 16 (`ab5c139`, PR #45) · Slice 15 (`6073c9f`, PR #46) |
+| **Merged** | Slices 1–2 (`7b3bf60`, PR #42) · Slices 3–4 (`bfb75b9`, PR #43) · Slices 5–7 (`d4387c3`, PR #44) · Slices 10–14 + 16 (`ab5c139`, PR #45) · Slice 15 (`6073c9f`, PR #46) · Slice 9 (`cd03959`, PR #48) |
 | **Merged, outside the slices** | `8aba011`, PR #47 — Experience bullets from the resume, header nav on shadcn `NavigationMenu`, primitives moved from Radix to Base UI, Experience on shadcn `Accordion`, loading skeletons for the remotes |
 | **On `master`** | The composed site works end to end: four live remotes, eight portfolio items with their real images, `/portfolio/<slug>` resolving, an unknown slug answering not-found, and a stopped remote showing its fallback while the others keep rendering |
 | **Redesign on `master`** | Slices 10–15: the new palette, type scale and card frame; the header; the whole homepage; and the detail page, all against the 2026-09-22 exports. Slices 11–14 landed as one change ([D92](./decisions-d88-d100.md#d92)). The anchor contract was verified end to end before merge: all five nav links scroll, four landing at exactly 84px ([D100](./decisions-d88-d100.md#d100)) |
 | **Done, maintainer's call** | Slices 16 and 17, 2026-09-23 ([D104](./decisions-d104.md#d104)). ⚠️ Slice 16's footer-down check never ran and moves to Slice 9; Slice 17's issue list was never written down |
-| **Built, awaiting review** | Slice 9 (E2E): 24 of 24 green, including the fix for the retry that could not recover ([D106](./decisions-d106.md#d106)) |
-| **Not started** | Slice 8 (deployment), gated on Slice 9 — [D101–D102](./decisions-d101-d102.md) |
+| **Built, awaiting review** | Slice 8 (deployment): the CDK stack, the deploy/rollback CLI, the `ci.yml` deploy job and three CI checks ([D107–D110](./decisions-d107-d109.md)). Nothing deployed yet; verifications 3 and 4 need the live stack |
 
 ⚠️ **The design changed on 2026-09-22.** Two new exports replace the look of every surface
 — see [design-sources.md](./design-sources.md) and
@@ -105,8 +104,8 @@ Listed in **execution order**. The `#` column is the label, not the position.
 | [15](./slices/15-portfolio-detail-redesign.md) | The detail page, **plus the two blocks the design omits** | fe | ✅ screen | ~31 | ✅ merged (`6073c9f`) |
 | [16](./slices/16-footer-strip.md) | The footer strip, and its degradation | fe | ✅ screen | ~6 | ✅ done ([D104](./decisions-d104.md#d104)); footer-down check → 9 |
 | [17](./slices/17-ui-navigation-fixes.md) | The remaining UI and navigation issues | fe | ✅ screen | unknown | ✅ done ([D104](./decisions-d104.md#d104)) |
-| [9](./slices/09-e2e-composition.md) | Playwright over a local production build, incl. failure isolation | fe | — none | **28 as built** (est. ~16) | ✅ built, awaiting review |
-| [8](./slices/08-independent-deployment.md) | GitHub Actions (`nx affected`) → CDK-described S3/CloudFront/Lambda, rollback, gated on 9 | ops | — none | ~26 | not started |
+| [9](./slices/09-e2e-composition.md) | Playwright over a local production build, incl. failure isolation | fe | — none | **28 as built** (est. ~16) | ✅ merged (`cd03959`) |
+| [8](./slices/08-independent-deployment.md) | GitHub Actions (`nx affected`) → CDK-described S3/CloudFront/Lambda, rollback, gated on 9 | ops | — none | **~48 as built** (est. ~26) | built, awaiting review |
 
 Slice 11 is the redesign's one invisible slice and it sits between two visible ones. Slices
 9 and 8 are the other two and they sit together at the end, after the visible Slice 17, so **no run of three can form**.
@@ -122,11 +121,11 @@ passing test suite is not a visible surface. Every slice is under the 250-file c
 - [model.md](./model.md) — the finalized architecture: stack, workspace shape, data flow,
   what reaches the browser versus what stays server-side, the Module Federation strategy,
   and the shadcn/Tailwind sharing strategy.
-- [decisions.md](./decisions.md) — the **index** to D1–D106, split into range files when the
+- [decisions.md](./decisions.md) — the **index** to D1–D110, split into range files when the
   log passed its 500-line cap. The source of truth; each slice restates only the ones that
   bind it. Start at [D33](./decisions-d33-d41.md#d33): the project's purpose is the
   tiebreaker the rest were decided against. Most recently
-  [D105–D106](./decisions-d105.md#d105): what building the E2E suite found, and the retry fix.
+  [D107–D110](./decisions-d107-d109.md#d107): how Slice 8 deploys.
 - [open-questions.md](./open-questions.md) — **none are open.** A slice that finds a new
   blocked field raises it there rather than deciding alone.
 - [questions-closed.md](./questions-closed.md) — all twenty-three answered, in full, each
@@ -144,6 +143,8 @@ passing test suite is not a visible surface. Every slice is under the 250-file c
   — failure isolation, error-boundary ownership, fallback strategy, retry bounds, and the
   immutable-deployment interaction. Implemented by Slice 4; not a plan doc, so it lives
   outside this directory and outlives it.
+- [docs/architecture/deploy-and-rollback.md](../../architecture/deploy-and-rollback.md) —
+  the deploy runbook: first-time setup, rollback, and the cold-cache check. Built by Slice 8.
 
 ## Out of scope
 

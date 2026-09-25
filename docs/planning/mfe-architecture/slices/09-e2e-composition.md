@@ -1,6 +1,6 @@
 # Slice 9 — Playwright over the composed application
 
-**Status:** ✅ built, awaiting review (2026-09-23); 24 of 24 green · **Visible?** — none · **Depends on:** Slices 15, 16, 17 · **Runs before:** Slice 8 ([D101](../decisions-d101-d102.md#d101))
+**Status:** ✅ merged (`cd03959`, PR #48); 24 of 24 green · **Visible?** — none · **Depends on:** Slices 15, 16, 17 · **Runs before:** Slice 8 ([D101](../decisions-d101-d102.md#d101))
 **Design:** not applicable — asserts behavior, not appearance
 
 The second-to-last slice ([D101](../decisions-d101-d102.md#d101)), and the only one that can
