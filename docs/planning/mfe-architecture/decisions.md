@@ -144,6 +144,7 @@ decision is separated from the ones that explain it. This file is now the index 
 | [D108](decisions-d107-d109.md#d108) | One CloudFront distribution and one bucket; the shell's static files live in S3; errors cached 0s | `d107-d109` |
 | [D109](decisions-d107-d109.md#d109) | `anselmmarie.com` + `www` on Cloudflare DNS, grey cloud; the whole stack in `us-east-1` | `d107-d109` |
 | [D110](decisions-d110.md#d110) | The deploy's base is the last green run on `master`; master runs are never cancelled; the deploy role has a fixed name | `d110` |
+| [D111](decisions-d111.md#d111) | The remote registry stays host-owned in `libs/shared/config`; no feature carries its own row; the manifest path is not adopted | `d111` |
 
 **Start at [D33](./decisions-d33-d41.md#d33)** if you are new to the plan: the project's
 purpose is the tiebreaker every later decision was taken against.
