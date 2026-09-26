@@ -1,27 +1,61 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {},
+  "files": [],
+  "references": [
+    {
+      "path": "./libs/shared/fixtures"
+    },
+    {
+      "path": "./libs/features/shell"
+    },
+    {
+      "path": "./libs/shared/config"
+    },
+    {
+      "path": "./libs/ui/components"
+    },
+    {
+      "path": "./libs/ui/primitives"
+    },
+    {
+      "path": "./libs/shared/types"
+    },
+    {
+      "path": "./libs/shared/utils"
+    },
+    {
+      "path": "./apps/shell"
+    },
+    {
+      "path": "./infra"
+    },
+    {
+      "path": "./libs/features/header"
+    },
+    {
+      "path": "./apps/header"
+    },
+    {
+      "path": "./libs/features/portfolio-item"
+    },
+    {
+      "path": "./libs/features/homepage"
+    },
+    {
+      "path": "./libs/features/footer"
+    },
+    {
+      "path": "./apps/portfolio-item"
+    },
+    {
+      "path": "./apps/homepage"
+    },
+    {
+      "path": "./apps/footer"
+    },
+    {
+      "path": "./e2e"
     }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  ]
 }

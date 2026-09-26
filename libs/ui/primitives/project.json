@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "ui-primitives",
+  "projectType": "library",
+  "sourceRoot": "libs/ui/primitives/src",
+  "tags": ["type:ui-primitives", "scope:shared"]
+}

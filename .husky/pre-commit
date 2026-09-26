@@ -1,0 +1,20 @@
+# Mirrors CI's `gates` job (.github/workflows/ci.yml) so a red build is caught
+# before the commit, not after the push. E2E stays in CI only: it builds the
+# whole stack and takes minutes.
+#
+# ⚠️ Everything after lint-staged checks the WORKING TREE, not the staged
+# snapshot. In a tree shared with other sessions, a failure in a file you did
+# not stage is probably another session's in-flight work, not yours.
+
+# Staged files only: eslint --fix, biome --write, the file-size cap.
+pnpm lint-staged
+
+# The fast workspace checks (~1.5s together).
+pnpm nx sync:check
+pnpm biome check
+pnpm check:project-tags
+pnpm check:react-major
+
+# `--base=HEAD` with no `--head` diffs against uncommitted and untracked files,
+# so only the projects this commit touches run, and the Nx cache covers repeats.
+pnpm nx affected -t typecheck lint test --base=HEAD

@@ -1,0 +1,202 @@
+# Gates, the E2E suite (Slice 9), and the deploy (Slice 8,
+# docs/planning/mfe-architecture/slices/08-independent-deployment.md). One
+# workflow, per D23: the deploy job `needs:` both check jobs, so nothing ships
+# that the gates and the E2E suite have not passed. The runbook is
+# docs/architecture/deploy-and-rollback.md.
+#
+# Why this exists before Slice 8: every gate in this repo runs from the
+# `lint-staged` pre-commit hook, which only covers commits made locally. A push
+# from anywhere that skips hooks bypassed all of them, including the 200-line cap
+# D52 added. `nx sync:check` is the new one — TypeScript project references are
+# generated from the Nx graph (D57), and they drift silently.
+name: CI
+
+# `version-3` runs the same gates and E2E suite as master, but never deploys:
+# the deploy job's `if:` admits only a push to master, and the OIDC trust policy
+# (infra/src/github-deploy-role) would refuse any other ref anyway.
+on:
+  pull_request:
+    branches: [master, version-3]
+  push:
+    branches: [master, version-3]
+
+# ⚠️ A pull request's superseded run is cancelled; a push's never is.
+# Cancelling a run mid-deploy would leave a remote uploaded but unreleased, or
+# the shell's assets uploaded under an old Lambda. Queued master runs wait.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    name: typecheck / lint / test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The file-size step diffs against the base commit, so the history
+          # has to be there.
+          fetch-depth: 0
+
+      # Reads the pnpm version from `packageManager` in package.json rather than
+      # restating it, per D46.
+      - uses: pnpm/action-setup@v4
+
+      # Reads .nvmrc rather than restating the Node version, per D45/D46.
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # D57. `nx sync` generates each project's TypeScript `references` from the
+      # Nx dependency graph; `sync:check` fails when a committed tsconfig no
+      # longer matches the graph. This runs first because stale references make
+      # the typecheck below misleading rather than merely red.
+      - name: Project references are in sync
+        run: pnpm nx sync:check
+
+      # `run-many`, not `affected`, deliberately: this workspace is ten projects
+      # and a full run is seconds, while `affected` given a wrong base silently
+      # checks nothing and reports green. `nx affected` is where Slice 8's deploy
+      # jobs earn it (D23) — there, skipping unchanged work is the point.
+      - name: Gates
+        run: pnpm nx run-many -t typecheck lint test
+
+      # D52. ⚠️ Pass the changed paths explicitly — with no arguments the script
+      # diffs against HEAD, which in a fresh CI checkout is empty, so it would
+      # run, pass, and check nothing.
+      #
+      # ⚠️ Source files are hard-gated here exactly as they are locally. The
+      # PLAN-DOC ratchet is weaker in CI than at a desk: it grandfathers a doc
+      # against its own line count at HEAD, and CI's HEAD already contains the
+      # change, so an over-cap plan doc degrades to a warning instead of failing.
+      # Slice 8 should tighten this by teaching the script a base ref.
+      - name: File-size caps
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          set -euo pipefail
+          if [ -z "${BASE_SHA}" ] || ! git cat-file -e "${BASE_SHA}^{commit}" 2>/dev/null; then
+            echo "No usable base commit; checking every tracked source and plan file."
+            git ls-files -- '*.ts' '*.tsx' '*.js' '*.jsx' '*.mjs' '*.cjs' 'docs/planning/**/*.md' \
+              | xargs --no-run-if-empty node tools/scripts/check-file-size.mjs
+            exit 0
+          fi
+          CHANGED="$(git diff --name-only "${BASE_SHA}...HEAD")"
+          if [ -z "${CHANGED}" ]; then
+            echo "No files changed against ${BASE_SHA}."
+            exit 0
+          fi
+          echo "${CHANGED}" | xargs --no-run-if-empty node tools/scripts/check-file-size.mjs
+
+      # Biome owns formatting (D44). `--write` is never used in CI.
+      - name: Formatting
+        run: pnpm biome check
+
+      # @nx/enforce-module-boundaries is silently inert for an untagged project,
+      # so D2/D25/D27/D29 hold only while every project carries both tags.
+      - name: Every project is tagged
+        run: pnpm check:project-tags
+
+      # D39. React is shared with `strictVersion: false`; this is the check that
+      # makes that safe (R2). It reads what each package resolves, not declares.
+      - name: One React major
+        run: pnpm check:react-major
+
+  # Slice 9 (D101): Playwright over a local production build of the shell and
+  # all four remotes. Slice 8's deploy jobs `needs:` this job, so nothing ships
+  # that this suite has not seen composed, styled, and surviving each remote's
+  # failure. It runs beside `gates` rather than after it: the two share no
+  # output, and a red E2E run is worth seeing even when a lint fails.
+  e2e:
+    name: e2e (Playwright, production build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # The browser version is pinned by the lockfile's @playwright/test, so
+      # this installs exactly the Chromium the suite was written against.
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      # ⚠️ The stack's own ports are baked in at build time — see
+      # tools/scripts/e2e-stack.mjs. `pnpm build` would bake the dev origins.
+      - name: Build the E2E stack
+        run: pnpm e2e:build
+
+      - name: Playwright
+        run: pnpm e2e
+
+      - name: Upload the report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+  # Slice 8 (D107–D109). Deploys only what `nx affected` says changed since the
+  # last green run on master: a remote uploads a new immutable version and its
+  # pointer is rewritten; the shell is rebuilt against the pointers and goes out
+  # through `cdk deploy`, last. Rollback is a manual, explicit operation — see
+  # the runbook — never an automatic switch on failure.
+  deploy:
+    name: deploy (affected apps → AWS)
+    needs: [gates, e2e]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # nx-set-shas lists this workflow's earlier runs to find the last green one.
+      actions: read
+      # GitHub OIDC (D10/D11): no AWS credential is stored in this repository.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # `nx affected` diffs against the base commit.
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Sets NX_BASE to the commit of the last SUCCESSFUL run of this workflow on
+      # master, not `github.event.before`. A run whose deploy failed, or one that
+      # was queued and superseded, never becomes a base, so its changes are
+      # still "affected" on the next run instead of being skipped.
+      - uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: master
+
+      # ⚠️ The role name is fixed in infra/src/site-config/site-config.ts
+      # (GITHUB_DEPLOY_ROLE_NAME). The trust policy admits only this repo's
+      # master, so this step fails on any other ref by design.
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::694951015005:role/portfolio-github-deploy
+          aws-region: us-east-1
+
+      # D12/D23: remotes first, the shell last. An unusable base (a first run)
+      # deploys everything rather than nothing.
+      - name: Deploy affected apps
+        run: pnpm aws:deploy --base "${NX_BASE}" --head "${NX_HEAD}"

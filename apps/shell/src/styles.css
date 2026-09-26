@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+
+/*
+ * D26 / D51 — one theme, in `libs/ui/theme`, that every app `@import`s
+ * instead of declaring its own `@theme` block. This also carries the
+ * `@source` declarations that used to live here (Slice 1's interim fix for
+ * R3, see docs/planning/mfe-architecture/risks.md#r3): they now live in the
+ * theme stylesheet so one file covers every lib and no app has to remember.
+ *
+ * ⚠️ **The webfonts are NOT loaded from here, or from the theme** (Q20 → D82).
+ * Slice 10 tried exactly that — an `@import url('https://fonts.googleapis.com/...')`
+ * in the theme, so one declaration would cover the shell and the four
+ * standalone remote surfaces — and **Vite silently dropped it**: no `@import`
+ * in the served CSS, no `@font-face`, zero requests, every gate green, and a
+ * page rendering in system faces. They are `<link>`s in
+ * `src/routes/__root.tsx` and in each remote's `index.html` instead.
+ */
+@import '@portfolio/ui-theme/theme.css';

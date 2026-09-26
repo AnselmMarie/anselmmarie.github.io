@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "feature-footer",
+  "projectType": "library",
+  "sourceRoot": "libs/features/footer/src",
+  "tags": ["type:feature", "scope:footer"]
+}

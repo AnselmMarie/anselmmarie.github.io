@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "feature-portfolio-item",
+  "projectType": "library",
+  "sourceRoot": "libs/features/portfolio-item/src",
+  "tags": ["type:feature", "scope:portfolio-item"]
+}

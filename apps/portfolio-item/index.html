@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Q20 → D82 — the three families, as a <link> rather than a CSS @import:
+      Vite silently dropped the @import and the page fell back to system faces
+      with every gate green. See apps/shell/src/routes/__root.tsx.
+
+      Standalone dev only. Mounted in the shell, the shell's own <link> is
+      already on the page and this file is not served at all.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <title>PortfolioItem — standalone</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

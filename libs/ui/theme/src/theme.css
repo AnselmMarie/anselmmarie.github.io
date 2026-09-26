@@ -1,0 +1,231 @@
+/*
+ * Q20 → D82, the maintainer's call on 2026-09-22: Carlito, JetBrains Mono and
+ * Inter are served from the Google Fonts CDN.
+ *
+ * ⚠️ **The request is NOT made from this file, and must not be moved back
+ * here.** Slice 10 first wrote `@import url('https://fonts.googleapis.com/...')`
+ * at the top of this stylesheet. **Vite's CSS pipeline silently dropped it**:
+ * green build, green typecheck, green tests, a page that rendered — and a
+ * served stylesheet with no `@import`, no `@font-face`, and zero requests to
+ * either font origin. The site showed system fallbacks and nothing reported it.
+ *
+ * The families are requested by a `<link>` in the shell's document head,
+ * `apps/shell/src/routes/__root.tsx`, and by the `<link>` in each remote's
+ * standalone `index.html`. The `--font-*` tokens below name those families;
+ * they do not fetch them. A token whose family never arrives falls through to
+ * the next entry in its stack, which is why every stack ends in a real system
+ * face rather than in `sans-serif` alone.
+ */
+
+/*
+ * The one theme every app extends (D26), as a Tailwind 4 `@theme` block
+ * rather than a `tailwind.config.ts` preset (D51 — Tailwind 4 configures in
+ * CSS; there is no config-object artifact). An app consumes this by
+ * `@import`ing this file from its own stylesheet instead of declaring its
+ * own colors.
+ *
+ * Values are read off the two 2026-09-22 design exports (D76), which are a
+ * **specification, not source**: they are inline-styled `<x-dc>` templates and
+ * nothing in that shape is copied. Every literal below was read from the
+ * export and re-expressed here as a token, so that Slices 12–16 build against
+ * names instead of re-typing hex.
+ *
+ * ⚠️ Supersedes the v3 palette (D34). `--color-page: #ffffff` is **gone** —
+ * there is no white anywhere in the new design.
+ */
+@theme {
+  /*
+   * The palette. Nine colours, named for the job they do rather than what
+   * they look like: the design's #EAE7DE is the paper the whole site sits on,
+   * so it is `paper` and never `bone`.
+   */
+  --color-backdrop: #0e1a19;
+  --color-paper: #eae7de;
+  --color-ink: #14211e;
+  --color-accent: #1c7a5e;
+  --color-accent-bright: #3fd9a4;
+  --color-muted: #635e55;
+  --color-rule: #d5d0c4;
+  --color-surface: #f3f1eb;
+  --color-surface-sunk: #dfdbd1;
+
+  /*
+   * ⚠️ `accent-bright` is the mint, and it appears **only on ink**. In both
+   * exports it is used exclusively inside `--color-ink` sections; `accent` is
+   * its paper counterpart. A component taking an accent should make the wrong
+   * pairing unrepresentable rather than document it — see `Eyebrow`'s `tone`.
+   */
+
+  /* Three families, each with exactly one job (see the type scale below). */
+  --font-display: 'Carlito', 'Calibri', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /*
+   * The display sizes, as the `clamp()`s the exports state literally. Their
+   * line-heights and tracking travel with them so a heading cannot be sized
+   * correctly and tracked wrongly.
+   */
+  --text-display: clamp(2.9rem, 9.5vw, 7rem);
+  --text-display--line-height: 0.92;
+  --text-display--letter-spacing: -0.04em;
+
+  --text-section: clamp(2rem, 4.5vw, 3.4rem);
+  --text-section--line-height: 1;
+  --text-section--letter-spacing: -0.03em;
+
+  --text-lead: clamp(1.6rem, 3.4vw, 2.7rem);
+  --text-lead--line-height: 1.15;
+  --text-lead--letter-spacing: -0.02em;
+
+  --text-company: clamp(1.15rem, 2.2vw, 1.6rem);
+  --text-company--line-height: 1.1;
+  --text-company--letter-spacing: -0.02em;
+
+  /*
+   * The mono eyebrow treatment. It appears **eleven times** across the two
+   * exports at two sizes and is the single most repeated pattern in the
+   * design, which is why `Eyebrow` is a component rather than a class string.
+   */
+  --text-eyebrow: 0.62rem;
+  --text-eyebrow--letter-spacing: 0.14em;
+  --text-chip: 0.58rem;
+  --text-chip--letter-spacing: 0.14em;
+
+  /* The frame's radii. */
+  --radius-shell: 26px;
+  --radius-shell-sm: 16px;
+  --radius-card: 22px;
+  --radius-panel: 18px;
+  --radius-pill: 999px;
+
+  /*
+   * D81 — ⚠️ **`--spacing-header` splits in two.** The nav spacer is 56px and
+   * the anchor offset is 84px; they are *different numbers* and the current
+   * code uses one 4rem token for both. A fixed nav 56px tall wants more than
+   * 56px of scroll margin or the section heading lands flush against the nav's
+   * bottom rule — 84px is the export's answer (`[id] { scroll-margin-top:
+   * 84px }`) and it is not derivable from the nav height.
+   */
+  --spacing-nav: 56px;
+  --spacing-anchor: 84px;
+
+  /*
+   * ⚠️ **Retired, not yet removable.** D43's single token still has readers in
+   * the Header remote and the Homepage sections. Slice 12 re-points all three
+   * sides of that contract at once and deletes this line; until then removing
+   * it breaks a remote that is deployed separately from this package.
+   */
+  --spacing-header: 4rem;
+
+  /*
+   * The frame's inset and the export's two breakpoints.
+   *
+   * ⚠️ **There are two, not one.** Slice 10 defined `frame` alone and this
+   * block said "its one breakpoint"; the homepage export distinguishes three
+   * bands — `<760`, `760–1080` and `>=1080` — and gives the middle one its own
+   * hero lede layout (`1fr auto`, end-aligned) rather than the mobile stack.
+   * Collapsing to two bands is a visible regression at tablet width, so Slice
+   * 13 added `wide`. Both numbers are the export's own.
+   */
+  --spacing-frame: 14px;
+  --breakpoint-frame: 760px;
+  --breakpoint-wide: 1080px;
+
+  /*
+   * The accordion's open/close, for the generated primitive's
+   * `data-open:animate-accordion-down` / `data-closed:animate-accordion-up`.
+   * ⚠️ Not `tw-animate-css`, which is where shadcn expects these from: its
+   * keyframes read the Radix/Bits/Reka height vars and never Base UI's
+   * `--accordion-panel-height`, so they would animate to `auto` — i.e. not at
+   * all. Base UI waits for the closing animation before unmounting the panel;
+   * `forwards` holds it at 0 for the frames in between, or it flashes open.
+   */
+  --animate-accordion-down: accordion-down 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-accordion-up: accordion-up 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--accordion-panel-height); }
+  }
+
+  @keyframes accordion-up {
+    from { height: var(--accordion-panel-height); }
+    to { height: 0; }
+  }
+}
+
+/*
+ * The base layer the exports state outside any element: the backdrop behind
+ * the card, body copy in Inter, and the anchor offset D81 describes.
+ */
+@layer base {
+  /*
+   * In-page anchors (`#work`, `#contact`, …) glide rather than jump. Opted out
+   * for anyone who has asked the OS for reduced motion.
+   */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /*
+   * ⚠️ **Paper, not the backdrop** (maintainer's call, 2026-09-23). The export
+   * paints `body` #0E1A19; this repo paints it the card's tan, so overscroll and
+   * anything past the last section read as the page. `ShellLayout` no longer
+   * draws the card or its dark inset at all (see `px-page` below);
+   * `--color-backdrop` survives for `MetaChip`.
+   */
+  body {
+    background: var(--color-paper);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  [id] {
+    scroll-margin-top: var(--spacing-anchor);
+  }
+}
+
+/*
+ * The sections' side padding, full-bleed edition (2026-09-23). Each section's
+ * background runs the whole window width; its content sits in the design's
+ * 1400px column with the export's 18px / 26px gutter inside it. Below 1400px
+ * + gutters this is just the gutter; above it, the gutter grows by half the
+ * spare width on each side. `100%` in a padding is the section's own width.
+ */
+@utility px-page {
+  padding-inline: max(18px, calc((100% - 1400px) / 2 + 18px));
+
+  @variant frame {
+    padding-inline: max(26px, calc((100% - 1400px) / 2 + 26px));
+  }
+}
+
+/*
+ * ⚠️ **R3 fired once already, in Slice 1** (see docs/planning/mfe-architecture/risks.md#r3).
+ * Tailwind 4 auto-detects sources from the Vite root and skips `node_modules` —
+ * every workspace lib is a symlink in `node_modules`, so a lib's classes
+ * resolve to nothing unless declared here. It fails by rendering **unstyled**,
+ * not by erroring: a green build, a green typecheck and a green test run all
+ * survive it. Verify by rendering a lib-only class and looking at the page,
+ * never by reading build output.
+ *
+ * ⚠️ This slice makes R3 *harder to see*: it changes every colour, so a token
+ * that silently fails to resolve looks like a token that resolved to the old
+ * value rather than like an unstyled page.
+ *
+ * One line per lib whose classes must survive. A missing line is silent.
+ */
+@source '../../../features/footer/src';
+@source '../../../features/header/src';
+@source '../../../features/homepage/src';
+@source '../../../features/portfolio-item/src';
+@source '../../../features/shell/src';
+@source '../../components/src';
+@source '../../primitives/src';

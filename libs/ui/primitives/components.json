@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "base-vega",
+  "rsc": false,
+  "tsx": true,
+  "iconLibrary": "tabler",
+  "tailwind": {
+    "config": "",
+    "css": "../theme/src/theme.css",
+    "baseColor": "slate",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "src",
+    "utils": "@portfolio/shared-utils",
+    "ui": "src"
+  }
+}

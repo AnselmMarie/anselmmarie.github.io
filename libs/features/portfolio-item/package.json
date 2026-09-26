@@ -1,0 +1,24 @@
+{
+  "name": "@portfolio/feature-portfolio-item",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@portfolio/shared-fixtures": "workspace:*",
+    "@portfolio/shared-types": "workspace:*",
+    "@portfolio/ui-components": "workspace:*",
+    "dompurify": "^3.4.15",
+    "react": "^19.3.0"
+  },
+  "devDependencies": {
+    "react-dom": "^19.3.0"
+  }
+}
