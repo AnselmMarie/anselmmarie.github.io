@@ -64,6 +64,20 @@ describe('SiteDistribution', () => {
     }
   });
 
+  it('lets CloudFront invoke the shell through its URL: both permissions, not only InvokeFunctionUrl', () => {
+    const cloudFrontActions = Object.values(template.findResources('AWS::Lambda::Permission'))
+      .map((permission) => permission.Properties)
+      .filter((props) => props.Principal === 'cloudfront.amazonaws.com')
+      .map((props) => props.Action)
+      .sort();
+
+    expect(cloudFrontActions).toEqual(['lambda:InvokeFunction', 'lambda:InvokeFunctionUrl']);
+    template.hasResourceProperties('AWS::Lambda::Permission', {
+      Action: 'lambda:InvokeFunction',
+      InvokedViaFunctionUrl: true,
+    });
+  });
+
   it('requests a DNS-validated certificate for both names (D109)', () => {
     template.hasResourceProperties('AWS::CertificateManager::Certificate', {
       DomainName: 'anselmmarie.com',
