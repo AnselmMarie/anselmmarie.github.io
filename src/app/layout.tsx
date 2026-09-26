@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 
-import { Theme } from '@radix-ui/themes';
+// Retired UI: kept for reference, re-enable with the <Theme> render below.
+// import { Theme } from '@radix-ui/themes';
 import type { Metadata } from 'next';
 
 import './globals.css';
@@ -16,18 +17,26 @@ export const metadata: Metadata = {
   alternates: { canonical: REDIRECT_URL },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactElement;
-}): ReactElement {
+// Retired UI: the original signature, restore it to render pages again.
+// export default function RootLayout({
+//   children,
+// }: {
+//   children: ReactElement;
+// }): ReactElement {
+export default function RootLayout(): ReactElement {
   return (
     <html lang="en">
       <head>
         <meta httpEquiv="refresh" content={`0; url=${REDIRECT_URL}`} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.location.replace(${JSON.stringify(REDIRECT_URL)});`,
+          }}
+        />
       </head>
       <body className={`prose prose-slate max-w-full`}>
-        <Theme>{children}</Theme>
+        {/* Retired UI: pages are no longer rendered so nothing shows before the redirect. */}
+        {/* <Theme>{children}</Theme> */}
       </body>
     </html>
   );
