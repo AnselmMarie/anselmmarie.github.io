@@ -6,10 +6,14 @@ import type { Metadata } from 'next';
 import './globals.css';
 import '@radix-ui/themes/styles.css';
 
+// This version of the site has been retired; every page forwards to the new site.
+const REDIRECT_URL = 'https://anselmmarie.com';
+
 export const metadata: Metadata = {
   title: 'Anselm Marie Portfolio',
   description:
     'Anselm Marie is a seasoned full-stack engineer with more than a decade of experience, coupled with expertise in UI/UX design.',
+  alternates: { canonical: REDIRECT_URL },
 };
 
 export default function RootLayout({
@@ -19,6 +23,9 @@ export default function RootLayout({
 }): ReactElement {
   return (
     <html lang="en">
+      <head>
+        <meta httpEquiv="refresh" content={`0; url=${REDIRECT_URL}`} />
+      </head>
       <body className={`prose prose-slate max-w-full`}>
         <Theme>{children}</Theme>
       </body>
