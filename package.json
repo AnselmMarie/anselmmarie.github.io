@@ -10,6 +10,7 @@
   },
   "scripts": {
     "dev": "nx run shell:dev",
+    "dev:all": "nx run-many -t dev --projects=shell,header,footer,homepage,portfolio-item --parallel=5",
     "build": "nx run-many -t build",
     "lint": "nx run-many -t lint",
     "test": "nx run-many -t test",
