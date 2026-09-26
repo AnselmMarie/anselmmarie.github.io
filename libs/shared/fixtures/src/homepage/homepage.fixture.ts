@@ -54,7 +54,7 @@ export const HOMEPAGE_CONTENT: HomepageContent = {
    */
   specs: [
     'Founder, Cosmikata',
-    'Front-end Architect',
+    'Senior Software Engineer',
     'Tech Lead',
     '13+ years shipping',
     'Atlanta',
@@ -63,7 +63,7 @@ export const HOMEPAGE_CONTENT: HomepageContent = {
     name: 'Anselm Marie',
     headline: { lead: 'Building the\nfront-end,', accent: 'end to end.' },
     lede:
-      'I’m Anselm, founder of Cosmikata and a front-end architect & tech lead. I build ' +
+      'I’m Anselm, founder of Cosmikata and a senior software engineer & tech lead. I build ' +
       'cross-platform systems: design systems, micro-frontend platforms, and edge-first ' +
       'backends.',
     ctas: [
