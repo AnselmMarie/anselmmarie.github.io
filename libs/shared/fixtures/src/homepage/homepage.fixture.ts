@@ -139,12 +139,21 @@ export const HOMEPAGE_CONTENT: HomepageContent = {
     {
       id: 'frontend',
       heading: 'Frontend',
-      skills: ['React', 'React Native', 'Expo', 'TypeScript', 'Next.js', 'TanStack', 'Tailwind'],
+      skills: [
+        'React',
+        'React Native',
+        'Expo',
+        'TypeScript',
+        'Next.js',
+        'TanStack',
+        'Tailwind',
+        'Nativewind / Uniwind',
+      ],
     },
     {
       id: 'backend',
       heading: 'Backend',
-      skills: ['Node.js', 'Hono', 'PostgreSQL', 'Drizzle ORM', 'REST API Design'],
+      skills: ['Node.js', 'Hono', 'PostgreSQL', 'Drizzle ORM', 'REST API'],
     },
     {
       id: 'architecture',
@@ -154,7 +163,7 @@ export const HOMEPAGE_CONTENT: HomepageContent = {
     {
       id: 'platform-quality',
       heading: 'Platform & Quality',
-      skills: ['AWS', 'Cloudflare', 'Zephyr Cloud', 'GitHub Actions', 'Jest / Vitest', 'Storybook'],
+      skills: ['AWS', 'Cloudflare', 'GitHub Actions', 'Jest / Vitest', 'Storybook'],
     },
   ],
   about: HOMEPAGE_ABOUT,

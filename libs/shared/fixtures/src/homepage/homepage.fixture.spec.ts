@@ -133,6 +133,18 @@ describe('HOMEPAGE_CONTENT — structure', () => {
     expect(platform?.skills).toContain('AWS');
   });
 
+  it('carries the 2026-09-25 skill edits', () => {
+    // Maintainer's call, 2026-09-25: Zephyr Cloud dropped, Tailwind followed
+    // by Nativewind / Uniwind as its own line, and REST API loses "Design".
+    const skillsOf = (id: string): readonly string[] =>
+      HOMEPAGE_CONTENT.skillGroups.find((g) => g.id === id)?.skills ?? [];
+
+    expect(skillsOf('platform-quality')).not.toContain('Zephyr Cloud');
+    expect(skillsOf('frontend').slice(-2)).toEqual(['Tailwind', 'Nativewind / Uniwind']);
+    expect(skillsOf('backend')).toContain('REST API');
+    expect(skillsOf('backend')).not.toContain('REST API Design');
+  });
+
   it('no longer carries projectGroups', () => {
     // D72/D77: the two v3 headings — Active Projects and Other Projects —
     // stop existing. A real content change, not a rename.
