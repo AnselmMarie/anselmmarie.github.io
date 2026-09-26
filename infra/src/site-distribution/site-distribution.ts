@@ -16,7 +16,7 @@ import {
   ViewerProtocolPolicy,
 } from 'aws-cdk-lib/aws-cloudfront';
 import { FunctionUrlOrigin, S3BucketOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
-import type { FunctionUrl } from 'aws-cdk-lib/aws-lambda';
+import { CfnPermission, type FunctionUrl } from 'aws-cdk-lib/aws-lambda';
 import type { IBucket } from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 
@@ -104,6 +104,16 @@ export class SiteDistribution extends Construct {
         httpStatus,
         ttl: Duration.seconds(0),
       })),
+    });
+
+    // The OAC origin grants only lambda:InvokeFunctionUrl. Since October 2025 a
+    // Function URL also needs lambda:InvokeFunction, or every page is a 403.
+    new CfnPermission(this, 'ShellInvokeFunction', {
+      action: 'lambda:InvokeFunction',
+      functionName: props.shellUrl.functionArn,
+      principal: 'cloudfront.amazonaws.com',
+      sourceArn: this.distribution.distributionArn,
+      invokedViaFunctionUrl: true,
     });
   }
 }
