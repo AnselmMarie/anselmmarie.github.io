@@ -34,7 +34,7 @@ export const UPCOMING_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     // ⚠️ INVENTED — the maintainer gave no summary line; replace when written.
     lede: 'A rebuild of this portfolio site as a React and TanStack Start micro-frontend platform.',
     facts: [
-      { key: 'Timeline', value: 'Less than a month' },
+      { key: 'Timeline', value: 'Less than a week' },
       { key: 'Role', value: 'Lead designer and developer' },
       { key: 'Focus', value: 'Architecting independently deployable micro-frontends on AWS' },
     ],

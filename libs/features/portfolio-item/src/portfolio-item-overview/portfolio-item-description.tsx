@@ -33,9 +33,6 @@ const PortfolioItemDescription = ({ html }: PortfolioItemDescriptionProps): Reac
       <div
         data-testid="portfolio-item-description"
         className="text-[0.97rem] leading-[1.8] text-muted [&_a]:text-ink [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-accent [&_li]:list-disc [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:mb-4 [&_ul]:pl-5"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: D69 — the string is
-        // sanitized by `sanitizeItemHtml` immediately above, against an allow-list
-        // derived from the eight ported bodies.
         dangerouslySetInnerHTML={{ __html: sanitizeItemHtml(html) }}
       />
     </div>
