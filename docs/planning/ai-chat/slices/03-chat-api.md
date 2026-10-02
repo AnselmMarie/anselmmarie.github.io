@@ -9,13 +9,13 @@
 - **D4**: the system prompt is built from `@portfolio/shared-fixtures` at cold start and prompt-cached.
 - **D5**: stateless. History comes from the client and is capped.
 - **D7**: guardrails A1, A4, A5, A7, B1, B2 (wiring), B3 and B4 are implemented here.
+- **D18**: $1 / day budget and 30 messages per IP per day, read from env, not hardcoded.
+- **D19**: on branch `feat/amarie/ai-chat-buildout`.
+- **D20**: the handler lives in `libs/api/chat`.
 - **D10 / D11**: tool specs and stream events come from `libs/shared/chat-contract`.
 
 ## Open questions blocking this slice
-- **Q2**: daily dollar budget and per-IP count (config values, read from env).
 - **Q3**: Turnstile secret (only the Secrets Manager ARN is read from env).
-- **Q5**: no branch yet.
-- **Q6**: `libs/api/chat` vs. `apps/chat-api`.
 
 ## Handler order (from guardrails.md)
 1. Kill switch: SSM `chat-enabled`, cached about 30s → `disabled`

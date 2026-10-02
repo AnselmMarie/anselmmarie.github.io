@@ -7,12 +7,13 @@
 - **D1**: Node 22, arm64, matching `LAMBDA_RUNTIME` / `LAMBDA_ARCHITECTURE` in `shell-function.ts`.
 - **D2 / D6**: IAM scoped to the one inference profile and its model ARNs.
 - **D7**: guardrails A2, A3, A5 (table), A6, A7 (parameter) and B2 (`CfnGuardrail`) are built here.
+- **D18**: A6 Budgets kill switch at $10 / month; the A5 limits ($1 / day, 30 per IP) passed as stack props / context.
+- **D19**: on branch `feat/amarie/ai-chat-buildout`.
+- **D20**: `ChatFunction` bundles `libs/api/chat` with esbuild.
 - **D12**: Function URL `AWS_IAM` + OAC, invoke mode `RESPONSE_STREAM`.
 
 ## Open questions blocking this slice
-- **Q2**: the A6 monthly dollar amount and the A5 limits (stack props / context).
 - **Q3**: the Turnstile secret has to exist in Secrets Manager (referenced by ARN, never inlined).
-- **Q5**: no branch yet.
 
 ## Resources
 

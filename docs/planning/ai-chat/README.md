@@ -9,8 +9,8 @@ assistant on topic.
 
 **Target codebase:** the Nx / TanStack Start site on the **`version-3`** branch
 (`b3657e9`, #52). Every path in this plan was checked against that branch.
-These files were drafted in the `version-2` checkout because no branch has been
-created yet ([Q5](./open-questions.md#q5)).
+Code goes on `feat/amarie/ai-chat-buildout`, which contains `version-3`
+([D19](./decisions.md#d19)).
 
 ## Design source
 
@@ -56,7 +56,7 @@ See [parallelization.md](./parallelization.md).
 
 | # | Layer | Scope | Visible? | Status | File |
 |---|---|---|---|---|---|
-| 1 | fe-form | `chat` remote MFE + the drawn launcher, drawer, bubbles and composer on stub replies | ✅ screen | not started | [01-chat-panel.md](./slices/01-chat-panel.md) |
+| 1 | fe-form | `chat` remote MFE + the drawn launcher, drawer, bubbles and composer on stub replies | ✅ screen | committed, in review | [01-chat-panel.md](./slices/01-chat-panel.md) |
 | 2 | fe-list | Client tool executor (`scroll_to` / `navigate`) + shell navigate listener | ✅ screen | not started | [02-messages-and-tools.md](./slices/02-messages-and-tools.md) |
 | 3 | api | Contract lib + handler + Bedrock streaming + in-code guardrails | — none | not started | [03-chat-api.md](./slices/03-chat-api.md) |
 | 4 | infra | Lambda, CloudFront route, WAF, DynamoDB, Guardrail, budget kill switch | — none | not started | [04-chat-infra.md](./slices/04-chat-infra.md) |

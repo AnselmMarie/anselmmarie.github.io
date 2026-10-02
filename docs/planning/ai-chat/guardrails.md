@@ -26,8 +26,8 @@ the cached rate.
 
 **Setting A5's budget:** pick a dollar figure, then convert it to tokens using
 current Bedrock pricing for the chosen model, checked when Slice 3 is built.
-Don't write a price into this plan from memory. Starting points:
-[Q2](./open-questions.md#q2).
+Don't write a price into this plan from memory. The limits are set in
+[D18](./decisions.md#d18): $10 / month (A6), $1 / day and 30 messages per IP (A5).
 
 ## B. Keeping it on topic
 

@@ -7,11 +7,11 @@ that names it. All three, in the same change.
 | Q | Raised | Blocks | Status |
 |---|---|---|---|
 | [Q1](#q1) | 2026-10-01 | Slices 1, 2, 5 | ✅ closed → [D17](./decisions.md#d17) (D16 superseded) |
-| [Q2](#q2) | 2026-10-01 | Slices 3, 4 | open |
+| [Q2](#q2) | 2026-10-01 | Slices 3, 4 | ✅ closed → [D18](./decisions.md#d18) |
 | [Q3](#q3) | 2026-10-01 | Slices 3, 5 | open |
 | [Q4](#q4) | 2026-10-01 | Slice 5 (live check only) | open |
-| [Q5](#q5) | 2026-10-01 | All code | open |
-| [Q6](#q6) | 2026-10-01 | Slice 3 | open |
+| [Q5](#q5) | 2026-10-01 | All code | ✅ closed → [D19](./decisions.md#d19) |
+| [Q6](#q6) | 2026-10-01 | Slice 3 | ✅ closed → [D20](./decisions.md#d20) |
 | [Q7](#q7) | 2026-10-01 | Slice 1 | ✅ closed → [D13](./decisions.md#d13) |
 
 <a id="q1"></a>
@@ -31,6 +31,9 @@ When this was asked on 2026-10-01, the maintainer gave no preference.
 
 <a id="q2"></a>
 ## Q2: Spending limits
+
+**✅ Closed 2026-10-02 → [D18](./decisions.md#d18).** The maintainer took the suggested
+starting points below.
 
 Three numbers are needed:
 
@@ -56,6 +59,10 @@ deploy account before the live check in Slice 5.
 <a id="q5"></a>
 ## Q5: Branch
 
+**✅ Closed 2026-10-02 → [D19](./decisions.md#d19).** Code goes on the current branch,
+`feat/amarie/ai-chat-buildout` (contains `origin/version-3`, no upstream). The
+original question is kept below.
+
 All code goes on a branch cut from `version-3`. Proposed:
 `feat/amarie/ai-chat` off `origin/version-3`, upstream unset after creation.
 On 2026-10-01 the maintainer asked for these plan files only, with no branch,
@@ -63,6 +70,8 @@ so nothing has been created.
 
 <a id="q6"></a>
 ## Q6: Where the handler lives
+
+**✅ Closed 2026-10-02 → [D20](./decisions.md#d20).** `libs/api/chat`, as the plan assumed.
 
 `libs/api/chat` (a lib, bundled by the infra construct) **or**
 `apps/chat-api` (an app with its own build target). The plan assumes

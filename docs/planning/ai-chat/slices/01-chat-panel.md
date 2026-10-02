@@ -1,16 +1,16 @@
 # Slice 1: `chat` remote MFE, launcher and drawer (on stub replies)
 
-**Status:** not started · **Layer:** fe-form · **Visible?** ✅ screen · **Depends on:** Wave 0 (contract lib + manifests)
+**Status:** built and committed 2026-10-02 (`e04b3d9`, `5e908c2`, `ca89d85`), in review · **Layer:** fe-form · **Visible?** ✅ screen · **Depends on:** Wave 0 (contract lib + manifests)
 **Design:** [`_design/Anselm Marie Portfolio.html`](../../../../_design/Anselm%20Marie%20Portfolio.html) → `<!-- AI CHAT -->`, drawn ✅. Transcribed in [design.md](../design.md) ([D17](../decisions.md#d17))
 
 ## Decisions that bind this slice
-- **D3**: built on `version-3`.
+- **D3 / D19**: built on `version-3`, on branch `feat/amarie/ai-chat-buildout`.
 - **D8**: frontend-first. This slice puts the panel on screen with stub data.
 - **D13**: the chat is its own federated remote. `apps/chat` exposes `./Chat`
   on dev port 4178, wired exactly like `footer`.
 - **D15**: a failed chat remote renders nothing (no notice, no skeleton).
 - **D17**: build to the drawn launcher + right-side drawer, from theme tokens and
-  ui-components. Add `ChatSheet`, `IconButton`, `PillInput` and three `UiIcon` names.
+  ui-components. Add `ChatSheet`, `IconButton`, `PillInput` and three `Icon` names.
 - **D11**: messages use the event types from `libs/shared/chat-contract`, even in the stub.
 - MFE **D16**: the shell never imports the chat's package. Anything the shell
   passes through `remoteProps` is declared on the shell side.
@@ -18,7 +18,7 @@
   `import('chat/Chat')` out of the SSR Lambda bundle.
 
 ## Open questions blocking this slice
-- **Q5**: no branch yet.
+none
 
 ## What's on screen
 - The drawn launcher: a 56px ink circle with a mint message icon, bottom-right,
@@ -44,13 +44,15 @@
 |---|---|
 | `apps/chat/{project.json,package.json,tsconfig.json,vite.config.ts,index.html}` | Remote app scaffold, copied from `apps/footer`. `exposes: { './Chat': … }`, `DEV_PORT = 4178`, `strictPort` |
 | `apps/chat/src/{main.tsx,bootstrap.tsx,styles.css}` | Standalone entry, as in `apps/footer` |
-| `libs/features/chat/{project.json,package.json,tsconfig*.json,vitest.config.ts}` | Lib scaffold (manifest parts done in Wave 0) |
+| `libs/features/chat/{project.json,package.json,tsconfig.json,vitest.config.ts}` | Lib scaffold, tagged `type:feature` + `scope:chat` |
+| `libs/shared/chat-contract/**` | **Wave 0, trimmed.** `ChatRole`, `ChatTurn`, `ChatToolName`, the `ChatStreamEvent` union, and A4's caps (`CHAT_MAX_MESSAGE_CHARS` etc.). Types and constants only: the zod schemas and the `zod` / AWS SDK dependencies arrive with the first slice that validates at runtime (2 or 3) |
 | `libs/features/chat/src/index.ts` | Barrel: exports `Chat` |
-| `libs/features/chat/src/chat/chat.tsx` (+ spec) | Root: open state, launcher (`IconButton tone="ink" size={56}`), `ChatSheet` |
+| `libs/features/chat/src/chat/chat.tsx` (+ spec) | Root: open state, launcher (`IconButton tone="ink-accent" size={56}`), `ChatSheet`. `data-testid="chat-remote"` sits on the launcher's fixed box, since a wrapper around fixed/portalled children has no size for e2e to see |
 | `libs/features/chat/src/chat-messages/chat-messages.tsx` (+ spec) | Scrolling column + auto-scroll on open and on change |
 | `libs/features/chat/src/chat-messages/chat-message.tsx` | One bubble: visitor or assistant tone and radius, from design.md |
 | `libs/features/chat/src/chat-composer/chat-composer.tsx` (+ spec) | White fade + `PillInput` (`maxLength={500}`, A4) + send `IconButton` |
-| `libs/features/chat/src/chat/chat-greeting.const.ts` | The drawn greeting text |
+| `libs/features/chat/src/chat-copy/chat-copy.const.ts` | Every drawn string (greeting, title, placeholder, button names) plus the invented input label "Message". Its own folder because three sections read it |
+| `libs/features/chat/src/chat-transcript/chat-transcript.ts` (+ spec) | `ChatMessage`, the `ChatSession` seam type, and the pure `startTurn` / `applyChatEvent` / `isTurnEnd`. Survives Slice 5: the real `use-chat` folds events with the same functions |
 | `libs/features/chat/src/chat-stub/use-chat-stub.ts` (+ spec) | The one seam Slice 5 swaps. Same signature as the real `use-chat` |
 | `libs/features/chat/src/chat-stub/chat-replies.fixture.ts` | Scripted replies, taken from the design's sample exchange |
 
@@ -59,11 +61,12 @@
 | File | Change |
 |---|---|
 | `libs/ui/components/src/chat-sheet/chat-sheet.tsx` (+ spec) | **New.** Wraps the `Sheet` primitive, `side="right"`: the inset 14px, 400px, `radius-card`, `surface` panel; `backdrop/35` scrim; title slot + close. Override pattern copied from `MenuSheet` |
-| `libs/ui/components/src/icon-button/icon-button.tsx` (+ spec) | **New.** Round icon-only button over the `Button` primitive. `tone: 'ink' \| 'ghost'`, `size: 36 \| 44 \| 56`, required `label` (becomes `aria-label`) |
+| `libs/ui/components/src/icon-button/icon-button.tsx` (+ spec) | **New.** Round icon-only button over the `Button` primitive. `tone: 'ink' \| 'ink-accent' \| 'ghost'` (the launcher's mint mark and hover-grow differ from send's, so it got its own tone), `size: 36 \| 44 \| 56`, required `label` (becomes `aria-label`) |
 | `libs/ui/primitives/src/input.tsx` | **Generated** by `shadcn add input` (D40). Never hand-edited |
 | `libs/ui/components/src/pill-input/pill-input.tsx` (+ spec) | **New.** 44px pill, `rule` border, white fill, focus border `accent` |
-| `libs/ui/components/src/ui-icon/ui-icon.tsx` (+ spec) | Add `message-circle`, `send`, `x` |
+| `libs/ui/components/src/icon/icon.tsx` (+ spec) | Add `message-circle`, `send`, `x`. **Renamed** from `UiIcon` / `ui-icon/` to `Icon` / `icon/` (maintainer, 2026-10-02), so its 7 consumers in header, homepage, portfolio-item, accordion, menu-sheet and icon-button changed too |
 | `libs/ui/components/src/index.ts`, `libs/ui/primitives/src/index.ts` | Barrel entries |
+| `libs/ui/theme/src/theme.css` | `@source '../../../features/chat/src'`. Without it the chat renders unstyled (MFE R3) |
 | `.claude/rules/design-system.md` | Replace the Button-casing placeholder: the first Button use is icon-only, so casing still isn't settled for text buttons. Say that instead of guessing |
 
 ### The wiring, following every place `footer` is registered (modified)
@@ -78,7 +81,12 @@
 | `apps/shell/src/routes/__root.tsx` | Mount `<ChatRemote />` once, outside the route `Outlet`, so it persists |
 | `infra/src/site-config/site-config.ts` (+ spec) | Add `'chat'` to `REMOTES`. The deploy CLI and deploy plan read this list |
 | `e2e/support/remotes.ts` | Add `chat` to `RemoteName`, the origin list (`PORTFOLIO_CHAT_ORIGIN`), and both page compositions |
-| `.env.example` | `PORTFOLIO_CHAT_ORIGIN`, `PORTFOLIO_CHAT_VERSION` |
+| `.env.example` | ⚠️ **Not done.** A permission rule blocks reading `.env*`. It also lists stale names (`PORTFOLIO_REMOTE_FOOTER_URL`, port 3002) that no code reads, so it needs a separate fix |
+| `apps/shell/vitest.config.ts`, `apps/shell/src/remotes/remotes-exposed-module.spec.tsx` | The `chat/Chat` stub alias, and the chat row in the exposed-module spec |
+| `tools/eslint/module-boundaries.mjs` | A `scope:chat` constraint. Without it the scope matches no rule and is unconstrained |
+| `tools/scripts/e2e-stack.mjs`, `e2e/support/expect-composition.ts` | E2E port 4278; and D15 in the suite: a failed chat expects no remote **and** no fallback |
+| `infra/src/deploy/{deploy-plan,deploy-run,deploy-shell}/*.spec.ts` | Their remote lists now include `chat` |
+| root `package.json` (`dev:all`), root `tsconfig.json` (via `nx sync`), `pnpm-lock.yaml` (three new importers only) | No `tsconfig.base.json` change: the repo resolves workspace packages, not path aliases |
 
 ⚠️ **Check while building:** the CI workflow, and anything else that has to
 change when a remote is added. Grep `version-3` for `portfolio-item` and
@@ -102,7 +110,7 @@ failure **silent by design**, so the deploy check has to look for it.
 - The greeting is the first message on open.
 - `IconButton`: renders its `label` as the accessible name; each tone renders.
   `ChatSheet`: open/close through `onOpenChange`, labelled by its title.
-  `PillInput`: forwards value/change. `UiIcon`: the three new names render.
+  `PillInput`: forwards value/change. `Icon`: the three new names render.
   (No class or style assertions, per testing-conventions.)
 - Through the parent `Chat`: sending shows the user message, then the stub reply streams in.
 - Typing and the send button are keyboard-reachable; the panel has a labelled dialog role.
