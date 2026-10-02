@@ -1,0 +1,24 @@
+# Decisions
+
+Numbered, never renumbered. "Maintainer" means you chose it in chat. "Proposed"
+means it came from the plan and is open for change until its slice starts.
+
+| # | Date | Decision | Source | Binds |
+|---|---|---|---|---|
+| <a id="d1"></a>D1 | 2026-10-01 | The chat API is **TypeScript on Node.js 22 Lambda** (arm64), not Rust or Python. Reasons in [architecture.md](./architecture.md#why-typescript-not-rust-or-python) | Maintainer accepted the recommendation | 3, 4 |
+| <a id="d2"></a>D2 | 2026-10-01 | The model provider is **Amazon Bedrock** (Claude): IAM auth, no API key to store, billed on the AWS account | Maintainer | 3, 4 |
+| <a id="d3"></a>D3 | 2026-10-01 | Built into the Nx / TanStack Start site on **`version-3`**, not `master` and not `version-2` | Maintainer | all |
+| <a id="d4"></a>D4 | 2026-10-01 | **No RAG or vector DB.** The system prompt is built from `@portfolio/shared-fixtures` exports and prompt-cached | Proposed | 3 |
+| <a id="d5"></a>D5 | 2026-10-01 | **Stateless API.** The client sends the conversation each turn, capped by A4. No chat history is stored server-side | Proposed | 3, 5 |
+| <a id="d6"></a>D6 | 2026-10-01 | **Claude Haiku 4.5** through a Bedrock cross-region inference profile. One constant to swap for a larger model | Proposed | 3, 4 |
+| <a id="d7"></a>D7 | 2026-10-01 | **Layered guardrails A1–A7 and B1–B5** ([guardrails.md](./guardrails.md)) are part of the core design. None is deferred to "later" | Maintainer asked for bill and topic safeguards | 2–5 |
+| <a id="d8"></a>D8 | 2026-10-01 | **Frontend-first flow.** The panel is on screen at Slice 1 against stub replies | Proposed (the default when the maintainer has no preference) | all |
+| <a id="d9"></a>D9 | 2026-10-01 | ~~The chat UI is a feature lib mounted directly in the shell root, not a remote~~ **Superseded by [D13](#d13)** the same day: it contradicted MFE D36 | Proposed, then withdrawn | — |
+| <a id="d10"></a>D10 | 2026-10-01 | The model gets **two tools only**, both with enum arguments: `scroll_to` and `navigate`. The browser carries them out and re-validates each call | Proposed (part of B3) | 2, 3 |
+| <a id="d11"></a>D11 | 2026-10-01 | Streamed responses use **NDJSON**, with event types defined in `libs/shared/chat-contract` | Proposed | 2, 3, 5 |
+| <a id="d12"></a>D12 | 2026-10-01 | The chat Lambda's Function URL uses **`AWS_IAM` behind CloudFront OAC**, the same pattern as the Shell (D108), so it can't be called around the distribution or the WAF | Proposed | 4 |
+| <a id="d13"></a>D13 | 2026-10-01 | **The chat is its own federated remote MFE.** `apps/chat` exposes `./Chat` (dev port 4178, `strictPort`), with the UI in `libs/features/chat`. It's wired exactly like `footer`: a registry row, a `RemoteName` member, a shell federation entry, `REMOTES` in `infra/src/site-config`, the e2e remote list, and `apps/shell/src/remotes/chat-remote.tsx` behind `ClientOnly` + `MfeRemoteMount`. It deploys independently through the existing deploy CLI. Mounted once in `__root.tsx` so it survives route changes. Closes [Q7](./open-questions.md#q7) and keeps D36 intact | **Maintainer** | 1, 2, 5 |
+| <a id="d14"></a>D14 | 2026-10-01 | **The chat remote never imports the router** (D43 kept the header off the router singleton for the same reason). To navigate, it dispatches a `portfolio:navigate` `CustomEvent` with `{ href }`. A listener in the shell root validates the href against known routes and calls `router.navigate`, and the existing `MfeHashReapply` handles the `#section` scroll. The event name and payload type live in `libs/shared/chat-contract`. `remoteProps` stays data-only | Proposed (follows from D13) | 2, 5 |
+| <a id="d15"></a>D15 | 2026-10-01 | **A failed chat remote renders nothing.** Its `fallback` returns an empty fragment and it has no skeleton. A missing chat is an absent feature, not a broken page, so it doesn't get the `MfeFallbackNotice` the content regions use | **Maintainer** ("if it fails with no chat button that's fine") | 1 |
+| <a id="d16"></a>D16 | 2026-10-01 | ~~No design; build from existing ui-components and flag every control as invented~~ **Superseded by [D17](#d17)** on 2026-10-02, when the maintainer supplied the chat design | Maintainer, then superseded | — |
+| <a id="d17"></a>D17 | 2026-10-02 | **The design of record is the `<!-- AI CHAT -->` block in `_design/Anselm Marie Portfolio.html`** (2026-10-02 export): a launcher plus a **right-side drawer**, transcribed in [design.md](./design.md). It's built from theme tokens and `@portfolio/ui-components`. Three new shared components (`ChatSheet`, `IconButton`, `PillInput`) and three `UiIcon` names are added, all over existing or on-demand shadcn primitives. Anything the design doesn't draw is listed as invented in design.md and in each slice report | **Maintainer** supplied the design | 1, 2, 5 |
