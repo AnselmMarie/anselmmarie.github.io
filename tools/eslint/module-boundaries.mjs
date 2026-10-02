@@ -32,7 +32,8 @@
  *   type:e2e             e2e                       the Playwright suite (Slice 9)
  *
  *   scope:shell | scope:header | scope:footer | scope:homepage |
- *   scope:portfolio-item      one per deployable pair (app + its feature lib)
+ *   scope:portfolio-item | scope:chat
+ *                             one per deployable pair (app + its feature lib)
  *   scope:shared              everything both halves may import
  *   scope:infra               the CDK project
  *   scope:e2e                 the Playwright suite — drives the built site
@@ -69,6 +70,12 @@ export const depConstraints = [
   {
     sourceTag: 'scope:portfolio-item',
     onlyDependOnLibsWithTags: ['scope:portfolio-item', 'scope:shared'],
+  },
+  // ai-chat D13 — the AI chat. Without this row `scope:chat` matches no
+  // constraint and the chat could import any remote's feature lib.
+  {
+    sourceTag: 'scope:chat',
+    onlyDependOnLibsWithTags: ['scope:chat', 'scope:shared'],
   },
   // Shared code is shared by everyone, so it may depend on nothing that is not
   // itself shared — otherwise a `libs/ui/*` change drags a feature's code into

@@ -56,6 +56,15 @@
     },
     {
       "path": "./e2e"
+    },
+    {
+      "path": "./libs/shared/chat-contract"
+    },
+    {
+      "path": "./libs/features/chat"
+    },
+    {
+      "path": "./apps/chat"
     }
   ]
 }
