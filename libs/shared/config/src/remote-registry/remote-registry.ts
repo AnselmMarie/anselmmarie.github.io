@@ -22,6 +22,7 @@ export const DEFAULT_HEADER_ORIGIN = 'http://localhost:4174';
 export const DEFAULT_FOOTER_ORIGIN = 'http://localhost:4175';
 export const DEFAULT_HOMEPAGE_ORIGIN = 'http://localhost:4176';
 export const DEFAULT_PORTFOLIO_ITEM_ORIGIN = 'http://localhost:4177';
+export const DEFAULT_CHAT_ORIGIN = 'http://localhost:4178';
 
 /**
  * Which deployment of each remote the shell references (D12, and the
@@ -36,6 +37,7 @@ export const HOMEPAGE_ORIGIN: string =
   readEnv('PORTFOLIO_HOMEPAGE_ORIGIN') ?? DEFAULT_HOMEPAGE_ORIGIN;
 export const PORTFOLIO_ITEM_ORIGIN: string =
   readEnv('PORTFOLIO_PORTFOLIO_ITEM_ORIGIN') ?? DEFAULT_PORTFOLIO_ITEM_ORIGIN;
+export const CHAT_ORIGIN: string = readEnv('PORTFOLIO_CHAT_ORIGIN') ?? DEFAULT_CHAT_ORIGIN;
 
 export const REMOTE_REGISTRY: RemoteRegistry = {
   header: {
@@ -63,6 +65,14 @@ export const REMOTE_REGISTRY: RemoteRegistry = {
     entryUrl: `${PORTFOLIO_ITEM_ORIGIN}/remoteEntry.js`,
     exposedModule: './PortfolioItem',
     version: versionFor('PORTFOLIO_ITEM'),
+  },
+  // ai-chat D13. A failed chat renders nothing (ai-chat D15), so a wrong row
+  // here is silent on the page: the composition e2e is what notices.
+  chat: {
+    name: 'chat',
+    entryUrl: `${CHAT_ORIGIN}/remoteEntry.js`,
+    exposedModule: './Chat',
+    version: versionFor('CHAT'),
   },
 };
 

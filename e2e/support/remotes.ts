@@ -1,5 +1,5 @@
 /**
- * The four remotes as the suite sees them: where each is served from, where it
+ * The five remotes as the suite sees them: where each is served from, where it
  * renders, and the test ids the shell and the remote already carry.
  *
  * ⚠️ **The origins come from the environment, never from a literal here.**
@@ -8,7 +8,7 @@
  * the shell's build reads, so the URL a spec blocks is the URL the shell loads.
  */
 
-export type RemoteName = 'header' | 'footer' | 'homepage' | 'portfolio-item';
+export type RemoteName = 'header' | 'footer' | 'homepage' | 'portfolio-item' | 'chat';
 
 /**
  * A real, published item. `composition.spec.ts` asserts the homepage links to
@@ -21,7 +21,7 @@ export const SAMPLE_ITEM_PATH = `/portfolio/${SAMPLE_SLUG}`;
 interface RemoteSpec {
   name: RemoteName;
   originEnv: string;
-  /** The route this remote is checked on. Header and footer render on every route. */
+  /** The route this remote is checked on. Header, footer and chat render on every route. */
   path: string;
 }
 
@@ -30,12 +30,13 @@ export const REMOTES: readonly RemoteSpec[] = [
   { name: 'footer', originEnv: 'PORTFOLIO_FOOTER_ORIGIN', path: '/' },
   { name: 'homepage', originEnv: 'PORTFOLIO_HOMEPAGE_ORIGIN', path: '/' },
   { name: 'portfolio-item', originEnv: 'PORTFOLIO_PORTFOLIO_ITEM_ORIGIN', path: SAMPLE_ITEM_PATH },
+  { name: 'chat', originEnv: 'PORTFOLIO_CHAT_ORIGIN', path: '/' },
 ];
 
 /** Which remotes a route composes. */
 export const REMOTES_ON_PATH = {
-  home: ['header', 'homepage', 'footer'],
-  item: ['header', 'portfolio-item', 'footer'],
+  home: ['header', 'homepage', 'footer', 'chat'],
+  item: ['header', 'portfolio-item', 'footer', 'chat'],
 } as const satisfies Record<string, readonly RemoteName[]>;
 
 export const remotesOn = (path: string): readonly RemoteName[] =>

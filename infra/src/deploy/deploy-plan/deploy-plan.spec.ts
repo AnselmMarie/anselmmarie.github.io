@@ -14,6 +14,7 @@ describe('planDeploy', () => {
       'footer',
       'homepage',
       'portfolio-item',
+      'chat',
       'shell',
       'e2e',
     ];
@@ -54,7 +55,7 @@ describe('parseRemote', () => {
 
   it.each([undefined, 'shell', 'Footer'])('rejects %j, naming the valid remotes', (name) => {
     expect(() => parseRemote(name)).toThrow(
-      'Expected one of: header, footer, homepage, portfolio-item'
+      'Expected one of: header, footer, homepage, portfolio-item, chat'
     );
   });
 });

@@ -5,6 +5,7 @@ import { SITE_ORIGIN } from '@portfolio/shared-config';
 import { HOME_METADATA, SITE_NAME } from '@portfolio/shared-fixtures';
 import { absoluteUrl } from '@portfolio/shared-utils';
 
+import ChatRemote from '../remotes/chat-remote.js';
 import appCss from '../styles.css?url';
 
 /**
@@ -79,6 +80,8 @@ function RootComponent(): ReactElement {
   return (
     <RootDocument>
       <Outlet />
+      {/* ai-chat D13 — outside the Outlet, so the chat and its conversation survive route changes. */}
+      <ChatRemote />
     </RootDocument>
   );
 }

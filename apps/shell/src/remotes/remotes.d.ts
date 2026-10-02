@@ -53,3 +53,11 @@ declare module 'portfolio-item/PortfolioItem' {
   const PortfolioItem: ComponentType<{ item?: PortfolioItemModel }>;
   export default PortfolioItem;
 }
+
+/** ai-chat D13. Takes no props; it navigates by event, never by router (D14). */
+declare module 'chat/Chat' {
+  import type { ComponentType } from 'react';
+
+  const Chat: ComponentType;
+  export default Chat;
+}
