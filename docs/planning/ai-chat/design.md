@@ -49,7 +49,7 @@ depend on the file being present.
 | Need | Build from | Notes |
 |---|---|---|
 | Drawer + scrim + Esc / outside press | **New `ChatSheet`** in `libs/ui/components`, wrapping the existing `Sheet` primitive (`side="right"`) | Same override pattern as `MenuSheet`: panel classes undo the generated ones. Modal is fine here: the launcher is hidden while it's open, so MenuSheet's trigger problem doesn't apply. The generated backdrop is restyled to `backdrop/35` through `className`. If the generated sheet can't take that, stop and report rather than editing the primitive (D25) |
-| Icons | **Extend `UiIcon`** with `message-circle`, `send`, `x` | One icon library (D75) |
+| Icons | **Extend `Icon`** (formerly `UiIcon`) with `message-circle`, `send`, `x` | One icon library (D75) |
 | Round icon buttons (launcher, close, send) | **New `IconButton`** in `libs/ui/components` over the existing `Button` primitive, with `tone: 'ink' \| 'ghost'` and `size: 44 \| 56 \| 36` | It's the first use of the Button primitive, so it **resolves design-system.md's casing placeholder**: these buttons are icon-only, so casing doesn't arise. Record that, not a guess |
 | Pill text input | Pull shadcn **`input`** on demand (D40) and wrap it as **`PillInput`** in `libs/ui/components` | No input primitive exists yet |
 | Message bubble | `chat-message.tsx` in `libs/features/chat` | Feature-specific, so it doesn't belong in ui-components |

@@ -21,7 +21,7 @@ maintainer decides.
 
 | Slice | Pre-existing files it modifies |
 |---|---|
-| 1 | `apps/shell/src/routes/__root.tsx`, `apps/shell/vite.config.ts`, `apps/shell/src/remotes/remotes.d.ts`, `libs/shared/types/src/remote/remote.ts`, `libs/shared/config/src/remote-registry/remote-registry.ts` (+ spec), `infra/src/site-config/site-config.ts` (+ spec), `e2e/support/remotes.ts`, `.env.example`, `libs/ui/components/src/index.ts`, `libs/ui/components/src/ui-icon/ui-icon.tsx` (+ spec), `libs/ui/primitives/src/index.ts`, `.claude/rules/design-system.md`, `tsconfig.base.json`, root `package.json` |
+| 1 | `apps/shell/src/routes/__root.tsx`, `apps/shell/vite.config.ts`, `apps/shell/src/remotes/remotes.d.ts`, `libs/shared/types/src/remote/remote.ts`, `libs/shared/config/src/remote-registry/remote-registry.ts` (+ spec), `infra/src/site-config/site-config.ts` (+ spec), `e2e/support/remotes.ts`, `.env.example`, `libs/ui/components/src/index.ts`, `libs/ui/components/src/icon/icon.tsx` (+ spec, renamed from `ui-icon/ui-icon.tsx`, with its 7 consumers), `libs/ui/primitives/src/index.ts`, `.claude/rules/design-system.md`, `tsconfig.base.json`, root `package.json` |
 | 2 | `libs/features/header/src/anchor-href/anchor-href.ts` (moves to `libs/shared/utils`), `libs/shared/utils/src/index.ts`, the header's import sites, `apps/shell/src/routes/__root.tsx` (navigate listener), `libs/shared/chat-contract` (navigate event) |
 | 3 | `tsconfig.base.json`, root `package.json` + `pnpm-lock.yaml` (adds `@aws-sdk/client-bedrock-runtime`, `@aws-sdk/client-dynamodb`, `@aws-sdk/client-ssm`, `zod`) |
 | 4 | `infra/src/portfolio-stack.ts`, `infra/src/portfolio-stack.spec.ts`, `infra/src/site-distribution/site-distribution.ts` (+ spec), `infra/src/main.ts`, `infra/package.json` |
