@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 
-import { MetaChip, UiIcon } from '@portfolio/ui-components';
+import { Icon, MetaChip } from '@portfolio/ui-components';
 
 interface HomepageWorkCardProps {
   slug: string;
@@ -87,7 +87,7 @@ const HomepageWorkCard = ({
           <span>{client}</span>
           <span className="inline-flex items-center gap-1.5">
             {year}
-            <UiIcon name="arrow-up-right" size={13} />
+            <Icon name="arrow-up-right" size={13} />
           </span>
         </div>
       </div>

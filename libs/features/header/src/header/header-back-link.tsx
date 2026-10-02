@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 
-import { UiIcon } from '@portfolio/ui-components';
+import { Icon } from '@portfolio/ui-components';
 
 import { WORK_HREF } from '../anchor-href/anchor-href.js';
 
@@ -22,7 +22,7 @@ const HeaderBackLink = (): ReactElement => {
       href={WORK_HREF}
       className="inline-flex items-center gap-2 text-[0.88rem] text-ink transition-colors hover:text-accent"
     >
-      <UiIcon name="arrow-left" size={16} />
+      <Icon name="arrow-left" size={16} />
       All work
     </a>
   );

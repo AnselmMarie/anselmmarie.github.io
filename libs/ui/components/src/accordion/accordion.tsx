@@ -8,7 +8,7 @@ import {
   AccordionTrigger,
 } from '@portfolio/ui-primitives';
 
-import UiIcon from '../ui-icon/ui-icon.js';
+import Icon from '../icon/icon.js';
 
 export interface AccordionEntry {
   /** A stable key — never an index or a display name, which can repeat. */
@@ -77,7 +77,7 @@ const Accordion = ({ items, defaultValue, className }: AccordionProps): ReactEle
                   isOpen ? RING_OPEN : RING_CLOSED
                 )}
               >
-                <UiIcon name={isOpen ? 'minus' : 'plus'} size={16} />
+                <Icon name={isOpen ? 'minus' : 'plus'} size={16} />
               </span>
             </AccordionTrigger>
             <AccordionContent className="pt-5 pb-[1.6rem]">{item.content}</AccordionContent>
