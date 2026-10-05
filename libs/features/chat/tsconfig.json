@@ -12,6 +12,12 @@
       "path": "../../ui/components"
     },
     {
+      "path": "../../shared/utils"
+    },
+    {
+      "path": "../../shared/fixtures"
+    },
+    {
       "path": "../../shared/chat-contract"
     }
   ]

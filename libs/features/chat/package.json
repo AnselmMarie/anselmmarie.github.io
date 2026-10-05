@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@portfolio/shared-chat-contract": "workspace:*",
+    "@portfolio/shared-fixtures": "workspace:*",
+    "@portfolio/shared-utils": "workspace:*",
     "@portfolio/ui-components": "workspace:*",
     "react": "^19.3.0"
   },

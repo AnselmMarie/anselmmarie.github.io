@@ -6,5 +6,9 @@
     "tsBuildInfoFile": "out-tsc/tsconfig.tsbuildinfo"
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../fixtures"
+    }
+  ]
 }

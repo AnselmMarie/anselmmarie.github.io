@@ -190,6 +190,9 @@ importers:
       '@portfolio/feature-shell':
         specifier: workspace:*
         version: link:../../libs/features/shell
+      '@portfolio/shared-chat-contract':
+        specifier: workspace:*
+        version: link:../../libs/shared/chat-contract
       '@portfolio/shared-config':
         specifier: workspace:*
         version: link:../../libs/shared/config
@@ -243,6 +246,12 @@ importers:
       '@portfolio/shared-chat-contract':
         specifier: workspace:*
         version: link:../../shared/chat-contract
+      '@portfolio/shared-fixtures':
+        specifier: workspace:*
+        version: link:../../shared/fixtures
+      '@portfolio/shared-utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
       '@portfolio/ui-components':
         specifier: workspace:*
         version: link:../../ui/components
@@ -358,7 +367,14 @@ importers:
         specifier: ^19.3.0
         version: 19.3.0(react@19.3.0)
 
-  libs/shared/chat-contract: {}
+  libs/shared/chat-contract:
+    dependencies:
+      '@portfolio/shared-fixtures':
+        specifier: workspace:*
+        version: link:../fixtures
+      zod:
+        specifier: ^4.6.5
+        version: 4.6.5
 
   libs/shared/config:
     dependencies:
@@ -376,6 +392,9 @@ importers:
 
   libs/shared/utils:
     dependencies:
+      '@portfolio/shared-fixtures':
+        specifier: workspace:*
+        version: link:../fixtures
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
