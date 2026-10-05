@@ -60,7 +60,7 @@ See [parallelization.md](./parallelization.md).
 | 2 | fe-list | Client tool executor (`scroll_to` / `navigate`) + shell navigate listener | ✅ screen | not started | [02-messages-and-tools.md](./slices/02-messages-and-tools.md) |
 | 3 | api | Contract lib + handler + Bedrock streaming + in-code guardrails | — none | not started | [03-chat-api.md](./slices/03-chat-api.md) |
 | 4 | infra | Lambda, CloudFront route, WAF, DynamoDB, Guardrail, budget kill switch | — none | not started | [04-chat-infra.md](./slices/04-chat-infra.md) |
-| 5 | connect | Real streaming, Turnstile, states, off-topic eval | ✅ screen | not started | [05-connect.md](./slices/05-connect.md) |
+| 5 | connect | Real streaming, WAF challenge token, states, off-topic eval | ✅ screen | not started | [05-connect.md](./slices/05-connect.md) |
 
 No more than two invisible slices run in a row (3, 4).
 

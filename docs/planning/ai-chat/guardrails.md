@@ -12,7 +12,7 @@ costs when one gets through.
 
 | # | Control | What it stops | Built in |
 |---|---|---|---|
-| A1 | **Cloudflare Turnstile** token, verified by the Lambda before any model call | Scripts and bots calling the API directly. DNS is already on Cloudflare, and Turnstile is free | Slice 3 (verify), Slice 5 (widget) |
+| A1 | **AWS WAF Challenge** on `/api/chat*`: a silent browser challenge. A request without a valid `aws-waf-token` is answered by WAF and never reaches the Lambda. The client gets the token through the AWS WAF JavaScript integration SDK ([D21](./decisions.md#d21)) | Scripts and bots calling the API directly | Slice 4 (rule), Slice 5 (SDK) |
 | A2 | **WAF rate-based rule** on `/api/chat*`, e.g. 20 requests per 5 min per IP → block | One person hammering it | Slice 4 |
 | A3 | **Lambda reserved concurrency**, e.g. 3 | A spike can never fan out into dozens of parallel Bedrock calls | Slice 4 |
 | A4 | **Request caps** (zod): ≤ 12 turns of history, ≤ 500 chars per user message, ≤ 6k chars total; only `user` / `assistant` roles accepted. Output `maxTokens` ≈ 400 | Huge prompts, long essays, a client-injected system prompt | Slice 3 |
@@ -41,12 +41,14 @@ Don't write a price into this plan from memory. The limits are set in
 
 ## What the handler checks, in order
 
-1. Kill switch (A7) → `disabled`
-2. Turnstile (A1) → 403
-3. zod caps and roles (A4) → 400
-4. Per-IP and global quota (A5) → `resting`
-5. Only then: Bedrock, with B1 + B2 + B4 applied
-6. After the stream: add the `usage` tokens to both counters (A5)
+A1 (WAF Challenge) and A2 (WAF rate rule) run at CloudFront, **before** the
+handler. A request that fails either never invokes the Lambda.
 
-Every rejection in steps 1–4 happens **before** any model call, so a rejected
+1. Kill switch (A7) → `disabled`
+2. zod caps and roles (A4) → 400
+3. Per-IP and global quota (A5) → `resting`
+4. Only then: Bedrock, with B1 + B2 + B4 applied
+5. After the stream: add the `usage` tokens to both counters (A5)
+
+Every rejection in steps 1–3 happens **before** any model call, so a rejected
 request costs a Lambda invocation and nothing else.

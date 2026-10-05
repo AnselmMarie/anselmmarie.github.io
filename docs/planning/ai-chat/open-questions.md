@@ -8,7 +8,7 @@ that names it. All three, in the same change.
 |---|---|---|---|
 | [Q1](#q1) | 2026-10-01 | Slices 1, 2, 5 | ✅ closed → [D17](./decisions.md#d17) (D16 superseded) |
 | [Q2](#q2) | 2026-10-01 | Slices 3, 4 | ✅ closed → [D18](./decisions.md#d18) |
-| [Q3](#q3) | 2026-10-01 | Slices 3, 5 | open |
+| [Q3](#q3) | 2026-10-01 | Slices 3, 4, 5 | ✅ closed → [D21](./decisions.md#d21) |
 | [Q4](#q4) | 2026-10-01 | Slice 5 (live check only) | open |
 | [Q5](#q5) | 2026-10-01 | All code | ✅ closed → [D19](./decisions.md#d19) |
 | [Q6](#q6) | 2026-10-01 | Slice 3 | ✅ closed → [D20](./decisions.md#d20) |
@@ -45,6 +45,10 @@ Three numbers are needed:
 
 <a id="q3"></a>
 ## Q3: Cloudflare Turnstile keys
+
+**✅ Closed 2026-10-05 → [D21](./decisions.md#d21).** Turnstile is replaced by an
+AWS WAF Challenge rule, so there are no keys to create. The original question
+is kept below.
 
 A Turnstile site key (public, used by the widget) and a secret key (Secrets
 Manager, used by the Lambda) have to be created in the Cloudflare dashboard by

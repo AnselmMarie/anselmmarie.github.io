@@ -5,17 +5,17 @@
 ```
 `chat` remote MFE (apps/chat → ./Chat, mounted once in the shell root via
 ChatRemote, so it persists across routes. D13)
-  │ POST /api/chat  { messages, turnstileToken }
+  │ POST /api/chat  { messages }   header x-aws-waf-token (AWS WAF JS SDK, D21)
   ▼
 CloudFront (existing SiteDistribution)
-  │ behavior /api/chat*  · WAF rate rule · no caching · POST allowed
+  │ behavior /api/chat*  · WAF rate rule · WAF Challenge (no token → answered by WAF, Lambda never runs)
+  │ no caching · POST allowed
   ▼
 Chat Lambda Function URL
   │ auth AWS_IAM + Origin Access Control (same pattern as the Shell, D108)
   │ invoke mode RESPONSE_STREAM · Node 22 · arm64 · reserved concurrency
   │
   ├─ kill switch (SSM)  → off: "disabled" event, no model call
-  ├─ Turnstile verify   → bad: 403, no model call
   ├─ zod request caps   → bad: 400, no model call
   ├─ quota check (DynamoDB per-IP + global daily) → over: "resting" event
   └─ Bedrock ConverseStream (Claude Haiku 4.5, guardrailConfig, cached system prompt)

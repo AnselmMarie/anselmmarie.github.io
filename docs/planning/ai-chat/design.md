@@ -63,5 +63,5 @@ depend on the file being present.
 | What happens when a tool call moves the page | 2 | **Close the drawer** so the visitor sees the scroll or page change, and keep the conversation |
 | The note in the bubble when the chat navigated | 2 | One mono-caps line, e.g. "→ WORK" |
 | Resting today / disabled / blocked / error | 5 | Assistant-styled bubble text. Error adds a retry link |
-| Turnstile placement | 5 | Invisible mode, no visible widget |
+| Bot check (WAF Challenge, D21) | 5 | Silent, nothing on screen. If the token can't be obtained, the send fails into the error state with retry |
 | Character counter (A4's 500-char cap) | 1 | **Not shown.** `maxLength=500` on the input only, which keeps the drawn composer unchanged |

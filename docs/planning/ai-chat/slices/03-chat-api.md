@@ -8,23 +8,26 @@
 - **D2 / D6**: Bedrock `ConverseStream`, Claude Haiku 4.5 inference profile, one model constant.
 - **D4**: the system prompt is built from `@portfolio/shared-fixtures` at cold start and prompt-cached.
 - **D5**: stateless. History comes from the client and is capped.
-- **D7**: guardrails A1, A4, A5, A7, B1, B2 (wiring), B3 and B4 are implemented here.
+- **D7**: guardrails A4, A5, A7, B1, B2 (wiring), B3 and B4 are implemented here. A1 moved to Slice 4 (D21).
 - **D18**: $1 / day budget and 30 messages per IP per day, read from env, not hardcoded.
 - **D19**: on branch `feat/amarie/ai-chat-buildout`.
 - **D20**: the handler lives in `libs/api/chat`.
 - **D10 / D11**: tool specs and stream events come from `libs/shared/chat-contract`.
+- **D21**: bot protection (A1) is a WAF Challenge at CloudFront. The handler does **no** bot verification and reads no secret.
 
 ## Open questions blocking this slice
-- **Q3**: Turnstile secret (only the Secrets Manager ARN is read from env).
+none (Q3 closed → D21)
 
 ## Handler order (from guardrails.md)
+WAF (A1 challenge, A2 rate rule) has already run at CloudFront by the time the
+handler is invoked.
+
 1. Kill switch: SSM `chat-enabled`, cached about 30s → `disabled`
-2. Turnstile `siteverify` → 403
-3. zod: request schema from the contract (caps, `user`/`assistant` roles only) → 400
-4. DynamoDB quota: per-IP (`ip#<hash>#<yyyy-mm-dd>`) and global (`global#<yyyy-mm-dd>`) → `resting`
-5. `ConverseStream` with the system prompt (B1), `toolConfig` (B3), `maxTokens` ≈ 400 (B4), `guardrailConfig` (B2)
-6. Map the Bedrock stream → NDJSON events. A guardrail intervention → `blocked`
-7. On `metadata.usage`: atomic `ADD` to both counters
+2. zod: request schema from the contract (caps, `user`/`assistant` roles only) → 400
+3. DynamoDB quota: per-IP (`ip#<hash>#<yyyy-mm-dd>`) and global (`global#<yyyy-mm-dd>`) → `resting`
+4. `ConverseStream` with the system prompt (B1), `toolConfig` (B3), `maxTokens` ≈ 400 (B4), `guardrailConfig` (B2)
+5. Map the Bedrock stream → NDJSON events. A guardrail intervention → `blocked`
+6. On `metadata.usage`: atomic `ADD` to both counters
 
 IPs are **hashed** before they're stored. TTL is about 48h.
 
@@ -37,7 +40,6 @@ IPs are **hashed** before they're stored. TTL is about 48h.
 | `libs/api/chat/src/system-prompt/build-system-prompt.ts` (+ spec) | Fixtures → prompt text + scope rules (B1) |
 | `libs/api/chat/src/bedrock-stream/bedrock-stream.ts` (+ spec) | ConverseStream call + event mapping |
 | `libs/api/chat/src/quota/quota.ts` (+ spec) | Read / check / add counters |
-| `libs/api/chat/src/turnstile/verify-turnstile.ts` (+ spec) | `siteverify` call |
 | `libs/api/chat/src/kill-switch/kill-switch.ts` (+ spec) | Cached SSM read |
 | `libs/api/chat/src/config/read-chat-env.ts` (+ spec) | Validates env at cold start; fails fast |
 | `libs/api/chat/evals/off-topic.prompts.json` | The B5 prompt set (run in Slice 5) |
@@ -48,7 +50,6 @@ chosen model **when this slice is built**, and record the source in the decision
 ## Specs (mocked Bedrock, DynamoDB, SSM, fetch)
 - Text + toolUse stream → the exact NDJSON sequence ending in `done`.
 - Invalid body → 400. A `system` role or oversize history → 400.
-- Missing or bad Turnstile → 403, **Bedrock not called**.
 - Per-IP or global quota exhausted → `resting`, **Bedrock not called**.
 - Kill switch off → `disabled`, **Bedrock not called**.
 - Guardrail intervention → `blocked`.
