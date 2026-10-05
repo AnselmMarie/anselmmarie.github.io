@@ -3,6 +3,9 @@ import { WORK_SECTION_ID } from '@portfolio/shared-fixtures';
 /**
  * Builds the `href` for an in-page section link (D43).
  *
+ * Moved here from `libs/features/header` in ai-chat Slice 2, when the chat's
+ * `scroll_to` tool became its second consumer.
+ *
  * On the homepage a bare `#id` jumps without touching history. Anywhere else —
  * a `/portfolio/$slug` page — the same fragment would look for a section that
  * is not on the page, so the link has to carry the path too.

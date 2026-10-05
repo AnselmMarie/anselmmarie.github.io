@@ -1,8 +1,7 @@
 import type { ReactElement } from 'react';
 
+import { WORK_HREF } from '@portfolio/shared-utils';
 import { Icon } from '@portfolio/ui-components';
-
-import { WORK_HREF } from '../anchor-href/anchor-href.js';
 
 /**
  * The `← All work` link that replaces the nav on a portfolio detail page.

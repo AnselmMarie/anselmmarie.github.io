@@ -1,4 +1,3 @@
-export { anchorHref, HOME_PATH, WORK_HREF } from './anchor-href/anchor-href.js';
 // D27 — the remote's `exposes` map points at this package's default export,
 // so the Header is also the module the shell mounts.
 export { default as Header, default, type HeaderVariant } from './header/header.js';
