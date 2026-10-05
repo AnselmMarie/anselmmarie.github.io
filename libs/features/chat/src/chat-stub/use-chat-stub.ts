@@ -7,10 +7,16 @@ import {
   applyChatEvent,
   type ChatMessage,
   type ChatSession,
+  type ChatSessionOptions,
   isTurnEnd,
   startTurn,
 } from '../chat-transcript/chat-transcript.js';
-import { CHAT_STUB_FALLBACK, CHAT_STUB_REPLIES } from './chat-replies.fixture.js';
+import {
+  CHAT_STUB_FALLBACK,
+  CHAT_STUB_REPLIES,
+  CHAT_STUB_TOOL_REPLIES,
+  type ChatStubReply,
+} from './chat-replies.fixture.js';
 
 /** How often the stub emits a delta, and how much text each one carries. */
 export const STUB_TICK_MS = 30;
@@ -20,24 +26,30 @@ const INITIAL_MESSAGES: readonly ChatMessage[] = [
   { id: 'greeting', role: 'assistant', text: CHAT_GREETING },
 ];
 
+const FALLBACK_REPLY: ChatStubReply = { keywords: [], reply: CHAT_STUB_FALLBACK };
+
 /** The scripted answer to a question: the first keyword match, or the fallback. */
-export const pickStubReply = (question: string): string => {
+export const pickStubReply = (question: string): ChatStubReply => {
   const lowered = question.toLowerCase();
-  const match = CHAT_STUB_REPLIES.find((entry) =>
+  const match = [...CHAT_STUB_TOOL_REPLIES, ...CHAT_STUB_REPLIES].find((entry) =>
     entry.keywords.some((keyword) => lowered.includes(keyword))
   );
 
-  return match?.reply ?? CHAT_STUB_FALLBACK;
+  return match ?? FALLBACK_REPLY;
 };
 
-/** A reply as the contract-shaped events the real stream will send (D11). */
-export const toStubEvents = (reply: string): readonly ChatStreamEvent[] => {
+/**
+ * A reply as the contract-shaped events the real stream will send (D11): the
+ * text as deltas, then its tool call if it has one, then `done`.
+ */
+export const toStubEvents = ({ reply, toolCall }: ChatStubReply): readonly ChatStreamEvent[] => {
   const deltas: ChatStreamEvent[] = [];
   for (let start = 0; start < reply.length; start += STUB_CHARS_PER_TICK) {
     deltas.push({ type: 'text-delta', text: reply.slice(start, start + STUB_CHARS_PER_TICK) });
   }
+  const tools: ChatStreamEvent[] = toolCall ? [{ type: 'tool-call', ...toolCall }] : [];
 
-  return [...deltas, { type: 'done' }];
+  return [...deltas, ...tools, { type: 'done' }];
 };
 
 /**
@@ -47,13 +59,19 @@ export const toStubEvents = (reply: string): readonly ChatStreamEvent[] => {
  * renders a growing bubble the way it will against Bedrock.
  *
  * A send while a reply is still playing is ignored (invented; the design
- * doesn't say).
+ * doesn't say). Each `tool-call` is passed to `onToolCall` as it plays.
  */
-const useChatStub = (): ChatSession => {
+const useChatStub = ({ onToolCall }: ChatSessionOptions): ChatSession => {
   const [messages, setMessages] = useState<readonly ChatMessage[]>(INITIAL_MESSAGES);
   const [isStreaming, setIsStreaming] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const turnCount = useRef(0);
+  // The interval outlives a render, so it reads the latest callback through a ref.
+  const toolCallHandler = useRef(onToolCall);
+
+  useEffect(() => {
+    toolCallHandler.current = onToolCall;
+  }, [onToolCall]);
 
   const stop = useCallback(() => {
     if (timer.current) clearInterval(timer.current);
@@ -76,6 +94,7 @@ const useChatStub = (): ChatSession => {
         if (!event) return;
 
         setMessages((previous) => applyChatEvent(previous, event));
+        if (event.type === 'tool-call') toolCallHandler.current(event);
         if (isTurnEnd(event)) {
           stop();
           setIsStreaming(false);

@@ -5,6 +5,7 @@ import { SITE_ORIGIN } from '@portfolio/shared-config';
 import { HOME_METADATA, SITE_NAME } from '@portfolio/shared-fixtures';
 import { absoluteUrl } from '@portfolio/shared-utils';
 
+import { useChatNavigateListener } from '../chat-navigate/use-chat-navigate-listener.js';
 import ChatRemote from '../remotes/chat-remote.js';
 import appCss from '../styles.css?url';
 
@@ -77,6 +78,9 @@ const RootDocument = ({ children }: Readonly<{ children: ReactNode }>): ReactEle
 };
 
 function RootComponent(): ReactElement {
+  // ai-chat D14 — the chat remote asks for route changes through a window event.
+  useChatNavigateListener();
+
   return (
     <RootDocument>
       <Outlet />

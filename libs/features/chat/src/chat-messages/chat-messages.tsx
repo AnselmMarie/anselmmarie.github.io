@@ -32,9 +32,14 @@ const ChatMessages = ({ messages }: ChatMessagesProps): ReactElement => {
       className="flex min-h-0 flex-1 flex-col gap-[18px] overflow-y-auto px-[18px] pt-[18px] pb-[120px]"
     >
       {messages
-        .filter((message) => message.text.length > 0)
+        .filter((message) => message.text.length > 0 || message.note)
         .map((message) => (
-          <ChatMessage key={message.id} role={message.role} text={message.text} />
+          <ChatMessage
+            key={message.id}
+            role={message.role}
+            text={message.text}
+            note={message.note}
+          />
         ))}
     </div>
   );

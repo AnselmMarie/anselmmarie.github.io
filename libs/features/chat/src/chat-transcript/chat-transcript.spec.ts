@@ -48,6 +48,47 @@ describe('applyChatEvent', () => {
 
     expect(applyChatEvent(turn, { type: 'done' })).toBe(turn);
   });
+
+  it('notes where a valid tool call moved the page, on the reply that made it', () => {
+    const turn = applyChatEvent(startTurn([GREETING], 'q', 't1'), {
+      type: 'text-delta',
+      text: 'Here',
+    });
+
+    const moved = applyChatEvent(turn, {
+      type: 'tool-call',
+      name: 'scroll_to',
+      input: { sectionId: 'work' },
+    });
+
+    expect(moved.at(-1)).toEqual({
+      id: 't1-assistant',
+      role: 'assistant',
+      text: 'Here',
+      note: 'Work',
+    });
+    expect(turn.at(-1)?.note).toBeUndefined();
+  });
+
+  it('adds no note for an invalid tool call', () => {
+    const turn = startTurn([GREETING], 'q', 't1');
+
+    expect(
+      applyChatEvent(turn, { type: 'tool-call', name: 'navigate', input: { slug: 'nope' } })
+    ).toBe(turn);
+  });
+
+  it('adds no note when the last bubble is the visitor’s', () => {
+    const messages: readonly ChatMessage[] = [{ id: 'u', role: 'user', text: 'q' }];
+
+    expect(
+      applyChatEvent(messages, {
+        type: 'tool-call',
+        name: 'scroll_to',
+        input: { sectionId: 'work' },
+      })
+    ).toBe(messages);
+  });
 });
 
 describe('isTurnEnd', () => {
