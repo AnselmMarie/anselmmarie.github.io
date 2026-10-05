@@ -1,10 +1,8 @@
 /**
  * The chat's wire format, shared by the browser and the Lambda (ai-chat D11).
  *
- * ⚠️ **Types only, for now.** The plan's Wave 0 also puts the zod schemas
- * here; they arrive with the first slice that validates at runtime (Slice 2's
- * tool-call re-validation, Slice 3's request caps), together with the `zod`
- * dependency. Slice 1 only needs the shapes its stub emits.
+ * The tools' zod schemas live beside this in `chat-tools/` (Slice 2). The
+ * request schema arrives with Slice 3's request caps.
  */
 
 /** Who wrote a turn. A `system` role is never accepted from a client (A4). */
