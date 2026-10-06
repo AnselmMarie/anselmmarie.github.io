@@ -28,9 +28,14 @@ export const runCommand: Run = (command, args, env) =>
 export interface SiteTarget {
   readonly bucket: string;
   readonly distributionId: string;
+  /**
+   * The AWS WAF JS SDK URL the chat remote is built with (ai-chat D21).
+   * Optional: a stack deployed before ai-chat Slice 4 has no such output.
+   */
+  readonly chatWafSdkUrl?: string;
 }
 
-/** Reads the bucket and distribution from the deployed stack's outputs. */
+/** Reads the bucket, the distribution and the chat's WAF SDK URL from the deployed stack's outputs. */
 export const readSiteTarget = (run: Run): SiteTarget => {
   const raw = run('aws', [
     'cloudformation',
@@ -43,14 +48,17 @@ export const readSiteTarget = (run: Run): SiteTarget => {
     'json',
   ]);
   const outputs = JSON.parse(raw) as { OutputKey: string; OutputValue: string }[] | null;
+  const optional = (key: string): string | undefined =>
+    outputs?.find((output) => output.OutputKey === key)?.OutputValue || undefined;
   const value = (key: string): string => {
-    const found = outputs?.find((output) => output.OutputKey === key)?.OutputValue;
+    const found = optional(key);
     if (!found) throw new Error(`Stack ${STACK_NAME} has no output ${key}. Has it been deployed?`);
     return found;
   };
   return {
     bucket: value(STACK_OUTPUTS.bucketName),
     distributionId: value(STACK_OUTPUTS.distributionId),
+    chatWafSdkUrl: optional(STACK_OUTPUTS.chatWafIntegrationUrl),
   };
 };
 

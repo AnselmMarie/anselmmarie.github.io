@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 import { describeCall, fakeContext, fakeRun } from '../../test-helpers/fake-run.test-helpers.js';
 import { IMMUTABLE } from '../aws-cli/aws-cli.js';
-import { assertBuiltFor, deployRemote, remoteDistDir } from './deploy-remote.js';
+import { assertBuiltFor, buildRemote, deployRemote, remoteDistDir } from './deploy-remote.js';
 
 const VERSION = '0123456789ab';
 const ORIGIN = `https://anselmmarie.com/_remotes/footer/${VERSION}`;
@@ -83,5 +83,38 @@ describe('deployRemote', () => {
 
     expect(() => deployRemote(ctx, 'footer', VERSION)).toThrow('was not made for');
     expect(calls.map(describeCall)).toEqual(['pnpm nx run footer:build']);
+  });
+});
+
+describe('buildRemote, for the chat (ai-chat D21)', () => {
+  const SDK_URL = 'https://abc.us-east-1.sdk.awswaf.com/abc/def/';
+  const CHAT_ORIGIN = `https://anselmmarie.com/_remotes/chat/${VERSION}`;
+
+  it('builds the chat with the stack’s WAF SDK URL', () => {
+    const { run, calls } = fakeRun();
+    const ctx = fakeContext(run);
+    buildRemote({ ...ctx, target: { ...ctx.target, chatWafSdkUrl: SDK_URL } }, 'chat', VERSION);
+
+    expect(calls[0]?.env).toEqual({
+      PORTFOLIO_CHAT_ORIGIN: CHAT_ORIGIN,
+      PORTFOLIO_CHAT_WAF_SDK_URL: SDK_URL,
+    });
+  });
+
+  it('gives no other remote the SDK URL', () => {
+    const { run, calls } = fakeRun();
+    const ctx = fakeContext(run);
+    buildRemote({ ...ctx, target: { ...ctx.target, chatWafSdkUrl: SDK_URL } }, 'footer', VERSION);
+
+    expect(calls[0]?.env).toEqual({ PORTFOLIO_FOOTER_ORIGIN: ORIGIN });
+  });
+
+  it('builds the chat without it, and says so, when the stack has no such output', () => {
+    const { run, calls } = fakeRun();
+    const ctx = fakeContext(run);
+    buildRemote(ctx, 'chat', VERSION);
+
+    expect(calls[0]?.env).toEqual({ PORTFOLIO_CHAT_ORIGIN: CHAT_ORIGIN });
+    expect(ctx.lines.join('\n')).toContain('no ChatWafIntegrationUrl output');
   });
 });
