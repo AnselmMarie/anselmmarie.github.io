@@ -1,4 +1,4 @@
-import type { ChatToolName } from '@portfolio/shared-chat-contract';
+import type { ChatToolName } from '@portfolio/shared-chat';
 
 /**
  * ⚠️ **PLACEHOLDER DATA, deleted in Slice 5** (plan-flow-order, Flow B). Read

@@ -1,8 +1,4 @@
-import {
-  type ChatRole,
-  type ChatStreamEvent,
-  parseChatToolCall,
-} from '@portfolio/shared-chat-contract';
+import { type ChatRole, type ChatStreamEvent, parseChatToolCall } from '@portfolio/shared-chat';
 
 import type { ChatToolCallEvent } from '../chat-tools/chat-tool-action.js';
 import { chatToolNote } from '../chat-tools/chat-tool-note.js';

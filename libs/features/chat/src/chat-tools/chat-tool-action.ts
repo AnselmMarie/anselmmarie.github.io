@@ -4,7 +4,7 @@ import {
   type ChatStreamEvent,
   parseChatToolCall,
   portfolioHref,
-} from '@portfolio/shared-chat-contract';
+} from '@portfolio/shared-chat';
 import { anchorHref, HOME_PATH } from '@portfolio/shared-utils';
 
 export type ChatToolCallEvent = Extract<ChatStreamEvent, { type: 'tool-call' }>;

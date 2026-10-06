@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import type { ChatStreamEventType } from '@portfolio/shared-chat-contract';
+import type { ChatStreamEventType } from '@portfolio/shared-chat';
 
 import { applyChatEvent, type ChatMessage, isTurnEnd, startTurn } from './chat-transcript.js';
 

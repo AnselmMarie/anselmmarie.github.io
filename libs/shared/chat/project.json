@@ -1,7 +1,7 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "name": "shared-chat-contract",
+  "name": "shared-chat",
   "projectType": "library",
-  "sourceRoot": "libs/shared/chat-contract/src",
+  "sourceRoot": "libs/shared/chat/src",
   "tags": ["type:shared", "scope:shared"]
 }

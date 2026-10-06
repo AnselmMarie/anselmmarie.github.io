@@ -1,6 +1,6 @@
 import { type ReactElement, type SyntheticEvent, useState } from 'react';
 
-import { CHAT_MAX_MESSAGE_CHARS } from '@portfolio/shared-chat-contract';
+import { CHAT_MAX_MESSAGE_CHARS } from '@portfolio/shared-chat';
 import { IconButton, PillInput } from '@portfolio/ui-components';
 
 import {

@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { CHAT_NAVIGATE_EVENT } from '@portfolio/shared-chat-contract';
+import { CHAT_NAVIGATE_EVENT } from '@portfolio/shared-chat';
 
 import { STUB_TICK_MS } from '../chat-stub/use-chat-stub.js';
 import Chat from './chat.js';

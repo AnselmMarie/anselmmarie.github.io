@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { CHAT_NAVIGATE_EVENT } from '@portfolio/shared-chat-contract';
+import { CHAT_NAVIGATE_EVENT } from '@portfolio/shared-chat';
 
 import { type ChatToolCallEvent, runChatToolAction, toChatToolAction } from './chat-tool-action.js';
 

@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 
-import type { ChatRole } from '@portfolio/shared-chat-contract';
+import type { ChatRole } from '@portfolio/shared-chat';
 
 interface ChatMessageProps {
   role: ChatRole;

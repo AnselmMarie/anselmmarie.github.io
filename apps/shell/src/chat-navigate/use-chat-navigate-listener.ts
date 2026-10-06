@@ -1,7 +1,7 @@
 import { useRouter } from '@tanstack/react-router';
 import { useEffect } from 'react';
 
-import { CHAT_NAVIGATE_EVENT, isAllowedHref } from '@portfolio/shared-chat-contract';
+import { CHAT_NAVIGATE_EVENT, isAllowedHref } from '@portfolio/shared-chat';
 
 const hrefOf = (event: Event): string | null => {
   if (!(event instanceof CustomEvent)) return null;

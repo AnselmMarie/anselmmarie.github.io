@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@portfolio/feature-shell": "workspace:*",
-    "@portfolio/shared-chat-contract": "workspace:*",
+    "@portfolio/shared-chat": "workspace:*",
     "@portfolio/shared-config": "workspace:*",
     "@portfolio/shared-fixtures": "workspace:*",
     "@portfolio/shared-types": "workspace:*",

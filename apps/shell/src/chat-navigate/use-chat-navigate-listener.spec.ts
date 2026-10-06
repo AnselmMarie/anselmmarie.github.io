@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { CHAT_NAVIGATE_EVENT } from '@portfolio/shared-chat-contract';
+import { CHAT_NAVIGATE_EVENT } from '@portfolio/shared-chat';
 
 import { useChatNavigateListener } from './use-chat-navigate-listener.js';
 

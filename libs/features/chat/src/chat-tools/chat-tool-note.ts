@@ -1,4 +1,4 @@
-import type { ChatToolCall } from '@portfolio/shared-chat-contract';
+import type { ChatToolCall } from '@portfolio/shared-chat';
 import { portfolioItemBySlug, SITE_SECTIONS } from '@portfolio/shared-fixtures';
 
 /**

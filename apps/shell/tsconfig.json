@@ -21,7 +21,7 @@
       "path": "../../libs/shared/config"
     },
     {
-      "path": "../../libs/shared/chat-contract"
+      "path": "../../libs/shared/chat"
     },
     {
       "path": "../../libs/features/shell"

@@ -1,5 +1,5 @@
 {
-  "name": "@portfolio/shared-chat-contract",
+  "name": "@portfolio/shared-chat",
   "version": "0.0.0",
   "private": true,
   "type": "module",

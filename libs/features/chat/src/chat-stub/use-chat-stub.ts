@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import type { ChatStreamEvent } from '@portfolio/shared-chat-contract';
+import type { ChatStreamEvent } from '@portfolio/shared-chat';
 
 import { CHAT_GREETING } from '../chat-copy/chat-copy.const.js';
 import {
