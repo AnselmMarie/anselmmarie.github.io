@@ -1,8 +1,8 @@
 /**
  * The chat's wire format, shared by the browser and the Lambda (ai-chat D11).
  *
- * The tools' zod schemas live beside this in `chat-tools/` (Slice 2). The
- * request schema arrives with Slice 3's request caps.
+ * The tools' zod schemas live beside this in `chat-tools/` (Slice 2), and the
+ * request body's in `chat-request/` (Slice 3).
  */
 
 /** Who wrote a turn. A `system` role is never accepted from a client (A4). */
