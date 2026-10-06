@@ -11,6 +11,7 @@ export type {
   ChatToolName,
   ChatTurn,
 } from './chat-stream-event/chat-stream-event.js';
+export { parseChatStreamEvent } from './chat-stream-event/parse-chat-stream-event.js';
 export {
   CHAT_PORTFOLIO_SLUGS,
   CHAT_SECTION_IDS,
