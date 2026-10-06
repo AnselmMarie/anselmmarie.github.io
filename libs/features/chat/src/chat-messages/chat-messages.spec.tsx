@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 import type { ChatMessage } from '../chat-transcript/chat-transcript.js';
 import ChatMessages from './chat-messages.js';
@@ -55,5 +55,37 @@ describe('ChatMessages', () => {
     );
 
     expect(log.scrollTop).toBe(900);
+  });
+
+  it('shows the waiting dots for an empty reply while it streams, and only then', () => {
+    const pending = [...MESSAGES, { id: 'a', role: 'assistant' as const, text: '' }];
+    const { rerender } = render(<ChatMessages messages={pending} isStreaming />);
+
+    expect(screen.getByRole('status', { name: 'Thinking' })).toBeInTheDocument();
+
+    rerender(<ChatMessages messages={pending} />);
+
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+
+  it('offers a retry under an error reply only, and calls back when pressed', () => {
+    const onRetry = vi.fn();
+    render(
+      <ChatMessages
+        messages={[
+          ...MESSAGES,
+          { id: 'b', role: 'assistant', text: 'Blocked', status: 'blocked' },
+          { id: 'e', role: 'assistant', text: 'Failed', status: 'error' },
+        ]}
+        onRetry={onRetry}
+      />
+    );
+
+    const retries = screen.getAllByRole('button', { name: 'Try again' });
+    fireEvent.click(retries[0] as HTMLElement);
+
+    expect(retries).toHaveLength(1);
+    expect(screen.getByText('Failed').parentElement).toContainElement(retries[0] ?? null);
+    expect(onRetry).toHaveBeenCalledTimes(1);
   });
 });

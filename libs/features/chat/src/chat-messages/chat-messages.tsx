@@ -2,9 +2,13 @@ import { type ReactElement, useEffect, useRef } from 'react';
 
 import type { ChatMessage as ChatMessageModel } from '../chat-transcript/chat-transcript.js';
 import ChatMessage from './chat-message.js';
+import ChatTypingDots from './chat-typing-dots.js';
 
 interface ChatMessagesProps {
   messages: readonly ChatMessageModel[];
+  /** While true, an empty last reply shows the waiting dots (Slice 5). */
+  isStreaming?: boolean;
+  onRetry?: () => void;
 }
 
 /**
@@ -16,9 +20,18 @@ interface ChatMessagesProps {
  * The 120px bottom padding keeps the last bubble clear of the composer that
  * floats over it. `role="log"` is not drawn; it makes a screen reader announce
  * each new message (invented).
+ *
+ * An assistant bubble stays hidden until it has text, except that the last one
+ * shows the waiting dots while its reply is pending (invented, Slice 5).
  */
-const ChatMessages = ({ messages }: ChatMessagesProps): ReactElement => {
+const ChatMessages = ({
+  messages,
+  isStreaming = false,
+  onRetry,
+}: ChatMessagesProps): ReactElement => {
   const column = useRef<HTMLDivElement>(null);
+  const last = messages.at(-1);
+  const isWaiting = isStreaming && last?.role === 'assistant' && !last.text && !last.note;
 
   useEffect(() => {
     const element = column.current;
@@ -39,8 +52,11 @@ const ChatMessages = ({ messages }: ChatMessagesProps): ReactElement => {
             role={message.role}
             text={message.text}
             note={message.note}
+            isRetryable={message.status === 'error'}
+            onRetry={onRetry}
           />
         ))}
+      {isWaiting ? <ChatTypingDots /> : null}
     </div>
   );
 };

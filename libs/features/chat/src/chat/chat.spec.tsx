@@ -1,30 +1,21 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { CHAT_GREETING } from '../chat-copy/chat-copy.const.js';
-import { CHAT_STUB_REPLIES } from '../chat-stub/chat-replies.fixture.js';
-import { STUB_CHARS_PER_TICK, STUB_TICK_MS } from '../chat-stub/use-chat-stub.js';
+import { CHAT_ERROR, CHAT_GREETING } from '../chat-copy/chat-copy.const.js';
+import {
+  askChat,
+  mockChatFetch,
+  mockStreamingChatFetch,
+  openChat,
+  reply,
+} from '../test-helpers/chat-fetch.test-helpers.js';
 import Chat from './chat.js';
 
-const BACKEND = CHAT_STUB_REPLIES[2]?.reply ?? '';
-
-const open = (): HTMLElement => {
-  fireEvent.click(screen.getByRole('button', { name: 'Open AI chat' }));
-  return screen.getByRole('dialog', { name: 'Chat' });
-};
-
-const ask = (text: string): void => {
-  fireEvent.change(screen.getByRole('textbox', { name: 'Message' }), { target: { value: text } });
-  fireEvent.click(screen.getByRole('button', { name: 'Send' }));
-};
+const BACKEND = 'He designed an edge-first backend on Hono, PostgreSQL, and Drizzle.';
 
 describe('Chat', () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
   afterEach(() => {
-    vi.useRealTimers();
+    vi.unstubAllGlobals();
   });
 
   it('identifies itself as the remote, on the box that holds the launcher', () => {
@@ -45,21 +36,21 @@ describe('Chat', () => {
   it('opens the drawer, and hides the launcher while it is open', () => {
     render(<Chat />);
 
-    expect(open()).toBeInTheDocument();
+    expect(openChat()).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Open AI chat' })).not.toBeInTheDocument();
   });
 
   it('greets first', () => {
     render(<Chat />);
 
-    const log = within(open()).getByRole('log');
+    const log = within(openChat()).getByRole('log');
 
     expect(log.firstElementChild).toHaveTextContent(CHAT_GREETING);
   });
 
   it('closes from the close button and brings the launcher back', () => {
     render(<Chat />);
-    open();
+    openChat();
 
     fireEvent.click(screen.getByRole('button', { name: 'Close chat' }));
 
@@ -70,14 +61,14 @@ describe('Chat', () => {
   it('closes on Escape', () => {
     render(<Chat />);
 
-    fireEvent.keyDown(open(), { key: 'Escape' });
+    fireEvent.keyDown(openChat(), { key: 'Escape' });
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('closes on a press on the scrim', () => {
     render(<Chat />);
-    open();
+    openChat();
     const scrim = document.querySelector('[data-slot="sheet-overlay"]');
     if (!scrim) throw new Error('no scrim rendered');
 
@@ -90,52 +81,58 @@ describe('Chat', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('shows a sent message, then streams the stub reply into the next bubble', () => {
+  it('shows a sent message, then streams the reply into the next bubble as it arrives', async () => {
+    const stream = mockStreamingChatFetch();
     render(<Chat />);
-    const log = within(open()).getByRole('log');
+    const log = within(openChat()).getByRole('log');
 
-    ask('What about the backend?');
+    askChat('What about the backend?');
 
-    expect(log.lastElementChild).toHaveTextContent('What about the backend?');
-    expect(log.lastElementChild).toHaveAttribute('data-role', 'user');
-
-    act(() => vi.advanceTimersByTime(STUB_TICK_MS));
-
+    expect(log).toHaveTextContent('What about the backend?');
+    stream.push({ type: 'text-delta', text: 'He designed ' });
+    await waitFor(() => expect(log.lastElementChild).toHaveTextContent('He designed'));
     expect(log.lastElementChild).toHaveAttribute('data-role', 'assistant');
-    expect(log.lastElementChild).toHaveTextContent(BACKEND.slice(0, STUB_CHARS_PER_TICK));
 
-    act(() => vi.advanceTimersByTime(STUB_TICK_MS * (BACKEND.length + 1)));
-
-    expect(log.lastElementChild).toHaveTextContent(BACKEND);
+    stream.push({ type: 'text-delta', text: 'an edge-first backend.' }, { type: 'done' });
+    stream.end();
+    await waitFor(() =>
+      expect(log.lastElementChild).toHaveTextContent('He designed an edge-first backend.')
+    );
   });
 
-  it('keeps the conversation across a close and reopen', () => {
+  it('keeps the conversation across a close and reopen', async () => {
+    mockChatFetch(reply(BACKEND));
     render(<Chat />);
-    open();
-    ask('What about the backend?');
-    act(() => vi.advanceTimersByTime(STUB_TICK_MS * (BACKEND.length + 1)));
+    openChat();
+    askChat('What about the backend?');
+    await screen.findByText(BACKEND);
 
     fireEvent.click(screen.getByRole('button', { name: 'Close chat' }));
-    const log = within(open()).getByRole('log');
+    const log = within(openChat()).getByRole('log');
 
     expect(log).toHaveTextContent('What about the backend?');
     expect(log).toHaveTextContent(BACKEND);
   });
 
-  it('holds back a second send while a reply streams', () => {
+  it('holds back a second send while a reply streams', async () => {
+    const stream = mockStreamingChatFetch();
     render(<Chat />);
-    const log = within(open()).getByRole('log');
+    const log = within(openChat()).getByRole('log');
 
-    ask('What about the backend?');
-    ask('And the team?');
+    askChat('What about the backend?');
+    askChat('And the team?');
 
     expect(screen.getByRole('textbox', { name: 'Message' })).toHaveValue('And the team?');
     expect(log).not.toHaveTextContent('And the team?');
+    await waitFor(() => expect(stream.fetchMock).toHaveBeenCalledTimes(1));
+    stream.end();
+    await screen.findByText(CHAT_ERROR);
+    expect(stream.fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it('keeps the composer reachable from the keyboard', () => {
     render(<Chat />);
-    const dialog = open();
+    const dialog = openChat();
 
     const input = within(dialog).getByRole('textbox', { name: 'Message' });
     const sendButton = within(dialog).getByRole('button', { name: 'Send' });

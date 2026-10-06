@@ -30,9 +30,20 @@ const DEV_PORT = 4178;
  */
 const REMOTE_ORIGIN = process.env.PORTFOLIO_CHAT_ORIGIN ?? `http://localhost:${DEV_PORT}`;
 
+/**
+ * ai-chat D21: the AWS WAF JS SDK URL `use-chat` sends through, from the
+ * stack's `ChatWafIntegrationUrl` output via the deploy CLI
+ * (`CHAT_WAF_SDK_ENV` in infra's chat-config repeats this name). Empty in dev
+ * and e2e, where the chat uses plain `fetch`. Unlike `PORTFOLIO_CHAT_ORIGIN`,
+ * this is the only non-base value baked into the bundle, and it's public: the
+ * SDK URL is served to every visitor anyway.
+ */
+const WAF_SDK_URL = process.env.PORTFOLIO_CHAT_WAF_SDK_URL ?? '';
+
 export default defineConfig(({ command }) => ({
   root: import.meta.dirname,
   base: `${REMOTE_ORIGIN}/`,
+  define: { __PORTFOLIO_CHAT_WAF_SDK_URL__: JSON.stringify(WAF_SDK_URL) },
   server: { port: DEV_PORT, strictPort: true, cors: true },
   preview: { port: DEV_PORT, strictPort: true, cors: true },
   // D55 §4 — the federation runtime emits ESM; an older target downlevels the
