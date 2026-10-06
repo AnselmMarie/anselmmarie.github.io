@@ -28,6 +28,7 @@
  *   type:ui-primitives   libs/ui/primitives        shadcn CLI output
  *   type:ui-theme        libs/ui/theme             the theme stylesheet (D51)
  *   type:shared          libs/shared/*             types, config, fixtures, utils
+ *   type:api             libs/api/*                Lambda handlers (ai-chat D20)
  *   type:infra           infra                     the CDK project
  *   type:e2e             e2e                       the Playwright suite (Slice 9)
  *
@@ -148,5 +149,12 @@ export const depConstraints = [
   {
     sourceTag: 'type:infra',
     onlyDependOnLibsWithTags: ['type:infra'],
+  },
+  // ai-chat D20. A Lambda handler runs in Node, so it reads the shared contract
+  // and fixtures and nothing UI-shaped. Nothing imports it: the CDK construct
+  // bundles it by path with esbuild (Slice 4), so no row lets anything reach it.
+  {
+    sourceTag: 'type:api',
+    onlyDependOnLibsWithTags: ['type:shared'],
   },
 ];

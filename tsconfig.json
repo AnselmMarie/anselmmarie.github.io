@@ -61,6 +61,9 @@
       "path": "./libs/shared/chat"
     },
     {
+      "path": "./libs/api/chat"
+    },
+    {
       "path": "./libs/features/chat"
     },
     {

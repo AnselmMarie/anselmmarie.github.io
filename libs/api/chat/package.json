@@ -1,0 +1,26 @@
+{
+  "name": "@portfolio/api-chat",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1146.0",
+    "@aws-sdk/client-dynamodb": "^3.1146.0",
+    "@aws-sdk/client-ssm": "^3.1146.0",
+    "@portfolio/shared-chat": "workspace:*",
+    "@portfolio/shared-fixtures": "workspace:*",
+    "@portfolio/shared-types": "workspace:*",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.164"
+  }
+}
