@@ -24,7 +24,7 @@ maintainer decides.
 | 1 | `apps/shell/src/routes/__root.tsx`, `apps/shell/vite.config.ts`, `apps/shell/src/remotes/remotes.d.ts`, `libs/shared/types/src/remote/remote.ts`, `libs/shared/config/src/remote-registry/remote-registry.ts` (+ spec), `infra/src/site-config/site-config.ts` (+ spec), `e2e/support/remotes.ts`, `.env.example`, `libs/ui/components/src/index.ts`, `libs/ui/components/src/icon/icon.tsx` (+ spec, renamed from `ui-icon/ui-icon.tsx`, with its 7 consumers), `libs/ui/primitives/src/index.ts`, `.claude/rules/design-system.md`, `tsconfig.base.json`, root `package.json` |
 | 2 | `libs/features/header/src/anchor-href/anchor-href.ts` (moves to `libs/shared/utils`), `libs/shared/utils/src/index.ts`, the header's import sites, `apps/shell/src/routes/__root.tsx` (navigate listener), `libs/shared/chat` (navigate event) |
 | 3 | `tsconfig.base.json`, root `package.json` + `pnpm-lock.yaml` (adds `@aws-sdk/client-bedrock-runtime`, `@aws-sdk/client-dynamodb`, `@aws-sdk/client-ssm`, `zod`) |
-| 4 | `infra/src/portfolio-stack.ts`, `infra/src/portfolio-stack.spec.ts`, `infra/src/site-distribution/site-distribution.ts` (+ spec), `infra/src/main.ts`, `infra/package.json` |
+| 4 | `infra/src/portfolio-stack.ts`, `infra/src/site-distribution/site-distribution.ts` (+ spec), `infra/src/main.ts`, `infra/src/test-helpers/synth-stack.test-helpers.ts`, root `package.json` + `pnpm-lock.yaml` (`esbuild`, D26) |
 | 5 | `libs/features/chat/**` (its own), `apps/shell/src/routes/__root.tsx`, `e2e/**` |
 
 ## Waves
@@ -50,7 +50,7 @@ for review anyway. The parallel option exists only if wall-clock time matters.
 | 1 | ~48 (remote scaffold + 9 registration files + 3 new ui-components, an icon update and the generated input) |
 | 2 | ~20 |
 | 3 | ~22 |
-| 4 | ~14 |
+| 4 | ~14 (actual: 23) |
 | 5 | ~12 |
 
 All well under the cap.

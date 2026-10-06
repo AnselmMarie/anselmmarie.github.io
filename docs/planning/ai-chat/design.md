@@ -64,4 +64,7 @@ depend on the file being present.
 | The note in the bubble when the chat navigated | 2 | One mono-caps line, e.g. "→ WORK" |
 | Resting today / disabled / blocked / error | 5 | Assistant-styled bubble text. Error adds a retry link |
 | Bot check (WAF Challenge, D21) | 5 | Silent, nothing on screen. If the token can't be obtained, the send fails into the error state with retry |
+| Retry after an error | 5 | **Built**: a "Try again" underlined text button under the error bubble, in the note's position; it resends the same question |
+| Waiting dots' accessible name | 5 | **Built**: `role="status"`, "Thinking" |
+| Launcher when the kill switch is off | 5 | **Built**: hidden once a reply says `disabled` and the drawer closes; no check on page load (D27) |
 | Character counter (A4's 500-char cap) | 1 | **Not shown.** `maxLength=500` on the input only, which keeps the drawn composer unchanged |

@@ -13,6 +13,8 @@ that names it. All three, in the same change.
 | [Q5](#q5) | 2026-10-01 | All code | ✅ closed → [D19](./decisions.md#d19) |
 | [Q6](#q6) | 2026-10-01 | Slice 3 | ✅ closed → [D20](./decisions.md#d20) |
 | [Q7](#q7) | 2026-10-01 | Slice 1 | ✅ closed → [D13](./decisions.md#d13) |
+| [Q8](#q8) | 2026-10-05 | Slice 5 (`cdk deploy`) | open |
+| [Q9](#q9) | 2026-10-05 | Slice 5 (`cdk deploy`) | open |
 
 <a id="q1"></a>
 ## Q1: Chat panel design
@@ -100,3 +102,29 @@ A chat panel mounted directly in the shell would be the first visible surface
 that isn't a remote, so D9 contradicts D36 as written. Resolve this before
 Slice 1. Either make the chat a remote (`apps/chat`, like `header` / `footer`),
 or record an explicit exception to D36.
+
+<a id="q8"></a>
+## Q8: The service name A6's budget filters on
+
+Anthropic models on Bedrock bill as an AWS Marketplace service named after the
+model (reported as e.g. `Claude Sonnet 4 (Amazon Bedrock Edition)`), not as
+`Amazon Bedrock`. Slice 4 filters on both `Amazon Bedrock` and
+`Claude Haiku 4.5 (Amazon Bedrock Edition)` (`CHAT_BUDGET_SERVICES` in
+`infra/src/chat-config/chat-config.ts`). If neither matches what Cost Explorer
+shows for this account, the budget sees $0 and **A6 never trips**. A5 still caps
+each day.
+
+**To close:** after the first real chat request, open Cost Explorer → group by
+Service, and copy the exact name into `CHAT_BUDGET_SERVICES`.
+
+<a id="q9"></a>
+## Q9: Lambda concurrency quota on the deploy account
+
+A3 reserves 3 concurrent executions. Lambda refuses a reservation that would
+leave fewer than 100 unreserved, so on an account whose total quota is still the
+new-account default (10), **`cdk deploy` fails** at the chat function.
+
+**To close:** `aws lambda get-account-settings --profile ansPortfolio` →
+`AccountLimit.ConcurrentExecutions` must be ≥ 103. If it isn't, request an
+increase through Service Quotas before Slice 5's deploy.
+
