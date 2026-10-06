@@ -36,15 +36,15 @@ none
 | `libs/features/chat/src/chat-tools/chat-tool-action.ts` (+ spec) | new | `toChatToolAction(event, pathname)`: pure, → `{ kind: 'scroll', id }` / `{ kind: 'navigate', href }` / `null`. `runChatToolAction`: `scrollIntoView`, or dispatches `portfolio:navigate`. No router import. **Diverges from the plan:** one file instead of `execute-chat-tool.ts` + a `use-chat-tool-executor` hook, because running an action holds no React state |
 | `libs/features/chat/src/chat-tools/chat-tool-note.ts` (+ spec) | new | The note's words: the section's nav label or the project's title |
 | `libs/features/chat/src/chat-stub/use-chat-stub.ts` (+ spec) | modified | Takes `{ onToolCall }` and calls it as each `tool-call` plays. `pickStubReply` returns the whole reply, `toStubEvents` puts the tool call after the text |
-| `libs/shared/chat-contract/src/chat-tools/chat-tools.ts` (+ spec) | new | zod `scrollToInputSchema` / `navigateInputSchema` (strict, enums from the fixtures) and `parseChatToolCall`. Slice 3 hands the same schemas to Bedrock |
-| `libs/shared/chat-contract/src/navigate-event/navigate-event.ts` (+ spec) | new | `CHAT_NAVIGATE_EVENT`, `ChatNavigateDetail`, `isAllowedHref(href)` (`/`, `/#<SECTION_IDS>`, `/portfolio/<known slug>`, exact matches only), `portfolioHref` |
+| `libs/shared/chat/src/chat-tools/chat-tools.ts` (+ spec) | new | zod `scrollToInputSchema` / `navigateInputSchema` (strict, enums from the fixtures) and `parseChatToolCall`. Slice 3 hands the same schemas to Bedrock |
+| `libs/shared/chat/src/navigate-event/navigate-event.ts` (+ spec) | new | `CHAT_NAVIGATE_EVENT`, `ChatNavigateDetail`, `isAllowedHref(href)` (`/`, `/#<SECTION_IDS>`, `/portfolio/<known slug>`, exact matches only), `portfolioHref` |
 | `apps/shell/src/chat-navigate/use-chat-navigate-listener.ts` (+ spec) | new | Shell side: listens, checks `isAllowedHref`, calls `router.navigate({ href })` |
 | `apps/shell/src/routes/__root.tsx` | modified | Calls the listener hook once |
 | `libs/shared/utils/src/anchor-href/anchor-href.ts` (+ spec) | moved | `git mv` from `libs/features/header/src/anchor-href/`. It now has a second consumer |
 | `libs/shared/utils/src/index.ts` | modified | Export `anchorHref`, `HOME_PATH`, `WORK_HREF` |
 | header import sites, header `index.ts` | modified | Import from `@portfolio/shared-utils`; the header barrel no longer re-exports them (nothing imported them from there) |
 | `libs/features/chat/src/chat-stub/chat-replies.fixture.ts` | modified | `CHAT_STUB_TOOL_REPLIES`, matched first: Cosmikata / Pokémon Pet Shop → `navigate`, "your work" / "experience" → `scroll_to` |
-| `package.json` of `shared-chat-contract` (+ `zod`, `shared-fixtures`), `shared-utils` (+ `shared-fixtures`), `feature-chat` (+ `shared-utils`, `shared-fixtures`), `shell` (+ `shared-chat-contract`); their `tsconfig.json` (`nx sync`); `pnpm-lock.yaml` | modified | Importer entries only. `zod` resolves to the 4.6.5 already in the lockfile |
+| `package.json` of `shared-chat` (+ `zod`, `shared-fixtures`), `shared-utils` (+ `shared-fixtures`), `feature-chat` (+ `shared-utils`, `shared-fixtures`), `shell` (+ `shared-chat`); their `tsconfig.json` (`nx sync`); `pnpm-lock.yaml` | modified | Importer entries only. `zod` resolves to the 4.6.5 already in the lockfile |
 
 ✅ **The `anchor-href` move:** `type:shared` → `shared-fixtures` is allowed, so
 `anchor-href.ts` keeps importing `WORK_SECTION_ID`. Lint confirms it.
@@ -74,4 +74,4 @@ renders it; the browser check covers it until Slice 5's e2e does.
 ## Done when
 - A screenshot showing a chat-triggered scroll, plus one of a project page opened from the chat.
 - `typecheck`, `lint`, `test` green on `feature-chat`, `feature-header`,
-  `shared-utils`, `shared-chat-contract`, `shell`.
+  `shared-utils`, `shared-chat`, `shell`.

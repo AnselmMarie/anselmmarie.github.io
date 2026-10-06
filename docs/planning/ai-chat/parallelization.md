@@ -14,7 +14,7 @@ maintainer decides.
 - Slice 2 builds on Slice 1's panel.
 - Slice 4 bundles Slice 3's handler and reads its env-var names.
 - Slice 5 needs both halves.
-- `libs/shared/chat-contract` is imported by both halves. It's created **up
+- `libs/shared/chat` is imported by both halves. It's created **up
   front by the coordinator** (types and zod schemas only) so neither half owns it.
 
 ## Shared-file table (pre-existing files each slice modifies)
@@ -22,7 +22,7 @@ maintainer decides.
 | Slice | Pre-existing files it modifies |
 |---|---|
 | 1 | `apps/shell/src/routes/__root.tsx`, `apps/shell/vite.config.ts`, `apps/shell/src/remotes/remotes.d.ts`, `libs/shared/types/src/remote/remote.ts`, `libs/shared/config/src/remote-registry/remote-registry.ts` (+ spec), `infra/src/site-config/site-config.ts` (+ spec), `e2e/support/remotes.ts`, `.env.example`, `libs/ui/components/src/index.ts`, `libs/ui/components/src/icon/icon.tsx` (+ spec, renamed from `ui-icon/ui-icon.tsx`, with its 7 consumers), `libs/ui/primitives/src/index.ts`, `.claude/rules/design-system.md`, `tsconfig.base.json`, root `package.json` |
-| 2 | `libs/features/header/src/anchor-href/anchor-href.ts` (moves to `libs/shared/utils`), `libs/shared/utils/src/index.ts`, the header's import sites, `apps/shell/src/routes/__root.tsx` (navigate listener), `libs/shared/chat-contract` (navigate event) |
+| 2 | `libs/features/header/src/anchor-href/anchor-href.ts` (moves to `libs/shared/utils`), `libs/shared/utils/src/index.ts`, the header's import sites, `apps/shell/src/routes/__root.tsx` (navigate listener), `libs/shared/chat` (navigate event) |
 | 3 | `tsconfig.base.json`, root `package.json` + `pnpm-lock.yaml` (adds `@aws-sdk/client-bedrock-runtime`, `@aws-sdk/client-dynamodb`, `@aws-sdk/client-ssm`, `zod`) |
 | 4 | `infra/src/portfolio-stack.ts`, `infra/src/portfolio-stack.spec.ts`, `infra/src/site-distribution/site-distribution.ts` (+ spec), `infra/src/main.ts`, `infra/package.json` |
 | 5 | `libs/features/chat/**` (its own), `apps/shell/src/routes/__root.tsx`, `e2e/**` |
@@ -31,7 +31,7 @@ maintainer decides.
 
 | Wave | Runs | Why this order |
 |---|---|---|
-| 0 | Coordinator: create `libs/shared/chat-contract`, add all dependencies, add tsconfig aliases | **Manifest work is solo.** `package.json`, `pnpm-lock.yaml` and `tsconfig.base.json` are touched by Slices 1 and 3 |
+| 0 | Coordinator: create `libs/shared/chat`, add all dependencies, add tsconfig aliases | **Manifest work is solo.** `package.json`, `pnpm-lock.yaml` and `tsconfig.base.json` are touched by Slices 1 and 3 |
 | 1 | Slice 1 **∥** Slice 3 | Disjoint once Wave 0 has done the manifests: the `chat` remote, its registration and the new `libs/ui/*` components vs. `libs/api/chat` |
 | 2 | Slice 2 **∥** Slice 4 | Disjoint: chat feature + header/utils + shell listener vs. `infra/`. Slice 1 already made its one `infra/src/site-config` edit (`REMOTES`) in Wave 1, so Slice 4 starts from it rather than racing it |
 | 3 | Slice 5 alone | Touches both halves |

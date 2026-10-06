@@ -11,7 +11,7 @@
 - **D15**: a failed chat remote renders nothing (no notice, no skeleton).
 - **D17**: build to the drawn launcher + right-side drawer, from theme tokens and
   ui-components. Add `ChatSheet`, `IconButton`, `PillInput` and three `Icon` names.
-- **D11**: messages use the event types from `libs/shared/chat-contract`, even in the stub.
+- **D11**: messages use the event types from `libs/shared/chat`, even in the stub.
 - MFE **D16**: the shell never imports the chat's package. Anything the shell
   passes through `remoteProps` is declared on the shell side.
 - MFE **D36 / D55**: the remote is client-only. `ClientOnly` keeps
@@ -45,7 +45,7 @@ none
 | `apps/chat/{project.json,package.json,tsconfig.json,vite.config.ts,index.html}` | Remote app scaffold, copied from `apps/footer`. `exposes: { './Chat': … }`, `DEV_PORT = 4178`, `strictPort` |
 | `apps/chat/src/{main.tsx,bootstrap.tsx,styles.css}` | Standalone entry, as in `apps/footer` |
 | `libs/features/chat/{project.json,package.json,tsconfig.json,vitest.config.ts}` | Lib scaffold, tagged `type:feature` + `scope:chat` |
-| `libs/shared/chat-contract/**` | **Wave 0, trimmed.** `ChatRole`, `ChatTurn`, `ChatToolName`, the `ChatStreamEvent` union, and A4's caps (`CHAT_MAX_MESSAGE_CHARS` etc.). Types and constants only: the zod schemas and the `zod` / AWS SDK dependencies arrive with the first slice that validates at runtime (2 or 3) |
+| `libs/shared/chat/**` | **Wave 0, trimmed.** `ChatRole`, `ChatTurn`, `ChatToolName`, the `ChatStreamEvent` union, and A4's caps (`CHAT_MAX_MESSAGE_CHARS` etc.). Types and constants only: the zod schemas and the `zod` / AWS SDK dependencies arrive with the first slice that validates at runtime (2 or 3) |
 | `libs/features/chat/src/index.ts` | Barrel: exports `Chat` |
 | `libs/features/chat/src/chat/chat.tsx` (+ spec) | Root: open state, launcher (`IconButton tone="ink-accent" size={56}`), `ChatSheet`. `data-testid="chat-remote"` sits on the launcher's fixed box, since a wrapper around fixed/portalled children has no size for e2e to see |
 | `libs/features/chat/src/chat-messages/chat-messages.tsx` (+ spec) | Scrolling column + auto-scroll on open and on change |

@@ -45,7 +45,7 @@ shell root  ── useChatNavigateListener: validate href (/, /#<section>, /port
 ```
 
 - The event name and the `{ href }` payload type are exported from
-  `libs/shared/chat-contract`, so both sides agree at compile time.
+  `libs/shared/chat`, so both sides agree at compile time.
 - The shell **re-validates** the href (B3). A remote can't use the event to send
   the visitor anywhere outside the site.
 - If the shell has no listener (an older shell, or the remote running
@@ -81,7 +81,7 @@ cold start and marks it for **prompt caching**.
 | `blocked` | `{ }` | Bedrock Guardrails intervened. The panel shows a canned redirect |
 | `error` | `{ code }` | Generic failure. Never leaks internals |
 
-The types live in `libs/shared/chat-contract`, which both sides import.
+The types live in `libs/shared/chat`, which both sides import.
 
 ## Why a request takes 1–5 seconds
 
