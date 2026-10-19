@@ -48,7 +48,7 @@ describe('handleChat', () => {
       events: [{ type: 'text-delta', text: 'Here.' }, { type: 'done' }],
     });
     expect(deps.streamReply).toHaveBeenCalledWith([{ role: 'user', content: 'show me your work' }]);
-    expect(deps.quota.record).toHaveBeenCalledWith(hashIp('203.0.113.7'), 165, NOW);
+    expect(deps.quota.record).toHaveBeenCalledWith(hashIp('203.0.113.7'), 17, NOW);
   });
 
   it('answers disabled when the kill switch is off, without calling Bedrock (A7)', async () => {

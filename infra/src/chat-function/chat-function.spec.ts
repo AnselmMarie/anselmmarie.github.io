@@ -85,7 +85,7 @@ describe('ChatFunction', () => {
     });
   });
 
-  it('may call only the Haiku 4.5 profile and its regional models, never `*` (D2, D6)', () => {
+  it('may call only the Haiku 5.5 profile and its regional models, never `*` (D2, D6)', () => {
     const bedrock = resourcesFor('bedrock:InvokeModelWithResponseStream').map((arn) =>
       JSON.stringify(arn)
     );
@@ -95,7 +95,7 @@ describe('ChatFunction', () => {
       bedrock.filter((arn) => arn.includes(`inference-profile/${CHAT_INFERENCE_PROFILE_ID}`))
     ).toHaveLength(1);
     expect(
-      bedrock.filter((arn) => arn.includes('::foundation-model/anthropic.claude-haiku-4-5'))
+      bedrock.filter((arn) => arn.includes('::foundation-model/anthropic.claude-haiku-5-5'))
     ).toHaveLength(3);
   });
 

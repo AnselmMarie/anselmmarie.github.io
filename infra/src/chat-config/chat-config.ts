@@ -9,17 +9,17 @@ export const CHAT_API_PATH = '/api/chat';
 export const CHAT_PATH_PATTERN = `${CHAT_API_PATH}*`;
 
 /**
- * Claude Haiku 4.5 through the US cross-region inference profile (D6).
+ * Claude Haiku 5.5 through the US cross-region inference profile (D6, D28).
  *
  * ⚠️ **Repeats `CHAT_MODEL_ID` in `libs/api/chat/src/chat-model/chat-model.ts`.**
  * `type:infra` may not import `type:api`, so the spec reads that file and fails
  * if the two differ. The IAM policy names only this profile, so a model swap
  * that skipped this line would deny every request.
  */
-export const CHAT_INFERENCE_PROFILE_ID = 'us.anthropic.claude-haiku-4-5-20251001-v1:0';
+export const CHAT_INFERENCE_PROFILE_ID = 'us.anthropic.claude-haiku-5-5';
 
 /** The profile's foundation model, which IAM also has to allow in each region it routes to. */
-export const CHAT_FOUNDATION_MODEL_ID = 'anthropic.claude-haiku-4-5-20251001-v1:0';
+export const CHAT_FOUNDATION_MODEL_ID = 'anthropic.claude-haiku-5-5';
 export const CHAT_MODEL_REGIONS = ['us-east-1', 'us-east-2', 'us-west-2'] as const;
 
 /**
@@ -41,13 +41,14 @@ export const CHAT_RATE_LIMIT_PER_5_MIN = 20;
 /**
  * Cost Explorer service names A6's budget filters on.
  *
- * ⚠️ **Unverified (Q8).** Anthropic models on Bedrock bill as an AWS Marketplace
- * service named after the model, not as "Amazon Bedrock". If neither name below
- * matches what Cost Explorer shows, the budget sees $0 and A6 never trips.
+ * Anthropic models on Bedrock bill as an AWS Marketplace service named after the
+ * model, not as "Amazon Bedrock". The Haiku 5.5 name is the `servicename` the AWS
+ * Pricing API reports (D28); Q8 stays open until Cost Explorer shows it too. If
+ * neither name matches, the budget sees $0 and A6 never trips.
  */
 export const CHAT_BUDGET_SERVICES = [
   'Amazon Bedrock',
-  'Claude Haiku 4.5 (Amazon Bedrock Edition)',
+  'Claude Haiku 5.5 (Amazon Bedrock Edition)',
 ] as const;
 
 /** D18's three limits. Config, not code: each can be overridden with cdk context. */
