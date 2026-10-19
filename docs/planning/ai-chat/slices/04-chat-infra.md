@@ -16,6 +16,7 @@
 - **D24**: a POST through Lambda OAC needs `x-amz-content-sha256` from the client; OAC signing reads it, and the origin request policy must not list it (CloudFront rejects `x-amz-*` there).
 - **D25**: A6 alerts go to an SNS topic; email only when `CHAT_ALERT_EMAIL` is set.
 - **D26**: this slice's build-time calls (bundling, WAF construct, integration URL, guardrail version hash, pricing).
+- **D29**: the integration-URL lookup is removed; a Challenge-only web ACL has none, and reading it failed the deploy.
 
 ## Open questions blocking this slice
 none (Q3 closed → D21). Two raised here block Slice 5's deploy, not this slice:
@@ -56,7 +57,7 @@ none (Q3 closed → D21). Two raised here block Slice 5's deploy, not this slice
 - Distribution: the `/api/chat*` behavior exists, has caching disabled, allows POST, and uses OAC.
 - WAF rate rule present and associated with the distribution.
 - WAF Challenge rule present, scoped down to `/api/chat*` and ordered after the rate rule.
-- The application-integration URL is a stack output.
+- No application-integration URL lookup or output (D29).
 - DynamoDB TTL enabled on `expiresAt`.
 - The Guardrail ID and version are in the function env.
 - The IAM policy names only the chosen model / profile ARNs (no `*`).

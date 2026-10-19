@@ -1,10 +1,5 @@
 import { Stack } from 'aws-cdk-lib';
 import { CfnWebACL } from 'aws-cdk-lib/aws-wafv2';
-import {
-  AwsCustomResource,
-  AwsCustomResourcePolicy,
-  PhysicalResourceId,
-} from 'aws-cdk-lib/custom-resources';
 import { Construct } from 'constructs';
 
 import { CHAT_API_PATH, CHAT_RATE_LIMIT_PER_5_MIN } from '../chat-config/chat-config.js';
@@ -34,11 +29,14 @@ const visibility = (metricName: string): CfnWebACL.VisibilityConfigProperty => (
  *
  * Everything else is allowed by default. CloudFront web ACLs must live in
  * us-east-1, which is where this stack already is.
+ *
+ * ⚠️ No JS SDK integration URL (D29). `GetWebACL` returns one only for a web ACL
+ * using the ATP, ACFP or targeted Bot Control rule groups, never for a plain
+ * Challenge rule, so a lookup here failed every deploy. Until D29 is settled,
+ * a chat POST carries no WAF token and the Challenge rule answers it.
  */
 export class ChatFirewall extends Construct {
   readonly webAcl: CfnWebACL;
-  /** The AWS WAF JS SDK URL the chat client loads to get its token (Slice 5). */
-  readonly integrationUrl: string;
 
   constructor(scope: Construct, id: string) {
     super(scope, id);
@@ -73,19 +71,5 @@ export class ChatFirewall extends Construct {
         },
       ],
     });
-
-    // The integration URL is not a CloudFormation attribute; only GetWebACL returns it.
-    const lookup = new AwsCustomResource(this, 'IntegrationUrl', {
-      onUpdate: {
-        service: 'WAFV2',
-        action: 'GetWebACL',
-        parameters: { Name: name, Scope: 'CLOUDFRONT', Id: this.webAcl.attrId },
-        physicalResourceId: PhysicalResourceId.of(this.webAcl.attrId),
-        outputPaths: ['ApplicationIntegrationURL'],
-      },
-      policy: AwsCustomResourcePolicy.fromSdkCalls({ resources: [this.webAcl.attrArn] }),
-      installLatestAwsSdk: false,
-    });
-    this.integrationUrl = lookup.getResponseField('ApplicationIntegrationURL');
   }
 }
