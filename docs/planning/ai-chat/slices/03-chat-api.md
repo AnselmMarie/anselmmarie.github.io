@@ -5,7 +5,7 @@
 
 ## Decisions that bind this slice
 - **D1**: TypeScript, Node 22 Lambda, response streaming (`awslambda.streamifyResponse`).
-- **D2 / D6**: Bedrock `ConverseStream`, Claude Haiku 4.5 inference profile, one model constant.
+- **D2 / D6**: Bedrock `ConverseStream`, Claude Haiku 4.5 inference profile, one model constant. Swapped to Haiku 5.5 by **D28**.
 - **D4**: the system prompt is built from `@portfolio/shared-fixtures` at cold start and prompt-cached.
 - **D5**: stateless. History comes from the client and is capped.
 - **D7**: guardrails A4, A5, A7, B1, B2 (wiring), B3 and B4 are implemented here. A1 moved to Slice 4 (D21).
@@ -59,7 +59,7 @@ Pricing for the A5 conversion is recorded in [D22](../decisions.md#d22).
 
 - **Entry:** `libs/api/chat/src/index.ts`, export `handler` (uses the runtime's `awslambda.streamifyResponse`).
 - **Origin request policy** must forward `CloudFront-Viewer-Address`, or every visitor shares one quota row per edge.
-- **IAM:** `bedrock:InvokeModelWithResponseStream` on the `us.anthropic.claude-haiku-4-5-20251001-v1:0` profile and its regional model ARNs, `bedrock:ApplyGuardrail`, `dynamodb:BatchGetItem` + `UpdateItem`, `ssm:GetParameter`.
+- **IAM:** `bedrock:InvokeModelWithResponseStream` on the Haiku inference profile (`us.anthropic.claude-haiku-5-5` since D28) and its regional model ARNs, `bedrock:ApplyGuardrail`, `dynamodb:BatchGetItem` + `UpdateItem`, `ssm:GetParameter`.
 
 ## Specs (mocked Bedrock, DynamoDB, SSM, fetch)
 - Text + toolUse stream → the exact NDJSON sequence ending in `done`.
@@ -74,7 +74,7 @@ Pricing for the A5 conversion is recorded in [D22](../decisions.md#d22).
 ## Built (2026-10-05)
 - 72 specs in `api-chat`, 35 in `shared-chat`; coverage 99% / 98% statements.
 - Seen failing: removing the kill-switch, zod and quota guards each turns its "Bedrock not called" spec red (1, 4 and 2 specs); removing the `guardrail_intervened` mapping turns the `blocked` spec red.
-- ⚠️ The prompt-cache point is set, but Haiku 4.5 only caches a prefix above its minimum size. If the fixture prompt is shorter, the cache point is a no-op; check `cacheReadInputTokens` in the live check.
+- ⚠️ The prompt-cache point is set, but Haiku only caches a prefix above its minimum size. If the fixture prompt is shorter, the cache point is a no-op; check `cacheReadInputTokens` in the live check.
 
 ## Done when
 - `typecheck`, `lint`, `test` (with coverage ≥ 80%) green on `shared-chat` and `api-chat`.

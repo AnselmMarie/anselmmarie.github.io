@@ -1,6 +1,6 @@
 # Slice 5: Connect the panel to the real API
 
-**Status:** client built 2026-10-05, uncommitted, in review; deploy and live check not run · **Layer:** connect · **Visible?** ✅ screen · **Depends on:** Slices 2 and 4
+**Status:** client built and committed 2026-10-05 (`0b8f776`, `753e9f2`, `1d565a7`), in review; deploy and live check not run · **Layer:** connect · **Visible?** ✅ screen · **Depends on:** Slices 2 and 4
 **Design:** [`_design/Anselm Marie Portfolio.html`](../../../../_design/Anselm%20Marie%20Portfolio.html) → AI CHAT, drawn ✅ for the bubbles. Undrawn behaviors are invented, see [design.md](../design.md#not-drawn-so-invented-flag-each-one-in-the-slice-report) ([D17](../decisions.md#d17))
 
 ## Decisions that bind this slice
@@ -15,7 +15,7 @@
 ## Open questions blocking this slice
 - **Q4**: Bedrock model access, for the live check only.
 - **Q8**: the budget's service name, before `cdk deploy`.
-- **Q9**: the account's Lambda concurrency quota, before `cdk deploy`.
+- ~~**Q9**: the account's Lambda concurrency quota, before `cdk deploy`.~~ ✅ closed 2026-10-13 (limit 1,000).
 
 ## What changes on screen
 - Replies come from Bedrock, streamed token by token.

@@ -1,6 +1,6 @@
 # Slice 4: Chat infrastructure (CDK)
 
-**Status:** built 2026-10-05, uncommitted, in review · **Layer:** infra · **Visible?** — none · **Depends on:** Slice 3
+**Status:** built and committed 2026-10-05 (`a9d76e5`, `b597532`), in review · **Layer:** infra · **Visible?** — none · **Depends on:** Slice 3
 **Design:** n/a
 
 ## Decisions that bind this slice

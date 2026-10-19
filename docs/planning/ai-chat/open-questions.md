@@ -14,7 +14,7 @@ that names it. All three, in the same change.
 | [Q6](#q6) | 2026-10-01 | Slice 3 | ✅ closed → [D20](./decisions.md#d20) |
 | [Q7](#q7) | 2026-10-01 | Slice 1 | ✅ closed → [D13](./decisions.md#d13) |
 | [Q8](#q8) | 2026-10-05 | Slice 5 (`cdk deploy`) | open |
-| [Q9](#q9) | 2026-10-05 | Slice 5 (`cdk deploy`) | open |
+| [Q9](#q9) | 2026-10-05 | Slice 5 (`cdk deploy`) | ✅ closed 2026-10-13 |
 
 <a id="q1"></a>
 ## Q1: Chat panel design
@@ -59,8 +59,25 @@ the maintainer.
 <a id="q4"></a>
 ## Q4: Bedrock model access
 
-Claude Haiku 4.5 must be enabled in the Bedrock console (us-east-1) on the
+Claude Haiku 5.5 ([D28](./decisions.md#d28)) must be enabled in the Bedrock console (us-east-1) on the
 deploy account before the live check in Slice 5.
+
+**Checked 2026-10-12:** `authorizationStatus: AUTHORIZED`, but
+`agreementAvailability: NOT_AVAILABLE`, and the Anthropic use-case form has never
+been submitted (`GetUseCaseForModelAccess` → not found). **To close:** submit the
+form from the model's page in the Bedrock console. The Marketplace agreement is then
+created on first use or from that page. Re-check with
+`aws bedrock get-foundation-model-availability --model-id anthropic.claude-haiku-5-5`.
+
+**2026-10-13:** form submitted, but the first `Converse` call answered
+`AccessDeniedException: anthropic.claude-haiku-5-5 is not available for this account`.
+Every Anthropic model on the account (Haiku 4.5, Sonnet 4.6, Sonnet 5.5) shows the
+same state, so it's account-wide, not specific to 5.5. The caller has
+`AdministratorAccess` in the organization's management account, so it isn't IAM or an
+SCP. Most likely AWS's eligibility hold on newer accounts for Marketplace models.
+**Next:** a free *Account and billing* support case asking AWS to enable Anthropic models
+on Bedrock for this account. The Bedrock playground, signed in as the account's root user,
+returns the same error, which confirms it's account-level.
 
 <a id="q5"></a>
 ## Q5: Branch
@@ -109,16 +126,23 @@ or record an explicit exception to D36.
 Anthropic models on Bedrock bill as an AWS Marketplace service named after the
 model (reported as e.g. `Claude Sonnet 4 (Amazon Bedrock Edition)`), not as
 `Amazon Bedrock`. Slice 4 filters on both `Amazon Bedrock` and
-`Claude Haiku 4.5 (Amazon Bedrock Edition)` (`CHAT_BUDGET_SERVICES` in
+`Claude Haiku 5.5 (Amazon Bedrock Edition)` (`CHAT_BUDGET_SERVICES` in
 `infra/src/chat-config/chat-config.ts`). If neither matches what Cost Explorer
 shows for this account, the budget sees $0 and **A6 never trips**. A5 still caps
 each day.
+
+**2026-10-12:** the Haiku 5.5 name is the `servicename` the AWS Pricing API
+reports ([D28](./decisions.md#d28)), so it very likely matches. It stays open until Cost Explorer confirms it.
 
 **To close:** after the first real chat request, open Cost Explorer → group by
 Service, and copy the exact name into `CHAT_BUDGET_SERVICES`.
 
 <a id="q9"></a>
 ## Q9: Lambda concurrency quota on the deploy account
+
+**✅ Closed 2026-10-13.** The Service Quotas request for 1,000 was approved
+(`CASE_CLOSED`), and `get-account-settings` now reports `ConcurrentExecutions: 1000`,
+well above the 103 that A3 needs. The original question is kept below.
 
 A3 reserves 3 concurrent executions. Lambda refuses a reservation that would
 leave fewer than 100 unreserved, so on an account whose total quota is still the
@@ -127,4 +151,8 @@ new-account default (10), **`cdk deploy` fails** at the chat function.
 **To close:** `aws lambda get-account-settings --profile ansPortfolio` →
 `AccountLimit.ConcurrentExecutions` must be ≥ 103. If it isn't, request an
 increase through Service Quotas before Slice 5's deploy.
+
+**Checked 2026-10-12:** `ConcurrentExecutions: 10`, `UnreservedConcurrentExecutions: 10`
+(one function, the Shell). Below 103, so the deploy would fail. Still open until
+the Service Quotas increase to 1,000 (quota `L-B99A9384`, us-east-1) is approved.
 

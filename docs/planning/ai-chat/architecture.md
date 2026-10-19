@@ -18,7 +18,7 @@ Chat Lambda Function URL
   ├─ kill switch (SSM)  → off: "disabled" event, no model call
   ├─ zod request caps   → bad: 400, no model call
   ├─ quota check (DynamoDB per-IP + global daily) → over: "resting" event
-  └─ Bedrock ConverseStream (Claude Haiku 4.5, guardrailConfig, cached system prompt)
+  └─ Bedrock ConverseStream (Claude Haiku 5.5 (D28), guardrailConfig, cached system prompt)
         │
   ◄─────┘ streamed NDJSON events back to the browser
 ```

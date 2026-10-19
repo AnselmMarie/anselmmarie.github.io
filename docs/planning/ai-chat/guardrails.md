@@ -20,7 +20,7 @@ costs when one gets through.
 | A6 | **AWS Budgets action**: when this project's monthly Bedrock spend passes $N, automatically attach a deny-Bedrock IAM policy to the chat role, and email the maintainer | Anything that gets past A1–A5. An automatic kill switch at the AWS level | Slice 4 |
 | A7 | **Manual kill switch**: SSM parameter `chat-enabled`, read with a short in-memory cache. The frontend hides the launcher when it's off | Turning it off instantly, without a deploy | Slice 3 (read), Slice 4 (parameter), Slice 5 (UI) |
 
-**Cost reducers:** Haiku 4.5 (the cheapest capable Claude model) and prompt
+**Cost reducers:** Haiku 5.5 (D28) (the cheapest capable Claude model) and prompt
 caching on the fixture-built system prompt, so most input tokens are billed at
 the cached rate.
 

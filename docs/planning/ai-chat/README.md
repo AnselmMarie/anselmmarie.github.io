@@ -59,8 +59,8 @@ See [parallelization.md](./parallelization.md).
 | 1 | fe-form | `chat` remote MFE + the drawn launcher, drawer, bubbles and composer on stub replies | ✅ screen | committed, in review | [01-chat-panel.md](./slices/01-chat-panel.md) |
 | 2 | fe-list | Client tool executor (`scroll_to` / `navigate`) + shell navigate listener | ✅ screen | built, in review | [02-messages-and-tools.md](./slices/02-messages-and-tools.md) |
 | 3 | api | Contract lib + handler + Bedrock streaming + in-code guardrails | — none | committed, in review | [03-chat-api.md](./slices/03-chat-api.md) |
-| 4 | infra | Lambda, CloudFront route, WAF, DynamoDB, Guardrail, budget kill switch | — none | built, in review | [04-chat-infra.md](./slices/04-chat-infra.md) |
-| 5 | connect | Real streaming, WAF challenge token, states, off-topic eval | ✅ screen | client built, in review; deploy + live check pending | [05-connect.md](./slices/05-connect.md) |
+| 4 | infra | Lambda, CloudFront route, WAF, DynamoDB, Guardrail, budget kill switch | — none | committed, in review | [04-chat-infra.md](./slices/04-chat-infra.md) |
+| 5 | connect | Real streaming, WAF challenge token, states, off-topic eval | ✅ screen | client committed, in review; deploy + live check pending | [05-connect.md](./slices/05-connect.md) |
 
 No more than two invisible slices run in a row (3, 4).
 
