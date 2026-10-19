@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { CHAT_RATE_LIMIT_PER_5_MIN } from '../chat-config/chat-config.js';
-import { STACK_OUTPUTS } from '../portfolio-stack.js';
+import { CHAT_WAF_INTEGRATION_URL_OUTPUT } from '../portfolio-stack.js';
 import { synthStack } from '../test-helpers/synth-stack.test-helpers.js';
 
 interface Rule {
@@ -66,9 +66,12 @@ describe('ChatFirewall', () => {
     });
   });
 
-  it('outputs the JS SDK integration URL the chat client loads (Slice 5)', () => {
-    const output = template.toJSON().Outputs?.[STACK_OUTPUTS.chatWafIntegrationUrl];
+  // D29: GetWebACL has no integration URL for a Challenge-only web ACL, and a
+  // lookup that reads one fails the deploy at the custom resource.
+  it('never looks up an integration URL the web ACL cannot have (D29)', () => {
+    const json = JSON.stringify(template.toJSON());
 
-    expect(JSON.stringify(output?.Value)).toContain('ApplicationIntegrationURL');
+    expect(json).not.toContain('ApplicationIntegrationURL');
+    expect(template.toJSON().Outputs?.[CHAT_WAF_INTEGRATION_URL_OUTPUT]).toBeUndefined();
   });
 });

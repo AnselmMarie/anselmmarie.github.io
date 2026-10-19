@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 
-import { STACK_OUTPUTS } from '../../portfolio-stack.js';
+import { CHAT_WAF_INTEGRATION_URL_OUTPUT, STACK_OUTPUTS } from '../../portfolio-stack.js';
 import { STACK_NAME } from '../../site-config/site-config.js';
 
 /**
@@ -58,7 +58,7 @@ export const readSiteTarget = (run: Run): SiteTarget => {
   return {
     bucket: value(STACK_OUTPUTS.bucketName),
     distributionId: value(STACK_OUTPUTS.distributionId),
-    chatWafSdkUrl: optional(STACK_OUTPUTS.chatWafIntegrationUrl),
+    chatWafSdkUrl: optional(CHAT_WAF_INTEGRATION_URL_OUTPUT),
   };
 };
 

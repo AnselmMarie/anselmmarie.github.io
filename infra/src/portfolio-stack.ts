@@ -20,10 +20,16 @@ export const STACK_OUTPUTS = {
   distributionDomainName: 'DistributionDomainName',
   deployRoleArn: 'GithubDeployRoleArn',
   certificateArn: 'CertificateArn',
-  chatWafIntegrationUrl: 'ChatWafIntegrationUrl',
   chatEnabledParam: 'ChatEnabledParam',
   chatAlertTopicArn: 'ChatAlertTopicArn',
 } as const;
+
+/**
+ * The chat's WAF JS SDK URL. The stack does not emit it (ai-chat D29): a
+ * Challenge-only web ACL has none. The deploy CLI still reads it as optional, so
+ * a stack that gains one (e.g. with Bot Control) is picked up without a CLI change.
+ */
+export const CHAT_WAF_INTEGRATION_URL_OUTPUT = 'ChatWafIntegrationUrl';
 
 export interface PortfolioStackProps extends StackProps {
   /** `apps/shell/.output/server` from an `aws_lambda`-preset build. */
@@ -93,10 +99,6 @@ export class PortfolioStack extends Stack {
     });
     new CfnOutput(this, STACK_OUTPUTS.certificateArn, {
       value: site.certificate.certificateArn,
-    });
-    new CfnOutput(this, STACK_OUTPUTS.chatWafIntegrationUrl, {
-      description: 'The AWS WAF JS SDK URL the chat client loads for its token (ai-chat D21)',
-      value: firewall.integrationUrl,
     });
     new CfnOutput(this, STACK_OUTPUTS.chatEnabledParam, {
       description: 'Set to anything but "true" to turn the chat off without a deploy (A7)',
