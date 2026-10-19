@@ -9,7 +9,7 @@
 - **D21**: the client sends `/api/chat` through `AwsWafIntegration.fetch` when the WAF SDK URL is configured, and plain `fetch` otherwise (dev, e2e).
 - **D11**: the client parses NDJSON into contract events and validates each one.
 - **D24**: every POST carries `x-amz-content-sha256` (hex SHA-256 of the exact body bytes sent), or the Lambda OAC answers 403.
-- **D26**: the WAF SDK URL is the stack's `ChatWafIntegrationUrl` output.
+- **D26**: the WAF SDK URL is the stack's `ChatWafIntegrationUrl` output. ⚠️ Not emitted since **D29**, so production builds use plain `fetch` and the Challenge rule blocks sends until D29 is settled.
 - **D27**: this slice's build-time calls (states as bubbles, disabled after a reply, event validation, the SDK URL `define`).
 
 ## Open questions blocking this slice
