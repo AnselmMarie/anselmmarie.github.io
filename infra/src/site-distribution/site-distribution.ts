@@ -81,14 +81,15 @@ export class SiteDistribution extends Construct {
     });
 
     // ai-chat: only what the handler reads. CloudFront-Viewer-Address is the
-    // per-IP quota key (D22); x-amz-content-sha256 is the body hash a POST
-    // through a Lambda OAC must carry (D24). A Function URL rejects a foreign Host.
+    // per-IP quota key (D22). The client's x-amz-content-sha256 body hash (D24)
+    // is NOT listed: CloudFront rejects x-amz-* headers in a policy, and OAC
+    // signing reads it from the viewer request on its own. A Function URL
+    // rejects a foreign Host.
     const chatOriginRequestPolicy = new OriginRequestPolicy(this, 'ChatOriginRequest', {
-      comment: 'ai-chat: viewer IP + the OAC payload hash, nothing else',
+      comment: 'ai-chat: viewer IP + content type, nothing else',
       headerBehavior: OriginRequestHeaderBehavior.allowList(
         'CloudFront-Viewer-Address',
-        'Content-Type',
-        'x-amz-content-sha256'
+        'Content-Type'
       ),
     });
 

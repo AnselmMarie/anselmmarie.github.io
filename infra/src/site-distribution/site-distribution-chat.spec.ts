@@ -43,14 +43,19 @@ describe('SiteDistribution: the /api/chat* behavior (ai-chat Slice 4)', () => {
     expect(JSON.stringify(chatOrigin?.DomainName)).toMatch(/ChatFunctionFunctionUrl/);
   });
 
-  it('forwards the viewer IP for A5 and the OAC body hash, and never the Host header', () => {
+  it('forwards the viewer IP for A5, and never the Host header', () => {
     const policy = json.Resources[chat?.OriginRequestPolicyId.Ref ?? ''];
     const headers = policy?.Properties.OriginRequestPolicyConfig.HeadersConfig;
 
     expect(headers.HeaderBehavior).toBe('whitelist');
-    expect(headers.Headers).toEqual(
-      expect.arrayContaining(['CloudFront-Viewer-Address', 'x-amz-content-sha256'])
-    );
+    expect(headers.Headers).toEqual(expect.arrayContaining(['CloudFront-Viewer-Address']));
     expect(headers.Headers.map((name: string) => name.toLowerCase())).not.toContain('host');
+  });
+
+  it('lists no x-amz-* header, which CloudFront rejects at deploy (D24)', () => {
+    const policy = json.Resources[chat?.OriginRequestPolicyId.Ref ?? ''];
+    const names: string[] = policy?.Properties.OriginRequestPolicyConfig.HeadersConfig.Headers;
+
+    expect(names.filter((name) => name.toLowerCase().startsWith('x-amz-'))).toEqual([]);
   });
 });

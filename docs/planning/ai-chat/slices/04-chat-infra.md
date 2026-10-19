@@ -13,7 +13,7 @@
 - **D20**: `ChatFunction` bundles `libs/api/chat` with esbuild.
 - **D12**: Function URL `AWS_IAM` + OAC, invoke mode `RESPONSE_STREAM`.
 - **D22**: the origin request policy forwards `CloudFront-Viewer-Address`.
-- **D24**: a POST through Lambda OAC needs `x-amz-content-sha256`; the chat behavior forwards it.
+- **D24**: a POST through Lambda OAC needs `x-amz-content-sha256` from the client; OAC signing reads it, and the origin request policy must not list it (CloudFront rejects `x-amz-*` there).
 - **D25**: A6 alerts go to an SNS topic; email only when `CHAT_ALERT_EMAIL` is set.
 - **D26**: this slice's build-time calls (bundling, WAF construct, integration URL, guardrail version hash, pricing).
 
