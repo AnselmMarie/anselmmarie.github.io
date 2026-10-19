@@ -2,7 +2,7 @@ import type { ReactElement } from 'react';
 
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@portfolio/ui-primitives';
 
-import UiIcon from '../ui-icon/ui-icon.js';
+import Icon from '../icon/icon.js';
 
 export interface MenuSheetItem {
   /** A plain href — a hash, a path, or both. Never a router link (D43). */
@@ -82,7 +82,7 @@ const MenuSheet = ({
         {items.map((item) => (
           <a key={item.href} href={item.href} className={LINK} onClick={() => onOpenChange(false)}>
             {item.label}
-            <UiIcon name="arrow-up-right" size={16} className="shrink-0 text-accent-bright" />
+            <Icon name="arrow-up-right" size={16} className="shrink-0 text-accent-bright" />
           </a>
         ))}
       </SheetContent>

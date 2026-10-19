@@ -14,6 +14,7 @@ describe('site-config', () => {
     // apps/*/vite.config.ts reads these exact names; a mismatch builds against localhost.
     expect(originEnvKey('footer')).toBe('PORTFOLIO_FOOTER_ORIGIN');
     expect(originEnvKey('portfolio-item')).toBe('PORTFOLIO_PORTFOLIO_ITEM_ORIGIN');
+    expect(originEnvKey('chat')).toBe('PORTFOLIO_CHAT_ORIGIN');
   });
 
   it('builds a remote into its versioned directory and the shell against the pointer (D107)', () => {
@@ -26,8 +27,9 @@ describe('site-config', () => {
     expect(versionPrefix('homepage', 'abc')).toBe('_remotes/homepage/abc');
   });
 
-  it('recognises only the four remotes', () => {
+  it('recognises only the five remotes', () => {
     expect(isRemoteApp('portfolio-item')).toBe(true);
+    expect(isRemoteApp('chat')).toBe(true);
     expect(isRemoteApp('shell')).toBe(false);
   });
 });

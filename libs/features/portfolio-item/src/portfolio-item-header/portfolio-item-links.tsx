@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 
 import type { ItemLink } from '@portfolio/shared-types';
-import { Eyebrow, PillLink, SocialIcon, UiIcon } from '@portfolio/ui-components';
+import { Eyebrow, Icon, PillLink, SocialIcon } from '@portfolio/ui-components';
 
 interface PortfolioItemLinksProps {
   links: readonly ItemLink[];
@@ -36,7 +36,7 @@ const PortfolioItemLinks = ({ links }: PortfolioItemLinksProps): ReactElement | 
             {link.icon === 'github' ? (
               <SocialIcon name="github" size={17} />
             ) : (
-              <UiIcon name="external" size={17} />
+              <Icon name="external" size={17} />
             )}
             {link.label}
           </PillLink>

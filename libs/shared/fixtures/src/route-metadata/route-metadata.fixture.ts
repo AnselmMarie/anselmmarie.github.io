@@ -16,10 +16,8 @@ import { PORTFOLIO_ITEM_METADATA } from './portfolio-route-metadata.fixture.js';
 export const SITE_NAME = 'Anselm Marie';
 
 export const HOME_METADATA: RouteMetadata = {
-  title: 'Anselm Marie — Front-End Engineer',
-  description:
-    'Front-end engineer building micro-frontend architecture: independently ' +
-    'deployed React remotes composed by a TanStack Start shell.',
+  title: 'Anselm Marie — Senior Software Engineer & Tech Lead',
+  description: `Senior software engineer and tech lead, founder of Cosmikata. I build design systems, micro-frontend platforms, and edge-first backends.`,
   path: '/',
 };
 

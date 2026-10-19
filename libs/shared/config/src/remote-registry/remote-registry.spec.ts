@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  DEFAULT_CHAT_ORIGIN,
   DEFAULT_FOOTER_ORIGIN,
   DEFAULT_HEADER_ORIGIN,
   DEFAULT_HOMEPAGE_ORIGIN,
@@ -46,6 +47,15 @@ describe('remoteEntryFor', () => {
     expect(entry?.exposedModule).toBe(exposedModule);
   });
 
+  it('resolves the AI chat to ./Chat on its own dev origin (ai-chat D13)', () => {
+    const entry = remoteEntryFor('chat');
+
+    expect(entry?.name).toBe('chat');
+    expect(entry?.exposedModule).toBe('./Chat');
+    expect(entry?.entryUrl).toBe(`${DEFAULT_CHAT_ORIGIN}/remoteEntry.js`);
+    expect(DEFAULT_CHAT_ORIGIN).toBe('http://localhost:4178');
+  });
+
   it('gives every remote its own origin, so no two share a dev port', () => {
     // A duplicated port is the quiet way two remotes end up serving each
     // other's bundles in dev — `strictPort` in the apps makes the second one
@@ -55,13 +65,15 @@ describe('remoteEntryFor', () => {
       DEFAULT_FOOTER_ORIGIN,
       DEFAULT_HOMEPAGE_ORIGIN,
       DEFAULT_PORTFOLIO_ITEM_ORIGIN,
+      DEFAULT_CHAT_ORIGIN,
     ];
 
     expect(new Set(origins).size).toBe(origins.length);
   });
 
-  it('holds all four remotes', () => {
+  it('holds all five remotes', () => {
     expect(Object.keys(REMOTE_REGISTRY).sort()).toEqual([
+      'chat',
       'footer',
       'header',
       'homepage',

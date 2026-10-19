@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { HOMEPAGE_CONTENT } from '../homepage/homepage.fixture.js';
 import { PORTFOLIO_ITEMS } from '../portfolio-items/portfolio-items.fixture.js';
 import { HOME_METADATA, metadataForPath } from './route-metadata.fixture.js';
 
@@ -38,5 +39,19 @@ describe('metadataForPath', () => {
     // preview that looks correct in the DOM and blank in a crawler.
     expect(HOME_METADATA.title.length).toBeGreaterThan(0);
     expect(HOME_METADATA.description.length).toBeGreaterThan(0);
+  });
+
+  it('claims only titles actually held, never "Architect" (maintainer, 2026-09-26)', () => {
+    // A page title reads as a job title. Architecture is described as work in
+    // the copy, never claimed as a title in the tab, the strip or the hero.
+    const claims = [
+      HOME_METADATA.title,
+      HOME_METADATA.description,
+      ...HOMEPAGE_CONTENT.specs,
+      HOMEPAGE_CONTENT.hero.lede,
+    ];
+
+    expect(HOME_METADATA.title).toBe('Anselm Marie — Senior Software Engineer & Tech Lead');
+    for (const claim of claims) expect(claim).not.toMatch(/architect\b/i);
   });
 });

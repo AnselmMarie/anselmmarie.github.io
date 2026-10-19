@@ -35,12 +35,14 @@ vi.mock('@portfolio/feature-shell', () => ({
   },
 }));
 
+const { default: ChatRemote } = await import('./chat-remote.js');
 const { default: FooterRemote } = await import('./footer-remote.js');
 const { default: HeaderRemote } = await import('./header-remote.js');
 const { default: HomepageRemote } = await import('./homepage-remote.js');
 const { default: PortfolioItemRemote } = await import('./portfolio-item-remote.js');
 
 const WRAPPERS: readonly [string, () => ReactElement, string][] = [
+  ['chat', () => <ChatRemote />, 'Chat'],
   ['footer', () => <FooterRemote />, 'Footer'],
   ['header', () => <HeaderRemote variant="home" />, 'Header'],
   ['homepage', () => <HomepageRemote />, 'Homepage'],

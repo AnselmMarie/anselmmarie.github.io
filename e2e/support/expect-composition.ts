@@ -22,8 +22,22 @@ export const expectRemotesRendered = async (
   }
 };
 
-/** The failed remote's region shows the shell's fallback, and not the remote. */
+/**
+ * ai-chat D15 — a failed chat renders **nothing**: no remote and no shell
+ * notice. A missing chat is an absent feature, not a broken page.
+ */
+const SILENT_REMOTES: readonly RemoteName[] = ['chat'];
+
+/**
+ * The failed remote's region shows the shell's fallback, and not the remote.
+ * For a remote with no fallback (D15), neither is on the page.
+ */
 export const expectFallback = async (page: Page, name: RemoteName): Promise<void> => {
+  if (SILENT_REMOTES.includes(name)) {
+    await expect(page.getByTestId(fallbackTestId(name))).toHaveCount(0);
+    await expect(page.getByTestId(remoteTestId(name))).toHaveCount(0);
+    return;
+  }
   await expect(page.getByTestId(fallbackTestId(name))).toBeVisible();
   await expect(page.getByTestId(remoteTestId(name))).toHaveCount(0);
 };

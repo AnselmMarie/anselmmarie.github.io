@@ -11,6 +11,7 @@ describe('shellBuildEnv', () => {
       PORTFOLIO_FOOTER_ORIGIN: 'https://anselmmarie.com/_remotes/footer',
       PORTFOLIO_HOMEPAGE_ORIGIN: 'https://anselmmarie.com/_remotes/homepage',
       PORTFOLIO_PORTFOLIO_ITEM_ORIGIN: 'https://anselmmarie.com/_remotes/portfolio-item',
+      PORTFOLIO_CHAT_ORIGIN: 'https://anselmmarie.com/_remotes/chat',
     });
   });
 });

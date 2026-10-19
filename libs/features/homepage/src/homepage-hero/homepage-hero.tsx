@@ -1,7 +1,7 @@
 import { Fragment, type ReactElement } from 'react';
 
 import type { HomepageContent } from '@portfolio/shared-types';
-import { PillLink, UiIcon } from '@portfolio/ui-components';
+import { Icon, PillLink } from '@portfolio/ui-components';
 
 // Hidden 2026-09-23 — see the render site below.
 // import HomepageHeroMedia from './homepage-hero-media.js';
@@ -70,7 +70,7 @@ const HomepageHero = ({ specs, hero }: HomepageHeroProps): ReactElement => {
             {hero.ctas.map((cta, index) => (
               <PillLink key={cta.href} href={cta.href} variant={index === 0 ? 'solid' : 'outline'}>
                 {cta.label}
-                {index === 0 ? <UiIcon name="arrow-right" size={17} /> : null}
+                {index === 0 ? <Icon name="arrow-right" size={17} /> : null}
               </PillLink>
             ))}
           </div>

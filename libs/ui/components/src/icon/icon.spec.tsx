@@ -2,23 +2,26 @@ import { render, screen } from '@testing-library/react';
 import { createElement } from 'react';
 import { describe, expect, it } from 'vitest';
 
-import UiIcon, { type UiIconName } from './ui-icon.js';
+import Icon, { type IconName } from './icon.js';
 
-const NAMES: readonly UiIconName[] = [
+const NAMES: readonly IconName[] = [
   'arrow-left',
   'arrow-right',
   'arrow-up-right',
   'external',
+  'message-circle',
   'minus',
   'plus',
+  'send',
+  'x',
 ];
 
-describe('UiIcon', () => {
+describe('Icon', () => {
   it('draws a distinct mark for every name in the union', () => {
     // A name mapped to the wrong icon renders happily and points the wrong
     // way, so the marks are compared rather than merely counted.
     const drawn = NAMES.map((name) => {
-      const { container, unmount } = render(createElement(UiIcon, { name }));
+      const { container, unmount } = render(createElement(Icon, { name }));
       const html = container.innerHTML;
 
       unmount();
@@ -35,7 +38,7 @@ describe('UiIcon', () => {
       createElement(
         'a',
         { href: '/x', 'aria-label': 'All work' },
-        createElement(UiIcon, {
+        createElement(Icon, {
           name: 'arrow-left',
         })
       )
@@ -49,7 +52,7 @@ describe('UiIcon', () => {
 
   it('takes a size and a className from the caller', () => {
     const { container } = render(
-      createElement(UiIcon, { name: 'external', size: 19, className: 'text-accent' })
+      createElement(Icon, { name: 'external', size: 19, className: 'text-accent' })
     );
     const svg = container.querySelector('svg');
 

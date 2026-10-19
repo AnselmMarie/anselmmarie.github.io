@@ -103,6 +103,35 @@ export interface PortfolioItem {
    * rather than a dead anchor.
    */
   readonly links: readonly ItemLink[];
+  /**
+   * The `| AI Enhancements` section, drawn between the videos and the gallery.
+   *
+   * ⚠️ **Optional, unlike `images` and `videos`** (maintainer, 2026-10-19).
+   * Only `cosmikata` carries any; an absent list renders no section, exactly
+   * as an empty one would.
+   */
+  readonly aiEnhancements?: readonly ItemAiEnhancement[];
+}
+
+/**
+ * Whether an {@link ItemAiEnhancement} is running today or only planned.
+ * Planned work is labelled as planned on the page, never shown as shipped.
+ */
+export type ItemAiEnhancementStatus = 'shipped' | 'planned';
+
+/**
+ * One card in the detail page's AI Enhancements section, written as
+ * problem → what was built → result (maintainer, 2026-10-19). Plain text.
+ */
+export interface ItemAiEnhancement {
+  readonly title: string;
+  /** The problem, and who had it. */
+  readonly problem: string;
+  /** What was built to solve it. */
+  readonly built: string;
+  /** What changed, with numbers where there are any. Estimates say so. */
+  readonly result: string;
+  readonly status: ItemAiEnhancementStatus;
 }
 
 /**

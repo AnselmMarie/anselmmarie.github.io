@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { App } from 'aws-cdk-lib';
 import { Template } from 'aws-cdk-lib/assertions';
 
-import { PortfolioStack } from '../portfolio-stack.js';
+import { PortfolioStack, type PortfolioStackProps } from '../portfolio-stack.js';
 import { AWS_ACCOUNT, AWS_REGION } from '../site-config/site-config.js';
 
 /**
@@ -21,11 +21,12 @@ export const fakeShellBuild = (preset = 'aws-lambda', withEntry = true): string 
 };
 
 /** Synthesizes the real stack, in the real account and region, against a fake build. */
-export const synthStack = (): Template => {
+export const synthStack = (overrides: Partial<PortfolioStackProps> = {}): Template => {
   const app = new App();
   const stack = new PortfolioStack(app, 'TestStack', {
     env: { account: AWS_ACCOUNT, region: AWS_REGION },
     shellServerDir: fakeShellBuild(),
+    ...overrides,
   });
   return Template.fromStack(stack);
 };

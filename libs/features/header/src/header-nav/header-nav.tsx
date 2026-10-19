@@ -1,9 +1,8 @@
 import type { ReactElement } from 'react';
 
 import { SITE_SECTIONS } from '@portfolio/shared-fixtures';
+import { anchorHref } from '@portfolio/shared-utils';
 import { NavMenu } from '@portfolio/ui-components';
-
-import { anchorHref } from '../anchor-href/anchor-href.js';
 
 interface HeaderNavProps {
   /** The current path, so each anchor knows whether it needs `/` (D43). */

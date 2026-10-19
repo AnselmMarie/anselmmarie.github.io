@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
+import { CHAT_WAF_SDK_ENV } from '../../chat-config/chat-config.js';
 import {
   originEnvKey,
   type RemoteApp,
@@ -28,7 +29,24 @@ export const buildRemote = (ctx: DeployContext, remote: RemoteApp, version: stri
   ctx.log(`${remote}: building for ${remoteBuildOrigin(remote, version)}`);
   ctx.run('pnpm', ['nx', 'run', `${remote}:build`, '--skip-nx-cache'], {
     [originEnvKey(remote)]: remoteBuildOrigin(remote, version),
+    ...chatBuildEnv(ctx, remote),
   });
+};
+
+/**
+ * The chat remote also needs the WAF JS SDK URL (ai-chat D21, D26). Without
+ * it the chat sends with plain `fetch`, which the WAF Challenge rule answers
+ * instead of the Lambda, so every reply is the error state. That's said in
+ * the log rather than failing the deploy: a stack from before ai-chat Slice 4
+ * has no chat route to call anyway.
+ */
+const chatBuildEnv = (ctx: DeployContext, remote: RemoteApp): NodeJS.ProcessEnv => {
+  if (remote !== 'chat') return {};
+  if (!ctx.target.chatWafSdkUrl) {
+    ctx.log('chat: ⚠️ the stack has no ChatWafIntegrationUrl output; building without the WAF SDK');
+    return {};
+  }
+  return { [CHAT_WAF_SDK_ENV]: ctx.target.chatWafSdkUrl };
 };
 
 /**

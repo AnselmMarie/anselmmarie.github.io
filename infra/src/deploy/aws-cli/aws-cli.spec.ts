@@ -21,7 +21,18 @@ describe('readSiteTarget', () => {
     const { run, calls } = fakeRun(() => outputs);
 
     expect(readSiteTarget(run)).toEqual({ bucket: 'site-bucket', distributionId: 'EDIST' });
+    expect(readSiteTarget(run).chatWafSdkUrl).toBeUndefined();
     expect(calls[0]?.args).toEqual(expect.arrayContaining(['describe-stacks', 'PortfolioStack']));
+  });
+
+  it('reads the chat’s WAF SDK URL when the stack has one (ai-chat D21)', () => {
+    const withChat = JSON.stringify([
+      ...JSON.parse(outputs),
+      { OutputKey: 'ChatWafIntegrationUrl', OutputValue: 'https://x.sdk.awswaf.com/a/b/' },
+    ]);
+    const { run } = fakeRun(() => withChat);
+
+    expect(readSiteTarget(run).chatWafSdkUrl).toBe('https://x.sdk.awswaf.com/a/b/');
   });
 
   it('names the missing output when the stack has not been deployed', () => {

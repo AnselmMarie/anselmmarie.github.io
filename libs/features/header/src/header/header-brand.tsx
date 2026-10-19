@@ -1,8 +1,7 @@
 import type { ReactElement } from 'react';
 
 import { SITE_NAME } from '@portfolio/shared-fixtures';
-
-import { HOME_PATH } from '../anchor-href/anchor-href.js';
+import { HOME_PATH } from '@portfolio/shared-utils';
 
 interface HeaderBrandProps {
   /** Closes the mobile overlay when the brand is tapped from inside it. */
