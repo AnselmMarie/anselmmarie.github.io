@@ -1,8 +1,8 @@
 # Gates, the E2E suite (Slice 9), and the deploy (Slice 8,
 # docs/planning/mfe-architecture/slices/08-independent-deployment.md). One
-# workflow, per D23: the deploy job `needs:` both check jobs, so nothing ships
-# that the gates and the E2E suite have not passed. The runbook is
-# docs/architecture/deploy-and-rollback.md.
+# workflow, per D23. The gates and the E2E suite run on pull requests only. A
+# push to master (a merged PR) runs only the deploy, because the PR that
+# produced it already passed both. A push to `version-3` runs nothing. The runbook is docs/architecture/deploy-and-rollback.md.
 #
 # Why this exists before Slice 8: every gate in this repo runs from the
 # `lint-staged` pre-commit hook, which only covers commits made locally. A push
@@ -11,14 +11,17 @@
 # generated from the Nx graph (D57), and they drift silently.
 name: CI
 
-# `version-3` runs the same gates and E2E suite as master, but never deploys:
-# the deploy job's `if:` admits only a push to master, and the OIDC trust policy
-# (infra/src/github-deploy-role) would refuse any other ref anyway.
+# Only master's pushes trigger a run, and they deploy. The OIDC trust policy
+# (infra/src/github-deploy-role) would refuse a deploy from any other ref anyway.
+#
+# ⚠️ That makes the PR's run the only check on what ships. Keep "require
+# branches to be up to date before merging" on for master, or the merged
+# commit can differ from anything a PR run tested.
 on:
   pull_request:
     branches: [master, version-3]
   push:
-    branches: [master, version-3]
+    branches: [master]
 
 # ⚠️ A pull request's superseded run is cancelled; a push's never is.
 # Cancelling a run mid-deploy would leave a remote uploaded but unreleased, or
@@ -33,6 +36,8 @@ permissions:
 jobs:
   gates:
     name: typecheck / lint / test
+    # Pull requests only (into master or version-3), never the push a merge makes.
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -109,12 +114,14 @@ jobs:
         run: pnpm check:react-major
 
   # Slice 9 (D101): Playwright over a local production build of the shell and
-  # all four remotes. Slice 8's deploy jobs `needs:` this job, so nothing ships
-  # that this suite has not seen composed, styled, and surviving each remote's
-  # failure. It runs beside `gates` rather than after it: the two share no
-  # output, and a red E2E run is worth seeing even when a lint fails.
+  # all four remotes. It runs on the PR, so nothing merges to master (and so
+  # nothing deploys) that this suite has not seen composed, styled, and
+  # surviving each remote's failure. It runs beside `gates` rather than after
+  # it: the two share no output, and a red E2E run is worth seeing even when a
+  # lint fails.
   e2e:
     name: e2e (Playwright, production build)
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -156,7 +163,8 @@ jobs:
   # the runbook — never an automatic switch on failure.
   deploy:
     name: deploy (affected apps → AWS)
-    needs: [gates, e2e]
+    # No `needs:`. Gates and E2E are skipped on master (they ran on the PR), and
+    # a job whose needs were skipped is skipped too.
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     permissions:
