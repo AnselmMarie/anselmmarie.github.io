@@ -72,6 +72,25 @@ describe('PortfolioItem', () => {
     expect(hero.querySelector('h1')).toHaveTextContent(item.title);
   });
 
+  it('forwards the AI enhancements and draws them before the gallery', () => {
+    // spec-through-the-parent: this is the only call site that supplies them.
+    render(<PortfolioItem item={itemOrThrow('cosmikata')} />);
+
+    const section = screen.getByTestId('portfolio-item-ai-enhancements');
+    const gallery = screen.getByTestId('portfolio-item-gallery');
+
+    expect(section).toHaveTextContent('Event agent over MCP');
+    expect(
+      section.compareDocumentPosition(gallery) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+  });
+
+  it('draws no AI section for an item without enhancements', () => {
+    render(<PortfolioItem item={itemOrThrow('cw-breeze-thru')} />);
+
+    expect(screen.queryByTestId('portfolio-item-ai-enhancements')).not.toBeInTheDocument();
+  });
+
   it('leaves the hero on its default fill for an item hidden from the Work grid', () => {
     render(<PortfolioItem item={itemOrThrow('rove-logix')} />);
 

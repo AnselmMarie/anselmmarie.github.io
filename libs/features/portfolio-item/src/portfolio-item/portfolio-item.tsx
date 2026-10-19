@@ -3,6 +3,7 @@ import type { ReactElement } from 'react';
 import { useHomepageContent, usePortfolioItem } from '@portfolio/shared-fixtures';
 import type { PortfolioItem as PortfolioItemModel } from '@portfolio/shared-types';
 
+import PortfolioItemAiEnhancements from '../portfolio-item-ai-enhancements/portfolio-item-ai-enhancements.js';
 import PortfolioItemGallery from '../portfolio-item-gallery/portfolio-item-gallery.js';
 import PortfolioItemHeader from '../portfolio-item-header/portfolio-item-header.js';
 import PortfolioItemHero from '../portfolio-item-hero/portfolio-item-hero.js';
@@ -31,7 +32,7 @@ interface PortfolioItemProps {
 /**
  * 🧭 **OWNER: Slice 15.** The portfolio detail page, per the 2026-09-22
  * design export: header + links + hero, the tech/facts/summary overview, the
- * gallery, and the dark next block. Two blocks the design omits — the HTML
+ * AI enhancements, the gallery, and the dark next block. Two blocks the design omits — the HTML
  * `description` and the videos — are kept and rendered (D78).
  *
  * ⚠️ **The body is HTML and is sanitized, never rendered raw** (D69). That
@@ -83,6 +84,7 @@ const PortfolioItem = ({ item }: PortfolioItemProps): ReactElement => {
         description={resolved.description}
       />
       <PortfolioItemVideos videos={resolved.videos} />
+      <PortfolioItemAiEnhancements aiEnhancements={resolved.aiEnhancements} />
       <PortfolioItemGallery images={resolved.images} />
       <PortfolioItemNextBlock />
     </article>
