@@ -30,13 +30,14 @@ export const REMOTES: readonly RemoteSpec[] = [
   { name: 'footer', originEnv: 'PORTFOLIO_FOOTER_ORIGIN', path: '/' },
   { name: 'homepage', originEnv: 'PORTFOLIO_HOMEPAGE_ORIGIN', path: '/' },
   { name: 'portfolio-item', originEnv: 'PORTFOLIO_PORTFOLIO_ITEM_ORIGIN', path: SAMPLE_ITEM_PATH },
-  { name: 'chat', originEnv: 'PORTFOLIO_CHAT_ORIGIN', path: '/' },
+  // The chat is disconnected for now (`apps/shell/src/routes/__root.tsx`).
+  // Restore this entry, and `'chat'` in REMOTES_ON_PATH, when it is reconnected.
 ];
 
 /** Which remotes a route composes. */
 export const REMOTES_ON_PATH = {
-  home: ['header', 'homepage', 'footer', 'chat'],
-  item: ['header', 'portfolio-item', 'footer', 'chat'],
+  home: ['header', 'homepage', 'footer'],
+  item: ['header', 'portfolio-item', 'footer'],
 } as const satisfies Record<string, readonly RemoteName[]>;
 
 export const remotesOn = (path: string): readonly RemoteName[] =>

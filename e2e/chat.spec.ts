@@ -19,6 +19,10 @@ const openAndAsk = async (page: Page, question: string): Promise<void> => {
 };
 
 test.describe('the AI chat', () => {
+  // The chat is disconnected for now (`apps/shell/src/routes/__root.tsx`), so
+  // there is no launcher to open. Remove this line when it is reconnected.
+  test.skip(true, 'the AI chat is disconnected from the shell for now');
+
   test('"show me your work" closes the drawer and brings #work into view', async ({ page }) => {
     const bodies: { body: string; hash: string | undefined }[] = [];
     await page.route('**/api/chat', async (route) => {

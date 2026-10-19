@@ -30,7 +30,6 @@ const FOOTER_ORIGIN = process.env.PORTFOLIO_FOOTER_ORIGIN ?? 'http://localhost:4
 const HOMEPAGE_ORIGIN = process.env.PORTFOLIO_HOMEPAGE_ORIGIN ?? 'http://localhost:4176';
 const PORTFOLIO_ITEM_ORIGIN =
   process.env.PORTFOLIO_PORTFOLIO_ITEM_ORIGIN ?? 'http://localhost:4177';
-const CHAT_ORIGIN = process.env.PORTFOLIO_CHAT_ORIGIN ?? 'http://localhost:4178';
 
 const mfPlugins = federation({
   name: 'shell',
@@ -62,8 +61,12 @@ const mfPlugins = federation({
       name: 'portfolio-item',
       entry: `${PORTFOLIO_ITEM_ORIGIN}/remoteEntry.js`,
     },
-    // ai-chat D13 — the fifth remote, wired the same way.
-    chat: { type: 'module', name: 'chat', entry: `${CHAT_ORIGIN}/remoteEntry.js` },
+    // ai-chat D13 — the fifth remote, `chat`, is disconnected for the time
+    // being (see `RootComponent` in `src/routes/__root.tsx`). An entry here is
+    // fetched on start-up whether or not anything mounts it, so it is out, not
+    // just unmounted. To reconnect, restore it with its origin:
+    //   chat: { type: 'module', name: 'chat', entry: `${CHAT_ORIGIN}/remoteEntry.js` },
+    // where CHAT_ORIGIN = process.env.PORTFOLIO_CHAT_ORIGIN ?? 'http://localhost:4178'.
   },
   // D39 — singleton React, `strictVersion: false`, the version pinned once at
   // the workspace root. Slice 8 adds the CI check that every app resolves the

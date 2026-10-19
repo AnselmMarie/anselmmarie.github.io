@@ -5,8 +5,6 @@ import { SITE_ORIGIN } from '@portfolio/shared-config';
 import { HOME_METADATA, SITE_NAME } from '@portfolio/shared-fixtures';
 import { absoluteUrl } from '@portfolio/shared-utils';
 
-import { useChatNavigateListener } from '../chat-navigate/use-chat-navigate-listener.js';
-import ChatRemote from '../remotes/chat-remote.js';
 import appCss from '../styles.css?url';
 
 /**
@@ -77,15 +75,19 @@ const RootDocument = ({ children }: Readonly<{ children: ReactNode }>): ReactEle
   );
 };
 
+/**
+ * ⚠️ **The AI chat is disconnected for the time being.** The root used to call
+ * `useChatNavigateListener()` (ai-chat D14) and render `<ChatRemote />` after
+ * the `<Outlet />` (D13). Both are out, and so is the `chat` entry in
+ * `vite.config.ts`'s `remotes`: the federation runtime fetches every registered
+ * remote's `remoteEntry.js` on start-up, so unmounting alone still loads it.
+ * To reconnect, restore all three; `ChatRemote`, the listener and their specs
+ * are untouched.
+ */
 function RootComponent(): ReactElement {
-  // ai-chat D14 — the chat remote asks for route changes through a window event.
-  useChatNavigateListener();
-
   return (
     <RootDocument>
       <Outlet />
-      {/* ai-chat D13 — outside the Outlet, so the chat and its conversation survive route changes. */}
-      <ChatRemote />
     </RootDocument>
   );
 }
