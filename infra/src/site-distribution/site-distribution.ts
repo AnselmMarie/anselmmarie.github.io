@@ -11,6 +11,7 @@ import {
   FunctionRuntime,
   HttpVersion,
   type ICachePolicy,
+  OriginRequestHeaderBehavior,
   OriginRequestPolicy,
   PriceClass,
   ViewerProtocolPolicy,
@@ -20,6 +21,7 @@ import { CfnPermission, type FunctionUrl } from 'aws-cdk-lib/aws-lambda';
 import type { IBucket } from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 
+import { CHAT_PATH_PATTERN } from '../chat-config/chat-config.js';
 import { APEX_DOMAIN, REMOTES_PREFIX, WWW_DOMAIN } from '../site-config/site-config.js';
 import { wwwRedirectSource } from '../www-redirect/www-redirect.js';
 
@@ -33,6 +35,10 @@ export const UNCACHED_ERROR_STATUSES = [400, 403, 404, 500, 502, 503, 504] as co
 export interface SiteDistributionProps {
   readonly bucket: IBucket;
   readonly shellUrl: FunctionUrl;
+  /** The chat Lambda's URL, served at `/api/chat*` (ai-chat D12). */
+  readonly chatUrl: FunctionUrl;
+  /** The web ACL whose rate and challenge rules guard `/api/chat*` (ai-chat A1, A2). */
+  readonly webAclArn: string;
 }
 
 /**
@@ -74,12 +80,25 @@ export class SiteDistribution extends Construct {
       functionAssociations,
     });
 
+    // ai-chat: only what the handler reads. CloudFront-Viewer-Address is the
+    // per-IP quota key (D22); x-amz-content-sha256 is the body hash a POST
+    // through a Lambda OAC must carry (D24). A Function URL rejects a foreign Host.
+    const chatOriginRequestPolicy = new OriginRequestPolicy(this, 'ChatOriginRequest', {
+      comment: 'ai-chat: viewer IP + the OAC payload hash, nothing else',
+      headerBehavior: OriginRequestHeaderBehavior.allowList(
+        'CloudFront-Viewer-Address',
+        'Content-Type',
+        'x-amz-content-sha256'
+      ),
+    });
+
     this.distribution = new Distribution(this, 'Distribution', {
       comment: 'anselmmarie.com: shell on Lambda, remotes and static files on S3 (D108)',
       domainNames: [APEX_DOMAIN, WWW_DOMAIN],
       certificate: this.certificate,
       httpVersion: HttpVersion.HTTP2_AND_3,
       priceClass: PriceClass.PRICE_CLASS_100,
+      webAclId: props.webAclArn,
       defaultBehavior: {
         origin: FunctionUrlOrigin.withOriginAccessControl(props.shellUrl),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
@@ -94,6 +113,17 @@ export class SiteDistribution extends Construct {
       },
       // ⚠️ Order is precedence. The pointer pattern first (D107).
       additionalBehaviors: {
+        [CHAT_PATH_PATTERN]: {
+          origin: FunctionUrlOrigin.withOriginAccessControl(props.chatUrl),
+          viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          // POST is why the client hashes its body (D24). Never cached: every
+          // reply is a fresh stream.
+          allowedMethods: AllowedMethods.ALLOW_ALL,
+          cachePolicy: CachePolicy.CACHING_DISABLED,
+          originRequestPolicy: chatOriginRequestPolicy,
+          compress: false,
+          functionAssociations,
+        },
         [`/${REMOTES_PREFIX}/*/remoteEntry.js`]: staticBehavior(CachePolicy.CACHING_DISABLED),
         [`/${REMOTES_PREFIX}/*`]: staticBehavior(CachePolicy.CACHING_OPTIMIZED),
         '/assets/*': staticBehavior(CachePolicy.CACHING_OPTIMIZED),
@@ -108,12 +138,15 @@ export class SiteDistribution extends Construct {
 
     // The OAC origin grants only lambda:InvokeFunctionUrl. Since October 2025 a
     // Function URL also needs lambda:InvokeFunction, or every page is a 403.
-    new CfnPermission(this, 'ShellInvokeFunction', {
-      action: 'lambda:InvokeFunction',
-      functionName: props.shellUrl.functionArn,
-      principal: 'cloudfront.amazonaws.com',
-      sourceArn: this.distribution.distributionArn,
-      invokedViaFunctionUrl: true,
-    });
+    const invokeVia = (id: string, url: FunctionUrl) =>
+      new CfnPermission(this, id, {
+        action: 'lambda:InvokeFunction',
+        functionName: url.functionArn,
+        principal: 'cloudfront.amazonaws.com',
+        sourceArn: this.distribution.distributionArn,
+        invokedViaFunctionUrl: true,
+      });
+    invokeVia('ShellInvokeFunction', props.shellUrl);
+    invokeVia('ChatInvokeFunction', props.chatUrl);
   }
 }

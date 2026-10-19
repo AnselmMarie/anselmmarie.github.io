@@ -16,6 +16,8 @@ export type {
   PanelNote,
 } from './homepage-panels/homepage-panels.js';
 export type {
+  ItemAiEnhancement,
+  ItemAiEnhancementStatus,
   ItemFact,
   ItemLink,
   ItemLinkIcon,

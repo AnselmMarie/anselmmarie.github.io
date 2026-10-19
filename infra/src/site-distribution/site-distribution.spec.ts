@@ -32,9 +32,11 @@ describe('SiteDistribution', () => {
   it('never caches a remote pointer, and declares it before /_remotes/* so it wins (D107, R12)', () => {
     const patterns = config.CacheBehaviors.map((behavior) => behavior.PathPattern);
 
-    expect(patterns.indexOf('/_remotes/*/remoteEntry.js')).toBe(0);
-    expect(patterns.indexOf('/_remotes/*')).toBe(1);
-    expect(config.CacheBehaviors[0]?.CachePolicyId).toBe(CACHING_DISABLED);
+    const pointer = patterns.indexOf('/_remotes/*/remoteEntry.js');
+
+    expect(pointer).toBeGreaterThanOrEqual(0);
+    expect(pointer).toBeLessThan(patterns.indexOf('/_remotes/*'));
+    expect(config.CacheBehaviors[pointer]?.CachePolicyId).toBe(CACHING_DISABLED);
   });
 
   it('caches versioned remotes and the shell’s static files', () => {
@@ -64,14 +66,20 @@ describe('SiteDistribution', () => {
     }
   });
 
-  it('lets CloudFront invoke the shell through its URL: both permissions, not only InvokeFunctionUrl', () => {
-    const cloudFrontActions = Object.values(template.findResources('AWS::Lambda::Permission'))
-      .map((permission) => permission.Properties)
-      .filter((props) => props.Principal === 'cloudfront.amazonaws.com')
-      .map((props) => props.Action)
-      .sort();
+  it('lets CloudFront invoke the shell and the chat through their URLs: both permissions each, not only InvokeFunctionUrl', () => {
+    const actionsByFunction = new Map<string, string[]>();
+    for (const { Properties: props } of Object.values(
+      template.findResources('AWS::Lambda::Permission')
+    )) {
+      if (props.Principal !== 'cloudfront.amazonaws.com') continue;
+      const key = JSON.stringify(props.FunctionName);
+      actionsByFunction.set(key, [...(actionsByFunction.get(key) ?? []), props.Action].sort());
+    }
 
-    expect(cloudFrontActions).toEqual(['lambda:InvokeFunction', 'lambda:InvokeFunctionUrl']);
+    expect([...actionsByFunction.values()]).toEqual([
+      ['lambda:InvokeFunction', 'lambda:InvokeFunctionUrl'],
+      ['lambda:InvokeFunction', 'lambda:InvokeFunctionUrl'],
+    ]);
     template.hasResourceProperties('AWS::Lambda::Permission', {
       Action: 'lambda:InvokeFunction',
       InvokedViaFunctionUrl: true,

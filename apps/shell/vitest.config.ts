@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
 /**
- * ⚠️ **The four federated specifiers have to resolve at transform time.**
+ * ⚠️ **The five federated specifiers have to resolve at transform time.**
  * Module Federation resolves them at runtime from `REMOTE_REGISTRY`, and Vite
  * does not know that — it fails the importing file outright, before `vi.mock`
  * gets a chance. Aliasing them to one stub is what makes any spec in this app
@@ -19,6 +19,7 @@ export default defineConfig({
       'footer/Footer': federatedStub,
       'homepage/Homepage': federatedStub,
       'portfolio-item/PortfolioItem': federatedStub,
+      'chat/Chat': federatedStub,
     },
   },
   test: {

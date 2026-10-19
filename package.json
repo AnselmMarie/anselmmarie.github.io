@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "nx run shell:dev",
-    "dev:all": "nx run-many -t dev --projects=shell,header,footer,homepage,portfolio-item --parallel=5",
+    "dev:all": "nx run-many -t dev --projects=shell,header,footer,homepage,portfolio-item --parallel=6",
     "build": "nx run-many -t build",
     "lint": "nx run-many -t lint",
     "test": "nx run-many -t test",
@@ -59,6 +59,7 @@
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
     "@vitest/coverage-v8": "^5.0.1",
+    "esbuild": "0.28.2",
     "eslint": "^9.0.0",
     "eslint-plugin-unused-imports": "^4.1.4",
     "husky": "^9.1.7",

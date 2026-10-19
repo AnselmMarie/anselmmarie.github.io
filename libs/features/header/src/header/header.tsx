@@ -1,9 +1,9 @@
 import { type ReactElement, useState } from 'react';
 
 import { SITE_SECTIONS } from '@portfolio/shared-fixtures';
+import { anchorHref, HOME_PATH } from '@portfolio/shared-utils';
 import { MenuSheet } from '@portfolio/ui-components';
 
-import { anchorHref, HOME_PATH } from '../anchor-href/anchor-href.js';
 import HeaderMenuToggle from '../header-menu/header-menu-toggle.js';
 import HeaderNav from '../header-nav/header-nav.js';
 import HeaderBackLink from './header-back-link.js';

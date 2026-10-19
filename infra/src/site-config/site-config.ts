@@ -25,8 +25,11 @@ export const GITHUB_DEPLOY_REF = 'refs/heads/master';
  */
 export const GITHUB_DEPLOY_ROLE_NAME = 'portfolio-github-deploy';
 
-/** The four federated remotes, by Nx project name (D50: bare, unscoped). */
-export const REMOTES = ['header', 'footer', 'homepage', 'portfolio-item'] as const;
+/**
+ * The five federated remotes, by Nx project name (D50: bare, unscoped). `chat`
+ * is the AI chat (ai-chat D13); the deploy CLI and deploy plan read this list.
+ */
+export const REMOTES = ['header', 'footer', 'homepage', 'portfolio-item', 'chat'] as const;
 export type RemoteApp = (typeof REMOTES)[number];
 
 export const SHELL_APP = 'shell';

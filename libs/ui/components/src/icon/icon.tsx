@@ -3,22 +3,28 @@ import {
   IconArrowRight,
   IconArrowUpRight,
   IconExternalLink,
+  IconMessageCircle,
   IconMinus,
   IconPlus,
+  IconSend,
+  IconX,
 } from '@tabler/icons-react';
 import type { ReactElement } from 'react';
 
-export type UiIconName =
+export type IconName =
   | 'arrow-left'
   | 'arrow-right'
   | 'arrow-up-right'
   | 'external'
+  | 'message-circle'
   | 'minus'
-  | 'plus';
+  | 'plus'
+  | 'send'
+  | 'x';
 
-interface UiIconProps {
-  name: UiIconName;
-  /** Edge length in px. The design draws these between 13 and 19. */
+interface IconProps {
+  name: IconName;
+  /** Edge length in px. The design draws these between 13 and 19, and the chat launcher's at 26. */
   size?: number;
   className?: string;
 }
@@ -28,8 +34,11 @@ const ICONS = {
   'arrow-right': IconArrowRight,
   'arrow-up-right': IconArrowUpRight,
   external: IconExternalLink,
+  'message-circle': IconMessageCircle,
   minus: IconMinus,
   plus: IconPlus,
+  send: IconSend,
+  x: IconX,
 } as const;
 
 /**
@@ -54,13 +63,17 @@ const ICONS = {
  * element around it, so a link reads once rather than twice. A caller that
  * renders this as the *only* content of a link ships an unlabelled link.
  *
+ * ⚠️ **`message-circle`, `send` and `x` are the AI chat's** (ai-chat D17): the
+ * launcher, the composer's send button and the drawer's close button. All three
+ * sit inside an `IconButton`, which carries the accessible name.
+ *
  * Tabler rather than v3's Radix set, per D75 — this extends that decision to
  * the non-brand marks rather than introducing a second icon library.
  */
-const UiIcon = ({ name, size = 16, className }: UiIconProps): ReactElement => {
-  const Icon = ICONS[name];
+const Icon = ({ name, size = 16, className }: IconProps): ReactElement => {
+  const Glyph = ICONS[name];
 
-  return <Icon aria-hidden focusable={false} size={size} stroke={1.5} className={className} />;
+  return <Glyph aria-hidden focusable={false} size={size} stroke={1.5} className={className} />;
 };
 
-export default UiIcon;
+export default Icon;

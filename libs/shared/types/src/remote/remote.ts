@@ -1,10 +1,11 @@
 /**
- * The four independently deployed remotes (D2, D12). The union is the single
+ * The five independently deployed remotes (D2, D12). `chat` is the AI chat
+ * (ai-chat D13), the fifth. The union is the single
  * place a remote's identity is spelled, so the registry, the error boundary's
  * fallback map (Slice 4) and each app's Module Federation config cannot drift
  * apart by a typo.
  */
-export type RemoteName = 'header' | 'footer' | 'homepage' | 'portfolio-item';
+export type RemoteName = 'header' | 'footer' | 'homepage' | 'portfolio-item' | 'chat';
 
 /**
  * One remote's runtime resolution. The URL is read at runtime rather than

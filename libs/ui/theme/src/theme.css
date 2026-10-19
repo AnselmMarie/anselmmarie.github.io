@@ -222,6 +222,7 @@
  *
  * One line per lib whose classes must survive. A missing line is silent.
  */
+@source '../../../features/chat/src';
 @source '../../../features/footer/src';
 @source '../../../features/header/src';
 @source '../../../features/homepage/src';

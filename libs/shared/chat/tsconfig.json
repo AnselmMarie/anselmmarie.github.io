@@ -1,0 +1,14 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "out-tsc",
+    "types": ["vitest/globals"],
+    "tsBuildInfoFile": "out-tsc/tsconfig.tsbuildinfo"
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../fixtures"
+    }
+  ]
+}

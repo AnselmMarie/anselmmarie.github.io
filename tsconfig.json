@@ -56,6 +56,18 @@
     },
     {
       "path": "./e2e"
+    },
+    {
+      "path": "./libs/shared/chat"
+    },
+    {
+      "path": "./libs/api/chat"
+    },
+    {
+      "path": "./libs/features/chat"
+    },
+    {
+      "path": "./apps/chat"
     }
   ]
 }

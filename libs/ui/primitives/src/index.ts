@@ -2,6 +2,7 @@ export { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './
 export { Badge, badgeVariants } from './badge.js';
 export { Button, buttonVariants } from './button.js';
 export { default as Card } from './card.js';
+export { Input } from './input.js';
 export {
   NavigationMenu,
   NavigationMenuContent,

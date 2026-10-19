@@ -58,7 +58,7 @@ describe('runDeploy', () => {
     vi.spyOn(shell, 'deployShell').mockImplementation(() => void order.push('shell'));
     runDeploy(fakeContext(fakeRun().run), FULL_PLAN, VERSION);
 
-    expect(order).toEqual(['header', 'footer', 'homepage', 'portfolio-item', 'shell']);
+    expect(order).toEqual(['header', 'footer', 'homepage', 'portfolio-item', 'chat', 'shell']);
     vi.restoreAllMocks();
   });
 

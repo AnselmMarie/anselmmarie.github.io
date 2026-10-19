@@ -1,0 +1,21 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "out-tsc",
+    "lib": ["ES2022"],
+    "types": ["node", "vitest/globals"],
+    "tsBuildInfoFile": "out-tsc/tsconfig.tsbuildinfo"
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../shared/chat"
+    },
+    {
+      "path": "../../shared/fixtures"
+    },
+    {
+      "path": "../../shared/types"
+    }
+  ]
+}

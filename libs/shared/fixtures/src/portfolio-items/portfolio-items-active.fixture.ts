@@ -1,5 +1,7 @@
 import type { PortfolioItem } from '@portfolio/shared-types';
 
+import { COSMIKATA_AI_ENHANCEMENTS } from './portfolio-items-cosmikata-ai.fixture.js';
+
 /**
  * 🧭 **OWNER: Slice 7 (Portfolio Item).** v3's `src/store/active.data.ts` at
  * commit `39bbe56` (D53), ported field for field. Split out of
@@ -193,5 +195,6 @@ export const ACTIVE_PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
       { key: 'Focus', value: 'Monorepo, tokens, edge backend' },
     ],
     links: [],
+    aiEnhancements: COSMIKATA_AI_ENHANCEMENTS,
   },
 ];

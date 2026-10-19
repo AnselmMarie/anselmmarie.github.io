@@ -30,6 +30,7 @@ export const E2E_REMOTES = [
   { app: 'footer', envKey: 'PORTFOLIO_FOOTER_ORIGIN', port: 4275 },
   { app: 'homepage', envKey: 'PORTFOLIO_HOMEPAGE_ORIGIN', port: 4276 },
   { app: 'portfolio-item', envKey: 'PORTFOLIO_PORTFOLIO_ITEM_ORIGIN', port: 4277 },
+  { app: 'chat', envKey: 'PORTFOLIO_CHAT_ORIGIN', port: 4278 },
 ];
 
 /** `{ PORTFOLIO_HEADER_ORIGIN: 'http://localhost:4274', … }` */

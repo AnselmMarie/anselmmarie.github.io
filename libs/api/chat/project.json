@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "api-chat",
+  "projectType": "library",
+  "sourceRoot": "libs/api/chat/src",
+  "tags": ["type:api", "scope:chat"]
+}

@@ -75,6 +75,15 @@ const RootDocument = ({ children }: Readonly<{ children: ReactNode }>): ReactEle
   );
 };
 
+/**
+ * ⚠️ **The AI chat is disconnected for the time being.** The root used to call
+ * `useChatNavigateListener()` (ai-chat D14) and render `<ChatRemote />` after
+ * the `<Outlet />` (D13). Both are out, and so is the `chat` entry in
+ * `vite.config.ts`'s `remotes`: the federation runtime fetches every registered
+ * remote's `remoteEntry.js` on start-up, so unmounting alone still loads it.
+ * To reconnect, restore all three; `ChatRemote`, the listener and their specs
+ * are untouched.
+ */
 function RootComponent(): ReactElement {
   return (
     <RootDocument>
